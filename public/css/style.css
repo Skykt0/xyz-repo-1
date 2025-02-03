@@ -917,6 +917,10 @@ label[for="pdf-upload"] {
     -webkit-transform-origin: 0 0;
 }
 
+#step5 {
+    overflow: hidden;
+}
+
 #sendDate, #sendDate3 {
     box-sizing: border-box;
     outline: 0;
@@ -970,11 +974,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: block;
 }
 
-.screen-5 {
-    overflow: hidden;
-}
-
-.screen-5 .section-label {
+#step5 .section-label {
     padding: 8px;
 }
 
