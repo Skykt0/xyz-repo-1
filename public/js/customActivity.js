@@ -302,6 +302,18 @@ define([
       companyLabel.text('Company *'); // Add * back
     }
   });
+
+  $('#company').change(function () {
+    var selectedValue = $(this).val();
+    let firstNameValue =$('.mapping-fields-group label[for=\'first-name\']');
+
+    if (selectedValue !== 'Select') {
+        firstNameValue.text('First Name'); // Remove *
+      } else {
+        firstNameValue.text('First Name *'); // Add * back
+      }
+});
+
   //end of adding * in Company Label
 
   //   $('#test-api-key').on('input', hideError);
