@@ -225,11 +225,11 @@ define([
     const icon = $('#toggle-password-live-key i'); // Select the icon inside the button
     const liveKeyInput = $('#live-api-key'); // Select the input field
 
-    if (liveKeyInput.attr('type') === 'password') {
-      liveKeyInput.attr('type', 'text'); // Change input type to text
+    if (liveKeyInput.attr('type') === 'text') {
+      liveKeyInput.attr('type', 'password'); // Change input type to text
       icon.removeClass('fa-eye').addClass('fa-eye-slash'); // Update icon class
     } else {
-      liveKeyInput.attr('type', 'password'); // Change input type back to password
+      liveKeyInput.attr('type', 'text'); // Change input type back to password
       icon.removeClass('fa-eye-slash').addClass('fa-eye'); // Update icon class
     }
   }
@@ -239,11 +239,11 @@ define([
     const icon = $('#toggle-password-test-key i'); // Select the icon inside the button
     const testKeyInput = $('#test-api-key'); // Select the input field
 
-    if (testKeyInput.attr('type') === 'password') {
-      testKeyInput.attr('type', 'text'); // Change input type to text
+    if (testKeyInput.attr('type') === 'text') {
+      testKeyInput.attr('type', 'password'); // Change input type to text
       icon.removeClass('fa-eye').addClass('fa-eye-slash'); // Update icon class
     } else {
-      testKeyInput.attr('type', 'password'); // Change input type back to password
+      testKeyInput.attr('type', 'text'); // Change input type back to password
       icon.removeClass('fa-eye-slash').addClass('fa-eye'); // Update icon class
     }
 
