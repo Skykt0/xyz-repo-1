@@ -788,6 +788,17 @@ define([
     await showPdfPreview(previewPayload.postcardId);
   });
 
+  $('.express-delivery-btn').on('click', function() {
+    var isChecked = $(this).prop('checked');
+    var mailingClass = $(this).closest('.spacer').find('.mailing-class');
+    
+    if (isChecked) {
+      mailingClass.prop('disabled', true);
+    } else {
+      mailingClass.prop('disabled', false);
+    }
+  });
+
   /** screen 4 script */
   let timeoutId;
   function fetchContacts(searchQuery) {
