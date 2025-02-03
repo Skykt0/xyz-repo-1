@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>TESTING: Custom Journey Builder Activity</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+    <script type="text/javascript" src="./js/require.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var config = {
+                baseUrl: "js",
+            };
+
+            var dependencies = ["customActivity"];
+
+            require(config, dependencies);
+        })();
+    </script>
+
+    <!--Styles-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Inter" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+    <div id="step1" class="step">
+        <div class="step1-left-panel">
+            <h2 class="step1-heading">Connect your PostGrid account</h2>
+            <div class="step1-input-group">
+                <label for="test-api-key">Test Api Key*</label>
+                <input type="password" id="test-api-key" placeholder="Enter test API key" required />
+                <span class="toggle-password" id="toggle-password-test-key"><i class="fa fa-eye"></i></span>
+                <span class="error-message" id="test-api-key-error" style="color: red; display: none">Please enter the
+                    Test API Key.</span>
+            </div>
+            <div class="step1-input-group">
+                <label for="live-api-key">Live Api Key</label>
+                <input type="password" id="live-api-key" placeholder="Enter live API key" />
+                <span class="toggle-password" id="toggle-password-live-key"><i class="fa fa-eye"></i></span>
+                <span class="error-message" id="live-api-key-error" style="color: red; display: none">Please enter the
+                    Live API Key.</span>
+            </div>
+        </div>
+        <div class="step1-right-panel"></div>
+    </div>
+
+    <div id="step2" class="step">
+        <div class="second-step">
+            <div class="left-box">
+                <!-- Message Type -->
+                <div class="message-type-wrapper">
+                    <div class="message-label-input-wrap">
+                        <div class="section-label">Message Type *</div>
+                        <div class="input-container">
+                            <div class="letter-radio radio-label-wrap">
+                                <input type="radio" class="radio-input step2radioBTN" id="letters" name="msgType" />
+                                <label for="letters" class="radio-label">Letters</label>
+                            </div>
+                            <div class="postcard-radio radio-label-wrap">
+                                <input type="radio" class="radio-input step2radioBTN" id="postcard" name="msgType" />
+                                <label for="postcard" class="radio-label">Postcards</label>
+                            </div>
+                            <div class="self-mailer-radio radio-label-wrap">
+                                <input type="radio" class="radio-input step2radioBTN" id="self-mailer" name="msgType" />
+                                <label for="self-mailer" class="radio-label">Self Mailer</label>
+                            </div>
+                        </div>
+                    </div>
+                    <span id="msgType-error" class="error-message"></span>
+                </div>
+                <div class="card-insert-wrapper hidden">
+                    <div id="card-insert-container" class="hidden">
+                        <input type="checkbox" id="card-insert" />
+                        <label for="card-insert">Card Insert</label>
+                    </div>
+                    <!-- Card Insert Type (Conditional) -->
+                    <div id="card-insert-type">
+                        <div class="section-label">Card Insert Type</div>
+                        <div class="input-container">
+                            <div class="single-sided-radio-wrap">
+                                <input type="radio" id="single-sided" name="cardType" checked />
+                                <label for="single-sided">Single-sided</label>
+                            </div>
+                            <div class="double-sided-radio-wrap">
+                                <input type="radio" id="double-sided" name="cardType" />
+                                <label for="double-sided">Double-sided</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Creation Type -->
+                <div class="creation-type-wrapper">
+                    <div class="creation-label-input-wrap">
+                        <div class="section-label">Creation Type *</div>
+                        <div class="input-container">
+                            <div class="html-radio-wrap radio-label-wrap">
+                                <input type="radio" class="radio-input step2radioBTN" id="htmlId" name="createType" />
+                                <label for="htmlId" class="radio-label">HTML</label>
+                            </div>
+                            <div class="pdf-radio-wrap radio-label-wrap">
+                                <input type="radio" class="radio-input step2radioBTN" id="pdfId" name="createType" />
+                                <label for="pdfId" class="radio-label">PDF Upload</label>
+                            </div>
+                            <dev class="existing-template-radio-wrap radio-label-wrap">
+                                <input type="radio" class="radio-input step2radioBTN" id="extTempId"
+                                    name="createType" />
+                                <label for="extTempId" class="radio-label">Existing Template</label>
+                            </dev>
+                        </div>
+                    </div>
+                    <span id="createType-error" class="error-message"></span>
+                </div>
+            </div>
+            <!-- Right box for Test Mode -->
+            <div class="right-box">
+                <div class="input-container align-right">
+                    <label class="test-to-live-switch">
+                        <input type="checkbox" />
+                        <span class="test-to-live-slider round"></span>
+                    </label>
+                    <label for="testMode" class="slider-label">Live Mode</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="step3" class="step">
+        <!------------------- 3rd step Postcard Screen ---------------------->
+        <div id="postcardScreen">
+            <!-- Third Step First Screen -->
+            <div class="screen-1">
+                <div id="html-screen-container" class="container spacer">
+                    <!-- Postcard HTML Fields Section -->
+                    <div class="html-screen-wrapper">
+                        <h3 class="section-label">HTML</h3>
+                        <div class="postcard-input-fields">
+                            <div class="input-fields">
+                                <div class="input-box">
+                                    <label for="description" class="input-label">Description *</label>
+                                    <input type="text" class="input-field" id="description" name="description" />
+                                    <span class="error-msg">Please enter required field</span>
+                                </div>
+                                <div class="input-box">
+                                    <label for="sendDate" class="input-label">Send Date *</label>
+                                    <div class="date-wrap">
+                                        <input type="date" placeholder="" class="input-field" id="sendDate"
+                                        name="sendDate" />
+                                        <i class="fa fa-calendar calendar-icon"></i>
+                                        <span class="error-msg">Please enter required field</span>
+                                    </div>
+                                </div>
+                                <div class="input-box">
+                                    <label for="mailingClass" class="input-label">Mailing Class *</label>
+                                    <select class="input-field" id="mailingClass" name="mailingClass">
+                                        <option value="first_class" selected>
+                                            first_class (7-10 business days)
+                                        </option>
+                                        <option value="standard_class">
+                                            standard_class (10-14 business
+                                            days)
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="postcard-html-size">
+                            <div class="input-label-radio">Size*</div>
+                            <div class="size-radio-buttons-wrap">
+                                <div class="radio-buttons">
+                                    <label class="radio-label size_radio_label">
+                                        <input type="radio" class="radio-input" id="six-four" name="postcardHtmlSize" value="6x4"
+                                            checked />
+                                        <span>6x4</span>
+                                    </label>
+                                    <label class="radio-label size_radio_label">
+                                        <input type="radio" class="radio-input" id="nine-six" name="postcardHtmlSize" value="9x6" />
+                                        <span>9x6</span>
+                                    </label>
+                                    <label class="radio-label size_radio_label">
+                                        <input type="radio" class="radio-input" id="eleven-eight" name="postcardHtmlSize"
+                                            value="11x8" />
+                                        <span>11x8</span>
+                                    </label>
+                                </div>
+                                <span class="error-msg">Please Select at least one size.</span>
+                            </div>
+                        </div>
+                        <div class="postcard-html-express-delivery">
+                            <div class="two-checkboxes">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input" id="expDelivery" name="expDelivery" />
+                                    <span>Express Delivery</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Postcard HTML Editor -->
+                    <div class="postcard-html-editor">
+                        <div class="html-btn-wrap">
+                            <button type="button" class="btn btn-light html__btn--front show">
+                                Front
+                            </button>
+                            <button type="button" class="btn btn-light html__btn--back">
+                                Back
+                            </button>
+                        </div>
+                        <textarea class="html-editor-front show"></textarea>
+                        <textarea class="html-editor-back"></textarea>
+                        <span class="error-msg">Please enter required field</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Third Step Second Screen -->
+            <div class="screen-2">
+                <div class="spacer">
+                    <div class="postcard-pdf-container">
+                        <h3 class="section-label">PDF Upload</h3>
+                        <div class="input-fields">
+                            <div class="input-box">
+                                <label for="description" class="input-label">Description *</label>
+                                <input type="text" class="input-field" id="description" name="description" />
+                                <span class="error-msg">Please enter required field</span>
+                            </div>
+                            <div class="input-box">
+                                <label for="sendDate" class="input-label">Send Date *</label>
+                                <div class="date-wrap">
+                                    <input type="date" placeholder="" class="input-field" id="sendDate"
+                                    name="sendDate" />
+                                    <i class="fa fa-calendar calendar-icon"></i>
+                                    <span class="error-msg">Please enter required field</span>
+                                </div>
+                            </div>
+                            <div class="input-box">
+                                <label for="mailingClass" class="input-label">Mailing Class *</label>
+                                <select class="input-field" id="mailingClass" name="mailingClass">
+                                    <option value="first_class" selected>
+                                        first_class (7-10 business days)
+                                    </option>
+                                    <option value="standard_class">
+                                        standard_class (10-14 business days)
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="postcard-pdf-size">
+                            <div class="input-label-radio">Size*</div>
+                            <div class="size-radio-buttons-wrap">
+                                <div class="radio-buttons">
+                                    <label class="radio-label size_radio_label">
+                                        <input type="radio" class="radio-input" id="six-four" name="postcardPDFSize" value="6x4" data-dimentions="6.25x4.25"
+                                            checked />
+                                        <span>6x4</span>
+                                    </label>
+                                    <label class="radio-label size_radio_label">
+                                        <input type="radio" class="radio-input" id="nine-six" name="postcardPDFSize" value="9x6" data-dimentions="9.25x6.25"/>
+                                        <span>9x6</span>
+                                    </label>
+                                    <label class="radio-label size_radio_label">
+                                        <input type="radio" class="radio-input" id="eleven-eight" name="postcardPDFSize"
+                                            value="11x6" data-dimentions="11.25x6.25"/>
+                                        <span>11x8</span>
+                                    </label>
+                                </div>
+                                <span class="error-msg">Please Select at least one size.</span>
+                            </div>
+                        </div>
+                        <div class="postcard-pdf-express-delivery">
+                            <div class="two-checkboxes">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input" id="expDelivery" name="expDelivery" />
+                                    <span>Express Delivery</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="drop-pdf upload-box" id="drop-area">
+                            <input type="file" id="pdf-upload" accept="application/pdf" class="hidden" />
+                            <label for="pdf-upload" id="file-name">Drag or Upload PDF</label>
+                            <span class="pdf-error error-msg">Please select a PDF file</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="screen-3">
+                <div class="spacer">
+                    <div class="section-label">Existing Template</div>
+                    <div class="six-input-field">
+                        <div class="input-box">
+                            <label for="description3" class="input-label">Description *</label>
+                            <input type="text" class="input-field" id="description3" name="description3">
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="input-box">
+                            <label for="sendDate3" class="input-label">Send Date *</label>
+                            <input type="date" placeholder="" class="input-field" id="sendDate3" name="sendDate3">
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="input-box">
+                            <label for="mailingClass3" class="input-label">Mailing *</label>
+                            <select class="input-field" id="mailingClass3" name="mailingClass3">
+                                <option value="first_class" selected>first_class (7-10 business days)</option>
+                                <option value="standard_class">standard_class (10-14 business days)</option>
+                            </select>
+                            <span class="error-message"></span>
+                        </div>
+                        <!-- Front Template Dropdown -->
+                        <div class="input-box">
+                            <label for="frontTemplateInput" class="input-label">Front Template *</label>
+                            <div class="mapping-dropdown">
+                                <input type="text" id="frontTemplateInput" placeholder="Search or enter template"
+                                    autocomplete="off" aria-describedby="frontTemplateList" aria-haspopup="listbox"
+                                    aria-expanded="false" />
+                                <div id="frontTemplateList" class="dropdown-options" role="listbox"
+                                    aria-labelledby="frontTemplateInput"></div>
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+                        <!-- Back Template -->
+                        <div class="input-box">
+                            <label for="backTemplateInput" class="input-label">Back Template *</label>
+                            <div class="mapping-dropdown">
+                                <input type="text" id="backTemplateInput" placeholder="Search or enter template"
+                                    autocomplete="off" aria-describedby="backTemplateList" aria-haspopup="listbox"
+                                    aria-expanded="false" />
+                                 <!-- Add down arrow here -->
+                                <div id="backTemplateList" class="dropdown-options" role="listbox"
+                                    aria-labelledby="backTemplateInput"></div>
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-label-radio">Size *</div>
+                    <div class="radio-buttons width-50">
+                        <label class="radio-label size_radio_label">
+                            <input type="radio" class="radio-input" id="six-four" name="size" value="6x4" checked>
+                            6x4
+                        </label>
+                        <label class="radio-label size_radio_label">
+                            <input type="radio" class="radio-input" id="nine-six" name="size" value="9x6">
+                            9x6
+                        </label>
+                        <label class="radio-label size_radio_label">
+                            <input type="radio" class="radio-input" id="eleven-eight" name="size" value="11x6">
+                            11x6
+                        </label>
+                        <span class="error-message"></span>
+                    </div>
+                    <!-- Express Delivery Checkbox -->
+                    <div class="checkboxes">
+                        <div class="five-checkboxes">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input" id="expDelivery" name="expDelivery">
+                                Express Delivery
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="step4" class="step">
+        <div class="mapping-container">
+            <!-- Left Section -->
+            <div class="mapping-left">
+                <h2 class="step4-heading" id="step4-heading">From Contact</h2>
+                <div class="mapping-dropdown">
+                    <input type="text" id="search-contact" placeholder="Search and select a contact...">
+                    <div id="dropdown-options" class="dropdown-options">
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="mapping-divider"></div>
+
+            <!-- Right Section -->
+            <div class="mapping-right">
+                <h2 class="step4-heading" id="step4-heading">To Mapping Field</h2>
+                <div class="mapping-fields">
+                    <div class="mapping-fields-group">
+                        <label for="first-name">First Name *</label>
+                        <select id="first-name">
+                            <option>Select</option>
+                        </select>
+                    </div>
+
+                    <div class="mapping-fields-group">
+                        <label for="last-name">Last Name</label>
+                        <select id="last-name">
+                            <option>Select</option>
+                        </select>
+                    </div>
+
+                    <div class="mapping-fields-group">
+                        <label for="company">Company</label>
+                        <select id="company">
+                            <option>Select</option>
+                        </select>
+                    </div>
+
+                    <div class="mapping-fields-group">
+                        <label for="email">Email Address</label>
+                        <select id="email">
+                            <option>Select</option>
+                        </select>
+                    </div>
+
+                    <div class="mapping-fields-group">
+                        <label for="address1">Address Line 1 *</label>
+                        <select id="address1">
+                            <option>Select</option>
+                        </select>
+                    </div>
+
+                    <div class="mapping-fields-group">
+                        <label for="address2">Address Line 2</label>
+                        <select id="address2">
+                            <option>Select</option>
+                        </select>
+                    </div>
+
+                    <div class="mapping-fields-group">
+                        <label for="city">City</label>
+                        <select id="city">
+                            <option>Select</option>
+                        </select>
+                    </div>
+
+                    <div class="mapping-fields-group">
+                        <label for="state">State</label>
+                        <select id="state">
+                            <option>Select</option>
+                        </select>
+                    </div>
+
+                    <div class="mapping-fields-group">
+                        <label for="country-code">Country Code</label>
+                        <select id="country-code">
+                            <option>Select</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mapping-fields-group">
+                        <label for="zip">ZipCode/ Postal</label>
+                        <select id="zip">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                </div>
+                <span class="error-message-contactMapping" style="display: block;"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="step5" class="step">
+        <div class="container spacer">
+            <div class="preview-container">
+                <div class="section-label">Preview Post</div>
+                <div class="preview-box">
+                    <div id="pdf-preview-container">
+                        <iframe id="pdf-preview" style="border: 1px solid #ccc;"></iframe>
+                    </div>
+                    <button class="retry-preview-btn">Retry</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

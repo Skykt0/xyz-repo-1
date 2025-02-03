@@ -1,0 +1,98 @@
+{
+	"workflowApiVersion": "1.1",
+	"metaData": {
+		"icon": "images/postgridicon.png",
+		"category": "message"
+	},
+	"type": "REST",
+	"lang": {
+		"en-US": {
+			"name": "Postgrid Akash",
+			"description": "Send letter and postcard from journey Builder using postgrid platform"
+		}
+	},
+	"arguments": {
+		"execute": {
+			"inArguments": [],
+			"outArguments": [],
+			"url": "https://postgrid-start.vercel.app/journeybuilder/execute",
+			"verb": "POST",
+			"body": "",
+			"format": "json",
+			"useJwt": false,
+			"timeout": 2000
+		}
+	},
+	"configurationArguments": {
+		"applicationExtensionKey": "e51f7b3f-9826-4164-babb-59dd952216b1",
+		"save": {
+			"url": "https://postgrid-start.vercel.app/save",
+			"verb": "POST",
+			"body": "",
+			"format": "json",
+			"useJwt": false,
+			"timeout": 2000
+		},
+		"publish": {
+			"url": "https://postgrid-start.vercel.app/publish",
+			"verb": "POST",
+			"body": "",
+			"format": "json",
+			"useJwt": false,
+			"timeout": 2000
+		},
+		"validate": {
+			"url": "https://postgrid-start.vercel.app/validate",
+			"verb": "POST",
+			"body": "",
+			"format": "json",
+			"useJwt": false,
+			"timeout": 2000
+		},
+		"stop": {
+			"url": "https://postgrid-start.vercel.app/stop",
+			"verb": "POST",
+			"body": "",
+			"format": "json",
+			"useJwt": false,
+			"timeout": 2000
+		}
+	},
+	"wizardSteps": [
+		{
+			"label": "Connect Account",
+			"key": "step1"
+		},
+		{
+			"label": "Select Method",
+			"key": "step2"
+		},
+		{
+			"label": "Select Message",
+			"key": "step3"
+		},
+		{
+			"label": "Select Contact",
+			"key": "step4"
+		},
+		{
+			"label": "Preview",
+			"key": "step5"
+		}
+	],
+	"userInterfaces": {
+		"configModal": {
+			"height": 500,
+			"width": 1048,
+			"fullscreen": false
+		}
+	},
+	"schema": {
+		"arguments": {
+			"execute": {
+				"inArguments": [],
+				"outArguments": []
+			}
+		}
+	}
+}

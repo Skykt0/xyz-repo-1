@@ -1,0 +1,979 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: inter;
+}
+
+/* STEP 3 - SCREEN 3 CSS*/
+.screen-3 .spacer {
+	padding: 44px;
+}
+.screen-3 .section-label {
+	font-size: 22px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 600;
+	margin-bottom: 30px;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.screen-3 .input-fields {
+	display: grid;
+	grid-template-rows: repeat(2, auto);
+	grid-template-columns: repeat(2, auto);
+
+	align-content: start;
+	row-gap: 15px;
+	column-gap: 50px;
+	margin-bottom: 40px;
+}
+.screen-3 .input-box {
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+}
+.screen-3 .input-field {
+	padding: 5px 10px;
+	border-radius: 3px;
+	border: 3px solid lightgray;
+	box-shadow: 0px 0px 1px 1px lightgray;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	outline: none;
+}
+.screen-3 .input-label {
+	margin-bottom: 5px;
+}
+.screen-3 .input-label-radio {
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.screen-3 .radio-buttons {
+	display: grid;
+	grid-template-columns: repeat(11, auto);
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+.screen-3 .checkbox-label {
+    font-size: 16px;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.screen-3 .checkbox-input {
+    margin-right: 5px;
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: bottom;
+}
+.screen-3 .checkboxes {
+	display: grid;
+	grid-template-rows: repeat(2, auto);
+	margin-top: 40px;
+}
+.screen-3 .three-checkboxes {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	justify-content: space-between;
+	margin-bottom: 15px;
+}
+.screen-3 .two-checkboxes {
+	display: grid;
+	grid-template-columns: repeat(2, auto);
+	justify-content: space-between;
+}
+.screen-3 .html-editior {
+	border: 3px solid lightgray;
+	border-radius: 10px;
+	outline: none;
+	resize: none;
+	overflow: auto;
+	width: 95%;
+	height: 100%;
+	padding: 10px;
+}
+.screen-3 .six-input-field {
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 2rem;
+	row-gap: 2rem;
+}
+.screen-3 .five-checkboxes {
+	display: grid;
+	grid-template-columns: repeat(5, auto);
+	justify-content: space-between;
+	margin-bottom: 15px;
+	margin-bottom: 40px;
+}
+.screen-3 .drop-pdf {
+	width: 100%;
+	background-color: lightgrey;
+	height: 80px;
+	margin-top: 30px;
+	border-radius: 10px;
+	position: relative;
+	cursor: pointer;
+}
+.screen-3 .input-label-drop {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.screen-3 .error-message {
+	color: red;
+	font-size: 16px;
+	display: block;
+	margin-top: 4px;
+}
+.screen-3 .error-field {
+	border: 1px solid red;
+}
+.screen-3 .mapping-dropdown {
+	position: relative;
+	width: 100%;
+}
+.screen-3 input[type="text"] {
+	width: 100%;
+	padding: 8px;
+	box-sizing: border-box;
+}
+
+/* Basic styling for dropdowns */
+.screen-3 #search-contact,
+.screen-3 #frontTemplateInput,
+.screen-3 #backTemplateInput {
+    width: 100%;
+    padding: 8px 30px 8px 12px; 
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    font-size: 14px;
+    background: transparent;
+}
+
+/* Arrow CSS */
+.screen-3 .arrow {
+	border: solid black;
+	border-width: 0 1.5px 1.5px 0;
+	display: inline-block;
+	padding: 3px;
+	position: absolute;
+	right: 10px; /* Position the arrow inside the input field */
+	top: 50%;
+	transform: translateY(-50%) rotate(45deg); /* Center and rotate the arrow */
+	pointer-events: none; /* Ensure the arrow doesn't block clicks */
+}
+.screen-3 .down {
+	transform: translateY(-50%) rotate(45deg); /* Down arrow rotation */
+}
+.screen-3 .dropdown-options {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	max-height: 200px;
+	overflow-y: auto;
+	border: 1px solid #ccc;
+	background: #fff;
+	display: none;
+	z-index: 1000;
+	border-radius: 4px; /* Rounded corners */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+.screen-3 .dropdown-options div,
+.screen-3 .dropdown-options li {
+	padding: 8px;
+	cursor: pointer;
+	list-style: none; /* Ensure no bullet points */
+}
+.screen-3 .dropdown-options div:hover,
+.screen-3 .dropdown-options li:hover {
+	background: #f0f0f0;
+}
+
+/* STEP 3 - SCREEN 3C CSS*/
+
+/* step1 -css below */
+#step1 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	height: 100vh;
+}
+
+.step1-left-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	align-items: center;
+	background-color: white;
+	padding: 40px;
+}
+
+.step1-heading,
+.step4-heading {
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 0px;
+
+	font-family: inter;
+}
+.step1-heading {
+	max-width: 250px;
+}
+.step4-heading {
+	max-width: 100%;
+	margin-bottom: 20px;
+}
+
+.step1-input-group {
+	width: 100%;
+	position: relative;
+	max-width: 350px;
+}
+
+#step1 label {
+	display: block;
+	font-size: 20px;
+	font-weight: 500;
+	margin-bottom: 8px;
+}
+
+#step1 input {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	width: -webkit-fill-available;
+}
+#step1 input:focus {
+	border-color: #a0a0a0; /* Slightly darker gray when focused */
+	outline: none; /* Removes the default browser outline */
+}
+
+.step1-right-panel {
+	background-image: url("https://images.unsplash.com/photo-1736690557984-333bfb83dd35?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+	background-size: cover;
+	background-position: center;
+}
+.toggle-password {
+	position: absolute;
+	right: 2%;
+	top: 49px;
+	transform: translateY(-50%);
+	cursor: pointer;
+	user-select: none;
+}
+/* end of step1 css */
+
+/* start of step2 css */
+
+.second-step {
+	display: grid;
+	grid-template-columns: 1fr auto; /* Auto width for right box */
+	gap: 10px;
+	padding: 44px;
+	align-items: start;
+	position: relative;
+}
+/* Left Box */
+.left-box {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+/* Section Label */
+.section-label {
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: 600;
+	margin-bottom: 10px;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+/* Input Container */
+.input-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px; /* Increased gap */
+	align-items: center;
+	color: #6b6b6b; /* Light gray color for fading */
+}
+/* Radio Buttons and Labels */
+.radio-input {
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+}
+.radio-label,
+#card-insert-container label,
+#card-insert-type label {
+	font-size: 18px; /* Same size for all */
+	font-family: Arial, Helvetica, sans-serif;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: #6b6b6b; /* Light gray color for fading */
+}
+/* Card Insert (Initially Hidden) */
+#card-insert-container {
+	display: none;
+}
+
+#card-insert-container.visible {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+/* Checkbox Size */
+#card-insert {
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+}
+/* Card Insert Type */
+#card-insert-type {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+#card-insert-type.hidden {
+	display: none;
+}
+
+#card-insert-type .input-container {
+	display: flex;
+	align-items: center;
+	gap: 20px; /* Increased gap */
+}
+
+/* Creation Type */
+.input-container input[type="radio"] {
+	width: 18px;
+	height: 18px;
+}
+/* Error Messages */
+.error-message {
+	color: red;
+	font-size: 16px;
+	display: inline-block;
+}
+/* Right Box (Toggle Field) */
+.right-box {
+	position: absolute;
+	margin-top: 40px;
+	right: 3%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+/* Align Toggle Properly */
+.align-right {
+	font-size: 18px; /* Same size for all */
+	font-family: Arial, Helvetica, sans-serif;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+/* Toggle Switch */
+.test-to-live-switch {
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 24px;
+}
+/* Hide Default Checkbox */
+.test-to-live-switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+/* Toggle Slider */
+.test-to-live-slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+}
+.test-to-live-slider:before {
+	position: absolute;
+	content: "";
+	height: 20px;
+	width: 20px;
+	left: 3px;
+	bottom: 2px;
+	background-color: white;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+}
+/* Toggle Active State */
+input:checked + .test-to-live-slider {
+	background-color: #30c8ff;
+}
+input:focus + .test-to-live-slider {
+	box-shadow: 0 0 1px #30c8ff;
+}
+input:checked + .test-to-live-slider:before {
+	-webkit-transform: translateX(24px);
+	-ms-transform: translateX(24px);
+	transform: translateX(24px);
+}
+/* Rounded Sliders */
+.test-to-live-slider.round {
+	border-radius: 34px;
+}
+.test-to-live-slider.round:before {
+	border-radius: 50%;
+}
+
+.radio-label-wrap {
+	align-items: flex-start;
+	display: flex;
+	gap: 0.5rem;
+}
+
+.radio-label-wrap .radio-input {
+	margin: 0;
+}
+
+.message-type-wrapper .input-container,
+.creation-type-wrapper .input-container {
+	margin: 0;
+}
+
+.message-type-wrapper,
+.creation-type-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.card-insert-wrapper {
+	display: none;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.card-insert-wrapper.visible {
+	display: flex;
+}
+
+.message-label-input-wrap,
+.creation-label-input-wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.single-sided-radio-wrap,
+.double-sided-radio-wrap {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.single-sided-radio-wrap input,
+.double-sided-radio-wrap input {
+	margin: 0;
+}
+/* end of step2 css */
+
+/* start of step 3 css */
+/* Postcard HTML creation CSS */
+
+#html-screen-container {
+	display: flex;
+	padding: 44px;
+}
+
+:root {
+	--heading: 22px;
+}
+
+/* common css */
+
+.section-label {
+	margin: 0;
+	font-size: var(--heading);
+}
+
+.input-field {
+	outline: none;
+	border: 4px solid lightgray;
+	border-radius: 4px;
+	height: 32px;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+
+.input-fields .input-box .input-label,
+.input-label-radio {
+	font-size: 18px;
+}
+
+.size-radio-buttons-wrap .radio-input {
+	width: 1.2rem;
+	height: 1.2rem;
+	margin: 0;
+	vertical-align: text-bottom;
+}
+
+.postcard-html-express-delivery .checkbox-input,
+.postcard-pdf-express-delivery .checkbox-input {
+	margin: 0;
+	vertical-align: text-top;
+	width: 1rem;
+	height: 1rem;
+}
+
+.postcard-html-express-delivery .checkbox-label,
+.postcard-pdf-express-delivery .checkbox-label {
+	font-size: 16px;
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.size-radio-buttons-wrap .radio-buttons {
+	display: flex;
+	gap: 8rem;
+	margin: 0 !important;
+}
+
+/* common css */
+
+.html-screen-wrapper .postcard-input-fields .input-fields {
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 2rem;
+	row-gap: 0.75rem;
+}
+
+.html-screen-wrapper .input-fields .input-box {
+	display: flex;
+	flex-direction: column;
+	width: 42%;
+	gap: 0.25rem;
+}
+
+/* .html-screen-wrapper .input-fields .input-box .input-field {
+outline: none;
+border: 4px solid lightgray;
+border-radius: 4px;
+height: 32px;
+font-size: 16px;
+box-sizing: border-box;
+} */
+
+.html-screen-wrapper .input-fields .input-field {
+	outline: none;
+	border: 3px solid lightgray;
+	border-radius: 3px;
+}
+
+.size-radio-buttons-wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.size-radio-buttons-wrap .size_radio_label {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+}
+
+.html-editor-front,
+.html-editor-back {
+	display: none;
+	border: 3px solid lightgray;
+	border-radius: 8px;
+	outline: none;
+	resize: none;
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+	padding-top: 3.5rem;
+	line-height: 1.5rem;
+	font-size: 1rem;
+}
+
+.html-editor-back.show,
+.html-editor-front.show {
+	display: block;
+}
+
+.html-screen-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	width: 50%;
+}
+
+.postcard-html-size .radio-buttons,
+.postcard-html-size .input-label-radio,
+.postcard-html-destinations .input-label-radio,
+.postcard-html-destinations .radio-buttons,
+.postcard-input-fields .input-fields {
+	margin: 0;
+}
+
+.postcard-html-editor {
+	position: relative;
+	width: 50%;
+	margin-top: 3rem;
+}
+
+.postcard-html-size,
+.postcard-html-destinations {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.postcard-html-size .input-label-radio {
+	font-size: 18px;
+}
+
+.html__btn--front {
+	left: 1rem;
+	top: 1.25rem;
+}
+
+.html__btn--back {
+	left: 6rem;
+	top: 1.25rem;
+}
+
+.btn.btn-light.html__btn--front:hover,
+.btn.btn-light.html__btn--back:hover {
+	background: #bfbfbf; /* Slightly darker gray on hover */
+}
+
+.btn.btn-light.html__btn--front.show,
+.btn.btn-light.html__btn--back.show {
+	background: #a9a9a9; /* Even darker gray when active */
+}
+
+.html__btn--front,
+.html__btn--back {
+	position: absolute;
+	padding: 0.3rem 1rem;
+	border-radius: 4px;
+	border: none;
+	font-weight: 500;
+	cursor: pointer;
+	background: #d1d1d1;
+}
+
+.screen-1 .radio-buttons .radio-label,
+.screen-1 .checkboxes .checkbox-label {
+	font-size: 16px;
+}
+
+.screen-2 .input-label-radio,
+.screen-2 .radio-buttons,
+.screen-2 .checkboxes {
+	margin-left: 3%;
+}
+
+.error-msg {
+	color: red;
+	/* visibility: hidden; */
+	display: none;
+	font-size: 16px;
+}
+
+.error-msg.show {
+	/* visibility: visible; */
+	display: block;
+}
+
+.error {
+	border-color: red !important;
+	border-width: 1px !important;
+}
+
+/* Postcard HTML creation CSS */
+
+/* Postcard PDF creation CSS */
+
+.screen-2 .spacer {
+	padding: 44px;
+}
+
+.postcard-pdf-container {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.postcard-pdf-container .input-fields {
+	display: flex;
+	justify-content: space-between;
+}
+
+.postcard-pdf-container .input-fields .input-box {
+	display: flex;
+	flex-direction: column;
+	width: 25%;
+	gap: 0.5rem;
+}
+
+.postcard-pdf-size {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+.postcard-pdf-size .input-label-radio {
+	margin: 0;
+}
+
+.upload-box {
+	border-radius: 2px;
+	padding: 20px;
+	text-align: center;
+	cursor: pointer;
+	position: relative;
+	background-color: lightgray;
+	height: 80px;
+}
+.hidden {
+	display: none;
+}
+
+label[for="pdf-upload"] {
+	display: flex;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	right: 0;
+	align-items: center;
+	justify-content: center;
+}
+
+#file-name {
+	position: absolute;
+	margin: 0;
+	bottom: -60%;
+	width: 100%;
+	text-align: center;
+}
+
+.pdf-error {
+	position: absolute;
+	bottom: -20%;
+	left: 0;
+}
+/* Postcard PDF creation CSS */
+/* end of step 3Acss */
+
+/* step 4 css*/
+
+/* below is the css for step 4 */
+#step4-heading {
+	margin: 0px;
+	margin-bottom: 20px;
+}
+.mapping-container {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	padding: 44px;
+	gap: 20px;
+}
+.mapping-left,
+.mapping-right {
+	flex: 1;
+	background: white;
+}
+.mapping-radio-group {
+	display: flex;
+	gap: 15px;
+	align-items: center;
+	margin-bottom: 20px;
+}
+.mapping-radio-group label {
+	display: flex;
+	align-items: center;
+	font-size: 1rem;
+	font-weight: 500;
+	cursor: pointer;
+}
+.mapping-radio-group input {
+	display: none;
+}
+.mapping-radio {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	border: 2px solid #ccc;
+	display: inline-block;
+	margin-right: 5px;
+	position: relative;
+}
+.mapping-radio-group input:checked + .mapping-radio {
+	border-color: #007bff;
+	background: #007bff;
+}
+.mapping-dropdown {
+	display: flex;
+	flex-direction: column;
+}
+
+#step4 label {
+	font-size: 1rem;
+	font-weight: 500;
+	margin-bottom: 5px;
+}
+.mapping-divider {
+	width: 1px;
+	background: #cce4ff;
+	height: 100vh;
+	min-height: 250px;
+}
+.mapping-fields-group {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 12px;
+}
+.mapping-fields-group label {
+	font-weight: bold;
+	font-size: 14px;
+	color: #333;
+}
+.mapping-fields-group select,
+#dropdown-options,
+#search-contact {
+	width: 60%;
+	padding: 8px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	cursor: pointer;
+}
+#dropdown-options,
+#search-contact {
+	width: 50%;
+	margin: auto;
+}
+.mapping-fields,
+.error-message-contactMapping {
+	width: 80%;
+	margin: auto;
+}
+.dropdown-options div {
+	padding: 8px;
+	cursor: pointer;
+}
+.dropdown-options div:hover {
+	background: rgb(37, 150, 190);
+}
+#search-contact:focus {
+	border-color: #a0a0a0; /* Slightly darker gray when focused */
+	outline: none;
+}
+.mapping-fields-group select {
+	border-color: #a0a0a0; /* Slightly darker gray when focused */
+	outline: none;
+}
+/* below is the css for step 4 */
+
+#step5 #pdf-preview {
+    height: 450px;
+    width: 100%;
+    zoom: 1;
+    -moz-transform: scale(1);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(1);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(1);
+    -webkit-transform-origin: 0 0;
+}
+
+#sendDate {
+    box-sizing: border-box;
+    outline: 0;
+    padding: .75rem;
+    position: relative;
+    width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+.date-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.calendar-icon {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    pointer-events: none;
+}
+
+.html-screen-container .html-btn-wrap {
+    position: absolute;
+    width: 96%;
+    background: white;
+    padding: 1.5rem 0.75rem;
+    top: 2px;
+    left: 4px;
+    border-radius: 8px;
+}
+
+.retry-preview-btn {
+    display: none;
+}
+
+.retry-preview-btn.show {
+    display: block;
+}
+
+.screen-5 {
+    overflow: hidden;
+}
+
+.screen-5 .section-label {
+    padding: 8px;
+}
