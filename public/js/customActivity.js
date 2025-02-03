@@ -503,7 +503,6 @@ define([
           };
           fileReader.readAsArrayBuffer(pdfFile);
         } else {
-          console.log('No file selected. Please select a file.');
           $('.drop-pdf .error-msg').addClass('show');
           isValid = false;
         }
@@ -542,8 +541,6 @@ define([
         postcardHtmlEditorErrorMsg.removeClass('show');
       }
     };
-
-    console.log('isValid: '+isValid);
     
     return isValid;
   }
@@ -563,8 +560,6 @@ define([
   }
 
   function setPreviewPayload() {
-    console.log('set preview called');
-    
     if ($('#postcardScreen .screen-1').css('display') === 'block') {
       const description = $('.screen-1 #description').val();
       const sendDate = $('.screen-1 #sendDate').val();
@@ -583,7 +578,6 @@ define([
       previewPayload.size = size;
       previewPayload.isExpressDelivery = isExpressDelivery;
     } else if ($('#postcardScreen .screen-2').css('display') === 'block') {
-      console.log('screen-2 pdf preview should be shown');
       const description = $('#postcardScreen .screen-2 #description').val();
       const sendDate = $('#postcardScreen .screen-2 #sendDate').val();
       const mailingClass = $('#postcardScreen .screen-2 #mailingClass').val();
@@ -599,12 +593,7 @@ define([
       previewPayload.size = size;
       previewPayload.isExpressDelivery = isExpressDelivery;
       previewPayload.pdf = pdfFile;
-      console.log('Selected file:', pdfFile.name);
-      console.log('File size:', pdfFile.size, 'bytes');
-      console.log('File type:', pdfFile.type);
     } else if ($('#postcardScreen .screen-3').css('display') === 'block') {
-      console.log('ex template set preview');
-        
       const description = document.querySelector('#description3').value;
       const sendDate = document.querySelector('#sendDate3').value;
       const frontTemplateId = document.querySelector('#frontTemplateInput')?.dataset.id;
@@ -631,10 +620,7 @@ define([
       'x-api-key': previewPayload.test_api_key,
     };
 
-    console.log('ex template : '+JSON.stringify(previewPayload));
-
     if(previewPayload.screen === 'pdf'){
-      console.log('inside the create postcard function');
       data = new FormData();
       data.append('to', 'contact_hGsXV82wSiv6wpta1uXf5M');
       data.append('from', fromContact);
@@ -661,7 +647,6 @@ define([
       });
     } else if(previewPayload.screen === 'existing-template') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
-        
       data = new URLSearchParams({
         'to': 'contact_hGsXV82wSiv6wpta1uXf5M',
         'from': 'contact_hGsXV82wSiv6wpta1uXf5M',
@@ -730,7 +715,7 @@ define([
         $('.preview-container .retry-preview-btn').removeClass('show');
       } else {
         $('.preview-container .retry-preview-btn').addClass('show');
-        $('#pdf-preview-container').html('<p>Preview not found.</p>');
+        $('#pdf-preview-container').append('<p>Preview not found.</p>');
       }
     } catch (error) {
       $('.preview-container .retry-preview-btn').addClass('show');
@@ -739,7 +724,7 @@ define([
 
     $('#pdf-preview').on('error', function () {
       $('.preview-container .retry-preview-btn').addClass('show');
-      $('#pdf-preview-container').html('<p>Unable to load preview.</p>');
+      $('#pdf-preview-container').append('<p>Unable to load preview.</p>');
     });
   }
 
@@ -751,10 +736,10 @@ define([
 
       setTimeout(async function() {
         await showPdfPreview(postcardId);
-      }, 4000);
+      }, 2000);
 
     } catch (error) {
-      $('#pdf-preview-container').html('<p>Failed to fetch preview.</p>');
+      $('#pdf-preview-container').append('<p>Failed to fetch preview.</p>');
       console.log('error: '+JSON.stringify(error));
       
       $('.preview-container .retry-preview-btn').addClass('show');
