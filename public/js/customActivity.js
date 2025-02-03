@@ -532,7 +532,7 @@ define([
             const height = viewport.height;
 
             const pdfDimensions = `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
-            const selectedPDFDimension = $('.postcard-pdf-size input[name="postcardPDFSize"]:checked').data('dimensions');
+            const selectedPDFDimension = $('.postcard-pdf-size input[name="postcardPDFSize"]:checked').data('dimentions');
 
             console.log(`PDF Dimensions: ${pdfDimensions} inches`);
 
