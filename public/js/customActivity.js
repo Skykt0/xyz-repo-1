@@ -10,7 +10,8 @@ define([
   let deFields;
   let selectedFieldsForMapping = {};
   let previewPayload = {
-    test_api_key: 'test_sk_uQXxwmGMghWwG5wEfezZVN'
+    test_api_key: 'test_sk_uQXxwmGMghWwG5wEfezZVN',
+    isValid: true
   };
   let fromContact = '';
 
@@ -314,23 +315,6 @@ define([
       }
 });
 
-  //end of adding * in Company Label
-
-  //   $('#test-api-key').on('input', hideError);
-  //   function validateApiKeys() {
-  //     console.log('inside validate api keys function');
-
-  //     const testApiKey = $('#test-api-key').val().trim();
-
-  //     if (testApiKey === '') {
-  //       $('#test-api-key').css('border', '1px solid red'); // Highlight input box
-  //       $('#test-api-key-error').show(); // Show error message
-  //       return false;
-  //     }
-  //     return true;
-
-  //   }
-
   function hideError() {
     $('#test-api-key').css('border', ''); // Reset border
     $('#test-api-key-error').hide(); // Hide error message
@@ -490,8 +474,10 @@ define([
                 console.log(`PDF Dimensions: ${pdfDimensions} inches`);
                 if(numPages !== 2) {
                   $('.drop-pdf .error-msg').text(`File has an incorrect number of pages ${numPages} when expecting 2.`).addClass('show');
+                  previewPayload.isValid = false;
                 } else if (pdfDimensions !== selectedPDFDimention) {
                   $('.drop-pdf .error-msg').text(`File has incorrect page dimensions ${pdfDimensions} when expecting ${selectedPDFDimention}.`).addClass('show');
+                  previewPayload.isValid = false;
                 } else {
                   $('.drop-pdf .error-msg').removeClass('show');
                 }
@@ -507,7 +493,7 @@ define([
           isValid = false;
         }
 
-        if($('.pdf-error').hasClass('show')){
+        if($('.drop-pdf .error-msg').hasClass('show')){
             isValid = false;
         }
       }
