@@ -456,10 +456,12 @@ define([
     let isValid = true;
 
     if ($('.screen-2').css('display') === 'block') {
-      if (!validateInputField($('.postcard-pdf-container #description')) || 
-            !validateInputField($('.postcard-pdf-container #sendDate'))) {
-        isValid = false;
-      }
+        let isDescriptionValid = validateInputField($('.postcard-pdf-container #description'));
+        let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
+    
+        if (!isDescriptionValid || !isSendDateValid) {
+            isValid = false;
+        }
 
       const pdfInput = $('.drop-pdf #pdf-upload')[0]; 
       if (pdfInput.files.length > 0) {
