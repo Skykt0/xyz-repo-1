@@ -589,7 +589,7 @@ define([
 
       previewPayload.screen = 'html';
       previewPayload.description = description;
-      previewPayload.sendDate = sendDate;
+      previewPayload.sendDate = getFormattedDate(sendDate);
       previewPayload.mailingClass = mailingClass;
       previewPayload.frontHtmlContent = frontHtmlContent;
       previewPayload.backHtmlContent = backHtmlContent;
@@ -606,7 +606,7 @@ define([
 
       previewPayload.screen = 'pdf';
       previewPayload.description = description;
-      previewPayload.sendDate = sendDate;
+      previewPayload.sendDate = getFormattedDate(sendDate);
       previewPayload.mailingClass = mailingClass;
       previewPayload.size = size;
       previewPayload.isExpressDelivery = isExpressDelivery;
@@ -623,11 +623,17 @@ define([
       }
       previewPayload.screen = 'existing-template';
       previewPayload.description = description;
-      previewPayload.sendDate = sendDate;
+      previewPayload.sendDate = getFormattedDate(sendDate);
       previewPayload.frontTemplateId = frontTemplateId;
       previewPayload.backTemplateId = backTemplateId;
       previewPayload.size = size;
     }
+  }
+
+  function getFormattedDate(sendDate) {
+    let now = new Date();
+    let formattedTime = now.toISOString().split('T')[1];
+    return `${sendDate}T${formattedTime}`;
   }
 
   async function createPostcard() {
