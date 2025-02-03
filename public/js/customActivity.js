@@ -500,7 +500,6 @@ define([
             console.error('Error loading PDF:', error);
           });
         };
-        
         fileReader.readAsArrayBuffer(pdfFile);
       } else {
         console.log('No file selected. Please select a file.');
@@ -538,6 +537,8 @@ define([
         postcardHtmlEditorErrorMsg.removeClass('show');
       }
     };
+
+    console.log('isValid: '+isValid);
     
     return isValid;
   }
