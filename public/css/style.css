@@ -983,7 +983,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: center;
 }
 
-.contact-dropdown-wrap .drowdown-icon {
+.contact-dropdown-wrap .dropdown-icon {
     position: absolute;
     right: 26%;
     top: 26%;
