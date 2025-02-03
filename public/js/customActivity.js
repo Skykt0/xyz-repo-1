@@ -712,19 +712,23 @@ define([
       connection.trigger('nextStep');
       if (pdfUrl) {
         $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
+        $('#pdf-preview-container').css('display','block');
         $('.preview-container .retry-preview-btn').removeClass('show');
       } else {
         $('.preview-container .retry-preview-btn').addClass('show');
-        $('#pdf-preview-container').append('<p>Preview not found.</p>');
+        $('#pdf-preview-container').css('display','none');
+        $('.pdf-preview-error-msg').text('Preview not found.');
       }
     } catch (error) {
-      $('.preview-container .retry-preview-btn').addClass('show');
-      console.log('preview error: '+error);
+        $('.preview-container .retry-preview-btn').addClass('show');
+        $('#pdf-preview-container').css('display','none');
+        $('.pdf-preview-error-msg').text('Error while fetching the preview.');
     }
 
     $('#pdf-preview').on('error', function () {
       $('.preview-container .retry-preview-btn').addClass('show');
-      $('#pdf-preview-container').append('<p>Unable to load preview.</p>');
+      $('#pdf-preview-container').css('display','none');
+      $('.pdf-preview-error-msg').text('Failed to fetch preview.');
     });
   }
 
@@ -739,10 +743,10 @@ define([
       }, 2000);
 
     } catch (error) {
-      $('#pdf-preview-container').append('<p>Failed to fetch preview.</p>');
-      console.log('error: '+JSON.stringify(error));
-      
       $('.preview-container .retry-preview-btn').addClass('show');
+      $('#pdf-preview-container').css('display','none');
+      $('.pdf-preview-error-msg').text('Failed to fetch preview.');
+      console.log('error: '+JSON.stringify(error));
     }
   }
 
