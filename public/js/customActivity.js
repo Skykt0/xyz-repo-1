@@ -465,7 +465,7 @@ define([
     let isValid = true;
 
     if ($('.screen-2').css('display') === 'block') {
-        if(!validateInputField($('.postcard-pdf-container #description')) || !validateInputField($('.html-screen-wrapper #sendDate'))) {
+        if(!validateInputField($('.postcard-pdf-container #description')) || !validateInputField($('.postcard-pdf-container #sendDate'))) {
             isValid = false;
           }
   
