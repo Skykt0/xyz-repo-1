@@ -901,38 +901,52 @@ define([
   /** screen 3C script */
   function validateStep3() {
     let isValid = true;
+    // Remove previous error messages and red borders
     $('.error-message').remove();
+    $('.error-field').removeClass('error-field');
     let today = new Date().toISOString().split('T')[0];
     $('#sendDate3').attr('min', today);
     if (!$('#description3').val().trim()) {
-      $('#description3').after('<span class="error-message">Please write the description.</span>');
-      isValid = false;
+        $('#description3').after('<span class="error-message">Please write the description.</span>');
+        $('#description3').addClass('error-field');
+        isValid = false;
     }
     let selectedDate = $('#sendDate3').val();
     if (!selectedDate || selectedDate < today) {
-      $('#sendDate3').after('<span class="error-message">Send Date cannot be in the past.</span>');
-      isValid = false;
+        $('#sendDate3').after('<span class="error-message">Send Date cannot be in the past.</span>');
+        $('#sendDate3').addClass('error-field');
+        isValid = false;
     }
     if (!$('#mailingClass3').val()) {
-      $('#mailingClass3').after('<span class="error-message">Mailing Class is required.</span>');
-      isValid = false;
+        $('#mailingClass3').after('<span class="error-message">Mailing Class is required.</span>');
+        $('#mailingClass3').addClass('error-field');
+        isValid = false;
     }
-    if (!$('input[name=\'size\']:checked').length) {
-      $('.radio-buttons').after('<span class="error-message">Please select at least one size.</span>');
-      isValid = false;
+    if (!$('input[name="size"]:checked').length) {
+        $('.radio-buttons').after('<span class="error-message">Please select at least one size.</span>');
+        isValid = false;
     }
     // Validate Front Template
-
-    if (!$('#frontTemplateInput').val()) {
-      $('#frontTemplateInput').after('<span class="error-message">Please select the Front Template this is required.</span>');
-      isValid = false;
+    if (!$('#frontTemplateInput').val().trim()) {
+        $('#frontTemplateInput').after('<span class="error-message">Please select the Front Template, this is required.</span>');
+        $('#frontTemplateInput').addClass('error-field');
+        isValid = false;
     }
-    if (!$('#backTemplateInput').val()) {
-      $('#backTemplateInput').after('<span class="error-message">Please select the Back Template this is required.</span>');
-      isValid = false;
+    // Validate Back Template
+    if (!$('#backTemplateInput').val().trim()) {
+        $('#backTemplateInput').after('<span class="error-message">Please select the Back Template, this is required.</span>');
+        $('#backTemplateInput').addClass('error-field');
+        isValid = false;
     }
     return isValid;
   }
+  // Remove error messages dynamically when the user starts typing
+  $(document).ready(function() {
+    $('input, textarea, select').on('input change', function() {
+        $(this).removeClass('error-field'); // Remove red border
+        $(this).next('.error-message').remove(); // Remove error message
+    });
+  });
 
   $(document).ready(function () {
     let today = new Date().toISOString().split('T')[0];
