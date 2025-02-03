@@ -445,91 +445,111 @@ define([
     });
   }
 
-  function validateStep3A() {
+  async function validateStep3A() {
     let isValid = true;
 
     if ($('.screen-2').css('display') === 'block') {
-        if(!validateInputField($('.postcard-pdf-container #description')) || !validateInputField($('.postcard-pdf-container #sendDate'))) {
+        if (!validateInputField($('.postcard-pdf-container #description')) || 
+            !validateInputField($('.postcard-pdf-container #sendDate'))) {
             isValid = false;
-          }
-  
-        const pdfInput = $('.drop-pdf #pdf-upload')[0]; // Get file input element
+        }
+
+        const pdfInput = $('.drop-pdf #pdf-upload')[0]; 
         if (pdfInput.files.length > 0) {
-          const pdfFile = pdfInput.files[0] ;
-  
-          const fileReader = new FileReader();
-      
-          fileReader.onload = function(event) {
-            const typedarray = new Uint8Array(event.target.result);
-            pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
-              const numPages = pdf.numPages;
-              pdf.getPage(1).then(function(page) {
-                const viewport = page.getViewport({ scale: 1 });
-                const width = viewport.width;
-                const height = viewport.height;
-  
-                const pdfDimensions = `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
-                const selectedPDFDimention = $('.postcard-pdf-size input[name="postcardPDFSize"]:checked').data('dimentions');
-  
-                console.log(`PDF Dimensions: ${pdfDimensions} inches`);
-                if(numPages !== 2) {
-                  $('.drop-pdf .error-msg').text(`File has an incorrect number of pages ${numPages} when expecting 2.`).addClass('show');
-                  previewPayload.isValid = false;
-                } else if (pdfDimensions !== selectedPDFDimention) {
-                  $('.drop-pdf .error-msg').text(`File has incorrect page dimensions ${pdfDimensions} when expecting ${selectedPDFDimention}.`).addClass('show');
-                  previewPayload.isValid = false;
+            const pdfFile = pdfInput.files[0];
+
+            try {
+                const pdfValidationResult = await validatePDFFile(pdfFile);
+                if (!pdfValidationResult.isValid) {
+                    isValid = false;
+                    $('.drop-pdf .error-msg').text(pdfValidationResult.errorMessage).addClass('show');
                 } else {
-                  $('.drop-pdf .error-msg').removeClass('show');
+                    $('.drop-pdf .error-msg').removeClass('show');
                 }
-              });
-            }).catch(function(error) {
-              console.error('Error loading PDF:', error);
-              isValid = false;
-            });
-          };
-          fileReader.readAsArrayBuffer(pdfFile);
+            } catch (error) {
+                console.error('Error validating PDF:', error);
+                isValid = false;
+            }
         } else {
-          $('.drop-pdf .error-msg').addClass('show');
+            $('.drop-pdf .error-msg').addClass('show');
+            isValid = false;
+        }
+    }
+
+    if ($('.screen-1').css('display') === 'block') {
+        if(!validateInputField($('.postcard-input-fields #description')) || !validateInputField($('.html-screen-wrapper #sendDate'))) {
           isValid = false;
         }
-
-        if($('.drop-pdf .error-msg').hasClass('show')){
-            isValid = false;
-        }
-      }
-    if ($('.screen-1').css('display') === 'block') {
-      if(!validateInputField($('.postcard-input-fields #description')) || !validateInputField($('.html-screen-wrapper #sendDate'))) {
-        isValid = false;
-      }
-
-      let isPostcardSizeSelected = $('.postcard-html-size input[name="postcardHtmlSize"]:checked').length;
-      let frontHtmlContent = $('.html-editor-front').val().trim();
-      let backtHtmlContent = $('.html-editor-back').val().trim();
-      let postcardHtmlEditorErrorMsg = $('.postcard-html-editor .error-msg');
-
-      if (!(isPostcardSizeSelected > 0)) {
-        $('.postcard-html-size .error-msg').addClass('show');
-        isValid = false;
-      } else {
-        $('.postcard-html-size .error-msg').removeClass('show');
-      }
-
-      if (frontHtmlContent === '' || backtHtmlContent === '') {
-        isValid = false;
-        if (frontHtmlContent === '' && backtHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text('Please enter content in both Front and Back fields.').addClass('show');
-        } else if (frontHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text('Please enter content in the Front field.').addClass('show');
+  
+        let isPostcardSizeSelected = $('.postcard-html-size input[name="postcardHtmlSize"]:checked').length;
+        let frontHtmlContent = $('.html-editor-front').val().trim();
+        let backtHtmlContent = $('.html-editor-back').val().trim();
+        let postcardHtmlEditorErrorMsg = $('.postcard-html-editor .error-msg');
+  
+        if (!(isPostcardSizeSelected > 0)) {
+          $('.postcard-html-size .error-msg').addClass('show');
+          isValid = false;
         } else {
-          postcardHtmlEditorErrorMsg.text('Please enter content in the Back field.').addClass('show');
+          $('.postcard-html-size .error-msg').removeClass('show');
         }
-      } else { 
-        postcardHtmlEditorErrorMsg.removeClass('show');
-      }
-    };
-    
+  
+        if (frontHtmlContent === '' || backtHtmlContent === '') {
+          isValid = false;
+          if (frontHtmlContent === '' && backtHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text('Please enter content in both Front and Back fields.').addClass('show');
+          } else if (frontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text('Please enter content in the Front field.').addClass('show');
+          } else {
+            postcardHtmlEditorErrorMsg.text('Please enter content in the Back field.').addClass('show');
+          }
+        } else { 
+          postcardHtmlEditorErrorMsg.removeClass('show');
+        }
+      };
+
     return isValid;
-  }
+}
+
+function validatePDFFile(pdfFile) {
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+
+        fileReader.onload = function (event) {
+            const typedarray = new Uint8Array(event.target.result);
+
+            pdfjsLib.getDocument(typedarray).promise.then(function (pdf) {
+                const numPages = pdf.numPages;
+                pdf.getPage(1).then(function (page) {
+                    const viewport = page.getViewport({ scale: 1 });
+                    const width = viewport.width;
+                    const height = viewport.height;
+
+                    const pdfDimensions = `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
+                    const selectedPDFDimension = $('.postcard-pdf-size input[name="postcardPDFSize"]:checked').data('dimensions');
+
+                    console.log(`PDF Dimensions: ${pdfDimensions} inches`);
+
+                    if (numPages !== 2) {
+                        resolve({
+                            isValid: false,
+                            errorMessage: `File has an incorrect number of pages ${numPages} when expecting 2.`
+                        });
+                    } else if (pdfDimensions !== selectedPDFDimension) {
+                        resolve({
+                            isValid: false,
+                            errorMessage: `File has incorrect page dimensions ${pdfDimensions} when expecting ${selectedPDFDimension}.`
+                        });
+                    } else {
+                        resolve({ isValid: true });
+                    }
+                }).catch(reject);
+            }).catch(reject);
+        };
+
+        fileReader.onerror = reject;
+        fileReader.readAsArrayBuffer(pdfFile);
+    });
+}
 
   /** screen 3A script */
 
