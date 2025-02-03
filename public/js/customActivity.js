@@ -381,24 +381,28 @@ define([
 
   function executeScreenTwoMethods() {
     // Handle showing Card Insert checkbox when "Letters" or "Self-Mailer" is selected
-    $('input[name=\'msgType\']').change(function () {
-      console.log('Radio button changed:', this.id);
-      if (this.id === 'letters' || this.id === 'self-mailer') {
-        $('#card-insert-container').addClass('visible'); // Show Card Insert checkbox
-        $('.card-insert-wrapper').addClass('visible'); // Show Card Insert wrapper (if needed)
-      } else {
-        $('#card-insert-container').removeClass('visible'); // Hide Card Insert checkbox
-        $('.card-insert-wrapper').removeClass('visible'); // Hide Card Insert wrapper (if needed)
-      }
+    $('input[name="msgType"]').change(function () {
+        console.log('Radio button changed:', this.id);
+        if (this.id === 'letters' || this.id === 'self-mailer') {
+            $('#card-insert-container').addClass('visible'); // Show Card Insert checkbox
+            $('.card-insert-wrapper').addClass('visible'); // Show Card Insert wrapper (if needed)
+        } else {
+            $('#card-insert-container').removeClass('visible'); // Hide Card Insert checkbox
+            $('.card-insert-wrapper').removeClass('visible'); // Hide Card Insert wrapper (if needed)
+        }
+        // If "Self-Mailer" is selected, uncheck "Card Insert"
+        if (this.id === 'letters' || this.id === 'self-mailer') {
+            $('#card-insert').prop('checked', false).trigger('change'); // Uncheck and trigger change event
+        }
     });
     // Show/Hide Card Insert Type section when Card Insert is checked/unchecked
     $('#card-insert').change(function () {
-      console.log('Card Insert checkbox changed:', this.checked);
-      if (this.checked) {
-        $('#card-insert-type').removeClass('hidden'); // Show Card Insert Type section
-      } else {
-        $('#card-insert-type').addClass('hidden'); // Hide Card Insert Type section
-      }
+        console.log('Card Insert checkbox changed:', this.checked);
+        if (this.checked) {
+            $('#card-insert-type').removeClass('hidden'); // Show Card Insert Type section
+        } else {
+            $('#card-insert-type').addClass('hidden'); // Hide Card Insert Type section
+        }
     });
   }
 
