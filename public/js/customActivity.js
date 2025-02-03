@@ -465,66 +465,49 @@ define([
     let isValid = true;
 
     if ($('.screen-2').css('display') === 'block') {
-      isValid = validateInputField($('.postcard-pdf-container #description'));
-
-      const pdfInput = $('.drop-pdf #pdf-upload')[0]; // Get file input element
-      if ($('.screen-2').css('display') === 'block') {
         isValid = validateInputField($('.postcard-pdf-container #description'));
-
+  
         const pdfInput = $('.drop-pdf #pdf-upload')[0]; // Get file input element
         if (pdfInput.files.length > 0) {
-            const pdfFile = pdfInput.files[0];
-
-            return new Promise((resolve) => {
-                const fileReader = new FileReader();
-
-                fileReader.onload = async function (event) {
-                    try {
-                        const typedarray = new Uint8Array(event.target.result);
-                        const pdf = await pdfjsLib.getDocument(typedarray).promise;
-                        const numPages = pdf.numPages;
-
-                        if (numPages !== 2) {
-                            $('.drop-pdf .error-msg')
-                                .text(`File has an incorrect number of pages ${numPages} when expecting 2.`)
-                                .addClass('show');
-                            resolve(false);
-                            return;
-                        }
-
-                        const page = await pdf.getPage(1);
-                        const viewport = page.getViewport({ scale: 1 });
-                        const width = viewport.width;
-                        const height = viewport.height;
-
-                        const pdfDimensions = `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
-                        const selectedPDFDimention = $('.postcard-pdf-size input[name="postcardPDFSize"]:checked').data('dimentions');
-
-                        console.log(`PDF Dimensions: ${pdfDimensions} inches`);
-                        if (pdfDimensions !== selectedPDFDimention) {
-                            $('.drop-pdf .error-msg')
-                                .text(`File has incorrect page dimensions ${pdfDimensions} when expecting ${selectedPDFDimention}.`)
-                                .addClass('show');
-                            resolve(false);
-                        } else {
-                            $('.drop-pdf .error-msg').removeClass('show');
-                            resolve(true);
-                        }
-                    } catch (error) {
-                        console.error('Error loading PDF:', error);
-                        resolve(false);
-                    }
-                };
-
-                fileReader.readAsArrayBuffer(pdfFile);
+          const pdfFile = pdfInput.files[0] ;
+  
+          const fileReader = new FileReader();
+      
+          fileReader.onload = function(event) {
+            const typedarray = new Uint8Array(event.target.result);
+            pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+              const numPages = pdf.numPages;
+              pdf.getPage(1).then(function(page) {
+                const viewport = page.getViewport({ scale: 1 });
+                const width = viewport.width;
+                const height = viewport.height;
+  
+                const pdfDimensions = `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
+                const selectedPDFDimention = $('.postcard-pdf-size input[name="postcardPDFSize"]:checked').data('dimentions');
+  
+                console.log(`PDF Dimensions: ${pdfDimensions} inches`);
+                if(numPages !== 2) {
+                  $('.drop-pdf .error-msg').text(`File has an incorrect number of pages ${numPages} when expecting 2.`).addClass('show');
+                } else if (pdfDimensions !== selectedPDFDimention) {
+                  $('.drop-pdf .error-msg').text(`File has incorrect page dimensions ${pdfDimensions} when expecting ${selectedPDFDimention}.`).addClass('show');
+                } else {
+                  $('.drop-pdf .error-msg').removeClass('show');
+                }
+              });
+            }).catch(function(error) {
+              console.error('Error loading PDF:', error);
+              isValid = false;
             });
+          };
+          fileReader.readAsArrayBuffer(pdfFile);
+        } else if($('.pdf-error').hasClass('show')){
+            isValid = false;
         } else {
-            console.log('No file selected. Please select a file.');
-            $('.drop-pdf .error-msg').addClass('show');
-            return false;
+          console.log('No file selected. Please select a file.');
+          $('.drop-pdf .error-msg').addClass('show');
+          isValid = false;
         }
-    }
-    }
+      }
     if ($('.screen-1').css('display') === 'block') {
       if(!validateInputField($('.postcard-input-fields #description')) || !validateInputField($('.html-screen-wrapper #sendDate'))) {
         isValid = false;

@@ -952,7 +952,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none;
 }
 
-.html-screen-container .html-btn-wrap {
+#html-screen-container .html-btn-wrap {
     position: absolute;
     width: 96%;
     background: white;
