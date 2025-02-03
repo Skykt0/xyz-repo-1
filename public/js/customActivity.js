@@ -465,7 +465,9 @@ define([
     let isValid = true;
 
     if ($('.screen-2').css('display') === 'block') {
-        isValid = validateInputField($('.postcard-pdf-container #description'));
+        if(!validateInputField($('.postcard-pdf-container #description')) || !validateInputField($('.html-screen-wrapper #sendDate'))) {
+            isValid = false;
+          }
   
         const pdfInput = $('.drop-pdf #pdf-upload')[0]; // Get file input element
         if (pdfInput.files.length > 0) {
