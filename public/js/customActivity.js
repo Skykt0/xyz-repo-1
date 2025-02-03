@@ -617,16 +617,17 @@ define([
       const frontTemplateId = document.querySelector('#frontTemplateInput')?.dataset.id;
       const backTemplateId = document.querySelector('#backTemplateInput')?.dataset.id;
       const size = $('.screen-3 input[name=\'size\']:checked').val();
-      if (!frontTemplateId || !backTemplateId || !size) {
-        console.error('Missing required fields for postcard creation.');
-        return null;
-      }
+      const isExpressDelivery = $('.screen-3 #expDelivery').is(':checked');
+      const mailingClass = $('.screen-3 #mailingClass3').val();
+      
       previewPayload.screen = 'existing-template';
       previewPayload.description = description;
       previewPayload.sendDate = getFormattedDate(sendDate);
       previewPayload.frontTemplateId = frontTemplateId;
       previewPayload.backTemplateId = backTemplateId;
       previewPayload.size = size;
+      previewPayload.mailingClass = mailingClass;
+      previewPayload.isExpressDelivery = isExpressDelivery;
     }
   }
 
@@ -652,7 +653,9 @@ define([
       data.append('express', previewPayload.isExpressDelivery);
       data.append('description', previewPayload.description);
       data.append('size',previewPayload.size);
-      data.append('mailingClass', previewPayload.mailingClass);
+      if(!previewPayload.isExpressDelivery) {
+          data.append('mailingClass', previewPayload.mailingClass);
+      } 
       data.append('pdf', previewPayload.pdf);
     } else if (previewPayload.screen === 'html') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -665,10 +668,12 @@ define([
         'sendDate': previewPayload.sendDate,
         'express': previewPayload.isExpressDelivery,
         'description': previewPayload.description,
-        'mailingClass': previewPayload.mailingClass,
         'mergeVariables[language]': 'english',
         'metadata[company]': 'PostGrid'
       });
+      if (!previewPayload.isExpressDelivery) {
+        data.append('mailingClass', previewPayload.mailingClass);
+    }
     } else if(previewPayload.screen === 'existing-template') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
@@ -679,7 +684,11 @@ define([
         size: previewPayload.size,
         sendDate: previewPayload.sendDate,
         description: previewPayload.description,
+        'express': previewPayload.isExpressDelivery,
       });
+      if (!previewPayload.isExpressDelivery) {
+        data.append('mailingClass', previewPayload.mailingClass);
+    }
     }
 
     try {
