@@ -500,12 +500,14 @@ define([
             });
           };
           fileReader.readAsArrayBuffer(pdfFile);
-        } else if($('.pdf-error').hasClass('show')){
-            isValid = false;
         } else {
           console.log('No file selected. Please select a file.');
           $('.drop-pdf .error-msg').addClass('show');
           isValid = false;
+        }
+
+        if($('.pdf-error').hasClass('show')){
+            isValid = false;
         }
       }
     if ($('.screen-1').css('display') === 'block') {
