@@ -938,7 +938,7 @@ define([
     let today = new Date().toISOString().split('T')[0];
     $('#sendDate3').attr('min', today);
     if (!$('#description3').val().trim()) {
-      $('#description3').after('<span class="error-message">Please write the description.</span>');
+      $('#description3').after('<span class="error-message">Please enter required field.</span>');
       $('#description3').addClass('error-field');
       isValid = false;
     }
@@ -959,13 +959,13 @@ define([
     }
     // Validate Front Template
     if (!$('#frontTemplateInput').val().trim()) {
-      $('#frontTemplateInput').after('<span class="error-message">Please select the Front Template, this is required.</span>');
+      $('#frontTemplateInput').after('<span class="error-message">Please select the Front Template.</span>');
       $('#frontTemplateInput').addClass('error-field');
       isValid = false;
     }
     // Validate Back Template
     if (!$('#backTemplateInput').val().trim()) {
-      $('#backTemplateInput').after('<span class="error-message">Please select the Back Template, this is required.</span>');
+      $('#backTemplateInput').after('<span class="error-message">Please select the Back Template.</span>');
       $('#backTemplateInput').addClass('error-field');
       isValid = false;
     }

@@ -579,15 +579,6 @@ input:checked + .test-to-live-slider:before {
 	gap: 0.25rem;
 }
 
-/* .html-screen-wrapper .input-fields .input-box .input-field {
-outline: none;
-border: 4px solid lightgray;
-border-radius: 4px;
-height: 32px;
-font-size: 16px;
-box-sizing: border-box;
-} */
-
 .html-screen-wrapper .input-fields .input-field {
 	outline: none;
 	border: 3px solid lightgray;
@@ -740,7 +731,7 @@ box-sizing: border-box;
 .postcard-pdf-container .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
-	width: 25%;
+	width: 30%;
 	gap: 0.5rem;
 }
 
@@ -946,7 +937,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.5rem;
+}
+
+.six-input-field .date-wrap {
+    gap: 0;
 }
 
 .calendar-icon {
