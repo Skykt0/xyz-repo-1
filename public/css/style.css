@@ -978,12 +978,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding: 8px;
 }
 
-.dropdown-wrap {
+.contact-dropdown-wrap .dropdown-wrap {
     position: relative;
     text-align: center;
 }
 
-.drowdown-icon {
+.contact-dropdown-wrap .drowdown-icon {
     position: absolute;
     right: 26%;
     top: 26%;
