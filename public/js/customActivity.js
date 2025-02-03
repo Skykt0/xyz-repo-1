@@ -486,9 +486,12 @@ define([
     }
 
     if ($('.screen-1').css('display') === 'block') {
-      if(!validateInputField($('.postcard-input-fields #description')) || !validateInputField($('.html-screen-wrapper #sendDate'))) {
-        isValid = false;
-      }
+        let isDescriptionValid = validateInputField($('.postcard-input-fields #description'));
+        let isSendDateValid = validateInputField($('.html-screen-wrapper #sendDate'));
+    
+        if (!isDescriptionValid || !isSendDateValid) {
+            isValid = false;
+        }
   
       let isPostcardSizeSelected = $('.postcard-html-size input[name="postcardHtmlSize"]:checked').length;
       let frontHtmlContent = $('.html-editor-front').val().trim();
