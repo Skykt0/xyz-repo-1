@@ -960,7 +960,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 96%;
     background: white;
     padding: 1.5rem 0.75rem;
-    top: 2px;
+    top: 3px;
     left: 4px;
     border-radius: 8px;
 }

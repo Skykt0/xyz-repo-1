@@ -456,12 +456,12 @@ define([
     let isValid = true;
 
     if ($('.screen-2').css('display') === 'block') {
-        let isDescriptionValid = validateInputField($('.postcard-pdf-container #description'));
-        let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
+      let isDescriptionValid = validateInputField($('.postcard-pdf-container #description'));
+      let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
     
-        if (!isDescriptionValid || !isSendDateValid) {
-            isValid = false;
-        }
+      if (!isDescriptionValid || !isSendDateValid) {
+        isValid = false;
+      }
 
       const pdfInput = $('.drop-pdf #pdf-upload')[0]; 
       if (pdfInput.files.length > 0) {
@@ -486,12 +486,12 @@ define([
     }
 
     if ($('.screen-1').css('display') === 'block') {
-        let isDescriptionValid = validateInputField($('.postcard-input-fields #description'));
-        let isSendDateValid = validateInputField($('.html-screen-wrapper #sendDate'));
+      let isDescriptionValid = validateInputField($('.postcard-input-fields #description'));
+      let isSendDateValid = validateInputField($('.html-screen-wrapper #sendDate'));
     
-        if (!isDescriptionValid || !isSendDateValid) {
-            isValid = false;
-        }
+      if (!isDescriptionValid || !isSendDateValid) {
+        isValid = false;
+      }
   
       let isPostcardSizeSelected = $('.postcard-html-size input[name="postcardHtmlSize"]:checked').length;
       let frontHtmlContent = $('.html-editor-front').val().trim();
@@ -654,7 +654,7 @@ define([
       data.append('description', previewPayload.description);
       data.append('size',previewPayload.size);
       if(!previewPayload.isExpressDelivery) {
-          data.append('mailingClass', previewPayload.mailingClass);
+        data.append('mailingClass', previewPayload.mailingClass);
       } 
       data.append('pdf', previewPayload.pdf);
     } else if (previewPayload.screen === 'html') {
@@ -673,7 +673,7 @@ define([
       });
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
-    }
+      }
     } else if(previewPayload.screen === 'existing-template') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
@@ -688,7 +688,7 @@ define([
       });
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
-    }
+      }
     }
 
     try {
