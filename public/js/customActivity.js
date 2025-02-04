@@ -679,7 +679,7 @@ define([
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
         'to': 'contact_hGsXV82wSiv6wpta1uXf5M',
-        'from': 'contact_hGsXV82wSiv6wpta1uXf5M',
+        'from': fromContact,
         'frontHTML': previewPayload.frontHtmlContent,
         'backHTML': previewPayload.backHtmlContent,
         'size': previewPayload.size,
@@ -696,7 +696,7 @@ define([
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
         'to': 'contact_hGsXV82wSiv6wpta1uXf5M',
-        'from': 'contact_hGsXV82wSiv6wpta1uXf5M',
+        'from': fromContact,
         frontTemplate: previewPayload.frontTemplateId,
         backTemplate: previewPayload.backTemplateId,
         size: previewPayload.size,
