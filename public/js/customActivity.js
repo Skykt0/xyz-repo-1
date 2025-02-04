@@ -11,7 +11,6 @@ define([
   let selectedFieldsForMapping = {};
   let previewPayload = {
     test_api_key: 'test_sk_uQXxwmGMghWwG5wEfezZVN',
-    live_api_key: 'live_sk_uQXxwmGMghWwG5wEfezZVN',
     isValid: true
   };
   let fromContact = '';
@@ -263,7 +262,6 @@ define([
   $('#live-api-key').on('input', hideErrorLiveKey);
 
   function validateApiKeys() {
-    console.log('inside validate api keys function');
     let isValid = true;
     const testApiKey = $('#test-api-key').val().trim();
     const liveApiKey = $('#live-api-key').val().trim();
@@ -286,6 +284,8 @@ define([
         $('#live-api-key').css('border', '1px solid red'); // Highlight input box
         $('#live-api-key-error').text('Enter a valid API key or leave it blank.').show();
         isValid =  false;
+      } else {
+        previewPayload.live_api_key = liveApiKey;
       }
     }
     return isValid;
