@@ -14,7 +14,6 @@ body {
 }
 .screen-3 .section-label {
 	font-size: 24px;
-	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 600;
 	margin-bottom: 30px;
 	-webkit-user-select: none;
@@ -124,7 +123,6 @@ body {
 	cursor: pointer;
 }
 .screen-3 .input-label-drop {
-	font-family: Arial, Helvetica, sans-serif;
 	font-size: 18px;
 	position: absolute;
 	top: 50%;
@@ -233,7 +231,6 @@ body {
 	font-weight: bold;
 	text-align: center;
 	margin-bottom: 0px;
-
 	font-family: inter;
 }
 .step1-heading {
@@ -303,7 +300,6 @@ body {
 /* Section Label */
 .section-label {
 	font-size: 20px;
-	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 600;
 	margin-bottom: 10px;
 	-webkit-user-select: none;
@@ -329,15 +325,14 @@ body {
 .radio-label,
 #card-insert-container label,
 #card-insert-type label {
-	font-size: 18px; /* Same size for all */
-	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	color: #6b6b6b; /* Light gray color for fading */
+	color: #6b6b6b;
 }
-/* Card Insert (Initially Hidden) */
+
 #card-insert-container {
 	display: none;
 }
@@ -392,8 +387,7 @@ body {
 }
 /* Align Toggle Properly */
 .align-right {
-	font-size: 18px; /* Same size for all */
-	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
 	display: flex;
 	align-items: center;
 	gap: 10px;
