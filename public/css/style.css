@@ -633,11 +633,6 @@ input:checked + .test-to-live-slider:before {
 	margin: 0;
 }
 
-.postcard-input-fields .input-fields,
-.postcard-pdf-container .input-label {
-    font-size: 16px;
-}
-
 .postcard-html-editor {
 	position: relative;
 	width: 50%;
@@ -1005,4 +1000,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     top: 10px;
     transform: rotate(90deg);
     pointer-events: none
+}
+
+.postcard-input-fields .input-fields,
+.postcard-pdf-container .input-label {
+    font-size: 16px;
 }
