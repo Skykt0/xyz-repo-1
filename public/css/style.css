@@ -1004,10 +1004,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 16px !important;
 }
 
+.retry-btn-wrap {
+    display: inline-flex;
+        gap: 1rem;
+        align-items: center;
+        padding: 8px;
+}
+
 .retry-preview-btn {
     background: rgb(0, 118, 222);
     color: white;
     border: none;
-    padding: 0.5rem 2rem;
+    padding: 0.35rem 1.5rem;
+    height: fit-content;
     border-radius: 4px;
 }

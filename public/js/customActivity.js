@@ -63,6 +63,7 @@ define([
     switch (currentStep.key) {
     case 'step1':
       if (validateApiKeys()) {
+        handleApiKeyToggle();
         connection.trigger('nextStep');
       } else {
         handleValidationFailure();
@@ -359,6 +360,27 @@ define([
 
     return isValid;
   }
+
+  function handleApiKeyToggle() {
+    if (typeof previewPayload === "undefined") {
+        return;
+    }
+
+    const testApiKey = previewPayload.test_api_key || "";
+    const liveApiKey = previewPayload.live_api_key || "";
+    const $liveModeToggle = $(".test-to-live-switch input");
+
+    if ($liveModeToggle.length === 0) {
+        return;
+    }
+
+    if (testApiKey && !liveApiKey) {
+        $liveModeToggle.prop("disabled", true).prop("checked", false);
+    } else {
+        $liveModeToggle.prop("disabled", false);
+    }
+}
+
 
   $('.step2radioBTN').change(function () {
     var isPostcard = $('#postcard').is(':checked');
