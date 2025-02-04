@@ -473,6 +473,8 @@ define([
       }
 
       const pdfInput = $('.drop-pdf #pdf-upload')[0]; 
+      console.log('pdfinput: '+pdfInput);
+      
       if (pdfInput.files.length > 0) {
         const pdfFile = pdfInput.files[0];
 
