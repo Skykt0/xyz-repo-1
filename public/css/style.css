@@ -1023,7 +1023,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .tooltip {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted black;
   }
   
   .tooltip .tooltiptext {
@@ -1036,8 +1035,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-radius: 6px;
     position: absolute;
     z-index: 1;
+    top: -25px;
   }
   
   .tooltip:hover .tooltiptext {
     visibility: visible;
+  }
+
+  .tooltip .fa-info-circle {
+    margin-left: 1rem;
   }
