@@ -633,6 +633,11 @@ input:checked + .test-to-live-slider:before {
 	margin: 0;
 }
 
+.postcard-input-fields .input-fields,
+.postcard-pdf-container .input-label {
+    font-size: 16px;
+}
+
 .postcard-html-editor {
 	position: relative;
 	width: 50%;
