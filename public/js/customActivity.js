@@ -10,7 +10,6 @@ define([
   let deFields;
   let selectedFieldsForMapping = {};
   let previewPayload = {
-    test_api_key: 'test_sk_uQXxwmGMghWwG5wEfezZVN',
     isValid: true
   };
   let fromContact = '';
@@ -264,6 +263,8 @@ define([
       $('#test-api-key').css('border', '1px solid red'); // Highlight input box
       $('#test-api-key-error').text('Enter a valid API key.').show();
       isValid =  false;
+    } else {
+        previewPayload.test_api_key = testApiKey;
     }
 
     // checking Live API key if it is not empty
@@ -675,7 +676,7 @@ define([
 
     if(previewPayload.screen === 'pdf'){
       data = new FormData();
-      data.append('to', 'contact_hGsXV82wSiv6wpta1uXf5M');
+      data.append('to', fromContact);
       data.append('from', fromContact);
       data.append('sendDate', previewPayload.sendDate);
       data.append('express', previewPayload.isExpressDelivery);
@@ -688,7 +689,7 @@ define([
     } else if (previewPayload.screen === 'html') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
-        'to': 'contact_hGsXV82wSiv6wpta1uXf5M',
+        'to': fromContact,
         'from': fromContact,
         'frontHTML': previewPayload.frontHtmlContent,
         'backHTML': previewPayload.backHtmlContent,
@@ -705,7 +706,7 @@ define([
     } else if(previewPayload.screen === 'existing-template') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
-        'to': 'contact_hGsXV82wSiv6wpta1uXf5M',
+        'to': fromContact,
         'from': fromContact,
         frontTemplate: previewPayload.frontTemplateId,
         backTemplate: previewPayload.backTemplateId,
