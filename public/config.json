@@ -7,7 +7,7 @@
 	"type": "REST",
 	"lang": {
 		"en-US": {
-			"name": "Postgrid Akash",
+			"name": "Postgrid",
 			"description": "Send letter and postcard from journey Builder using postgrid platform"
 		}
 	},

@@ -428,8 +428,8 @@ define([
 
     const today = new Date().toISOString().split('T')[0];
     $('input[type="date"]').each(function () {
-      $(this).val(today);  // Set default value
-      $(this).attr('min', today);  // Set minimum selectable date
+      $(this).val(today);
+      $(this).attr('min', today);
     });
 
     $('#pdf-upload').on('change', function () {
