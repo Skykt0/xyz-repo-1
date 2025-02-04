@@ -644,10 +644,15 @@ define([
 
   function getFormattedDate(sendDate) {
     let now = new Date();
-    let formattedTime = now.toISOString().split('T')[1];
-    console.log('formatted date: '+`${sendDate}T${formattedTime}`);
+    let istOffset = 5.5 * 60 * 60 * 1000; // Convert 5.5 hours to milliseconds
+    let istTime = new Date(now.getTime() + istOffset);
+
+    let formattedDate = sendDate;
+    let formattedTime = istTime.toISOString().split('T')[1]; // Extract the time part from IST
+
+    console.log('Formatted date in IST: ' + `${formattedDate}T${formattedTime}`);
     
-    return `${sendDate}T${formattedTime}`;
+    return `${formattedDate}T${formattedTime}`;
   }
 
   async function createPostcard() {
