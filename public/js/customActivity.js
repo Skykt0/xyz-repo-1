@@ -26,7 +26,6 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
-    console.log('onRender()************************************************************');
     connection.trigger('ready');
     connection.trigger('requestSchema');
     $('#card-insert-type').addClass('hidden');
@@ -42,13 +41,11 @@ define([
 
   connection.on('requestedSchema', function (data) {
     // save schema
-    console.log('*** Schema ***', data['schema']);
     deFields = data['schema'];
     populateDropdowns();
   });
 
   function initialize(data) {
-    console.log('initialize()************************************************************');
     if (data) {
       payload = data;
     }
@@ -58,7 +55,6 @@ define([
   // wizard step *******************************************************************************
   var currentStep = steps[0].key;
   function onClickedNext() {
-    console.log('onClickedNext() ************************************************************');
 
     switch (currentStep.key) {
     case 'step1':
@@ -72,7 +68,7 @@ define([
 
     case 'step2':
       if (validateStep2()) {
-        console.log('validate--*************' + validateStep2());
+
         connection.trigger('nextStep');
       } else {
         handleValidationFailure();
@@ -80,7 +76,7 @@ define([
       break;
 
     case 'step3':
-      console.log('inside step 3');
+
       if ($('.screen-3').css('display') === 'block') {
         validateStep3() ? proceedToNext() : handleValidationFailure();
       } else {
@@ -118,7 +114,6 @@ define([
   }
 
   function proceedToNext() {
-    console.log('set preview start');
     
     setPreviewPayload();
     connection.trigger('nextStep');
@@ -126,26 +121,23 @@ define([
 
 
   function onClickedBack() {
-    console.log('onClickedBack()************************************************************');
     connection.trigger('prevStep');
   }
 
   function onGotoStep(step) {
-    console.log('onGotoStep()************************************************************', step);
     showStep(step);
     connection.trigger('ready');
   }
 
   function showStep(step) {
 
-    console.log('showStep()************************************************************');
     currentStep = step;
 
     $('.step').hide();
 
     switch (currentStep.key) {
     case 'step1':
-      console.log('case step1************************************************************');
+
       $('#step1').show();
       connection.trigger('updateButton', {
         button: 'back',
@@ -158,7 +150,7 @@ define([
       });
       break;
     case 'step2':
-      console.log('case step2************************************************************');
+
       $('#step2').show();
       connection.trigger('updateButton', {
         button: 'back',
@@ -171,7 +163,7 @@ define([
       });
       break;
     case 'step3':
-      console.log('case step3************************************************************');
+
       $('#step3').show();
       connection.trigger('updateButton', {
         button: 'back',
@@ -184,7 +176,7 @@ define([
       });
       break;
     case 'step4':
-      console.log('case step4************************************************************');
+
       $('#step4').show();
       connection.trigger('updateButton', {
         button: 'back',
@@ -197,7 +189,7 @@ define([
       });
       break;
     case 'step5':
-      console.log('case step5************************************************************');
+
       $('#step5').show();
       connection.trigger('updateButton', {
         button: 'back',
@@ -214,14 +206,12 @@ define([
 
 
   function save() {
-    console.log('save()************************************************************');
     payload['arguments'].execute.inArguments = [{}];
     connection.trigger('updateActivity', payload);
   }
 
 
   function initializeHandler() {
-    console.log('inside initializehandelloer');
     executeScreenTwoMethods();
     setDefaultValuesForPostCardHtmlCreation();
   }
@@ -229,7 +219,6 @@ define([
 
   function showHideLiveKey(e) {
     e.preventDefault();
-    console.log('inside showHideLiveKey');
 
     const icon = $('#toggle-password-live-key i'); // Select the icon inside the button
     const liveKeyInput = $('#live-api-key'); // Select the input field
@@ -244,7 +233,6 @@ define([
   }
 
   function showHideTestKey() {
-    console.log('inside showHideTestKey');
     const icon = $('#toggle-password-test-key i'); // Select the icon inside the button
     const testKeyInput = $('#test-api-key'); // Select the input field
 
@@ -363,24 +351,24 @@ define([
   }
 
   function handleApiKeyToggle() {
-    if (typeof previewPayload === "undefined") {
-        return;
+    if (typeof previewPayload === 'undefined') {
+      return;
     }
 
-    const testApiKey = previewPayload.test_api_key || "";
-    const liveApiKey = previewPayload.live_api_key || "";
-    const $liveModeToggle = $(".test-to-live-switch input");
+    const testApiKey = previewPayload.test_api_key || '';
+    const liveApiKey = previewPayload.live_api_key || '';
+    const $liveModeToggle = $('.test-to-live-switch input');
 
     if ($liveModeToggle.length === 0) {
-        return;
+      return;
     }
 
     if (testApiKey && !liveApiKey) {
-        $liveModeToggle.prop("disabled", true).prop("checked", false);
+      $liveModeToggle.prop('disabled', true).prop('checked', false);
     } else {
-        $liveModeToggle.prop("disabled", false);
+      $liveModeToggle.prop('disabled', false);
     }
-}
+  }
 
 
   $('.step2radioBTN').change(function () {
@@ -408,7 +396,7 @@ define([
   function executeScreenTwoMethods() {
     // Handle showing Card Insert checkbox when "Letters" or "Self-Mailer" is selected
     $('input[name="msgType"]').change(function () {
-      console.log('Radio button changed:', this.id);
+
       if (this.id === 'letters' || this.id === 'self-mailer') {
         $('#card-insert-container').addClass('visible'); // Show Card Insert checkbox
         $('.card-insert-wrapper').addClass('visible'); // Show Card Insert wrapper (if needed)
@@ -423,7 +411,7 @@ define([
     });
     // Show/Hide Card Insert Type section when Card Insert is checked/unchecked
     $('#card-insert').change(function () {
-      console.log('Card Insert checkbox changed:', this.checked);
+
       if (this.checked) {
         $('#card-insert-type').removeClass('hidden'); // Show Card Insert Type section
       } else {
@@ -463,11 +451,11 @@ define([
     });
 
     $('#remove-pdf').on('click', function(e) {
-        e.preventDefault();
+      e.preventDefault();
 
-        $('#pdf-upload').val('');
-        $('#file-name').text('Drag or Upload PDF');
-        $(this).hide();
+      $('#pdf-upload').val('');
+      $('#file-name').text('Drag or Upload PDF');
+      $(this).hide();
     });
 
     $('#drop-area').on('dragover', function (e) {
@@ -496,7 +484,7 @@ define([
       }
 
       const pdfInput = $('.drop-pdf #pdf-upload')[0]; 
-      console.log('pdfinput: '+pdfInput.files.length);
+
       
       if (pdfInput.files.length > 0) {
         const pdfFile = pdfInput.files[0];
@@ -573,7 +561,7 @@ define([
             const pdfDimensions = `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
             const selectedPDFDimension = $('.postcard-pdf-size input[name="postcardPDFSize"]:checked').data('dimentions');
 
-            console.log(`PDF Dimensions: ${pdfDimensions} inches`);
+    
 
             if (numPages !== 2) {
               resolve({
@@ -673,7 +661,6 @@ define([
     let formattedDate = sendDate;
     let formattedTime = istTime.toISOString().split('T')[1]; // Extract the time part from IST
 
-    console.log('Formatted date in IST: ' + `${formattedDate}T${formattedTime}`);
     
     return `${formattedDate}T${formattedTime}`;
   }
@@ -745,7 +732,7 @@ define([
       }
 
       const result = await response.json();
-      console.log('Postcard created successfully:', result);
+
       return result;
     } catch (error) {
       console.error('Error creating postcard:', error.message);
@@ -781,7 +768,7 @@ define([
     try {
       const postcardDetails = await fetchPostcardDetails(postcardId);
       const pdfUrl = postcardDetails.url;
-      console.log('postcard details: '+pdfUrl);
+
     
       connection.trigger('nextStep');
       if (pdfUrl) {
@@ -821,7 +808,7 @@ define([
       $('.preview-container .retry-preview-btn').addClass('show');
       $('#pdf-preview-container').css('display','none');
       $('.pdf-preview-error-msg').text('Failed to fetch preview.');
-      console.log('error: '+JSON.stringify(error));
+
     }
   }
 
@@ -853,7 +840,7 @@ define([
       success: function (response) {
         // Clear existing options
         $('#dropdown-options').empty();
-        console.log('Resonese here', response.data);
+
 
         // Populate the dropdown with new options
         response.data.forEach(function (contact) {
@@ -899,11 +886,9 @@ define([
     const contact = $(this).data('contact');
     $('#search-contact').val(contact.firstName); // Set the selected contact name in the input
     $('#dropdown-options').hide(); // Hide the dropdown
-    console.log('contactId: '+contact.id);
     
     fromContact = contact.id;
     // You can also store the selected contact ID or other data if needed
-    console.log('Selected Contact:', contact);
   });
 
   $(document).on('click', function (event) {
@@ -1055,7 +1040,6 @@ define([
   }
 
   async function fetchTemplates(searchQuery = '') {
-    console.log('Fetching templates...');
     const requestOptions = {
       method: 'GET',
       headers: { 'x-api-key': previewPayload.test_api_key },
@@ -1108,7 +1092,6 @@ define([
       $list.append($listItem);
     });
 
-    console.log(`${listId} populated with templates.`);
   }
 
 

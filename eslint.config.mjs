@@ -11,6 +11,7 @@ export default [
       },
       globals: {
         require: 'readonly',
+        exports: 'readonly',
         module: 'readonly',
         __dirname: 'readonly',
         process: 'readonly',
