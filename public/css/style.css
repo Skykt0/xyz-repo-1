@@ -768,13 +768,13 @@ label[for="pdf-upload"] {
 	justify-content: center;
 }
 
-#file-name {
+/* #file-name {
 	position: absolute;
 	margin: 0;
 	bottom: -60%;
 	width: 100%;
 	text-align: center;
-}
+} */
 
 .pdf-error {
 	position: absolute;

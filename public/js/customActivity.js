@@ -435,7 +435,16 @@ define([
     $('#pdf-upload').on('change', function () {
       if (this.files.length > 0 && this.files[0].type === 'application/pdf') {
         $('#file-name').text(this.files[0].name);
+        $('#remove-pdf').show();
       }
+    });
+
+    $('#remove-pdf').on('click', function(e) {
+        e.preventDefault();
+
+        $('#pdf-upload').val('');
+        $('#file-name').text('Drag or Upload PDF');
+        $(this).hide();
     });
 
     $('#drop-area').on('dragover', function (e) {

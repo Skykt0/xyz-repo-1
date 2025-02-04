@@ -279,8 +279,11 @@
                             </div>
                         </div>
                         <div class="drop-pdf upload-box" id="drop-area">
-                            <input type="file" id="pdf-upload" accept="application/pdf" class="hidden" />
-                            <label for="pdf-upload" id="file-name">Drag or Upload PDF</label>
+                            <input type="file" id="pdf-upload" accept="application/pdf" class="hidden">
+                            <label for="pdf-upload">
+                                <span id="file-name">Drag or Upload PDF</span>
+                                <span id="remove-pdf" style="display: none;">✖</span>
+                            </label>
                             <span class="pdf-error error-msg">Please select a PDF file</span>
                         </div>
                     </div>
