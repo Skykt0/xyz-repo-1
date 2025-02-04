@@ -645,6 +645,8 @@ define([
   function getFormattedDate(sendDate) {
     let now = new Date();
     let formattedTime = now.toISOString().split('T')[1];
+    console.log('formatted date: '+`${sendDate}T${formattedTime}`);
+    
     return `${sendDate}T${formattedTime}`;
   }
 
