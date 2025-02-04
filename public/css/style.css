@@ -1019,30 +1019,3 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: fit-content;
     border-radius: 4px;
 }
-
-.tooltip {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: max-content;
-    background-color: rgb(209, 209, 209);
-    color: black;
-    text-align: center;
-    padding: 6px;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-    top: -25px;
-  }
-  
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-  }
-
-  .tooltip .fa-info-circle {
-    margin-left: 1rem;
-    color: #a9a9a9;
-  }
