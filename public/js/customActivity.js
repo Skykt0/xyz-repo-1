@@ -491,7 +491,7 @@ define([
           isValid = false;
         }
       } else {
-        $('.drop-pdf .error-msg').addClass('show');
+        $('.drop-pdf .error-msg').text('Please select a PDF file').addClass('show');
         isValid = false;
       }
     }
