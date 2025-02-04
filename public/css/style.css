@@ -1044,4 +1044,5 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   .tooltip .fa-info-circle {
     margin-left: 1rem;
+    color: #a9a9a9;
   }
