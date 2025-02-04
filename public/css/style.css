@@ -766,15 +766,12 @@ label[for="pdf-upload"] {
 	right: 0;
 	align-items: center;
 	justify-content: center;
+    gap: 1rem;
 }
 
-/* #file-name {
-	position: absolute;
-	margin: 0;
-	bottom: -60%;
-	width: 100%;
-	text-align: center;
-} */
+.remove-pdf {
+    cursor: pointer;
+}
 
 .pdf-error {
 	position: absolute;
