@@ -1003,3 +1003,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .postcard-pdf-container .input-label {
     font-size: 16px !important;
 }
+
+.retry-preview-btn {
+    background: rgb(0, 118, 222);
+    color: white;
+    border: none;
+    padding: 0.5rem 2rem;
+    border-radius: 4px;
+}
