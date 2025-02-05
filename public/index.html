@@ -125,6 +125,9 @@
                     <label for="testMode" class="slider-label">Live Mode</label>
                 </div>
             </div>
+            <p id="liveModeError" style="color: red; display: none; font-size: 16px; margin-top: 30px;">
+                Live API key is required to enable live mode.
+            </p>
         </div>
     </div>
 
@@ -443,21 +446,21 @@
                     </div>
 
                     <div class="mapping-fields-group">
-                        <label for="city">City</label>
+                        <label for="city">City *</label>
                         <select id="city">
                             <option>Select</option>
                         </select>
                     </div>
 
                     <div class="mapping-fields-group">
-                        <label for="state">State</label>
+                        <label for="state">State *</label>
                         <select id="state">
                             <option>Select</option>
                         </select>
                     </div>
 
                     <div class="mapping-fields-group">
-                        <label for="country-code">Country Code</label>
+                        <label for="country-code">Country Code *</label>
                         <select id="country-code">
                             <option>Select</option>
                         </select>
@@ -487,7 +490,10 @@
                     </div>
                     <div class="retry-btn-wrap">
                         <p class="pdf-preview-error-msg"></p>
-                        <button class="retry-preview-btn">Retry</button>
+                    </div>
+                    <div class="retry-btn-wrap">
+                        <span class="preview-message">If you want to view the template preview, click the 'Show Preview' button.</span>
+                        <button class="retry-preview-btn">Show Preview</button>
                     </div>
                 </div>
             </div>

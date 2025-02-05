@@ -272,13 +272,13 @@ define([
     }
 
     // checking Live API key if it is not empty
+    previewPayload.live_api_key = liveApiKey;
     if(liveApiKey !== ''){
       if(!regexForLiveApiKey.test(liveApiKey)){
         $('#live-api-key').css('border', '1px solid red'); // Highlight input box
         $('#live-api-key-error').text('Enter a valid API key or leave it blank.').show();
         isValid =  false;
-      } else {
-        previewPayload.live_api_key = liveApiKey;
+        previewPayload.live_api_key = '';
       }
     }
     return isValid;
@@ -375,6 +375,29 @@ define([
     }
   }
 
+
+  $(document).ready(function () {
+    const $liveModeToggle = $('.test-to-live-switch input');
+    const $errorMessage = $('#liveModeError');
+    console.log("Script Loaded: Checking Live Mode Toggle");
+    console.log("Live Mode Toggle Found:", $liveModeToggle.length);
+    if ($liveModeToggle.length === 0) {
+        console.error("Error: Live Mode Toggle input NOT found in the DOM!");
+        return; // Exit script if element is missing
+    }
+    // Attach events to the parent label (because disabled inputs don't fire events)
+    $('.test-to-live-switch').on('mouseenter', function () {
+        console.log("Hover detected on Live Mode Toggle container");
+        if ($liveModeToggle.prop('disabled')) {
+            console.log("Live Mode Toggle is Disabled - Showing Error Message");
+            $errorMessage.show();
+        }
+    });
+    $('.test-to-live-switch').on('mouseleave', function () {
+        console.log("Mouse Left Live Mode Toggle - Hiding Error Message");
+        $errorMessage.hide();
+    });
+});
 
   $('.step2radioBTN').change(function () {
     var isPostcard = $('#postcard').is(':checked');

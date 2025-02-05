@@ -1013,3 +1013,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: fit-content;
     border-radius: 4px;
 }
+
+.preview-message {
+    font-size: 14px;
+    color: #666; /* Adjust the color as needed */
+}
