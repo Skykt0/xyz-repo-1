@@ -265,7 +265,7 @@ define([
     }
     else if(!regexForTestApiKey.test(testApiKey)){
       $('#test-api-key').css('border', '1px solid red'); // Highlight input box
-      $('#test-api-key-error').text('Enter a valid API key.').show();
+      $('#test-api-key-error').text('Invalid API key.').show();
       isValid =  false;
     } else {
         previewPayload.test_api_key = testApiKey;
@@ -276,7 +276,7 @@ define([
     if(liveApiKey !== ''){
       if(!regexForLiveApiKey.test(liveApiKey)){
         $('#live-api-key').css('border', '1px solid red'); // Highlight input box
-        $('#live-api-key-error').text('Enter a valid API key or leave it blank.').show();
+        $('#live-api-key-error').text('Invalid API key.').show();
         isValid =  false;
         previewPayload.live_api_key = '';
       }
@@ -991,6 +991,25 @@ define([
       isValid = false;
     }
 
+    let city = $('#city').val();
+    if (city === 'Select') {
+      $('#city').css('border', '2px solid red');
+      $('.error-message-contactMapping').text(' City is required.').css('color', 'red').show();
+      isValid = false;
+    }
+    let state = $('#state').val();
+    if (state === 'Select') {
+      $('#state').css('border', '2px solid red');
+      $('.error-message-contactMapping').text(' State is required.').css('color', 'red').show();
+      isValid = false;
+    }
+    let countryCode = $('#country-code').val();
+    if (countryCode === 'Select') {
+      $('#country-code').css('border', '2px solid red');
+      $('.error-message-contactMapping').text(' Country Code is required.').css('color', 'red').show();
+      isValid = false;
+    }
+
     return isValid;
   }
 
@@ -1012,7 +1031,7 @@ define([
     let today = new Date().toISOString().split('T')[0];
     $('#sendDate3').attr('min', today);
     if (!$('#description3').val().trim()) {
-      $('#description3').after('<span class="error-message">Please enter required field.</span>');
+      $('#description3').after('<span class="error-message">The input value is missing.</span>');
       $('#description3').addClass('error-field');
       isValid = false;
     }

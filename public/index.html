@@ -34,15 +34,13 @@
                 <label for="test-api-key">Test Api Key*</label>
                 <input type="password" id="test-api-key" placeholder="Enter test API key" required />
                 <span class="toggle-password" id="toggle-password-test-key"><i class="fa fa-eye-slash"></i></span>
-                <span class="error-message" id="test-api-key-error" style="color: red; display: none">Please enter the
-                    Test API Key.</span>
+                <span class="error-message" id="test-api-key-error" style="color: red; display: none">Missing or invalid authentication.</span>
             </div>
             <div class="step1-input-group">
                 <label for="live-api-key">Live Api Key</label>
                 <input type="password" id="live-api-key" placeholder="Enter live API key" />
                 <span class="toggle-password" id="toggle-password-live-key"><i class="fa fa-eye-slash"></i></span>
-                <span class="error-message" id="live-api-key-error" style="color: red; display: none">Please enter the
-                    Live API Key.</span>
+                <span class="error-message" id="live-api-key-error" style="color: red; display: none">Missing or invalid authentication.</span>
             </div>
         </div>
         <div class="step1-right-panel"></div>
@@ -145,7 +143,7 @@
                                 <div class="input-box">
                                     <label for="description" class="input-label">Description *</label>
                                     <input type="text" class="input-field" id="description" name="description" />
-                                    <span class="error-msg">Please enter required field</span>
+                                    <span class="error-msg">The input value is missing</span>
                                 </div>
                                 <div class="input-box">
                                     <label for="sendDate" class="input-label">Send Date *</label>
@@ -153,7 +151,7 @@
                                         <input type="date" placeholder="" class="input-field" id="sendDate"
                                         name="sendDate" />
                                         <i class="fa fa-calendar calendar-icon"></i>
-                                        <span class="error-msg">Please enter required field</span>
+                                        <span class="error-msg">The input value is missing</span>
                                     </div>
                                 </div>
                                 <div class="input-box">
@@ -492,7 +490,7 @@
                         <p class="pdf-preview-error-msg"></p>
                     </div>
                     <div class="retry-btn-wrap">
-                        <span class="preview-message">If you want to view the template preview, click the 'Show Preview' button.</span>
+                        <span class="preview-message"></span>
                         <button class="retry-preview-btn">Show Preview</button>
                     </div>
                 </div>
