@@ -59,6 +59,7 @@ define([
     case 'step1':
       if (validateApiKeys()) {
         handleApiKeyToggle();
+        
         connection.trigger('nextStep');
       } else {
         handleValidationFailure();
@@ -67,7 +68,10 @@ define([
 
     case 'step2':
       if (validateStep2()) {
-
+        var isExtTemp = $('#extTempId').is(':checked');
+        if (isExtTemp) {
+            fetchTemplates();
+        }
         connection.trigger('nextStep');
       } else {
         handleValidationFailure();
@@ -1139,6 +1143,5 @@ define([
     fetchTemplates(searchQuery);
   }, 300));
 
-  fetchTemplates();
   /** screen 3C script */
 });
