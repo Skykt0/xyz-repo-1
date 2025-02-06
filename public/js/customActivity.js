@@ -79,7 +79,7 @@ define([
       break;
 
     case 'step3':
-
+      $('#dropdown-options').hide();
       if ($('.screen-3').css('display') === 'block') {
         validateStep3() ? proceedToNext() : handleValidationFailure();
       } else {
@@ -258,32 +258,37 @@ define([
     const liveApiKey = $('#live-api-key').val().trim();
     const regexForTestApiKey = /^test_sk_[a-zA-Z0-9]{16,}$/;
     const regexForLiveApiKey = /^live_sk_[a-zA-Z0-9]{16,}$/;
+    // Validate Test API Key
     if (testApiKey === '') {
-      $('#test-api-key').css('border', '1px solid red'); // Highlight input box
-      $('#test-api-key-error').show(); // Show error message
-      isValid = false;
-    }
-    else if(!regexForTestApiKey.test(testApiKey)){
-      $('#test-api-key').css('border', '1px solid red'); // Highlight input box
-      $('#test-api-key-error').text('Invalid API key.').show();
-      isValid =  false;
+        $('#test-api-key').css('border', '1px solid red'); // Highlight input box
+        $('#test-api-key-error').text('Test API Key is required').show(); // Show error message
+        isValid = false;
+    } else if (!regexForTestApiKey.test(testApiKey)) {
+        $('#test-api-key').css('border', '1px solid red'); // Highlight input box
+        $('#test-api-key-error').text(`Invalid API key: ${testApiKey}`).show(); // Show error message with key value
+        isValid = false;
     } else {
         previewPayload.test_api_key = testApiKey;
+        $('#test-api-key-error').hide(); // Hide error message if valid
+        $('#test-api-key').css('border', ''); // Remove highlight
     }
-
-    // checking Live API key if it is not empty
-    previewPayload.live_api_key = liveApiKey;
-    if(liveApiKey !== ''){
-      if(!regexForLiveApiKey.test(liveApiKey)){
-        $('#live-api-key').css('border', '1px solid red'); // Highlight input box
-        $('#live-api-key-error').text('Invalid API key.').show();
-        isValid =  false;
-        previewPayload.live_api_key = '';
-      }
+    // Validate Live API Key (only if it's not empty)
+    if (liveApiKey !== '') {
+        if (!regexForLiveApiKey.test(liveApiKey)) {
+            $('#live-api-key').css('border', '1px solid red'); // Highlight input box
+            $('#live-api-key-error').text(`Invalid API key: ${liveApiKey}`).show(); // Show error message with key value
+            isValid = false;
+        } else {
+            previewPayload.live_api_key = liveApiKey;
+            $('#live-api-key-error').hide(); // Hide error message if valid
+            $('#live-api-key').css('border', ''); // Remove highlight
+        }
+    } else {
+        $('#live-api-key-error').hide(); // Hide error message if empty
+        $('#live-api-key').css('border', ''); // Remove highlight
     }
     return isValid;
-  
-  }
+}
   
   function hideErrorTestKey() {
     $('#test-api-key').css('border', ''); // Reset border
@@ -914,25 +919,23 @@ define([
     const contact = $(this).data('contact');
     $('#search-contact').val(contact.firstName); // Set the selected contact name in the input
     $('#dropdown-options').hide(); // Hide the dropdown
-    
     fromContact = contact.id;
-    // You can also store the selected contact ID or other data if needed
-  });
-
-  $(document).on('click', function (event) {
+});
+$(document).on('click', function (event) {
     if (!$(event.target).closest('.mapping-dropdown').length) {
-      $('#dropdown-options').hide();
+        $('#dropdown-options').hide();
     }
-  });
-
-  $('#search-contact').on('focus', function () {
-    //  fetchContacts(); // Show initial contacts
+});
+$('#search-contact').on('focus', function () {
     const searchQuery = $(this).val().trim();
-    if ($('#dropdown-options').is(':hidden')) { // Only fetch if dropdown is hidden
-      fetchContacts(searchQuery); // Use existing searchQuery if present
+    if ($('#dropdown-options').is(':hidden')) {
+        if (searchQuery === '') {
+            fetchContacts(); // Fetch default contacts if input is empty
+        } else {
+            $('#dropdown-options').show(); // Show dropdown if it was hidden
+        }
     }
-
-  });
+});
 
   function populateDropdowns() {
     $('.mapping-fields-group select').each(function () {
