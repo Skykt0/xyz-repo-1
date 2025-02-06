@@ -273,19 +273,14 @@ define([
         $('#test-api-key').css('border', ''); // Remove highlight
     }
     // Validate Live API Key (only if it's not empty)
+    previewPayload.live_api_key = liveApiKey;
     if (liveApiKey !== '') {
         if (!regexForLiveApiKey.test(liveApiKey)) {
             $('#live-api-key').css('border', '1px solid red'); // Highlight input box
             $('#live-api-key-error').text(`Invalid API key: ${liveApiKey}`).show(); // Show error message with key value
             isValid = false;
-        } else {
-            previewPayload.live_api_key = liveApiKey;
-            $('#live-api-key-error').hide(); // Hide error message if valid
-            $('#live-api-key').css('border', ''); // Remove highlight
+            previewPayload.live_api_key = '';
         }
-    } else {
-        $('#live-api-key-error').hide(); // Hide error message if empty
-        $('#live-api-key').css('border', ''); // Remove highlight
     }
     return isValid;
 }
