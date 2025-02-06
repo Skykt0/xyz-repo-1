@@ -971,43 +971,27 @@ $('#search-contact').on('focus', function () {
   function validateToContact() {
     let isValid = true;
     resetToContactMappingErrors();
-
-    // Validate Address Line 1
-    let address1 = $('#address1').val();
-    if (address1 === 'Select') {
-      $('#address1').css('border', '2px solid red');
-      $('.error-message-contactMapping').text('Address Line 1 is required.').css('color', 'red').show();
+    let requiredFields = ['#address1', '#first-name', '#company', '#city', '#state', '#country-code'];
+    let isAnyFieldEmpty = false;
+    requiredFields.forEach(selector => {
+      let value = $(selector).val();
+      // Special validation for First Name or Company (one must be selected)
+      if (selector === '#first-name' || selector === '#company') {
+        if ($('#first-name').val() === 'Select' && $('#company').val() === 'Select') {
+          $('#first-name, #company').css('border', '2px solid red');
+          isAnyFieldEmpty = true;
+        }
+      } else {
+        if (value === 'Select') {
+          $(selector).css('border', '2px solid red');
+          isAnyFieldEmpty = true;
+        }
+      }
+    });
+    if (isAnyFieldEmpty) {
+      $('.error-message-contactMapping').text('Please fill all required fields.').css('color', 'red').show();
       isValid = false;
     }
-
-    // Validate First Name or Company (one must be selected)
-    let firstName = $('#first-name').val();
-    let company = $('#company').val();
-    if (firstName === 'Select' && company === 'Select') {
-      $('#first-name, #company').css('border', '2px solid red');
-      $('.error-message-contactMapping').text('Either First Name or Company must be selected.').css('color', 'red').show();
-      isValid = false;
-    }
-
-    let city = $('#city').val();
-    if (city === 'Select') {
-      $('#city').css('border', '2px solid red');
-      $('.error-message-contactMapping').text(' City is required.').css('color', 'red').show();
-      isValid = false;
-    }
-    let state = $('#state').val();
-    if (state === 'Select') {
-      $('#state').css('border', '2px solid red');
-      $('.error-message-contactMapping').text(' State is required.').css('color', 'red').show();
-      isValid = false;
-    }
-    let countryCode = $('#country-code').val();
-    if (countryCode === 'Select') {
-      $('#country-code').css('border', '2px solid red');
-      $('.error-message-contactMapping').text(' Country Code is required.').css('color', 'red').show();
-      isValid = false;
-    }
-
     return isValid;
   }
 
