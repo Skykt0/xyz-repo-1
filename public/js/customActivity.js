@@ -261,7 +261,7 @@ define([
     // Validate Test API Key
     if (testApiKey === '') {
         $('#test-api-key').css('border', '1px solid red'); // Highlight input box
-        $('#test-api-key-error').text('Test API Key is required').show(); // Show error message
+        $('#test-api-key-error').text('Missing or invalid authentication').show(); // Show error message
         isValid = false;
     } else if (!regexForTestApiKey.test(testApiKey)) {
         $('#test-api-key').css('border', '1px solid red'); // Highlight input box
