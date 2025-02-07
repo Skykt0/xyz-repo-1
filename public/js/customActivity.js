@@ -794,33 +794,43 @@ define([
 
   async function showPdfPreview(postcardId) {
     try {
-      const postcardDetails = await fetchPostcardDetails(postcardId);
-      const pdfUrl = postcardDetails.url;
-
-    
-      connection.trigger('nextStep');
-      if (pdfUrl) {
-        $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
-        $('#pdf-preview-container').css('display','block');
-        $('.preview-container .retry-preview-btn').removeClass('show');
-        $('.pdf-preview-error-msg').css('display','none');
-      } else {
-        $('.preview-container .retry-preview-btn').addClass('show');
-        $('#pdf-preview-container').css('display','none');
-        $('.pdf-preview-error-msg').text('Preview not found.').css('display','block');
-      }
+        $('#pdf-preview').attr('src', '');
+        $('#pdf-preview-container').css('display', 'none');
+        $('.retry-preview-btn').css('display', 'none');
+        $('.preview-message').css('display', 'none');
+        const postcardDetails = await fetchPostcardDetails(postcardId);
+        const pdfUrl = postcardDetails.url;
+        console.log("PDF URL:", pdfUrl);
+        connection.trigger('nextStep');
+        if (pdfUrl) {
+            $('.retry-preview-btn').css('display', 'inline-block');
+            $('.preview-message').css('display', 'inline-block');
+            $('.retry-preview-btn').off('click').on('click', function() {
+                console.log("Show Preview button clicked!");
+                $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
+                $('#pdf-preview-container').css('display', 'block');
+                $('.retry-preview-btn').css('display', 'none');
+                $('.preview-message').css('display', 'none');
+            });
+        } else {
+            console.warn("No PDF URL received!");
+            $('#pdf-preview-container').css('display', 'block');
+            $('.retry-preview-btn').css('display', 'none');
+            $('.preview-message').css('display', 'none');
+        }
     } catch (error) {
-      $('.preview-container .retry-preview-btn').addClass('show');
-      $('#pdf-preview-container').css('display','none');
-      $('.pdf-preview-error-msg').text('Error while fetching the preview - '+error.message).css('display','block');
+        console.error("Error fetching PDF Preview:", error);
+        $('#pdf-preview-container').css('display', 'block');
+        $('.retry-preview-btn').css('display', 'none');
+        $('.preview-message').css('display', 'none');
     }
-
     $('#pdf-preview').on('error', function () {
-      $('.preview-container .retry-preview-btn').addClass('show');
-      $('#pdf-preview-container').css('display','none');
-      $('.pdf-preview-error-msg').text('Failed to fetch preview.').css('display','block');
+        console.error("Error loading PDF preview!");
+        $('#pdf-preview-container').css('display', 'block');
+        $('.retry-preview-btn').css('display', 'none');
+        $('.preview-message').css('display', 'none');
     });
-  }
+}
 
   async function getPreviewURL () {
     try {
