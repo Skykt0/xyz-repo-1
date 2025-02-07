@@ -475,6 +475,8 @@ define([
       if (this.files.length > 0 && this.files[0].type === 'application/pdf') {
         $('#file-name').text(this.files[0].name);
         $('#remove-pdf').show();
+      } else if (this.files[0].type !== 'application/pdf') {
+        $('.drop-pdf .error-msg').text('Please upload a PDF file.').addClass('show');
       }
     });
 
@@ -588,8 +590,6 @@ define([
 
             const pdfDimensions = `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
             const selectedPDFDimension = $('.postcard-pdf-size input[name="postcardPDFSize"]:checked').data('dimentions');
-
-    
 
             if (numPages !== 2) {
               resolve({
