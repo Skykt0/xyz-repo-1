@@ -477,7 +477,7 @@ define([
         $('#file-name').text(this.files[0].name);
         $('#remove-pdf').show();
       } else if (this.files[0].type !== 'application/pdf') {
-        $('.drop-pdf .error-msg').text('Please upload a PDF file.').addClass('show');
+        $('.drop-pdf .error-msg').text('Invalid file type! Please upload a PDF file.').addClass('show');
       }
     });
 
