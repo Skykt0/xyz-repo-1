@@ -13,6 +13,7 @@ define([
     isValid: true
   };
   let fromContact = '';
+  let toContact = '';
 
   var steps = [ // initialize to the same value as what's set in config.json for consistency        
     { 'label': 'Connect Account', 'key': 'step1' },
@@ -73,6 +74,7 @@ define([
             fetchTemplates();
         }
         connection.trigger('nextStep');
+        createContact();
       } else {
         handleValidationFailure();
       }
@@ -704,7 +706,7 @@ define([
 
     if(previewPayload.screen === 'pdf'){
       data = new FormData();
-      data.append('to', fromContact);
+      data.append('to', toContact);
       data.append('from', fromContact);
       data.append('sendDate', previewPayload.sendDate);
       data.append('express', previewPayload.isExpressDelivery);
@@ -717,7 +719,7 @@ define([
     } else if (previewPayload.screen === 'html') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
-        'to': fromContact,
+        'to': toContact,
         'from': fromContact,
         'frontHTML': previewPayload.frontHtmlContent,
         'backHTML': previewPayload.backHtmlContent,
@@ -734,7 +736,7 @@ define([
     } else if(previewPayload.screen === 'existing-template') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
-        'to': fromContact,
+        'to': toContact,
         'from': fromContact,
         frontTemplate: previewPayload.frontTemplateId,
         backTemplate: previewPayload.backTemplateId,
@@ -849,6 +851,47 @@ define([
       $('.pdf-preview-error-msg').text('Failed to fetch preview.');
 
     }
+  }
+
+  function createContact () {
+    const url = "https://api.postgrid.com/print-mail/v1/contacts";
+                
+    // Data payload (form-encoded)
+    const formData = new URLSearchParams();
+    formData.append("firstName", "Kevin");
+    formData.append("lastName", "Smith");
+    formData.append("companyName", "PostGrid");
+    formData.append("addressLine1", "20-20 bay st");
+    formData.append("addressLine2", "floor 11");
+    formData.append("city", "toronto");
+    formData.append("provinceOrState", "ON");
+    formData.append("email", "kevinsmith@postgrid.com");
+    formData.append("phoneNumber", "9059059059");
+    formData.append("jobTitle", "Manager");
+    formData.append("postalOrZip", "M5J 2N8");
+    formData.append("country", "CA");
+    formData.append("countryCode", "CA");
+    formData.append("description", "Kevin Smith's contact information");
+    formData.append("metadata[friend]", "no");
+    formData.append("skipVerification", "false");
+    formData.append("forceVerifiedStatus", "false");
+
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "x-api-key": previewPayload.test_api_key
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Contact Created:", data);
+        toContact = data.id;
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
   }
 
   $('.preview-container .retry-preview-btn').click(async function() {
