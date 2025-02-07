@@ -472,6 +472,7 @@ define([
     });
 
     $('#pdf-upload').on('change', function () {
+        console.log('file type: '+this.files[0].type);
       if (this.files.length > 0 && this.files[0].type === 'application/pdf') {
         $('#file-name').text(this.files[0].name);
         $('#remove-pdf').show();
