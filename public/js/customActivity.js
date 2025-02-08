@@ -12,7 +12,7 @@ define([
   let previewPayload = {
     isValid: true
   };
-  let fromContact = '';
+  let fromContact = {};
   let toContact = '';
 
   var steps = [ // initialize to the same value as what's set in config.json for consistency        
@@ -48,8 +48,77 @@ define([
   function initialize(data) {
     if (data) {
       payload = data;
+      console.log("ggggggggggggggggggggggggggggggggggggggg");
+      console.log("Payload on SAVE function: " + JSON.stringify(payload['arguments'].execute.inArguments));
+      console.log(payload);
     }
+    var hasPostcardArguments = Boolean(
+      payload['arguments'] &&
+      payload['arguments'].execute &&
+      payload['arguments'].execute.inArguments &&
+      payload['arguments'].execute.inArguments.length > 0 &&
+      payload['arguments'].execute.inArguments[0].internalPostcardJson
+    );
+
+    var postcardArguments = hasPostcardArguments ? payload['arguments'].execute.inArguments[0].internalPostcardJson : {};
+    console.log("postcard arguments below");
+    console.log(postcardArguments);
+   // $('#test-api-key').val(postcardArguments.test_api_key).change()
+    console.log("changes should reflect", postcardArguments.test_api_key);
+
+    // Iterating over every postcardArguments for prepopulating
+
+    $.each(postcardArguments, function(key, value) {
+      switch (key) {
+      case 'test_api_key':
+        $('#test-api-key').val(value).change();
+        break;
+      case 'live_api_key':
+        $('#live-api-key').val(value).change();
+        break;
+      case 'creationType':
+        $("input[name='createType'][value='" + value + "']").prop("checked", true);
+        break;
+      case 'messageType':
+        $("input[name='msgType'][value='" + value + "']").prop("checked", true);
+        break;
+      case 'description':
+        var queryString = "." + postcardArguments.messageType.replace(/\s+/g, "") + " ." + postcardArguments.creationType.replace(/\s+/g, "")+ " .description";
+        $(queryString).val(value);
+        break;
+      case 'frontTemplateName':
+        var queryString = "." + postcardArguments.messageType.replace(/\s+/g, "") + " ." + postcardArguments.creationType.replace(/\s+/g, "")+ " #frontTemplateInput";
+        $(queryString).val(value);
+        $(queryString).attr('data-id', postcardArguments.frontTemplateId);
+        break;
+      case 'backTemplateName':
+        var queryString = "." + postcardArguments.messageType.replace(/\s+/g, "") + " ." + postcardArguments.creationType.replace(/\s+/g, "")+ " #backTemplateInput";
+        $(queryString).val(value);
+        $(queryString).attr('data-id', postcardArguments.backTemplateId);
+        break;
+      case 'size':
+        var queryString = "." + postcardArguments.messageType.replace(/\s+/g, "") + " ." + postcardArguments.creationType.replace(/\s+/g, "")+ ' input[value="' + value + '"]';
+        $(queryString).prop('checked', true);
+        break;
+      case 'isExpressDelivery':
+        var queryString = "." + postcardArguments.messageType.replace(/\s+/g, "") + " ." + postcardArguments.creationType.replace(/\s+/g, "") + " .express-delivery-btn";
+        $(queryString).prop('checked', value);
+        break;
+      case 'frontHtmlContent':
+        var queryString = "." + postcardArguments.messageType.replace(/\s+/g, "") + " ." + postcardArguments.creationType.replace(/\s+/g, "") + " .html-editor-front";
+        $(queryString).val(value);
+        break;
+      case "backHtmlContent":
+        var queryString = "." + postcardArguments.messageType.replace(/\s+/g, "") + " ." + postcardArguments.creationType.replace(/\s+/g, "") + " .html-editor-back";
+        $(queryString).val(value);
+        break;
+      default:
+        console.log("Unknown key: " + key);
+      }
+  });
+    
     initializeHandler();
+
   }
 
   // wizard step *******************************************************************************
@@ -73,6 +142,15 @@ define([
         if (isExtTemp) {
             fetchTemplates();
         }
+        var isPostcard = $('#postcard').is(':checked');
+        if (isPostcard) {
+          var isHtml = $('#htmlId').is(':checked');
+          var isPdf = $('#pdfId').is(':checked');
+          var isExtTemp = $('#extTempId').is(':checked');
+        }
+        $('#postcardScreen > .screen-1').toggle(isHtml);
+        $('#postcardScreen > .screen-2').toggle(isPdf);
+        $('#postcardScreen > .screen-3').toggle(isExtTemp);
         connection.trigger('nextStep');
         createContact();
       } else {
@@ -212,6 +290,32 @@ define([
 
   function save() {
     payload['arguments'].execute.inArguments = [{}];
+    previewPayload.xyz = "live_deepakTest";
+    previewPayload.messageType = $("input[name='msgType']:checked").val();
+    previewPayload.creationType = $("input[name='createType']:checked").val();
+    payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
+    payload['metaData'].isConfigured = true;
+    console.log("previewPayload");
+    console.log(JSON.stringify(previewPayload));
+    console.log("Payload on SAVE function: " + JSON.stringify(payload['arguments'].execute.inArguments));
+    var postCardJson = {
+      from: previewPayload.fromContact ? previewPayload.fromContact.id : '',
+      size: previewPayload.size,
+      sendDate: previewPayload.sendDate,
+      express: previewPayload.isExpressDelivery,
+      description: previewPayload.description,
+      mailingClass: previewPayload.mailingClass,
+    };
+    if(previewPayload.messageType === 'Postcards' && previewPayload.creationType === 'HTML'){
+      if(previewPayload.creationType === 'HTML'){
+        postCardJson.frontHTML = previewPayload.frontHtmlContent;
+        postCardJson.backHTML = previewPayload.backHtmlContent;
+      } else if(previewPayload.creationType === 'Existing Template'){
+        postCardJson.frontTemplate = previewPayload.frontTemplateName;
+        postCardJson.backTemplate = previewPayload.backTemplateName;
+      }
+    }
+    payload['arguments'].execute.inArguments[0]['postcardJson'] = postCardJson;
     connection.trigger('updateActivity', payload);
   }
 
@@ -672,7 +776,9 @@ define([
       const size = $('.screen-3 input[name=\'size\']:checked').val();
       const isExpressDelivery = $('.screen-3 #expDelivery').is(':checked');
       const mailingClass = $('.screen-3 #mailingClass3').val();
-      
+      const frontTemplateName = $('#frontTemplateInput')?.val();
+      const backTemplateName = $('#backTemplateInput')?.val();
+
       previewPayload.screen = 'existing-template';
       previewPayload.description = description;
       previewPayload.sendDate = getFormattedDate(sendDate);
@@ -681,6 +787,8 @@ define([
       previewPayload.size = size;
       previewPayload.mailingClass = mailingClass;
       previewPayload.isExpressDelivery = isExpressDelivery;
+      previewPayload.frontTemplateName = frontTemplateName;
+      previewPayload.backTemplateName = backTemplateName;
     }
   }
 
@@ -707,7 +815,7 @@ define([
     if(previewPayload.screen === 'pdf'){
       data = new FormData();
       data.append('to', toContact);
-      data.append('from', fromContact);
+      data.append('from', fromContact.id);
       data.append('sendDate', previewPayload.sendDate);
       data.append('express', previewPayload.isExpressDelivery);
       data.append('description', previewPayload.description);
@@ -720,7 +828,7 @@ define([
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
         'to': toContact,
-        'from': fromContact,
+        'from': fromContact.id,
         'frontHTML': previewPayload.frontHtmlContent,
         'backHTML': previewPayload.backHtmlContent,
         'size': previewPayload.size,
@@ -737,7 +845,7 @@ define([
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
         'to': toContact,
-        'from': fromContact,
+        'from': fromContact.id,
         frontTemplate: previewPayload.frontTemplateId,
         backTemplate: previewPayload.backTemplateId,
         size: previewPayload.size,
@@ -968,7 +1076,8 @@ define([
     const contact = $(this).data('contact');
     $('#search-contact').val(contact.firstName); // Set the selected contact name in the input
     $('#dropdown-options').hide(); // Hide the dropdown
-    fromContact = contact.id;
+    fromContact.id = contact.id;
+    fromContact.name = contact.firstName;
 });
 $(document).on('click', function (event) {
     if (!$(event.target).closest('.mapping-dropdown').length) {
@@ -1024,6 +1133,7 @@ $('#search-contact').on('focus', function () {
 
   function validateToContact() {
     let isValid = true;
+    previewPayload.fromContact = fromContact;
     resetToContactMappingErrors();
     let requiredFields = ['#address1', '#first-name', '#company', '#city', '#state', '#country-code'];
     let isAnyFieldEmpty = false;
