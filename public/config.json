@@ -15,7 +15,7 @@
 		"execute": {
 			"inArguments": [],
 			"outArguments": [],
-			"url": "https://xyz-repo-1.vercel.app/execute",
+			"url": "https://xyz-repo-1-production.up.railway.app/execute",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -26,7 +26,7 @@
 	"configurationArguments": {
 		"applicationExtensionKey": "e51f7b3f-9826-4164-babb-59dd952216b1",
 		"save": {
-			"url": "https://xyz-repo-1.vercel.app/save",
+			"url": "https://xyz-repo-1-production.up.railway.app/save",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -34,7 +34,7 @@
 			"timeout": 2000
 		},
 		"publish": {
-			"url": "https://xyz-repo-1.vercel.app/publish",
+			"url": "https://xyz-repo-1-production.up.railway.app/publish",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -42,7 +42,7 @@
 			"timeout": 2000
 		},
 		"validate": {
-			"url": "https://xyz-repo-1.vercel.app/validate",
+			"url": "https://xyz-repo-1-production.up.railway.app/validate",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -50,7 +50,7 @@
 			"timeout": 2000
 		},
 		"stop": {
-			"url": "https://xyz-repo-1.vercel.app/stop",
+			"url": "https://xyz-repo-1-production.up.railway.app/stop",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
