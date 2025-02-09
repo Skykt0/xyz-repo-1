@@ -15,7 +15,7 @@
 		"execute": {
 			"inArguments": [],
 			"outArguments": [],
-			"url": "https://xyz-repo-1.vercel.app/journeybuilder/execute",
+			"url": "https://xyz-repo-1.vercel.app/execute",
 			"verb": "POST",
 			"body": "",
 			"format": "json",

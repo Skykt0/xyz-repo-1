@@ -7,11 +7,15 @@ define([
   var request = require([request]);
   var connection = new Postmonger.Session();
   var payload = {};
+  var deData = {};
+  var previewDEMapOptions = {};
   let deFields;
+  var authorization = {};
   let selectedFieldsForMapping = {};
   let previewPayload = {
     isValid: true
   };
+  var authToken, et_subdomain, authTSSD;
   let fromContact = {};
   let toContact = '';
 
@@ -42,7 +46,21 @@ define([
   connection.on('requestedSchema', function (data) {
     // save schema
     deFields = data['schema'];
-    populateDropdowns();
+    var optionsData = ''
+    data['schema'].forEach(ele => {
+      //change schema of field so that field with space between can also be render
+      optionsData +=`<option value="${ele.name}">${ele.name}</option>`
+      var key = ele.key
+      const myArray = key.split(".");
+      var value = myArray[0]+'.'+myArray[1]+'.'+'"'+ele.name+'"'  
+      deData[ele.name]=value        
+      //Storing data extension mapping
+    });
+    $('.mapping-fields-group select').append(optionsData);
+    console.log("-------------------shwoign the schema below -------------");
+    console.log(data['schema']);
+    console.log("showing the DE Data", deData);
+    connection.trigger('ready');
   });
 
   function initialize(data) {
@@ -59,16 +77,24 @@ define([
       payload['arguments'].execute.inArguments.length > 0 &&
       payload['arguments'].execute.inArguments[0].internalPostcardJson
     );
-
+    var hasMapDESchema = Boolean(
+      payload['arguments'] &&
+      payload['arguments'].execute &&
+      payload['arguments'].execute.inArguments &&
+      payload['arguments'].execute.inArguments.length > 0 &&
+      payload['arguments'].execute.inArguments[0].previewDEMapOptions
+    );
     var postcardArguments = hasPostcardArguments ? payload['arguments'].execute.inArguments[0].internalPostcardJson : {};
+    previewDEMapOptions = hasMapDESchema ?payload['arguments'].execute.inArguments[0].previewDEMapOptions : {};
     console.log("postcard arguments below");
     console.log(postcardArguments);
-   // $('#test-api-key').val(postcardArguments.test_api_key).change()
+    console.log("previewDEMapOptions below");
     console.log("changes should reflect", postcardArguments.test_api_key);
+    console.log(previewDEMapOptions);
 
     // Iterating over every postcardArguments for prepopulating
 
-    $.each(postcardArguments, function(key, value) {
+  $.each(postcardArguments, function(key, value) {
       switch (key) {
       case 'test_api_key':
         $('#test-api-key').val(value).change();
@@ -112,14 +138,38 @@ define([
         var queryString = "." + postcardArguments.messageType.replace(/\s+/g, "") + " ." + postcardArguments.creationType.replace(/\s+/g, "") + " .html-editor-back";
         $(queryString).val(value);
         break;
+      case 'fromContact' :
+        $('#search-contact').val(value.name).change();
+        fromContact.id = value.id;
+        fromContact.name = value.name;
+        console.log("Setting up the names");      
+        break;
       default:
         console.log("Unknown key: " + key);
       }
   });
     
-    initializeHandler();
+  connection.trigger('requestTokens');
+  connection.trigger('requestEndpoints');
+  initializeHandler();
 
   }
+  // Start of Getting Endpoints and AuthToken of Marketing Cloud Instance
+  connection.on('requestedEndpoints', onGetEndpoints);
+  function onGetEndpoints (endpoints) {
+      // Response: endpoints = { restHost: <url> } i.e. "rest.s1.qa1.exacttarget.com"
+      console.log("Get End Points function: "+JSON.stringify(endpoints));
+      et_subdomain = endpoints.restHost        
+      //{"authTSSD":"https://mcp77m12wgt8vbq2j9n10v1dq.auth.marketingcloudapis.com"}
+      authTSSD = (endpoints.authTSSD).split("//")[1].split(".")[0];
+  }
+  connection.on('requestedTokens', onGetTokens);
+  function onGetTokens (tokens) {
+      // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
+      console.log("Get tokens function: "+JSON.stringify(tokens));
+      authToken = tokens.fuel2token;
+  }
+  // End of Getting Endpoints and AuthToken of Marketing Cloud Instance
 
   // wizard step *******************************************************************************
   var currentStep = steps[0].key;
@@ -159,6 +209,7 @@ define([
       break;
 
     case 'step3':
+      prepopulateToDeMapping();
       $('#dropdown-options').hide();
       if ($('.screen-3').css('display') === 'block') {
         validateStep3() ? proceedToNext() : handleValidationFailure();
@@ -290,14 +341,22 @@ define([
 
   function save() {
     payload['arguments'].execute.inArguments = [{}];
+    var MapDESchema = {}
+    $('.mapping-fields-group select').each(function(){
+        var eleID = $(this).attr('id')
+        var optionSelect = $(this).find(":selected").val();
+        if(optionSelect !== "Select"){
+          MapDESchema[eleID]='{{'+deData[optionSelect]+'}}'
+        } 
+        previewDEMapOptions[eleID]=optionSelect
+    })
     previewPayload.xyz = "live_deepakTest";
     previewPayload.messageType = $("input[name='msgType']:checked").val();
     previewPayload.creationType = $("input[name='createType']:checked").val();
     payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
+    payload['arguments'].execute.inArguments[0]['MapDESchema']=MapDESchema
+    payload['arguments'].execute.inArguments[0]['previewDEMapOptions']=previewDEMapOptions
     payload['metaData'].isConfigured = true;
-    console.log("previewPayload");
-    console.log(JSON.stringify(previewPayload));
-    console.log("Payload on SAVE function: " + JSON.stringify(payload['arguments'].execute.inArguments));
     var postCardJson = {
       from: previewPayload.fromContact ? previewPayload.fromContact.id : '',
       size: previewPayload.size,
@@ -306,16 +365,25 @@ define([
       description: previewPayload.description,
       mailingClass: previewPayload.mailingClass,
     };
-    if(previewPayload.messageType === 'Postcards' && previewPayload.creationType === 'HTML'){
+    if(previewPayload.messageType === 'Postcards'){
       if(previewPayload.creationType === 'HTML'){
         postCardJson.frontHTML = previewPayload.frontHtmlContent;
         postCardJson.backHTML = previewPayload.backHtmlContent;
       } else if(previewPayload.creationType === 'Existing Template'){
-        postCardJson.frontTemplate = previewPayload.frontTemplateName;
-        postCardJson.backTemplate = previewPayload.backTemplateName;
+        postCardJson.frontTemplate = previewPayload.frontTemplateId;
+        postCardJson.backTemplate = previewPayload.backTemplateId;
       }
     }
     payload['arguments'].execute.inArguments[0]['postcardJson'] = postCardJson;
+    authorization['authToken'] = authToken;
+    authorization['et_subdomain'] = et_subdomain;
+    authorization['authTSSD'] = authTSSD;
+    console.log("authorization", authorization);
+    
+    payload['arguments'].execute.inArguments[0]['authorization'] = authorization;
+    console.log("previewPayload");
+    console.log(JSON.stringify(previewPayload));
+    console.log("Payload on SAVE function: " + JSON.stringify(payload['arguments'].execute.inArguments));
     connection.trigger('updateActivity', payload);
   }
 
@@ -1095,42 +1163,6 @@ $('#search-contact').on('focus', function () {
     }
 });
 
-  function populateDropdowns() {
-    $('.mapping-fields-group select').each(function () {
-      let $select = $(this);
-      let defaultOption = $select.find('option:first').prop('outerHTML'); // Preserve the first default option
-      let currentSelection = $select.val(); // Store current selection
-
-      $select.empty().append(defaultOption); // Reset options
-
-      deFields.forEach((field) => {
-        if (!Object.values(selectedFieldsForMapping).includes(field.name) || field.name === currentSelection) {
-          $select.append($('<option></option>').attr('value', field.name).text(field.name));
-        }
-      });
-
-      $select.val(currentSelection); // Reapply previous selection if still valid
-    });
-  }
-
-  $('.mapping-fields-group select').on('change', function () {
-    let fieldId = $(this).attr('id');
-    let selectedValue = $(this).val();
-
-    // Remove previous selection
-    if (selectedFieldsForMapping[fieldId]) {
-      delete selectedFieldsForMapping[fieldId];
-    }
-
-    // Store new selection
-    if (selectedValue && selectedValue !== $(this).find('option:first').val()) {
-      selectedFieldsForMapping[fieldId] = selectedValue;
-    }
-
-    // Refresh all dropdowns
-    populateDropdowns();
-  });
-
   function validateToContact() {
     let isValid = true;
     previewPayload.fromContact = fromContact;
@@ -1332,4 +1364,43 @@ $('#search-contact').on('focus', function () {
   }, 300));
 
   /** screen 3C script */
+    /* Method for Prepopulating TO Mapping */
+  function prepopulateToDeMapping(){
+    $.each(previewDEMapOptions, function(key, value) {
+      switch (key) {
+          case "firstName":
+            $('#firstName').val(value).change();  
+              break;
+          case "lastName":
+            $('#lastName').val(value).change();
+              break;
+          case "companyName":
+            $('#companyName').val(value).change();
+              break;
+          case "email":
+            $('#email').val(value).change();
+              break;
+          case "addressLine1":
+            $('#addressLine1').val(value).change();
+              break;
+          case "addressLine2":
+            $('#addressLine2').val(value).change();
+              break;
+          case "city":
+            $('#city').val(value).change();
+              break;
+          case "provinceOrState":
+            $('#provinceOrState').val(value).change();
+              break;
+          case "countryCode":
+            $('#countryCode').val(value).change();
+              break;
+          case "postalOrZip":
+            $('#postalOrZip').val(value).change();
+              break;
+          default:
+            console.log("Unknown DE Map: " + key);
+      }
+    });
+  }
 });
