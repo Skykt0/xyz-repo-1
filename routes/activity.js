@@ -32,7 +32,8 @@ exports.execute = async function (req, res) {
   console.log("authTSSD", authTSSD);
   try{
       // Contact create call    -------------------------------------------------
-      var contactFields = req.body.inArguments[0].MapDESchema
+      var contactFields = req.body.inArguments[0].MapDESchema ;
+      var internalPostcardJson = req.body.inArguments[0].internalPostcardJson ;
       console.log('contactFields : ',contactFields)
       const conConfigOptions = {
           method: 'POST',
@@ -40,7 +41,7 @@ exports.execute = async function (req, res) {
           headers: {
               accept: 'application/json',
               'Content-Type': 'application/json',
-              'X-API-KEY': 'test_sk_cnq1oaxBBACr1LucRxr42q'
+              'X-API-KEY': internalPostcardJson.test_api_key
           },
           data: contactFields
       };
@@ -60,7 +61,7 @@ exports.execute = async function (req, res) {
                   headers: {
                       accept: 'application/json',
                       'Content-Type': 'application/json',
-                      'X-API-KEY': 'test_sk_cnq1oaxBBACr1LucRxr42q'
+                      'X-API-KEY': internalPostcardJson.test_api_key
                   },
                   data: postcardJson
               };
