@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/save/', activity.save);
 app.post('/validate/', activity.validate);
 app.post('/publish/', activity.publish);
-app.post('/journeybuilder/execute/', activity.execute);
+app.post('/execute/', activity.execute);
 
 const PORT = process.env.PORT || 3000;
 
