@@ -277,6 +277,8 @@ define([
       break;
 
     case 'step4':
+        console.log('to contact step: '+toContact);;
+        
       if (validateToContact()) {
         getPreviewURL();
       } else {
@@ -1105,6 +1107,8 @@ define([
       .then(data => {
         console.log('Contact Created:', data);
         toContact = data.id;
+        console.log('to contact: '+toContact);;
+        
       })
       .catch(error => {
         console.error('Error:', error);
