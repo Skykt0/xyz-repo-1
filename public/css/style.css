@@ -267,7 +267,7 @@ body {
 }
 
 .step1-right-panel {
-	/* background-image: url("../images/loginScreen.jpg"); */
+	background-image: url("../images/loginScreen.jpg");
 	background-size: cover;
 	background-position: center;
 }
