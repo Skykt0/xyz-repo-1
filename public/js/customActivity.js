@@ -10,6 +10,7 @@ define([
   var deData = {};
   var previewDEMapOptions = {};
   var authorization = {};
+  let deFields = {};
   let previewPayload = {
     isValid: true
   };
