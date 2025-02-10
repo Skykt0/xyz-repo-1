@@ -229,7 +229,7 @@ define([
     case 'step1':
       if (validateApiKeys()) {
         handleApiKeyToggle();
-        
+        fetchContacts();
         connection.trigger('nextStep');
       } else {
         handleValidationFailure();
@@ -1199,14 +1199,14 @@ define([
     fromContact.name = contact.firstName;
 });
 $(document).on('click', function (event) {
-    if (!$(event.target).closest('.mapping-dropdown').length) {
+    if (!$(event.target).is('#dropdown-options, #search-contact') && $(event.target).closest('#step4').length) {
         $('#dropdown-options').hide();
     }
 });
 $('#search-contact').on('focus', function () {
     const searchQuery = $(this).val().trim();
     if ($('#dropdown-options').is(':hidden')) {
-        if (searchQuery === '') {
+        if (searchQuery === '' && $('#dropdown-options div').length == 0) {
             fetchContacts(); // Fetch default contacts if input is empty
         } else {
             $('#dropdown-options').show(); // Show dropdown if it was hidden
