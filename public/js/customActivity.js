@@ -1191,6 +1191,29 @@ $('#search-contact').on('focus', function () {
     return isValid;
   }
 
+  //start of adding * in Company Label 
+  $('.mapping-fields-group #first-name').change(function () {
+    var firstNameValue = $(this).val();
+    var companyLabel = $('.mapping-fields-group label[for=\'company\']');
+  
+    if (firstNameValue !== 'Select') {
+      companyLabel.text('Company'); // Remove *
+    } else {
+      companyLabel.text('Company *'); // Add * back
+    }
+  });
+
+  $('#company').change(function () {
+    var selectedValue = $(this).val();
+    let firstNameValue =$('.mapping-fields-group label[for=\'first-name\']');
+
+    if (selectedValue !== 'Select') {
+      firstNameValue.text('First Name'); // Remove *
+    } else {
+      firstNameValue.text('First Name *'); // Add * back
+    }
+  });
+
   function resetToContactMappingErrors() {
     $('.mapping-fields-group select').css('border', ''); // Reset border styles
     $('.error-message-contactMapping').text('').hide(); // Clear and hide error messages
