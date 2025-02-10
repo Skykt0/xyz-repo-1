@@ -191,6 +191,7 @@ define([
         console.log("Setting up the names");
         break;
       case 'encodedPdf':
+        var base64Data = 'data:application/pdf;base64,'+value;
         setFileToInput(base64Data, postcardArguments['pdfName']);
         break;
       default:
