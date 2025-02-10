@@ -1220,6 +1220,8 @@ define([
           isAnyFieldEmpty = true;
         }
       } else {
+        console.log('contact fields: ' +selector);
+        
         if (value === 'Select') {
           $(selector).css('border', '2px solid red');
           isAnyFieldEmpty = true;
