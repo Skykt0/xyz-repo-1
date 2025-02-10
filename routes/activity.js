@@ -78,7 +78,9 @@ exports.execute = async function (req, res) {
                   }
               } catch (error) {
                   console.error("Error creating postcard:", error.response ? error.response.data : error.message);
-                  logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken);
+                  const d = new Date();
+                  let timeStamp = d.toISOString();
+                  logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp);
                   res.status(500).send('Error creating postcard');
                   return;
               }
@@ -90,7 +92,9 @@ exports.execute = async function (req, res) {
           }
       } catch (error) {
           console.error("Error creating contact:", error.response ? error.response.data : error.message);
-          logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken);
+          const d = new Date();
+          let timeStamp = d.toISOString();
+          logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp);
           res.status(500).send('Error creating contact');
           return;
       }
@@ -119,13 +123,14 @@ exports.validate = function (req, res) {
 // res.send(200, 'Validate');
   res.status(200).send('Validate');
 };
-function logToDataExtension(responseData, authTSSD, authToken) {
+function logToDataExtension(responseData, authTSSD, authToken, timeStamp) {
 
   var payload = JSON.stringify({
       "items": [
           {
           "Status": "Error",
-          "Response": responseData
+          "Response": responseData,
+          "TimeStamp": timeStamp
           }
       ]
   });
