@@ -9,9 +9,7 @@ define([
   var payload = {};
   var deData = {};
   var previewDEMapOptions = {};
-  let deFields;
   var authorization = {};
-  let selectedFieldsForMapping = {};
   let previewPayload = {
     isValid: true
   };
