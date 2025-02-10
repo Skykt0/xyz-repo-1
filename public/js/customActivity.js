@@ -1209,7 +1209,7 @@ define([
     let isValid = true;
     previewPayload.fromContact = fromContact;
     resetToContactMappingErrors();
-    let requiredFields = ['#address1', '#firstName', '#companyName', '#city', '#provinceOrState', '#countryCode'];
+    let requiredFields = ['#addressLine1', '#firstName', '#companyName', '#city', '#provinceOrState', '#countryCode'];
     let isAnyFieldEmpty = false;
     requiredFields.forEach(selector => {
       let value = $(selector).val();
