@@ -156,7 +156,7 @@ define([
         break;
       case 'description':
         var queryString = "." + postcardArguments.messageType.replace(/\s+/g, "") + " ." + postcardArguments.creationType.replace(/\s+/g, "")+ " .description";
-        console.log('desc query: '+queryString);
+        console.log('description query: '+queryString);
         $(queryString).val(value);
         break;
       case 'frontTemplateName':
