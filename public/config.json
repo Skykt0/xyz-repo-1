@@ -24,7 +24,7 @@
 		}
 	},
 	"configurationArguments": {
-		"applicationExtensionKey": "e51f7b3f-9826-4164-babb-59dd952216b1",
+		"applicationExtensionKey": "b2556cf2-85b9-4239-a0a9-b10edbf3f4c0",
 		"save": {
 			"url": "https://xyz-repo-1-production.up.railway.app/save",
 			"verb": "POST",
