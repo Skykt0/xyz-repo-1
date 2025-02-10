@@ -445,6 +445,8 @@ define([
       } else if(previewPayload.creationType === 'Existing Template'){
         postCardJson.frontTemplate = previewPayload.frontTemplateId;
         postCardJson.backTemplate = previewPayload.backTemplateId;
+      } else if(previewPayload.creationType === 'PDF Upload'){
+        postCardJson.pdf = previewPayload.pdfLink;
       }
     }
     payload['arguments'].execute.inArguments[0]['postcardJson'] = postCardJson;
@@ -984,6 +986,7 @@ define([
       }
 
       const result = await response.json();
+      previewPayload.pdfLink = result.uploadedPDF;
 
       return result;
     } catch (error) {
