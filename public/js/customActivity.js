@@ -63,6 +63,52 @@ define([
     connection.trigger('ready');
   });
 
+  function base64ToFile(base64String, fileName) {
+    // Convert base64 string to a byte array
+    let arr = base64String.split(',');
+    let mime = arr[0].match(/:(.*?);/)[1]; // Extract MIME type
+    let byteString = atob(arr[1]); // Decode Base64
+
+    let arrayBuffer = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      arrayBuffer[i] = byteString.charCodeAt(i);
+    }
+
+    // Create a Blob from the byte array
+    let file = new File([arrayBuffer], fileName, { type: mime });
+
+    return file;
+  };
+
+
+  function base64ToFile(base64String, fileName) {
+    // Convert base64 string to a byte array
+    let arr = base64String.split(',');
+    let mime = arr[0].match(/:(.*?);/)[1]; // Extract MIME type
+    let byteString = atob(arr[1]); // Decode Base64
+
+    let arrayBuffer = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      arrayBuffer[i] = byteString.charCodeAt(i);
+    }
+
+    // Create a Blob from the byte array
+    let file = new File([arrayBuffer], fileName, { type: mime });
+
+    return file;
+  };
+
+  function setFileToInput(base64String, fileName) {
+    let file = base64ToFile(base64String, fileName);
+
+    // Use DataTransfer to set the file in the input element
+    let dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    $("#pdf-upload")[0].files = dataTransfer.files;
+    $('#file-name').text(dataTransfer.files[0].name);
+    $('#remove-pdf').show();
+  };
+
   function initialize(data) {
     if (data) {
       payload = data;
@@ -142,7 +188,10 @@ define([
         $('#search-contact').val(value.name).change();
         fromContact.id = value.id;
         fromContact.name = value.name;
-        console.log("Setting up the names");      
+        console.log("Setting up the names");
+        break;
+      case 'encodedPdf':
+        setFileToInput(base64Data, postcardArguments['pdfName']);
         break;
       default:
         console.log("Unknown key: " + key);
@@ -339,7 +388,16 @@ define([
   }
 
 
-  function save() {
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]); // Base64 content (without the data URL prefix)
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file); // Read the file as a data URL
+    });
+  }
+
+  async function save() {
     payload['arguments'].execute.inArguments = [{}];
     var MapDESchema = {}
     $('.mapping-fields-group select').each(function(){
@@ -347,9 +405,21 @@ define([
         var optionSelect = $(this).find(":selected").val();
         if(optionSelect !== "Select"){
           MapDESchema[eleID]='{{'+deData[optionSelect]+'}}'
-        } 
+        }
         previewDEMapOptions[eleID]=optionSelect
     })
+
+    // Coverting PDF in base64
+    if (previewPayload.pdf) {
+      await convertToBase64(previewPayload.pdf)
+        .then((base64String) => {
+          previewPayload.encodedPdf = base64String;
+          // You can now use this base64String in your logic
+        })
+        .catch((error) => {
+          return;
+        });
+    }
     previewPayload.xyz = "live_deepakTest";
     previewPayload.messageType = $("input[name='msgType']:checked").val();
     previewPayload.creationType = $("input[name='createType']:checked").val();
@@ -836,6 +906,7 @@ define([
       previewPayload.size = size;
       previewPayload.isExpressDelivery = isExpressDelivery;
       previewPayload.pdf = pdfFile;
+      previewPayload.pdfName = pdfFile.name;
     } else if ($('#postcardScreen .screen-3').css('display') === 'block') {
       const description = document.querySelector('#description3').value;
       const sendDate = document.querySelector('#sendDate3').value;
