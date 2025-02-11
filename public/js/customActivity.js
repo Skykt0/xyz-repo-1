@@ -928,7 +928,7 @@ define([
     if(previewPayload.screen === 'pdf'){
       data = new FormData();
       data.append('to', toContact);
-      data.append('from', fromContact.id);
+      data.append('from', fromContact.id || '');
       data.append('sendDate', previewPayload.sendDate);
       data.append('express', previewPayload.isExpressDelivery);
       data.append('description', previewPayload.description);
@@ -941,7 +941,7 @@ define([
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
         'to': toContact,
-        'from': fromContact.id,
+        'from': fromContact.id || '',
         'frontHTML': previewPayload.frontHtmlContent,
         'backHTML': previewPayload.backHtmlContent,
         'size': previewPayload.size,
@@ -960,7 +960,7 @@ define([
       
       data = new URLSearchParams({
         'to': toContact,
-        'from': fromContact.id,
+        'from': fromContact.id || '',
         frontTemplate: previewPayload.frontTemplateId,
         backTemplate: previewPayload.backTemplateId,
         size: previewPayload.size,
@@ -1230,9 +1230,6 @@ define([
           isAnyFieldEmpty = true;
         }
       } else {
-        console.log('contact fields: ' +selector + ',  ');
-        console.log($(selector));
-        
         if (value === 'Select') {
           $(selector).css('border', '2px solid red');
           isAnyFieldEmpty = true;
