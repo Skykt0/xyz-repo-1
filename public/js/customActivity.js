@@ -1043,12 +1043,12 @@ define([
       if (pdfUrl) {
         $('.retry-preview-btn').css('display', 'inline-block');
         $('.preview-message').css('display', 'inline-block');
-        $('.retry-preview-btn .loader').removeClass('show');
+        $('.retry-btn-wrap .loader').removeClass('show');
         $('.retry-preview-btn').off('click').on('click', function() {
           console.log('Show Preview button clicked!');
           $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
           $('#pdf-preview-container').css('display', 'block');
-          $('.retry-preview-btn').css('display', 'block');
+          $('.retry-preview-btn').css('display', 'none');
           $('.preview-message').css('display', 'none');
         });
       } else {
@@ -1056,7 +1056,7 @@ define([
         $('#pdf-preview-container').css('display', 'none');
         $('.retry-preview-btn').css('display', 'none');
         $('.preview-message').css('display', 'block');
-        $('.retry-preview-btn .loader').addClass('show');
+        $('.retry-btn-wrap .loader').addClass('show');
         setTimeout(() => {
             showPdfPreviewRetry(postcardId);
         }, 2000);
@@ -1075,12 +1075,12 @@ define([
 
     if (pdfUrl) {
         $('.retry-preview-btn').css('display', 'inline-block');
-        $('.retry-preview-btn .loader').removeClass('show');
+        $('.retry-btn-wrap .loader').removeClass('show');
         $('.retry-preview-btn').off('click').on('click', function() {
           console.log('Show Preview button clicked!');
           $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
           $('#pdf-preview-container').css('display', 'block');
-          $('.retry-preview-btn').css('display', 'block');
+          $('.retry-preview-btn').css('display', 'none');
           $('.preview-message').css('display', 'none');
         });
       } else {
