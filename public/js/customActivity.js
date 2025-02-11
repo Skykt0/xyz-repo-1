@@ -1218,14 +1218,14 @@ $('#search-contact').on('focus', function () {
     let isValid = true;
     previewPayload.fromContact = fromContact;
     resetToContactMappingErrors();
-    let requiredFields = ['#address1', '#first-name', '#company', '#city', '#state', '#country-code'];
+    let requiredFields = ['#addressLine1', '#firstName', '#companyName', '#city', '#provinceOrState', '#countryCode'];
     let isAnyFieldEmpty = false;
     requiredFields.forEach(selector => {
       let value = $(selector).val();
       // Special validation for First Name or Company (one must be selected)
-      if (selector === '#first-name' || selector === '#company') {
-        if ($('#first-name').val() === 'Select' && $('#company').val() === 'Select') {
-          $('#first-name, #company').css('border', '2px solid red');
+      if (selector === '#firstName' || selector === '#companyName') {
+        if ($('#firstName').val() === 'Select' && $('#companyName').val() === 'Select') {
+          $('#firstName, #companyName').css('border', '2px solid red');
           isAnyFieldEmpty = true;
         }
       } else {
@@ -1243,9 +1243,9 @@ $('#search-contact').on('focus', function () {
   }
 
   // Handling * in Company Label based on First Name selection
-$('.mapping-fields-group #first-name').change(function () {
+$('.mapping-fields-group #firstName').change(function () {
   var firstNameValue = $(this).val();
-  var companyLabel = $('.mapping-fields-group label[for="company"]');
+  var companyLabel = $('.mapping-fields-group label[for="companyName"]');
 
   if (firstNameValue !== 'Select') {
       companyLabel.text('Company'); // Remove *
@@ -1255,9 +1255,9 @@ $('.mapping-fields-group #first-name').change(function () {
 });
 
 // Handling * in First Name Label based on Company selection
-$('.mapping-fields-group #company').change(function () {
+$('.mapping-fields-group #companyName').change(function () {
   var companyValue = $(this).val();
-  var firstNameLabel = $('.mapping-fields-group label[for="first-name"]');
+  var firstNameLabel = $('.mapping-fields-group label[for="firstName"]');
 
   if (companyValue !== 'Select') {
       firstNameLabel.text('First Name'); // Remove *
