@@ -436,8 +436,10 @@ define([
       sendDate: previewPayload.sendDate,
       express: previewPayload.isExpressDelivery,
       description: previewPayload.description,
-      mailingClass: previewPayload.mailingClass,
     };
+    if(!previewPayload.isExpressDelivery) {
+        postCardJson.mailingClass = previewPayload.mailingClass;
+    }
     if(previewPayload.messageType === 'Postcards'){
       if(previewPayload.creationType === 'HTML'){
         postCardJson.frontHTML = previewPayload.frontHtmlContent;
