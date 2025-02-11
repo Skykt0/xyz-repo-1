@@ -237,10 +237,21 @@ define([
     switch (currentStep.key) {
     case 'step1':
       if (validateApiKeys()) {
-        handleApiKeyToggle();
-        fetchContacts();
-        connection.trigger('nextStep');
-      } else {
+        authenticateApiKeys().then((isAuthenticated) => {
+          if (isAuthenticated) {
+            // Proceed with the next steps
+            handleApiKeyToggle();
+            fetchContacts();
+            connection.trigger('nextStep');
+          } else {
+            // Handle authentication failure
+            handleValidationFailure();
+          }
+        }).catch((error) => {
+          console.error("Authentication failed:", error);
+        });
+      }
+      else{
         handleValidationFailure();
       }
       break;
@@ -1517,4 +1528,57 @@ $('.mapping-fields-group #companyName').change(function () {
       }
     });
   }
+
+  /* Method for Authentication API */
+  async function authenticateApiKeys(){
+    const testApiKey = $('#test-api-key').val().trim();
+    const liveApiKey = $('#live-api-key').val().trim();
+    let isValid = true;
+
+    const url = 'https://api.postgrid.com/print-mail/v1/contacts?limit=1';
+    if(testApiKey){
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'x-api-key': testApiKey
+          }
+        });
+  
+        if (!response.ok) {
+          $('#test-api-key').css('border', '1px solid red'); // Highlight input box
+          $('#test-api-key-error').text(`Invalid API key: ${testApiKey}`).show(); 
+          console.log(response);
+          
+          isValid =  false;
+        }
+      } catch (error) {
+        console.error('Error Validating TestApiKey:', error.message);
+        throw error;
+      }
+    }
+    if(liveApiKey){
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'x-api-key': liveApiKey
+          }
+        });
+  
+        if (!response.ok) {
+          $('#live-api-key').css('border', '1px solid red'); // Highlight input box
+          $('#live-api-key-error').text(`Invalid API key: ${liveApiKey}`).show();
+          isValid = false;
+        }
+      } catch (error) {
+        console.error('Error Validating TestApiKey:', error.message);
+        throw error;
+      }
+    }
+
+    return isValid;
+  }
+
+  
 });
