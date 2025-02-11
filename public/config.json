@@ -20,7 +20,7 @@
 			"body": "",
 			"format": "json",
 			"useJwt": false,
-			"timeout": 2000
+			"timeout": 9000
 		}
 	},
 	"configurationArguments": {
