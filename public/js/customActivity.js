@@ -1272,6 +1272,7 @@ $('#search-contact').on('focus', function () {
   $('.mapping-fields-group select').on('click', function () {
     resetToContactMappingErrors();
   });
+  
   /** screen 4 script */
 
   /** screen 3C script */
