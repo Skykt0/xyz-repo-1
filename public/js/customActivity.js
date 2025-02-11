@@ -903,6 +903,9 @@ define([
       previewPayload.frontTemplateName = frontTemplateName;
       previewPayload.backTemplateName = backTemplateName;
     }
+
+    console.log('set preview payload: '+JSON.stringify(previewPayload));
+    
   }
 
   function getFormattedDate(sendDate) {
@@ -924,6 +927,9 @@ define([
     let headers = {
       'x-api-key': previewPayload.test_api_key,
     };
+
+    console.log('existing template contact '+toContact);
+    console.log('preview payload: '+JSON.stringify(previewPayload));
 
     if(previewPayload.screen === 'pdf'){
       data = new FormData();
@@ -956,9 +962,6 @@ define([
       }
     } else if(previewPayload.screen === 'existing-template') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      console.log('existing template contact '+toContact);
-      console.log('preview payload: '+JSON.stringify(previewPayload));
-      
       
       data = new URLSearchParams({
         'to': toContact,
