@@ -194,6 +194,10 @@ define([
         var base64Data = 'data:application/pdf;base64,'+value;
         setFileToInput(base64Data, postcardArguments['pdfName']);
         break;
+      case 'mailingClass':
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .mailing-class';
+        $(queryString).val(value);
+        break;
       default:
         console.log('Unknown key: ' + key);
       }
