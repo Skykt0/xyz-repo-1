@@ -1048,21 +1048,21 @@ define([
         });
       } else {
         console.warn('No PDF URL received!');
-        $('#pdf-preview-container').css('display', 'block');
+        $('#pdf-preview-container').css('display', 'none');
         $('.retry-preview-btn').css('display', 'none');
-        $('.preview-message').css('display', 'none');
+        $('.preview-message').css('display', 'block');
       }
     } catch (error) {
       console.error('Error fetching PDF Preview:', error);
-      $('#pdf-preview-container').css('display', 'block');
+      $('#pdf-preview-container').css('display', 'none');
       $('.retry-preview-btn').css('display', 'none');
-      $('.preview-message').css('display', 'none');
+      $('.preview-message').css('display', 'block');
     }
     $('#pdf-preview').on('error', function () {
       console.error('Error loading PDF preview!');
-      $('#pdf-preview-container').css('display', 'block');
+      $('#pdf-preview-container').css('display', 'none');
       $('.retry-preview-btn').css('display', 'none');
-      $('.preview-message').css('display', 'none');
+      $('.preview-message').css('display', 'block');
     });
   }
 
