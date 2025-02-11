@@ -747,9 +747,9 @@ define([
 
     if ($('.screen-2').css('display') === 'block') {
       let isDescriptionValid = validateInputField($('.postcard-pdf-container #description'));
-      let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
+    //   let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
     
-      if (!isDescriptionValid || !isSendDateValid) {
+      if (!isDescriptionValid) {
         isValid = false;
       }
 
@@ -779,9 +779,9 @@ define([
 
     if ($('.screen-1').css('display') === 'block') {
       let isDescriptionValid = validateInputField($('.postcard-input-fields #description'));
-      let isSendDateValid = validateInputField($('.html-screen-wrapper #sendDate'));
+    //   let isSendDateValid = validateInputField($('.html-screen-wrapper #sendDate'));
     
-      if (!isDescriptionValid || !isSendDateValid) {
+      if (!isDescriptionValid) {
         isValid = false;
       }
   
@@ -870,7 +870,7 @@ define([
   function setPreviewPayload() {
     if ($('#postcardScreen .screen-1').css('display') === 'block') {
       const description = $('.screen-1 #description').val();
-      const sendDate = $('.screen-1 #sendDate').val();
+    //   const sendDate = $('.screen-1 #sendDate').val();
       const mailingClass = $('.screen-1 #mailingClass').val();
       const frontHtmlContent = $('.html-editor-front').val();
       const backHtmlContent = $('.html-editor-back ').val();
@@ -879,7 +879,7 @@ define([
 
       previewPayload.screen = 'html';
       previewPayload.description = description;
-      previewPayload.sendDate = getFormattedDate(sendDate);
+      previewPayload.sendDate = getFormattedDate();
       previewPayload.mailingClass = mailingClass;
       previewPayload.frontHtmlContent = frontHtmlContent;
       previewPayload.backHtmlContent = backHtmlContent;
@@ -887,7 +887,7 @@ define([
       previewPayload.isExpressDelivery = isExpressDelivery;
     } else if ($('#postcardScreen .screen-2').css('display') === 'block') {
       const description = $('#postcardScreen .screen-2 #description').val();
-      const sendDate = $('#postcardScreen .screen-2 #sendDate').val();
+    //   const sendDate = $('#postcardScreen .screen-2 #sendDate').val();
       const mailingClass = $('#postcardScreen .screen-2 #mailingClass').val();
       const size = $('.postcard-pdf-size input[name=\'postcardPDFSize\']:checked').val();
       const isExpressDelivery = $('#postcardScreen .screen-2 #expDelivery').is(':checked');
@@ -896,7 +896,7 @@ define([
 
       previewPayload.screen = 'pdf';
       previewPayload.description = description;
-      previewPayload.sendDate = getFormattedDate(sendDate);
+      previewPayload.sendDate = getFormattedDate();
       previewPayload.mailingClass = mailingClass;
       previewPayload.size = size;
       previewPayload.isExpressDelivery = isExpressDelivery;
@@ -904,7 +904,7 @@ define([
       previewPayload.pdfName = pdfFile.name;
     } else if ($('#postcardScreen .screen-3').css('display') === 'block') {
       const description = document.querySelector('#description3').value;
-      const sendDate = document.querySelector('#sendDate3').value;
+    //   const sendDate = document.querySelector('#sendDate3').value;
       const frontTemplateId = document.querySelector('#frontTemplateInput')?.dataset.id;
       const backTemplateId = document.querySelector('#backTemplateInput')?.dataset.id;
       const size = $('.screen-3 input[name=\'size\']:checked').val();
@@ -915,7 +915,7 @@ define([
 
       previewPayload.screen = 'existing-template';
       previewPayload.description = description;
-      previewPayload.sendDate = getFormattedDate(sendDate);
+      previewPayload.sendDate = getFormattedDate();
       previewPayload.frontTemplateId = frontTemplateId;
       previewPayload.backTemplateId = backTemplateId;
       previewPayload.size = size;
@@ -929,8 +929,11 @@ define([
     
   }
 
-  function getFormattedDate(sendDate) {
+  function getFormattedDate() {
     let now = new Date();
+    const sendDate = now.getFullYear() + '-' + 
+                       String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                       String(now.getDate()).padStart(2, '0');
     let istOffset = 5.5 * 60 * 60 * 1000; // Convert 5.5 hours to milliseconds
     let istTime = new Date(now.getTime() + istOffset);
 
@@ -1341,12 +1344,12 @@ $('.mapping-fields-group #companyName').change(function () {
       $('#description3').addClass('error-field');
       isValid = false;
     }
-    let selectedDate = $('#sendDate3').val();
-    if (!selectedDate || selectedDate < today) {
-      $('#sendDate3').after('<span class="error-message">Send Date cannot be in the past.</span>');
-      $('#sendDate3').addClass('error-field');
-      isValid = false;
-    }
+    // let selectedDate = $('#sendDate3').val();
+    // if (!selectedDate || selectedDate < today) {
+    //   $('#sendDate3').after('<span class="error-message">Send Date cannot be in the past.</span>');
+    //   $('#sendDate3').addClass('error-field');
+    //   isValid = false;
+    // }
     if (!$('#mailingClass3').val()) {
       $('#mailingClass3').after('<span class="error-message">Mailing Class is required.</span>');
       $('#mailingClass3').addClass('error-field');
