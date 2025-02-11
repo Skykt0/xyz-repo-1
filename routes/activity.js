@@ -81,7 +81,7 @@ exports.execute = async function (req, res) {
           console.error('Error creating postcard:', error.response ? error.response.data : error.message);
           const d = new Date();
           let timeStamp = d.toISOString();
-          logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp, contactKey);
+          logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp, contactKey, 'postcard');
           res.status(500).send('Error creating postcard');
           return;
         }
@@ -95,7 +95,7 @@ exports.execute = async function (req, res) {
       console.error('Error creating contact:', error.response ? error.response.data : error.message);
       const d = new Date();
       let timeStamp = d.toISOString();
-      logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp, contactKey);
+      logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp, contactKey, 'contact');
       res.status(500).send('Error creating contact');
       return;
     }
@@ -124,7 +124,7 @@ exports.validate = function (req, res) {
   // res.send(200, 'Validate');
   res.status(200).send('Validate');
 };
-function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contactKey) {
+function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contactKey, object) {
 
   var payload = JSON.stringify({
     'items': [
@@ -132,7 +132,8 @@ function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contac
         'Status': 'Error',
         'Response': responseData,
         'TimeStamp': timeStamp,
-        'ContactKey' : contactKey
+        'ContactKey' : contactKey,
+        'Object': object
       }
     ]
   });
