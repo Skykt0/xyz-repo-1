@@ -954,7 +954,7 @@ define([
       }
     } else if(previewPayload.screen === 'existing-template') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      console.log('log ik; '+toContact);
+      console.log('existing template contact '+toContact);
       
       data = new URLSearchParams({
         'to': toContact,
