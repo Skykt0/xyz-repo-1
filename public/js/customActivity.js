@@ -1242,28 +1242,30 @@ $('#search-contact').on('focus', function () {
     return isValid;
   }
 
-  //start of adding * in Company Label 
-  $('.mapping-fields-group #first-name').change(function () {
-    var firstNameValue = $(this).val();
-    var companyLabel = $('.mapping-fields-group label[for=\'company\']');
-  
-    if (firstNameValue !== 'Select') {
+  // Handling * in Company Label based on First Name selection
+$('.mapping-fields-group #first-name').change(function () {
+  var firstNameValue = $(this).val();
+  var companyLabel = $('.mapping-fields-group label[for="company"]');
+
+  if (firstNameValue !== 'Select') {
       companyLabel.text('Company'); // Remove *
-    } else {
+  } else {
       companyLabel.text('Company *'); // Add * back
-    }
-  });
+  }
+});
 
-  $('#company').change(function () {
-    var selectedValue = $(this).val();
-    let firstNameValue =$('.mapping-fields-group label[for=\'first-name\']');
+// Handling * in First Name Label based on Company selection
+$('.mapping-fields-group #company').change(function () {
+  var companyValue = $(this).val();
+  var firstNameLabel = $('.mapping-fields-group label[for="first-name"]');
 
-    if (selectedValue !== 'Select') {
-      firstNameValue.text('First Name'); // Remove *
-    } else {
-      firstNameValue.text('First Name *'); // Add * back
-    }
-  });
+  if (companyValue !== 'Select') {
+      firstNameLabel.text('First Name'); // Remove *
+  } else {
+      firstNameLabel.text('First Name *'); // Add * back
+  }
+});
+
 
   function resetToContactMappingErrors() {
     $('.mapping-fields-group select').css('border', ''); // Reset border styles
