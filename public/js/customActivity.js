@@ -1043,7 +1043,7 @@ define([
           console.log('Show Preview button clicked!');
           $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
           $('#pdf-preview-container').css('display', 'block');
-          $('.retry-preview-btn').css('display', 'none');
+          $('.retry-preview-btn').css('display', 'block');
           $('.preview-message').css('display', 'none');
         });
       } else {
