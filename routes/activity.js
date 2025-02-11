@@ -25,6 +25,7 @@ exports.save = function (req, res) {
  */
 exports.execute = async function (req, res) {
   console.log('Starting of Execute Function');
+  var contactKey = req.body.keyValue;
   var requestBody = req.body.inArguments[0];        
   var authToken = requestBody.authorization.authToken;
   var authTSSD = requestBody.authorization.authTSSD;
@@ -80,7 +81,7 @@ exports.execute = async function (req, res) {
           console.error('Error creating postcard:', error.response ? error.response.data : error.message);
           const d = new Date();
           let timeStamp = d.toISOString();
-          logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp);
+          logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp, contactKey);
           res.status(500).send('Error creating postcard');
           return;
         }
@@ -94,7 +95,7 @@ exports.execute = async function (req, res) {
       console.error('Error creating contact:', error.response ? error.response.data : error.message);
       const d = new Date();
       let timeStamp = d.toISOString();
-      logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp);
+      logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp, contactKey);
       res.status(500).send('Error creating contact');
       return;
     }
@@ -123,14 +124,15 @@ exports.validate = function (req, res) {
   // res.send(200, 'Validate');
   res.status(200).send('Validate');
 };
-function logToDataExtension(responseData, authTSSD, authToken, timeStamp) {
+function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contactKey) {
 
   var payload = JSON.stringify({
     'items': [
       {
         'Status': 'Error',
         'Response': responseData,
-        'TimeStamp': timeStamp
+        'TimeStamp': timeStamp,
+        'ContactKey' : contactKey
       }
     ]
   });
