@@ -1206,7 +1206,7 @@ define([
         // Populate the dropdown with new options
         response.data.forEach(function (contact) {
           $('#dropdown-options').append(
-            $('<div>').text(contact.firstName).data('contact', contact)
+            $('<div>').text(contact.firstName ? contact.firstName : contact.companyName).data('contact', contact)
           );
         });
 
@@ -1245,10 +1245,11 @@ define([
 
   $('#dropdown-options').on('click', 'div', function () {
     const contact = $(this).data('contact');
-    $('#search-contact').val(contact.firstName); // Set the selected contact name in the input
+    var contactValue = contact.firstName ? contact.firstName : contact.companyName
+    $('#search-contact').val(contactValue); // Set the selected contact name in the input
     $('#dropdown-options').hide(); // Hide the dropdown
     fromContact.id = contact.id;
-    fromContact.name = contact.firstName;
+    fromContact.name = contactValue;
   });
 
   $(document).on('click', function (event) {
