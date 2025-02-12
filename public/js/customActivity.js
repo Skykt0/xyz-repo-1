@@ -246,9 +246,9 @@ define([
           fetchTemplates();
         }
 
-        $(`${selectedMessageType} > .screen-1`).toggle(isHtml);
-        $(`${selectedMessageType} > .screen-2`).toggle(isPdf);
-        $(`${selectedMessageType} > .screen-3`).toggle(isExtTemp);
+        $(`.${selectedMessageType} > .screen-1`).toggle(isHtml);
+        $(`.${selectedMessageType} > .screen-2`).toggle(isPdf);
+        $(`.${selectedMessageType} > .screen-3`).toggle(isExtTemp);
 
         connection.trigger('nextStep');
         createContact();
