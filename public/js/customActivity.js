@@ -1,6 +1,6 @@
 define([
   'postmonger',
-  '../utilities/utilitiesHelper'
+  '../js/utilities/utilityHelper.js'
 ], function (
   Postmonger,
   utilitiesHelper
