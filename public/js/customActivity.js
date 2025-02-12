@@ -202,6 +202,9 @@ define([
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .mailing-class';
         $(queryString).val(value);
         break;
+      case 'liveApiKeyEnabled':
+        $('.test-to-live-switch input').prop('checked', value).trigger('change');
+        break;
       default:
         console.log('Unknown key: ' + key);
       }
@@ -609,6 +612,7 @@ define([
     }
 
     if (testApiKey && !liveApiKey) {
+      previewPayload.liveApiKeyEnabled = false;
       $liveModeToggle.prop('disabled', true).prop('checked', false);
     } else {
       $liveModeToggle.prop('disabled', false);
@@ -635,6 +639,10 @@ define([
     $('.test-to-live-switch').on('mouseleave', function () {
       console.log('Mouse Left Live Mode Toggle - Hiding Error Message');
       $errorMessage.hide();
+    });
+
+    $('.test-to-live-switch input').on('change', function() {
+      previewPayload.liveApiKeyEnabled = $(this).is(':checked');
     });
   });
 
