@@ -132,7 +132,7 @@
 
     <div id="step3" class="step">
         <!------------------- 3rd step Postcard Screen ---------------------->
-        <div id="postcardScreen" class="Postcards postcard">
+        <div id="postcardScreen" class="Postcards">
             <!-- Third Step First Screen -->
             <div class="screen-1 screen">
                 <div id="html-screen-container" class="container spacer HTML">
@@ -379,9 +379,70 @@
             </div>
         </div>
 
-        <div class="self-mailer" id="selfMailerScreen">
+        <div class="SelfMailer" id="selfMailerScreen">
             <div class="screen-1 screen">Trifold screen 1 html</div>
-            <div class="screen-2 screen">Trifold Screen 2 PDF</div>
+            <div class="screen-2 screen">
+              <div class="spacer">
+                <div class="self-mailer-pdf-container PDFUpload">
+                    <h3 class="section-label">PDF Upload</h3>
+                    <div class="input-fields">
+                        <div class="input-box">
+                            <label for="description" class="input-label">Description *</label>
+                            <input type="text" class="input-field description" id="self-mailer-pdf-description" name="self-mailer-pdf-description" />
+                            <span class="error-msg">Please enter required field</span>
+                        </div>
+                        <div class="input-box">
+                            <label for="mailingClass" class="input-label">Mailing Class *</label>
+                            <select class="input-field mailing-class" id="self-mailer-pdf-mailing-class" name="self-mailer-pdf-mailing-class">
+                                <option value="first_class" selected>
+                                    First Class (7 - 10 business days)
+                                </option>
+                                <option value="standard_class">
+                                    Standard Class (10 - 14 business days)
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="self-mailer-pdf-size">
+                        <div class="input-label-radio">Size *</div>
+                        <div class="size-radio-buttons-wrap">
+                            <div class="radio-buttons">
+                                <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" name="selfMailerPdfSize" value="8.5x11_bifold" data-dimentions="6.25x4.25"
+                                        checked />
+                                    <span>8.5x11_bifold</span>
+                                </label>
+                                <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" name="selfMailerPdfSize" value="8.5x11_trifold" data-dimentions="9.25x6.25"/>
+                                    <span>8.5x11_trifold</span>
+                                </label>
+                                <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" name="selfMailerPdfSize" value="9.5x16_trifold" data-dimentions="11.25x6.25"/>
+                                    <span>9.5x16_trifold</span>
+                                </label>
+                            </div>
+                            <span class="error-msg">Please Select at least one size.</span>
+                        </div>
+                    </div>
+                    <div class="self-mailer-pdf-express-delivery">
+                        <div class="two-checkboxes">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input express-delivery-btn" id="selfMailerexpDelivery" name="selfMailerexpDelivery" />
+                                <span>Express Delivery</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="drop-pdf upload-box" id="drop-area">
+                        <input type="file" id="pdf-upload" accept="application/pdf" class="hidden">
+                        <label for="pdf-upload">
+                            <span id="file-name">Drag or Upload PDF</span>
+                            <span id="remove-pdf" style="display: none;">✖</span>
+                        </label>
+                        <span class="pdf-error error-msg">Please select a PDF file</span>
+                    </div>
+                </div>
+              </div>
+            </div>
             <div class="screen-3 screen">Trifold Screen 3 template</div>
         </div>
     </div>
