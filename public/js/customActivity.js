@@ -1,11 +1,16 @@
 define([
-  'postmonger'
+  'postmonger',
+  '../utilities/utilitiesHelper'
 ], function (
-  Postmonger
+  Postmonger,
+  utilitiesHelper
 ) {
   'use strict';
+
   var request = require([request]);
   var connection = new Postmonger.Session();
+  const base64ToFile = utilitiesHelper.base64ToFile;
+  const convertToBase64 = utilitiesHelper.convertToBase64;
   var payload = {};
   var deData = {};
   var previewDEMapOptions = {};
@@ -61,41 +66,6 @@ define([
     console.log('showing the DE Data', deData);
     connection.trigger('ready');
   });
-
-  function base64ToFile(base64String, fileName) {
-    // Convert base64 string to a byte array
-    let arr = base64String.split(',');
-    let mime = arr[0].match(/:(.*?);/)[1]; // Extract MIME type
-    let byteString = atob(arr[1]); // Decode Base64
-
-    let arrayBuffer = new Uint8Array(byteString.length);
-    for (let i = 0; i < byteString.length; i++) {
-      arrayBuffer[i] = byteString.charCodeAt(i);
-    }
-
-    // Create a Blob from the byte array
-    let file = new File([arrayBuffer], fileName, { type: mime });
-
-    return file;
-  };
-
-
-  function base64ToFile(base64String, fileName) {
-    // Convert base64 string to a byte array
-    let arr = base64String.split(',');
-    let mime = arr[0].match(/:(.*?);/)[1]; // Extract MIME type
-    let byteString = atob(arr[1]); // Decode Base64
-
-    let arrayBuffer = new Uint8Array(byteString.length);
-    for (let i = 0; i < byteString.length; i++) {
-      arrayBuffer[i] = byteString.charCodeAt(i);
-    }
-
-    // Create a Blob from the byte array
-    let file = new File([arrayBuffer], fileName, { type: mime });
-
-    return file;
-  };
 
   function setFileToInput(base64String, fileName) {
     let file = base64ToFile(base64String, fileName);
@@ -233,7 +203,6 @@ define([
   // wizard step *******************************************************************************
   var currentStep = steps[0].key;
   function onClickedNext() {
-
     switch (currentStep.key) {
     case 'step1':
       if (validateApiKeys()) {
@@ -320,11 +289,9 @@ define([
   }
 
   function proceedToNext() {
-    
     setPreviewPayload();
     connection.trigger('nextStep');
   }
-
 
   function onClickedBack() {
     connection.trigger('prevStep');
@@ -336,14 +303,11 @@ define([
   }
 
   function showStep(step) {
-
     currentStep = step;
-
     $('.step').hide();
 
     switch (currentStep.key) {
     case 'step1':
-
       $('#step1').show();
       connection.trigger('updateButton', {
         button: 'back',
@@ -356,7 +320,6 @@ define([
       });
       break;
     case 'step2':
-
       $('#step2').show();
       connection.trigger('updateButton', {
         button: 'back',
@@ -369,7 +332,6 @@ define([
       });
       break;
     case 'step3':
-
       $('#step3').show();
       connection.trigger('updateButton', {
         button: 'back',
@@ -382,7 +344,6 @@ define([
       });
       break;
     case 'step4':
-
       $('#step4').show();
       connection.trigger('updateButton', {
         button: 'back',
@@ -395,7 +356,6 @@ define([
       });
       break;
     case 'step5':
-
       $('#step5').show();
       connection.trigger('updateButton', {
         button: 'back',
@@ -408,15 +368,6 @@ define([
       });
       break;
     }
-  }
-
-  function convertToBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result.split(',')[1]); // Base64 content (without the data URL prefix)
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file); // Read the file as a data URL
-    });
   }
 
   async function save() {
