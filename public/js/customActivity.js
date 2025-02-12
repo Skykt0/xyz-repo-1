@@ -233,7 +233,7 @@ define([
         let selectedRadio = $('input[name="msgType"]:checked');
         if (selectedRadio.length > 0) {
           selectedMessageType = selectedRadio.attr('id');
-          console.log("Selected ID:", selectedId);
+          console.log("Selected ID:", selectedMessageType);
         } else {
           console.log("No option selected.");
         }
