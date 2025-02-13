@@ -220,7 +220,7 @@ define([
             handleValidationFailure();
           }
         }).catch((error) => {
-          console.error("Authentication failed:", error);
+          console.error('Authentication failed:', error);
         });
       }
       else{
@@ -275,7 +275,7 @@ define([
       break;
 
     case 'step4':
-        console.log('to contact step: '+toContact);;
+      console.log('to contact step: '+toContact);;
         
       if (validateToContact()) {
         getPreviewURL();
@@ -418,7 +418,7 @@ define([
       description: previewPayload.description,
     };
     if(!previewPayload.isExpressDelivery) {
-        postCardJson.mailingClass = previewPayload.mailingClass;
+      postCardJson.mailingClass = previewPayload.mailingClass;
     }
     if(previewPayload.messageType === 'Postcards'){
       if(previewPayload.creationType === 'HTML'){
@@ -676,34 +676,50 @@ define([
       $(this).attr('min', today);
     });
 
-    $('#pdf-upload').on('change', function () {
-      console.log('file type: '+this.files[0].type);
-      if (this.files.length > 0 && this.files[0].type === 'application/pdf') {
-        $('#file-name').text(this.files[0].name);
-        $('#remove-pdf').show();
-      } else if (this.files[0].type !== 'application/pdf') {
-        $('.drop-pdf .error-msg').text('Invalid file type! Please upload a PDF file.').addClass('show');
+    $(document).on('change', '.pdf-upload', function () {
+      let $uploadBox = $(this).closest('.upload-box');
+      let file = this.files[0];
+
+      if (file && file.type === 'application/pdf') {
+        $uploadBox.find('.file-name').text(file.name);
+        $uploadBox.find('.remove-pdf').show();
+        $uploadBox.find('.pdf-error').removeClass('show');
+      } else {
+        $uploadBox.find('.pdf-error').text('Invalid file type! Please upload a PDF file.').addClass('show');
       }
     });
 
-    $('#remove-pdf').on('click', function(e) {
+    $(document).on('click', '.remove-pdf', function (e) {
       e.preventDefault();
 
-      $('#pdf-upload').val('');
-      $('#file-name').text('Drag or Upload PDF');
+      let $uploadBox = $(this).closest('.upload-box');
+      let $fileInput = $uploadBox.find('.pdf-upload');
+
+      $fileInput.val('');
+      $uploadBox.find('.file-name').text('Drag or Upload PDF');
       $(this).hide();
     });
 
-    $('#drop-area').on('dragover', function (e) {
+    $(document).on('dragover', '.drop-pdf', function (e) {
       e.preventDefault();
     });
 
-    $('#drop-area').on('drop', function (e) {
+    $(document).on('drop', '.drop-pdf', function (e) {
       e.preventDefault();
-      const droppedFile = e.originalEvent.dataTransfer.files[0];
+      let $uploadBox = $(this).closest('.upload-box');
+      let $fileInput = $uploadBox.find('.pdf-upload');
+      let droppedFile = e.originalEvent.dataTransfer.files[0];
+
       if (droppedFile && droppedFile.type === 'application/pdf') {
-        $('#pdf-upload')[0].files = e.originalEvent.dataTransfer.files;
-        $('#file-name').text(droppedFile.name);
+        let fileList = new DataTransfer();
+        fileList.items.add(droppedFile);
+        $fileInput[0].files = fileList.files;
+
+        $uploadBox.find('.file-name').text(droppedFile.name);
+        $uploadBox.find('.remove-pdf').show();
+        $uploadBox.find('.pdf-error').removeClass('show');
+      } else {
+        $uploadBox.find('.pdf-error').text('Invalid file type! Please upload a PDF file.').addClass('show');
       }
     });
   }
@@ -711,14 +727,14 @@ define([
   async function validateStep3A() {
     let isValid = true;
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-    let isDescriptionValid = validateInputField($(`.${selectedMessageType} .description`));
-    //   let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
-    
-    if (!isDescriptionValid) {
-      isValid = false;
-    }
 
     if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
+      let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
+      //   let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
+      
+      if (!isDescriptionValid) {
+        isValid = false;
+      }
       const pdfInput = $(`.${selectedMessageType} .drop-pdf #pdf-upload`)[0]; 
       if (pdfInput.files.length > 0) {
         const pdfFile = pdfInput.files[0];
@@ -741,6 +757,12 @@ define([
     }
 
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
+      let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-1 .description`));
+      //   let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
+      
+      if (!isDescriptionValid) {
+        isValid = false;
+      }
       let isPostcardSizeSelected = $('.postcard-html-size input[name="postcardHtmlSize"]:checked').length;
       let frontHtmlContent = $('.html-editor-front').val().trim();
       let backtHtmlContent = $('.html-editor-back').val().trim();
@@ -826,7 +848,7 @@ define([
   function setPreviewPayload() {
     if ($('#postcardScreen .screen-1').css('display') === 'block') {
       const description = $('.screen-1 #description').val();
-    //   const sendDate = $('.screen-1 #sendDate').val();
+      //   const sendDate = $('.screen-1 #sendDate').val();
       const mailingClass = $('.screen-1 #mailingClass').val();
       const frontHtmlContent = $('.html-editor-front').val();
       const backHtmlContent = $('.html-editor-back ').val();
@@ -843,7 +865,7 @@ define([
       previewPayload.isExpressDelivery = isExpressDelivery;
     } else if ($('#postcardScreen .screen-2').css('display') === 'block') {
       const description = $('#postcardScreen .screen-2 #description').val();
-    //   const sendDate = $('#postcardScreen .screen-2 #sendDate').val();
+      //   const sendDate = $('#postcardScreen .screen-2 #sendDate').val();
       const mailingClass = $('#postcardScreen .screen-2 #mailingClass').val();
       const size = $('.postcard-pdf-size input[name=\'Postcards-pdf-size\']:checked').val();
       const isExpressDelivery = $('#postcardScreen .screen-2 #expDelivery').is(':checked');
@@ -860,7 +882,7 @@ define([
       previewPayload.pdfName = pdfFile.name;
     } else if ($('#postcardScreen .screen-3').css('display') === 'block') {
       const description = document.querySelector('#description3').value;
-    //   const sendDate = document.querySelector('#sendDate3').value;
+      //   const sendDate = document.querySelector('#sendDate3').value;
       const frontTemplateId = document.querySelector('#frontTemplateInput')?.dataset.id;
       const backTemplateId = document.querySelector('#backTemplateInput')?.dataset.id;
       const size = $('.screen-3 input[name=\'size\']:checked').val();
@@ -1032,7 +1054,7 @@ define([
         $('.preview-message').css('display', 'block');
         $('.retry-btn-wrap .loader').addClass('show');
         setTimeout(() => {
-            showPdfPreviewRetry(postcardId);
+          showPdfPreviewRetry(postcardId);
         }, 2000);
       }
     } catch (error) {
@@ -1048,24 +1070,24 @@ define([
     const pdfUrl = postcardDetails.url;
 
     if (pdfUrl) {
-        $('.retry-preview-btn').css('display', 'inline-block');
-        $('.retry-btn-wrap .loader').removeClass('show');
-        $('.retry-preview-btn').off('click').on('click', function() {
-          console.log('Show Preview button clicked!');
-          $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
-          $('#pdf-preview-container').css('display', 'block');
-          $('.retry-preview-btn').css('display', 'none');
-          $('.preview-message').css('display', 'none');
-        });
-      } else {
-        console.warn('No PDF URL received!');
-        $('#pdf-preview-container').css('display', 'none');
+      $('.retry-preview-btn').css('display', 'inline-block');
+      $('.retry-btn-wrap .loader').removeClass('show');
+      $('.retry-preview-btn').off('click').on('click', function() {
+        console.log('Show Preview button clicked!');
+        $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
+        $('#pdf-preview-container').css('display', 'block');
         $('.retry-preview-btn').css('display', 'none');
-        $('.preview-message').css('display', 'block');
-        setTimeout(() => {
-            showPdfPreviewRetry(postcardId);
-        }, 2000);
-      }
+        $('.preview-message').css('display', 'none');
+      });
+    } else {
+      console.warn('No PDF URL received!');
+      $('#pdf-preview-container').css('display', 'none');
+      $('.retry-preview-btn').css('display', 'none');
+      $('.preview-message').css('display', 'block');
+      setTimeout(() => {
+        showPdfPreviewRetry(postcardId);
+      }, 2000);
+    }
   }
 
   async function getPreviewURL () {
@@ -1201,7 +1223,7 @@ define([
 
   $('#dropdown-options').on('click', 'div', function () {
     const contact = $(this).data('contact');
-    var contactValue = contact.firstName ? contact.firstName : contact.companyName
+    var contactValue = contact.firstName ? contact.firstName : contact.companyName;
     $('#search-contact').val(contactValue); // Set the selected contact name in the input
     $('#dropdown-options').hide(); // Hide the dropdown
     fromContact.id = contact.id;
@@ -1254,28 +1276,28 @@ define([
   }
 
   // Handling * in Company Label based on First Name selection
-$('.mapping-fields-group #firstName').change(function () {
-  var firstNameValue = $(this).val();
-  var companyLabel = $('.mapping-fields-group label[for="companyName"]');
+  $('.mapping-fields-group #firstName').change(function () {
+    var firstNameValue = $(this).val();
+    var companyLabel = $('.mapping-fields-group label[for="companyName"]');
 
-  if (firstNameValue !== 'Select') {
+    if (firstNameValue !== 'Select') {
       companyLabel.text('Company'); // Remove *
-  } else {
+    } else {
       companyLabel.text('Company *'); // Add * back
-  }
-});
+    }
+  });
 
-// Handling * in First Name Label based on Company selection
-$('.mapping-fields-group #companyName').change(function () {
-  var companyValue = $(this).val();
-  var firstNameLabel = $('.mapping-fields-group label[for="firstName"]');
+  // Handling * in First Name Label based on Company selection
+  $('.mapping-fields-group #companyName').change(function () {
+    var companyValue = $(this).val();
+    var firstNameLabel = $('.mapping-fields-group label[for="firstName"]');
 
-  if (companyValue !== 'Select') {
+    if (companyValue !== 'Select') {
       firstNameLabel.text('First Name'); // Remove *
-  } else {
+    } else {
       firstNameLabel.text('First Name *'); // Add * back
-  }
-});
+    }
+  });
 
 
   function resetToContactMappingErrors() {

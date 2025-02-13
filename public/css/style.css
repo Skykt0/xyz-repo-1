@@ -754,7 +754,8 @@ input:checked + .test-to-live-slider:before {
 	display: none;
 }
 
-label[for="pdf-upload"] {
+label[for="postcard-pdf-upload"],
+label[for="self-mailer-pdf-upload"] {
 	display: flex;
 	position: absolute;
 	width: 100%;
