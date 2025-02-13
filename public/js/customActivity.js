@@ -735,23 +735,23 @@ define([
       if (!isDescriptionValid) {
         isValid = false;
       }
-      const pdfInput = $(`.${selectedMessageType} .drop-pdf #pdf-upload`)[0]; 
+      const pdfInput = $(`.${selectedMessageType} .screen-2 .drop-pdf #pdf-upload`)[0]; 
       if (pdfInput.files.length > 0) {
         const pdfFile = pdfInput.files[0];
         try {
           const pdfValidationResult = await validatePDFFile(pdfFile, selectedMessageType);
           if (!pdfValidationResult.isValid) {
             isValid = false;
-            $(`.${selectedMessageType} .drop-pdf .error-msg`).text(pdfValidationResult.errorMessage).addClass('show');
+            $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text(pdfValidationResult.errorMessage).addClass('show');
           } else {
-            $(`.${selectedMessageType} .drop-pdf .error-msg`).removeClass('show');
+            $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).removeClass('show');
           }
         } catch (error) {
           console.error('Error validating PDF:', error);
           isValid = false;
         }
       } else {
-        $(`.${selectedMessageType} .drop-pdf .error-msg`).text('Please select a PDF file').addClass('show');
+        $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text('Please select a PDF file').addClass('show');
         isValid = false;
       }
     }
