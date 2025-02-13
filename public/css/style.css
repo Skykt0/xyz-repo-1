@@ -711,18 +711,18 @@ input:checked + .test-to-live-slider:before {
 	padding: 44px;
 }
 
-.postcard-pdf-container {
+.pdf-container {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
 }
 
-.postcard-pdf-container .input-fields {
+.pdf-container .input-fields {
 	display: flex;
 	justify-content: space-between;
 }
 
-.postcard-pdf-container .input-fields .input-box {
+.pdf-container .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
 	width: 30%;
@@ -994,7 +994,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .postcard-input-fields .input-fields .input-label,
-.postcard-pdf-container .input-label {
+.pdf-container .input-label {
     font-size: 16px !important;
 }
 
