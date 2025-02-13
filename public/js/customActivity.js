@@ -70,7 +70,6 @@ define([
   function setFileToInput(base64String, fileName) {
     let file = base64ToFile(base64String, fileName);
 
-    // Use DataTransfer to set the file in the input element
     let dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);
     $('#pdf-upload')[0].files = dataTransfer.files;
@@ -869,7 +868,7 @@ define([
       const mailingClass = $('#postcardScreen .screen-2 #mailingClass').val();
       const size = $('.postcard-pdf-size input[name=\'Postcards-pdf-size\']:checked').val();
       const isExpressDelivery = $('#postcardScreen .screen-2 #expDelivery').is(':checked');
-      const pdfInput = $('#postcardScreen .screen-2 #pdf-upload')[0];
+      const pdfInput = $('#postcardScreen .screen-2 .pdf-upload')[0];
       const pdfFile = pdfInput.files[0] ;
 
       previewPayload.screen = 'pdf';
