@@ -720,6 +720,11 @@ input:checked + .test-to-live-slider:before {
 	justify-content: space-between;
 }
 
+.self-mailer-pdf-container .input-fields {
+  justify-content: flex-start;
+  gap: 4rem;
+}
+
 .pdf-container .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
