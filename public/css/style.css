@@ -729,12 +729,12 @@ input:checked + .test-to-live-slider:before {
 	gap: 0.5rem;
 }
 
-.postcard-pdf-size {
+.pdf-size {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
-.postcard-pdf-size .input-label-radio {
+.pdf-size .input-label-radio {
 	margin: 0;
 }
 
