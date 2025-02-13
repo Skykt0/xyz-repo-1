@@ -735,7 +735,7 @@ define([
       if (!isDescriptionValid) {
         isValid = false;
       }
-      const pdfInput = $(`.${selectedMessageType} .screen-2 .drop-pdf #pdf-upload`)[0]; 
+      const pdfInput = $(`.${selectedMessageType} .screen-2 .drop-pdf .pdf-upload`)[0]; 
       if (pdfInput.files.length > 0) {
         const pdfFile = pdfInput.files[0];
         try {
