@@ -535,16 +535,14 @@ input:checked + .test-to-live-slider:before {
 	vertical-align: text-bottom;
 }
 
-.postcard-html-express-delivery .checkbox-input,
-.postcard-pdf-express-delivery .checkbox-input {
+.express-delivery .checkbox-input {
 	margin: 0;
 	vertical-align: text-top;
 	width: 1rem;
 	height: 1rem;
 }
 
-.postcard-html-express-delivery .checkbox-label,
-.postcard-pdf-express-delivery .checkbox-label {
+.express-delivery .checkbox-label {
 	font-size: 16px;
 	display: inline-flex;
 	gap: 0.5rem;
