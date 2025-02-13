@@ -535,16 +535,14 @@ input:checked + .test-to-live-slider:before {
 	vertical-align: text-bottom;
 }
 
-.postcard-html-express-delivery .checkbox-input,
-.postcard-pdf-express-delivery .checkbox-input {
+.express-delivery .checkbox-input {
 	margin: 0;
 	vertical-align: text-top;
 	width: 1rem;
 	height: 1rem;
 }
 
-.postcard-html-express-delivery .checkbox-label,
-.postcard-pdf-express-delivery .checkbox-label {
+.express-delivery .checkbox-label {
 	font-size: 16px;
 	display: inline-flex;
 	gap: 0.5rem;
@@ -711,30 +709,35 @@ input:checked + .test-to-live-slider:before {
 	padding: 44px;
 }
 
-.postcard-pdf-container {
+.pdf-container {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
 }
 
-.postcard-pdf-container .input-fields {
+.pdf-container .input-fields {
 	display: flex;
 	justify-content: space-between;
 }
 
-.postcard-pdf-container .input-fields .input-box {
+.self-mailer-pdf-container .input-fields {
+  justify-content: flex-start;
+  gap: 4rem;
+}
+
+.pdf-container .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
 	width: 30%;
 	gap: 0.5rem;
 }
 
-.postcard-pdf-size {
+.pdf-size {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
-.postcard-pdf-size .input-label-radio {
+.pdf-size .input-label-radio {
 	margin: 0;
 }
 
@@ -994,7 +997,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .postcard-input-fields .input-fields .input-label,
-.postcard-pdf-container .input-label {
+.pdf-container .input-label {
     font-size: 16px !important;
 }
 

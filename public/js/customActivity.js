@@ -236,9 +236,6 @@ define([
         let selectedRadio = $('input[name="msgType"]:checked');
         if (selectedRadio.length > 0) {
           selectedMessageType = selectedRadio.val().replace(/\s+/g, '');
-          console.log("Selected ID:", selectedMessageType);
-        } else {
-          console.log("No option selected.");
         }
 
         let isHtml = $('#htmlId').is(':checked');
@@ -713,47 +710,37 @@ define([
 
   async function validateStep3A() {
     let isValid = true;
-
-    if ($('.screen-2').css('display') === 'block') {
-      let isDescriptionValid = validateInputField($('.postcard-pdf-container #description'));
+    let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let isDescriptionValid = validateInputField($(`.${selectedMessageType} .description`));
     //   let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
     
-      if (!isDescriptionValid) {
-        isValid = false;
-      }
+    if (!isDescriptionValid) {
+      isValid = false;
+    }
 
-      const pdfInput = $('.drop-pdf #pdf-upload')[0]; 
-
-      
+    if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
+      const pdfInput = $(`.${selectedMessageType} .drop-pdf #pdf-upload`)[0]; 
       if (pdfInput.files.length > 0) {
         const pdfFile = pdfInput.files[0];
-
         try {
-          const pdfValidationResult = await validatePDFFile(pdfFile);
+          const pdfValidationResult = await validatePDFFile(pdfFile, selectedMessageType);
           if (!pdfValidationResult.isValid) {
             isValid = false;
-            $('.drop-pdf .error-msg').text(pdfValidationResult.errorMessage).addClass('show');
+            $(`.${selectedMessageType} .drop-pdf .error-msg`).text(pdfValidationResult.errorMessage).addClass('show');
           } else {
-            $('.drop-pdf .error-msg').removeClass('show');
+            $(`.${selectedMessageType} .drop-pdf .error-msg`).removeClass('show');
           }
         } catch (error) {
           console.error('Error validating PDF:', error);
           isValid = false;
         }
       } else {
-        $('.drop-pdf .error-msg').text('Please select a PDF file').addClass('show');
+        $(`.${selectedMessageType} .drop-pdf .error-msg`).text('Please select a PDF file').addClass('show');
         isValid = false;
       }
     }
 
-    if ($('.screen-1').css('display') === 'block') {
-      let isDescriptionValid = validateInputField($('.postcard-input-fields #description'));
-    //   let isSendDateValid = validateInputField($('.html-screen-wrapper #sendDate'));
-    
-      if (!isDescriptionValid) {
-        isValid = false;
-      }
-  
+    if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       let isPostcardSizeSelected = $('.postcard-html-size input[name="postcardHtmlSize"]:checked').length;
       let frontHtmlContent = $('.html-editor-front').val().trim();
       let backtHtmlContent = $('.html-editor-back').val().trim();
@@ -783,7 +770,7 @@ define([
     return isValid;
   }
 
-  function validatePDFFile(pdfFile) {
+  function validatePDFFile(pdfFile, selectedMessageType) {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
 
@@ -798,7 +785,7 @@ define([
             const height = viewport.height;
 
             const pdfDimensions = `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
-            const selectedPDFDimension = $('.postcard-pdf-size input[name="postcardPDFSize"]:checked').data('dimentions');
+            const selectedPDFDimension = $(`.${selectedMessageType} .pdf-size input[name="${selectedMessageType}-pdf-size"]:checked`).data('dimentions');
 
             if (numPages !== 2) {
               resolve({
@@ -858,7 +845,7 @@ define([
       const description = $('#postcardScreen .screen-2 #description').val();
     //   const sendDate = $('#postcardScreen .screen-2 #sendDate').val();
       const mailingClass = $('#postcardScreen .screen-2 #mailingClass').val();
-      const size = $('.postcard-pdf-size input[name=\'postcardPDFSize\']:checked').val();
+      const size = $('.postcard-pdf-size input[name=\'Postcards-pdf-size\']:checked').val();
       const isExpressDelivery = $('#postcardScreen .screen-2 #expDelivery').is(':checked');
       const pdfInput = $('#postcardScreen .screen-2 #pdf-upload')[0];
       const pdfFile = pdfInput.files[0] ;
