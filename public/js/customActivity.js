@@ -38,10 +38,13 @@ define([
     connection.trigger('requestSchema');
     $('#card-insert-type').addClass('hidden');
   }
-  const toggleButtonTestKey = $('#toggle-password-test-key');
-  const toggleButtonLiveKey = $('#toggle-password-live-key');
-  toggleButtonTestKey.on('click', showHideTestKey);
-  toggleButtonLiveKey.on('click', showHideLiveKey);
+  // const toggleButtonTestKey = $('#toggle-password-test-key');
+  // const toggleButtonLiveKey = $('#toggle-password-live-key');
+  // toggleButtonTestKey.on('click', showHideTestKey);
+  // toggleButtonLiveKey.on('click', showHideLiveKey);
+
+  $('.toggle-password').on('click', toggleApiKeyVisibility);
+  
   connection.on('initActivity', initialize);
   connection.on('clickedNext', onClickedNext);
   connection.on('clickedBack', onClickedBack);
@@ -210,12 +213,10 @@ define([
       if (validateApiKeys()) {
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
-            // Proceed with the next steps
             handleApiKeyToggle();
             fetchContacts();
             connection.trigger('nextStep');
           } else {
-            // Handle authentication failure
             handleValidationFailure();
           }
         }).catch((error) => {
@@ -251,7 +252,9 @@ define([
         $(`.${selectedMessageType} > .screen-3`).toggle(isExtTemp);
 
         connection.trigger('nextStep');
-        createContact();
+        if(toContact === '') {
+          createContact();
+        }
       } else {
         handleValidationFailure();
       }
@@ -445,39 +448,44 @@ define([
   }
 
   function initializeHandler() {
-    console.log('initializeHandler testing');
-    
     executeScreenTwoMethods();
-    
   }
 
-  function showHideLiveKey(e) {
+  // function showHideLiveKey(e) {
+  //   e.preventDefault();
+  //   const icon = $('#toggle-password-live-key i');
+  //   const liveKeyInput = $('#live-api-key');
+
+  //   if (liveKeyInput.attr('type') === 'text') {
+  //     liveKeyInput.attr('type', 'password');
+  //     icon.removeClass('fa-eye').addClass('fa-eye-slash');
+  //   } else {
+  //     liveKeyInput.attr('type', 'text');
+  //     icon.removeClass('fa-eye-slash').addClass('fa-eye');
+  //   }
+  // }
+
+  // function showHideTestKey() {
+  //   const icon = $('#toggle-password-test-key i');
+  //   const testKeyInput = $('#test-api-key');
+
+  //   if (testKeyInput.attr('type') === 'text') {
+  //     testKeyInput.attr('type', 'password');
+  //     icon.removeClass('fa-eye').addClass('fa-eye-slash');
+  //   } else {
+  //     testKeyInput.attr('type', 'text');
+  //     icon.removeClass('fa-eye-slash').addClass('fa-eye');
+  //   }
+
+  // }
+
+  function toggleApiKeyVisibility(e) {
     e.preventDefault();
-
-    const icon = $('#toggle-password-live-key i'); // Select the icon inside the button
-    const liveKeyInput = $('#live-api-key'); // Select the input field
-
-    if (liveKeyInput.attr('type') === 'text') {
-      liveKeyInput.attr('type', 'password'); // Change input type to text
-      icon.removeClass('fa-eye').addClass('fa-eye-slash'); // Update icon class
-    } else {
-      liveKeyInput.attr('type', 'text'); // Change input type back to password
-      icon.removeClass('fa-eye-slash').addClass('fa-eye'); // Update icon class
-    }
-  }
-
-  function showHideTestKey() {
-    const icon = $('#toggle-password-test-key i'); // Select the icon inside the button
-    const testKeyInput = $('#test-api-key'); // Select the input field
-
-    if (testKeyInput.attr('type') === 'text') {
-      testKeyInput.attr('type', 'password'); // Change input type to text
-      icon.removeClass('fa-eye').addClass('fa-eye-slash'); // Update icon class
-    } else {
-      testKeyInput.attr('type', 'text'); // Change input type back to password
-      icon.removeClass('fa-eye-slash').addClass('fa-eye'); // Update icon class
-    }
-
+    const input = $(this).prev('input');
+    const icon = $(this).find('i');
+  
+    input.attr('type', input.attr('type') === 'text' ? 'password' : 'text');
+    icon.toggleClass('fa-eye fa-eye-slash');
   }
 
   $('#test-api-key').on('input', hideErrorTestKey);
