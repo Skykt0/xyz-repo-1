@@ -1454,6 +1454,9 @@ define([
   $('#frontTemplateInput, #backTemplateInput').on('input', debounce(function () {
     fetchTemplates($(this).val().trim());
   }, 300));
+  $('#selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('input', debounce(function () {
+    fetchTemplates($(this).val().trim());
+  }, 300));
 
   // document ready
   $(document).ready(function () {
