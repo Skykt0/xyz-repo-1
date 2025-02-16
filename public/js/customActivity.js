@@ -1129,7 +1129,6 @@ define([
       $('.preview-container .retry-preview-btn').addClass('show');
       $('#pdf-preview-container').css('display','none');
       $('.pdf-preview-error-msg').text('Failed to fetch preview.');
-
     }
   }
 
@@ -1204,7 +1203,6 @@ define([
       success: function (response) {
         // Clear existing options
         $('#dropdown-options').empty();
-
 
         // Populate the dropdown with new options
         response.data.forEach(function (contact) {
