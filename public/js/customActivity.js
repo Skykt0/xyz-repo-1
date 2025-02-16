@@ -38,9 +38,6 @@ define([
     connection.trigger('requestSchema');
     $('#card-insert-type').addClass('hidden');
   }
-
-  $('.toggle-password').on('click', toggleApiKeyVisibility);
-  $('input.api-key').on('input', hideError);
   
   connection.on('initActivity', initialize);
   connection.on('clickedNext', onClickedNext);
@@ -184,7 +181,7 @@ define([
     initializeHandler();
 
   }
-  // Start of Getting Endpoints and AuthToken of Marketing Cloud Instance
+
   connection.on('requestedEndpoints', onGetEndpoints);
   function onGetEndpoints (endpoints) {
     // Response: endpoints = { restHost: <url> } i.e. "rest.s1.qa1.exacttarget.com"
@@ -200,7 +197,6 @@ define([
     console.log('Get tokens function: '+JSON.stringify(tokens));
     authToken = tokens.fuel2token;
   }
-  // End of Getting Endpoints and AuthToken of Marketing Cloud Instance
 
   // wizard step *******************************************************************************
   var currentStep = steps[0].key;
@@ -291,11 +287,6 @@ define([
     default:
       connection.trigger('nextStep');
     }
-  }
-
-  function handleValidationFailure() {
-    showStep(currentStep);
-    connection.trigger('ready');
   }
 
   function proceedToNext() {
@@ -448,6 +439,11 @@ define([
     executeScreenTwoMethods();
   }
 
+  function handleValidationFailure() {
+    showStep(currentStep);
+    connection.trigger('ready');
+  }
+
   function toggleApiKeyVisibility(e) {
     e.preventDefault();
     const input = $(this).prev('input');
@@ -494,7 +490,6 @@ define([
     $(this).css('border', '').next('.error-message').hide();
   }
 
-  /* step 2 functions kritika */
   function validateStep2() {
     let isValid = true;
     let errorMessages = [];
@@ -548,55 +543,6 @@ define([
     }
   }
 
-  $(document).ready(function () {
-    const $liveModeToggle = $('.test-to-live-switch input');
-    const $errorMessage = $('#liveModeError');
-    console.log('Script Loaded: Checking Live Mode Toggle');
-    console.log('Live Mode Toggle Found:', $liveModeToggle.length);
-    if ($liveModeToggle.length === 0) {
-      console.error('Error: Live Mode Toggle input NOT found in the DOM!');
-      return; // Exit script if element is missing
-    }
-    // Attach events to the parent label (because disabled inputs don't fire events)
-    $('.test-to-live-switch').on('mouseenter', function () {
-      console.log('Hover detected on Live Mode Toggle container');
-      if ($liveModeToggle.prop('disabled')) {
-        console.log('Live Mode Toggle is Disabled - Showing Error Message');
-        $errorMessage.show();
-      }
-    });
-    $('.test-to-live-switch').on('mouseleave', function () {
-      console.log('Mouse Left Live Mode Toggle - Hiding Error Message');
-      $errorMessage.hide();
-    });
-
-    $('.test-to-live-switch input').on('change', function() {
-      previewPayload.liveApiKeyEnabled = $(this).is(':checked');
-    });
-  });
-
-  $('.step2radioBTN').change(function () {
-    var isPostcard = $('#postcard').is(':checked');
-    var isHtml = $('#htmlId').is(':checked');
-    var isPdf = $('#pdfId').is(':checked');
-    var isExtTemp = $('#extTempId').is(':checked');
-
-    if (isPostcard) {
-      $('#postcardScreen').show();
-      $('#postcardScreen > .screen-1').toggle(isHtml);
-      $('#postcardScreen > .screen-2').toggle(isPdf);
-      $('#postcardScreen > .screen-3').toggle(isExtTemp);
-    } else {
-      $('#postcardScreen').hide();
-    }
-
-    // The "Next" button remains enabled
-    connection.trigger('updateButton', {
-      button: 'next',
-      enabled: true
-    });
-  });
-
   function executeScreenTwoMethods() {
     // Handle showing Card Insert checkbox when "Letters" or "Self-Mailer" is selected
     $('input[name="msgType"]').change(function () {
@@ -624,9 +570,6 @@ define([
     });
   }
 
-  /* end of step 2 functions kritika */
-
-  /** screen 3A script */
   function setDefaultValuesForPostCardCreation() {
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     $(`.${selectedMessageType} .html-editor .html__btn--front`).click(function () {
@@ -802,8 +745,6 @@ define([
       fileReader.readAsArrayBuffer(pdfFile);
     });
   }
-
-  /** screen 3A script */
 
   function validateInputField(element) {
     if (element.val().trim() === '') {
@@ -1020,69 +961,52 @@ define([
     }
   }
 
-  async function showPdfPreview(messageId) {
+  async function showPdfPreview(messageId, isRetry = false, startTime = Date.now()) {
     try {
-      $('#pdf-preview').attr('src', '');
-      $('#pdf-preview-container').css('display', 'none');
-      $('.retry-preview-btn').css('display', 'none');
-      $('.preview-message').css('display', 'none');
+      if (!isRetry) {
+        $('#pdf-preview').attr('src', '');
+        $('#pdf-preview-container, .retry-preview-btn, .preview-message').hide();
+      }
+  
       const messageDetails = await fetchMessageDetails(messageId);
       const pdfUrl = messageDetails.url;
       console.log('PDF URL:', pdfUrl);
       connection.trigger('nextStep');
+  
       if (pdfUrl) {
-        $('.retry-preview-btn').css('display', 'inline-block');
-        $('.preview-message').css('display', 'inline-block');
+        $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
         $('.retry-btn-wrap .loader').removeClass('show');
-        $('.retry-preview-btn').off('click').on('click', function() {
+  
+        $('.retry-preview-btn').off('click').on('click', function () {
           console.log('Show Preview button clicked!');
           $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
-          $('#pdf-preview-container').css('display', 'block');
-          $('.retry-preview-btn').css('display', 'none');
-          $('.preview-message').css('display', 'none');
+          $('#pdf-preview-container').show();
+          $('.retry-preview-btn, .preview-message').hide();
         });
       } else {
-        console.warn('No PDF URL received!');
-        $('#pdf-preview-container').css('display', 'none');
-        $('.retry-preview-btn').css('display', 'none');
-        $('.preview-message').css('display', 'block');
+        const elapsedTime = Date.now() - startTime;
+        if (elapsedTime >= 60000) {
+          console.warn('Retry limit reached (1 minute). Stopping retries.');
+          $('.retry-btn-wrap .loader').removeClass('show');
+          $('.preview-message').text('Failed to load preview after multiple attempts.').show();
+          return;
+        }
+  
+        console.warn('No PDF URL received! Retrying...');
+        $('#pdf-preview-container, .retry-preview-btn').hide();
+        $('.preview-message').show();
         $('.retry-btn-wrap .loader').addClass('show');
+  
         setTimeout(() => {
-          showPdfPreviewRetry(messageId);
+          showPdfPreview(messageId, true, startTime);
         }, 2000);
       }
     } catch (error) {
       console.error('Error fetching PDF Preview:', error);
-      $('#pdf-preview-container').css('display', 'none');
-      $('.retry-preview-btn').css('display', 'none');
-      $('.preview-message').css('display', 'block');
+      $('#pdf-preview-container, .retry-preview-btn').hide();
+      $('.preview-message').text('An error occurred while loading the preview.').show();
     }
-  }
-
-  async function showPdfPreviewRetry(messageId) {
-    const messageDetails = await fetchMessageDetails(messageId);
-    const pdfUrl = messageDetails.url;
-
-    if (pdfUrl) {
-      $('.retry-preview-btn').css('display', 'inline-block');
-      $('.retry-btn-wrap .loader').removeClass('show');
-      $('.retry-preview-btn').off('click').on('click', function() {
-        console.log('Show Preview button clicked!');
-        $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
-        $('#pdf-preview-container').css('display', 'block');
-        $('.retry-preview-btn').css('display', 'none');
-        $('.preview-message').css('display', 'none');
-      });
-    } else {
-      console.warn('No PDF URL received!');
-      $('#pdf-preview-container').css('display', 'none');
-      $('.retry-preview-btn').css('display', 'none');
-      $('.preview-message').css('display', 'block');
-      setTimeout(() => {
-        showPdfPreviewRetry(messageId);
-      }, 2000);
-    }
-  }
+  }  
 
   async function getPreviewURL () {
     try {
@@ -1144,43 +1068,23 @@ define([
       });
   }
 
-  $('.preview-container .retry-preview-btn').click(async function() {
-    await showPdfPreview(previewPayload.messageId);
-  });
-
-  $('.express-delivery-input').on('click', function() {
-    var isChecked = $(this).prop('checked');
-    var mailingClass = $(this).closest('.spacer').find('.mailing-class');
-    
-    if (isChecked) {
-      mailingClass.prop('disabled', true);
-    } else {
-      mailingClass.prop('disabled', false);
-    }
-  });
-
-  /** screen 4 script */
-  let timeoutId;
   function fetchContacts(searchQuery) {
     $.ajax({
-      url: 'https://api.postgrid.com/print-mail/v1/contacts', // Replace with your API endpoint
+      url: 'https://api.postgrid.com/print-mail/v1/contacts',
       method: 'GET',
       data: searchQuery ? { search: searchQuery, limit: 10 } : { limit: 10 },
       headers: {
-        'x-api-key': previewPayload.test_api_key// Replace with your API key
+        'x-api-key': previewPayload.test_api_key
       },
       success: function (response) {
-        // Clear existing options
         $('#dropdown-options').empty();
 
-        // Populate the dropdown with new options
         response.data.forEach(function (contact) {
           $('#dropdown-options').append(
             $('<div>').text(contact.firstName ? contact.firstName : contact.companyName).data('contact', contact)
           );
         });
 
-        // Show the dropdown if there are results
         if (response.data.length > 0) {
           $('#dropdown-options').show();
         } else {
@@ -1194,50 +1098,12 @@ define([
   }
 
   function debounce(func, delay) {
-    return function () {
-      const context = this;
-      const args = arguments;
+    let timeoutId;
+    return function (...args) {
       clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => func.apply(context, args), delay);
+      timeoutId = setTimeout(() => func.apply(this, args), delay);
     };
   }
-
-  const debouncedFetchContacts = debounce(fetchContacts, 300);
-
-  $('#search-contact').on('input', function () {
-    const searchQuery = $(this).val();
-    if (searchQuery.length > 2) { // Only search if the input has more than 2 characters
-      debouncedFetchContacts(searchQuery);
-    } else {
-      $('#dropdown-options').empty().hide();
-    }
-  });
-
-  $('#dropdown-options').on('click', 'div', function () {
-    const contact = $(this).data('contact');
-    var contactValue = contact.firstName ? contact.firstName : contact.companyName;
-    $('#search-contact').val(contactValue); // Set the selected contact name in the input
-    $('#dropdown-options').hide(); // Hide the dropdown
-    fromContact.id = contact.id;
-    fromContact.name = contactValue;
-  });
-
-  $(document).on('click', function (event) {
-    if (!$(event.target).is('#dropdown-options, #search-contact') && $(event.target).closest('#step4').length) {
-      $('#dropdown-options').hide();
-    }
-  });
-
-  $('#search-contact').on('focus', function () {
-    const searchQuery = $(this).val().trim();
-    if ($('#dropdown-options').is(':hidden')) {
-      if (searchQuery === '' && $('#dropdown-options div').length == 0) {
-        fetchContacts(); // Fetch default contacts if input is empty
-      } else {
-        $('#dropdown-options').show(); // Show dropdown if it was hidden
-      }
-    }
-  });
 
   function validateToContact() {
     let isValid = true;
@@ -1267,45 +1133,13 @@ define([
     return isValid;
   }
 
-  // Handling * in Company Label based on First Name selection
-  $('.mapping-fields-group #firstName').change(function () {
-    var firstNameValue = $(this).val();
-    var companyLabel = $('.mapping-fields-group label[for="companyName"]');
-
-    if (firstNameValue !== 'Select') {
-      companyLabel.text('Company'); // Remove *
-    } else {
-      companyLabel.text('Company *'); // Add * back
-    }
-  });
-
-  // Handling * in First Name Label based on Company selection
-  $('.mapping-fields-group #companyName').change(function () {
-    var companyValue = $(this).val();
-    var firstNameLabel = $('.mapping-fields-group label[for="firstName"]');
-
-    if (companyValue !== 'Select') {
-      firstNameLabel.text('First Name'); // Remove *
-    } else {
-      firstNameLabel.text('First Name *'); // Add * back
-    }
-  });
-
-
   function resetToContactMappingErrors() {
     $('.mapping-fields-group select').css('border', ''); // Reset border styles
     $('.error-message-contactMapping').text('').hide(); // Clear and hide error messages
   }
-  $('.mapping-fields-group select').on('click', function () {
-    resetToContactMappingErrors();
-  });
-  
-  /** screen 4 script */
 
-  /** screen 3C script */
   function validateStep3() {
     let isValid = true;
-    // Remove previous error messages and red borders
     $('.error-message').remove();
     $('.error-field').removeClass('error-field');
     let today = new Date().toISOString().split('T')[0];
@@ -1343,27 +1177,6 @@ define([
       isValid = false;
     }
     return isValid;
-  }
-  // Remove error messages dynamically when the user starts typing
-  $(document).ready(function() {
-    $('input, textarea, select').on('input change', function() {
-      $(this).removeClass('error-field'); // Remove red border
-      $(this).next('.error-message').remove(); // Remove error message
-    });
-  });
-
-  $(document).ready(function () {
-    let today = new Date().toISOString().split('T')[0];
-    $('#sendDate3').val(today); // Set default value
-    $('#sendDate3').attr('min', today); // Restrict past dates
-  });
-
-  function lazyInvoke(func, delay) {
-    let timeoutId;
-    return function (...args) {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => func.apply(this, args), delay);
-    };
   }
 
   async function fetchTemplates(searchQuery = '') {
@@ -1432,38 +1245,6 @@ define([
     }
   }
 
-  $('#frontTemplateInput').on('focus', function () {
-    $('#frontTemplateList').show();
-  });
-
-  $('#backTemplateInput').on('focus', function () {
-    $('#backTemplateList').show();
-  });
-
-  $(document).on('click', function (event) {
-    const isClickInsideFront = $(event.target).closest('#frontTemplateList, #frontTemplateInput').length > 0;
-    const isClickInsideBack = $(event.target).closest('#backTemplateList, #backTemplateInput').length > 0;
-
-    if (!isClickInsideFront) {
-      $('#frontTemplateList').hide();
-    }
-    if (!isClickInsideBack) {
-      $('#backTemplateList').hide();
-    }
-  });
-
-  $('#frontTemplateInput').on('input', lazyInvoke(function () {
-    const searchQuery = $(this).val().trim();
-    fetchTemplates(searchQuery);
-  }, 300));
-
-  $('#backTemplateInput').on('input', lazyInvoke(function () {
-    const searchQuery = $(this).val().trim();
-    fetchTemplates(searchQuery);
-  }, 300));
-
-  /** screen 3C script */
-  /* Method for Prepopulating TO Mapping */
   function prepopulateToDeMapping(){
     $.each(previewDEMapOptions, function(key, value) {
       switch (key) {
@@ -1503,7 +1284,6 @@ define([
     });
   }
 
-  /* Method for Authentication API */
   async function authenticateApiKeys(){
     const testApiKey = $('#test-api-key').val().trim();
     const liveApiKey = $('#live-api-key').val().trim();
@@ -1554,5 +1334,146 @@ define([
     return isValid;
   }
 
+  // js event registration
+  $('.toggle-password').on('click', toggleApiKeyVisibility);
+  $('input.api-key').on('input', hideError);
+
+  $('.step2radioBTN').change(function () {
+    var isPostcard = $('#postcard').is(':checked');
+    var isHtml = $('#htmlId').is(':checked');
+    var isPdf = $('#pdfId').is(':checked');
+    var isExtTemp = $('#extTempId').is(':checked');
+
+    if (isPostcard) {
+      $('#postcardScreen').show();
+      $('#postcardScreen > .screen-1').toggle(isHtml);
+      $('#postcardScreen > .screen-2').toggle(isPdf);
+      $('#postcardScreen > .screen-3').toggle(isExtTemp);
+    } else {
+      $('#postcardScreen').hide();
+    }
+
+    // The "Next" button remains enabled
+    connection.trigger('updateButton', {
+      button: 'next',
+      enabled: true
+    });
+  });
+
+  $('.preview-container .retry-preview-btn').click(async function() {
+    await showPdfPreview(previewPayload.messageId);
+  });
+
+  $('.express-delivery-input').on('click', function() {
+    var isChecked = $(this).prop('checked');
+    var mailingClass = $(this).closest('.spacer').find('.mailing-class');
+    
+    if (isChecked) {
+      mailingClass.prop('disabled', true);
+    } else {
+      mailingClass.prop('disabled', false);
+    }
+  });
+
+  $('#search-contact').on('input', debounce(function () {
+    const searchQuery = $(this).val();
+    if (searchQuery.length > 2) {
+      fetchContacts(searchQuery);
+    } else {
+      $('#dropdown-options').empty().hide();
+    }
+  }, 300));  
+
+  $('#dropdown-options').on('click', 'div', function () {
+    const contact = $(this).data('contact');
+    var contactValue = contact.firstName ? contact.firstName : contact.companyName;
+    $('#search-contact').val(contactValue);
+    $('#dropdown-options').hide();
+    fromContact.id = contact.id;
+    fromContact.name = contactValue;
+  });
+
+  $('#search-contact').on('focus', function () {
+    const searchQuery = $(this).val().trim();
+    if ($('#dropdown-options').is(':hidden')) {
+      if (searchQuery === '' && $('#dropdown-options div').length === 0) {
+        fetchContacts();
+      } else {
+        $('#dropdown-options').show();
+      }
+    }
+  });
+
+  $('.mapping-fields-group #firstName, .mapping-fields-group #companyName').change(function () {
+    var isFirstName = $(this).attr('id') === 'firstName';
+    var targetLabel = isFirstName 
+      ? $('.mapping-fields-group label[for="companyName"]') 
+      : $('.mapping-fields-group label[for="firstName"]');
   
+    if ($(this).val() !== 'Select') {
+      targetLabel.text(targetLabel.text().replace(' *', ''));
+    } else {
+      if (!targetLabel.text().includes('*')) {
+        targetLabel.text(targetLabel.text() + ' *');
+      }
+    }  
+  });  
+
+  $('.mapping-fields-group select').on('click', function () {
+    resetToContactMappingErrors();
+  });
+
+  $('#frontTemplateInput, #backTemplateInput').on('focus', function () {
+    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
+  });  
+
+  $(document).on('click', function (event) {
+    const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact') || $(event.target).closest('#step4').length > 0;
+    const isClickInsideFront = $(event.target).closest('#frontTemplateList, #frontTemplateInput').length > 0;
+    const isClickInsideBack = $(event.target).closest('#backTemplateList, #backTemplateInput').length > 0;
+  
+    if (!isClickInsideDropdown) {
+      $('#dropdown-options').hide();
+    }
+    if (!isClickInsideFront) {
+      $('#frontTemplateList').hide();
+    }
+    if (!isClickInsideBack) {
+      $('#backTemplateList').hide();
+    }
+  });  
+
+  $('#frontTemplateInput, #backTemplateInput').on('input', debounce(function () {
+    fetchTemplates($(this).val().trim());
+  }, 300));
+
+  // document ready
+  $(document).ready(function () {
+    const $liveModeToggle = $('.test-to-live-switch input');
+    const $errorMessage = $('#liveModeError');
+  
+    if ($liveModeToggle.length > 0) {
+      $('.test-to-live-switch')
+        .on('mouseenter', function () {
+          if ($liveModeToggle.prop('disabled')) {
+            $errorMessage.show();
+          }
+        })
+        .on('mouseleave', function () {
+          $errorMessage.hide();
+        });
+  
+      $liveModeToggle.on('change', function () {
+        previewPayload.liveApiKeyEnabled = $(this).is(':checked');
+      });
+    }
+  
+    $('input, textarea, select').on('input change', function () {
+      $(this).removeClass('error-field').next('.error-message').remove();
+    });
+  
+    const today = new Date().toISOString().split('T')[0];
+    $('#sendDate3').val(today).attr('min', today);
+  });
+
 });
