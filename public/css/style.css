@@ -35,7 +35,7 @@ body {
 .screen-3 .input-box {
 	display: flex;
 	flex-direction: column;
-	width: 30%;
+	flex-basis: calc(50% - 1rem);
 }
 .screen-3 .input-field {
 	padding: 5px 10px;
@@ -100,7 +100,7 @@ body {
 	height: 100%;
 	padding: 10px;
 }
-.screen-3 .six-input-field {
+.screen-3 .existing-template-details {
 	display: flex;
 	flex-wrap: wrap;
 	column-gap: 2rem;
@@ -151,6 +151,8 @@ body {
 	width: 100%;
 	padding: 8px;
 	box-sizing: border-box;
+	border: 3px solid lightgray;
+    box-shadow: 0px 0px 1px 1px lightgray;
 }
 
 /* Basic styling for dropdowns */
@@ -936,7 +938,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     gap: 0.3rem;
 }
 
-.six-input-field .date-wrap {
+.existing-template-details .date-wrap {
     gap: 0;
 }
 

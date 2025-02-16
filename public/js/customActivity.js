@@ -704,6 +704,13 @@ define([
       }
     };
 
+    if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block'){
+      let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-3 .description`));
+      if (!isDescriptionValid) {
+        isValid = false;
+      }
+    }
+
     return isValid;
   }
 
