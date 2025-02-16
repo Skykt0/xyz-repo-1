@@ -712,7 +712,12 @@ define([
       let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .frontTemplate`));
       let backTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .backTemplate`));
 
-      if(!frontTemplateValid || !backTemplateValid){
+      if(!frontTemplateValid){
+        $(`.${selectedMessageType} .screen-3 .frontTemplate`).after('<span class="error-message">Please select the above Template.</span>');
+        isValid = false;
+      }
+      if(!backTemplateValid){
+        $(`.${selectedMessageType} .screen-3 .backTemplate`).after('<span class="error-message">Please select the above Template.</span>');
         isValid = false;
       }
 
