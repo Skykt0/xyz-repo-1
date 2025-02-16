@@ -1206,8 +1206,16 @@ define([
       });
 
       // Populate dropdowns with sorted data
-      populateDropdown('frontTemplateList', sortedData);
-      populateDropdown('backTemplateList', sortedData);
+      let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+      if(selectedMessageType === 'Postcards'){
+        populateDropdown('frontTemplateList', sortedData);
+        populateDropdown('backTemplateList', sortedData);
+      }
+      else if(selectedMessageType === 'Self Mailer'){
+        populateDropdown('selfMailer-insideTemplateList', sortedData);
+        populateDropdown('selfMailer-outsideTemplateList', sortedData);
+      }
+      
     } catch (error) {
       console.error('Error fetching templates:', error);
     }
