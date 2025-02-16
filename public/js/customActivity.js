@@ -1447,7 +1447,7 @@ define([
       $('#selfMailer-insideTemplateList').hide();
     }
     if(!isClickInsideBackSelfMailer){
-      $('#selfMailer-outsideTemplateInput').hide();
+      $('#selfMailer-outsideTemplateList').hide();
     }
   });  
 
