@@ -38,12 +38,9 @@ define([
     connection.trigger('requestSchema');
     $('#card-insert-type').addClass('hidden');
   }
-  // const toggleButtonTestKey = $('#toggle-password-test-key');
-  // const toggleButtonLiveKey = $('#toggle-password-live-key');
-  // toggleButtonTestKey.on('click', showHideTestKey);
-  // toggleButtonLiveKey.on('click', showHideLiveKey);
 
   $('.toggle-password').on('click', toggleApiKeyVisibility);
+  $('input.api-key').on('input', hideError);
   
   connection.on('initActivity', initialize);
   connection.on('clickedNext', onClickedNext);
@@ -451,34 +448,6 @@ define([
     executeScreenTwoMethods();
   }
 
-  // function showHideLiveKey(e) {
-  //   e.preventDefault();
-  //   const icon = $('#toggle-password-live-key i');
-  //   const liveKeyInput = $('#live-api-key');
-
-  //   if (liveKeyInput.attr('type') === 'text') {
-  //     liveKeyInput.attr('type', 'password');
-  //     icon.removeClass('fa-eye').addClass('fa-eye-slash');
-  //   } else {
-  //     liveKeyInput.attr('type', 'text');
-  //     icon.removeClass('fa-eye-slash').addClass('fa-eye');
-  //   }
-  // }
-
-  // function showHideTestKey() {
-  //   const icon = $('#toggle-password-test-key i');
-  //   const testKeyInput = $('#test-api-key');
-
-  //   if (testKeyInput.attr('type') === 'text') {
-  //     testKeyInput.attr('type', 'password');
-  //     icon.removeClass('fa-eye').addClass('fa-eye-slash');
-  //   } else {
-  //     testKeyInput.attr('type', 'text');
-  //     icon.removeClass('fa-eye-slash').addClass('fa-eye');
-  //   }
-
-  // }
-
   function toggleApiKeyVisibility(e) {
     e.preventDefault();
     const input = $(this).prev('input');
@@ -487,9 +456,6 @@ define([
     input.attr('type', input.attr('type') === 'text' ? 'password' : 'text');
     icon.toggleClass('fa-eye fa-eye-slash');
   }
-
-  $('#test-api-key').on('input', hideErrorTestKey);
-  $('#live-api-key').on('input', hideErrorLiveKey);
 
   function validateApiKeys() {
     let isValid = true;
@@ -524,13 +490,8 @@ define([
     return isValid;
   }
   
-  function hideErrorTestKey() {
-    $('#test-api-key').css('border', ''); // Reset border
-    $('#test-api-key-error').hide(); // Hide error message
-  }
-  function hideErrorLiveKey(){
-    $('#live-api-key').css('border', ''); // Reset border
-    $('#live-api-key-error').hide();
+  function hideError() {
+    $(this).css('border', '').next('.error-message').hide();
   }
 
   /* step 2 functions kritika */
