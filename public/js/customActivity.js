@@ -256,9 +256,6 @@ define([
     case 'step3':
       prepopulateToDeMapping();
       $('#dropdown-options').hide();
-      if ($('.screen-3').css('display') === 'block') {
-        validateStep3A() ? proceedToNext() : handleValidationFailure();
-      } else {
         validateStep3A()
           .then((isValid) => {
             isValid ? proceedToNext() : handleValidationFailure();
@@ -267,7 +264,6 @@ define([
             console.error('Error during validation:', error);
             handleValidationFailure(); // Handle errors gracefully
           });
-      }
       break;
 
     case 'step4':
@@ -712,12 +708,7 @@ define([
       let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .frontTemplate`));
       let backTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .backTemplate`));
 
-      if(!frontTemplateValid){
-        $(`.${selectedMessageType} .screen-3 .frontTemplate`).after('<span class="error-message">Please select the above Template.</span>');
-        isValid = false;
-      }
-      if(!backTemplateValid){
-        $(`.${selectedMessageType} .screen-3 .backTemplate`).after('<span class="error-message">Please select the above Template.</span>');
+      if(!frontTemplateValid || !backTemplateValid){
         isValid = false;
       }
 
