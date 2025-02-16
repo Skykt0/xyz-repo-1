@@ -1223,7 +1223,6 @@ define([
 
   function populateDropdown(listId, templates) {
     const $list = $('#' + listId);
-    
     if (!$list.length) {
       console.error(`Dropdown list with ID ${listId} not found.`);
       return;
@@ -1247,13 +1246,13 @@ define([
   }
 
   function selectTemplate(listId, template) {
-    const inputId = listId === 'frontTemplateList' ? 'frontTemplateInput' : 'backTemplateInput';
+    //const inputId = listId === 'frontTemplateList' ? 'frontTemplateInput' : 'backTemplateInput';
     const inputElement = document.getElementById(inputId);
     if (inputElement) {
       inputElement.value = template.description || 'No description';
       inputElement.dataset.id = template.id; // Store ID for later use
     } else {
-      console.error(`Input element with ID ${inputId} not found.`);
+      console.error(`Input element not found.`);
     }
   }
 
@@ -1419,6 +1418,9 @@ define([
   });
 
   $('#frontTemplateInput, #backTemplateInput').on('focus', function () {
+    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
+  });  
+  $('#selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('focus', function () {
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });  
 
