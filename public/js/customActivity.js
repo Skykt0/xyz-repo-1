@@ -709,6 +709,13 @@ define([
       if (!isDescriptionValid) {
         isValid = false;
       }
+      let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .frontTemplate`));
+      let backTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .backTemplate`));
+
+      if(!frontTemplateValid || !backTemplateValid){
+        isValid = false;
+      }
+
     }
 
     return isValid;
@@ -1149,13 +1156,7 @@ define([
     let isValid = true;
     $('.error-message').remove();
     $('.error-field').removeClass('error-field');
-    let today = new Date().toISOString().split('T')[0];
-    $('#sendDate3').attr('min', today);
-    if (!$('#description3').val().trim()) {
-      $('#description3').after('<span class="error-message">The input value is missing.</span>');
-      $('#description3').addClass('error-field');
-      isValid = false;
-    }
+
     // let selectedDate = $('#sendDate3').val();
     // if (!selectedDate || selectedDate < today) {
     //   $('#sendDate3').after('<span class="error-message">Send Date cannot be in the past.</span>');

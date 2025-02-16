@@ -302,14 +302,6 @@
                             <span class="error-message"></span>
                         </div>
                         <div class="input-box">
-                            <label for="sendDate3" class="input-label">Send Date *</label>
-                            <div class="date-wrap">
-                                <input type="date" placeholder="" class="input-field" id="sendDate3" name="sendDate3"> 
-                                <i class="fa fa-calendar calendar-icon"></i>
-                                <span class="error-message"></span>
-                            </div>                           
-                        </div>
-                        <div class="input-box">
                             <label for="mailingClass3" class="input-label">Mailing Class *</label>
                             <select class="input-field mailing-class" id="mailingClass3" name="mailingClass3">
                                 <option value="first_class" selected>First Class (7 - 10 business days)</option>
@@ -322,7 +314,7 @@
                             <label for="frontTemplateInput" class="input-label">Front Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="frontTemplateInput" placeholder="Search or enter template"
+                                    <input type="text" id="frontTemplateInput" class = "frontTemplate" placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="frontTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                         <i class="fa fa-angle-right dropdown-icon"></i>
@@ -337,7 +329,7 @@
                             <label for="backTemplateInput" class="input-label">Back Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="backTemplateInput" placeholder="Search or enter template"
+                                    <input type="text" id="backTemplateInput" class = "backTemplate" placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="backTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                         <i class="fa fa-angle-right dropdown-icon"></i>
@@ -551,7 +543,7 @@
                             <label for="selfMailer-insideTemplateInput" class="input-label">Front Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="selfMailer-insideTemplateInput" placeholder="Search or enter template"
+                                    <input type="text" id="selfMailer-insideTemplateInput" class = "frontTemplate"  placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="selfMailer-insideTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                         <i class="fa fa-angle-right dropdown-icon"></i>
@@ -566,7 +558,7 @@
                             <label for="selfMailer-outsideTemplateInput" class="input-label">Back Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="selfMailer-outsideTemplateInput" placeholder="Search or enter template"
+                                    <input type="text" id="selfMailer-outsideTemplateInput" class = "backTemplate"  placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="selfMailer-outsideTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                         <i class="fa fa-angle-right dropdown-icon"></i>
