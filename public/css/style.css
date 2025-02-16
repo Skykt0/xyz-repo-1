@@ -557,7 +557,7 @@ input:checked + .test-to-live-slider:before {
 
 /* common css */
 
-.html-screen-wrapper .postcard-input-fields .input-fields {
+.html-screen-wrapper .outer-input-fields .input-fields {
 	display: flex;
 	flex-wrap: wrap;
 	column-gap: 2rem;
@@ -617,28 +617,25 @@ input:checked + .test-to-live-slider:before {
 	width: 50%;
 }
 
-.postcard-html-size .radio-buttons,
-.postcard-html-size .input-label-radio,
-.postcard-html-destinations .input-label-radio,
-.postcard-html-destinations .radio-buttons,
-.postcard-input-fields .input-fields {
+.html-size .radio-buttons,
+.html-size .input-label-radio,
+.outer-input-fields .input-fields {
 	margin: 0;
 }
 
-.postcard-html-editor {
+.html-editor {
 	position: relative;
 	width: 50%;
 	margin-top: 3rem;
 }
 
-.postcard-html-size,
-.postcard-html-destinations {
+.html-size{
 	display: flex;
 	flex-direction: column;
 	gap: 0.75rem;
 }
 
-.postcard-html-size .input-label-radio {
+.html-size .input-label-radio {
 	font-size: 18px;
 }
 
@@ -935,7 +932,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     gap: 0.5rem;
 }
 
-.postcard-input-fields .date-wrap {
+.outer-input-fields .date-wrap {
     gap: 0.3rem;
 }
 
@@ -997,7 +994,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none
 }
 
-.postcard-input-fields .input-fields .input-label,
+.outer-input-fields .input-fields .input-label,
 .pdf-container .input-label {
     font-size: 16px !important;
 }

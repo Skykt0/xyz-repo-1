@@ -142,7 +142,7 @@ define([
         $(queryString).prop('checked', true);
         break;
       case 'isExpressDelivery':
-        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .express-delivery-btn';
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .express-delivery-input';
         $(queryString).prop('checked', value);
         if(value) {
           var queryStringMailingClass = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .mailing-class';
@@ -229,6 +229,7 @@ define([
 
     case 'step2':
       if (validateStep2()) {
+        setDefaultValuesForPostCardCreation();
         $('#step3 .screen').toggle(false);
         let selectedMessageType;
 
@@ -444,8 +445,10 @@ define([
   }
 
   function initializeHandler() {
+    console.log('initializeHandler testing');
+    
     executeScreenTwoMethods();
-    setDefaultValuesForPostCardHtmlCreation();
+    
   }
 
   function showHideLiveKey(e) {
@@ -655,18 +658,19 @@ define([
   /* end of step 2 functions kritika */
 
   /** screen 3A script */
-  function setDefaultValuesForPostCardHtmlCreation() {
-    $('.postcard-html-editor .html__btn--front').click(function () {
+  function setDefaultValuesForPostCardCreation() {
+    let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    $(`.${selectedMessageType} .html-editor .html__btn--front`).click(function () {
       $(this).addClass('show');
-      $('.postcard-html-editor .html__btn--back').removeClass('show');
-      $('.html-editor-front').addClass('show');
-      $('.html-editor-back').removeClass('show');
+      $(`.${selectedMessageType} .html-editor .html__btn--back`).removeClass('show');
+      $(`.${selectedMessageType} .html-editor-front`).addClass('show');
+      $(`.${selectedMessageType} .html-editor-back`).removeClass('show');
     });
-    $('.postcard-html-editor .html__btn--back').click(function () {
+    $(`.${selectedMessageType} .html-editor .html__btn--back`).click(function () {
       $(this).addClass('show');
-      $('.postcard-html-editor .html__btn--front').removeClass('show');
-      $('.html-editor-front').removeClass('show');
-      $('.html-editor-back').addClass('show');
+      $(`.${selectedMessageType} .html-editor .html__btn--front`).removeClass('show');
+      $(`.${selectedMessageType} .html-editor-front`).removeClass('show');
+      $(`.${selectedMessageType} .html-editor-back`).addClass('show');
     });
 
     const today = new Date().toISOString().split('T')[0];
@@ -762,16 +766,16 @@ define([
       if (!isDescriptionValid) {
         isValid = false;
       }
-      let isPostcardSizeSelected = $('.postcard-html-size input[name="postcardHtmlSize"]:checked').length;
-      let frontHtmlContent = $('.html-editor-front').val().trim();
-      let backtHtmlContent = $('.html-editor-back').val().trim();
-      let postcardHtmlEditorErrorMsg = $('.postcard-html-editor .error-msg');
+      let isPostcardSizeSelected = $(`.${selectedMessageType} .html-size .radio-input:checked`).length;
+      let frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val().trim();
+      let backtHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val().trim();
+      let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .html-editor .error-msg`);
   
       if (!(isPostcardSizeSelected > 0)) {
-        $('.postcard-html-size .error-msg').addClass('show');
+        $(`.${selectedMessageType} .html-size .error-msg`).addClass('show');
         isValid = false;
       } else {
-        $('.postcard-html-size .error-msg').removeClass('show');
+        $(`.${selectedMessageType} .html-size .error-msg`).removeClass('show');
       }
   
       if (frontHtmlContent === '' || backtHtmlContent === '') {
@@ -845,14 +849,17 @@ define([
   }
 
   function setPreviewPayload() {
-    if ($('#postcardScreen .screen-1').css('display') === 'block') {
-      const description = $('.screen-1 #description').val();
+    let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
+    if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
+      const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
       //   const sendDate = $('.screen-1 #sendDate').val();
-      const mailingClass = $('.screen-1 #mailingClass').val();
-      const frontHtmlContent = $('.html-editor-front').val();
-      const backHtmlContent = $('.html-editor-back ').val();
-      const size = $('.postcard-html-size input[name=\'postcardHtmlSize\']:checked').val();
-      const isExpressDelivery = $('.postcard-html-express-delivery #expDelivery').is(':checked');
+      const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
+      const frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val();
+      const backHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val();
+      
+      const size = $(`.${selectedMessageType} .html-size .radio-input:checked`).val();
+      const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
 
       previewPayload.screen = 'html';
       previewPayload.description = description;
@@ -862,13 +869,13 @@ define([
       previewPayload.backHtmlContent = backHtmlContent;
       previewPayload.size = size;
       previewPayload.isExpressDelivery = isExpressDelivery;
-    } else if ($('#postcardScreen .screen-2').css('display') === 'block') {
-      const description = $('#postcardScreen .screen-2 #description').val();
+    } else if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
+      const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
       //   const sendDate = $('#postcardScreen .screen-2 #sendDate').val();
-      const mailingClass = $('#postcardScreen .screen-2 #mailingClass').val();
-      const size = $('.postcard-pdf-size input[name=\'Postcards-pdf-size\']:checked').val();
-      const isExpressDelivery = $('#postcardScreen .screen-2 #expDelivery').is(':checked');
-      const pdfInput = $('#postcardScreen .screen-2 .pdf-upload')[0];
+      const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
+      const size = $(`.${selectedMessageType} .pdf-size .radio-input:checked`).val();
+      const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
+      const pdfInput = $(`.${selectedMessageType} .${selectedCreationType} .pdf-upload`)[0];
       const pdfFile = pdfInput.files[0] ;
 
       previewPayload.screen = 'pdf';
@@ -879,13 +886,13 @@ define([
       previewPayload.isExpressDelivery = isExpressDelivery;
       previewPayload.pdf = pdfFile;
       previewPayload.pdfName = pdfFile.name;
-    } else if ($('#postcardScreen .screen-3').css('display') === 'block') {
-      const description = document.querySelector('#description3').value;
+    } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
+      const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
       //   const sendDate = document.querySelector('#sendDate3').value;
       const frontTemplateId = document.querySelector('#frontTemplateInput')?.dataset.id;
       const backTemplateId = document.querySelector('#backTemplateInput')?.dataset.id;
       const size = $('.screen-3 input[name=\'size\']:checked').val();
-      const isExpressDelivery = $('.screen-3 #expDelivery').is(':checked');
+      const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
       const mailingClass = $('.screen-3 #mailingClass3').val();
       const frontTemplateName = $('#frontTemplateInput')?.val();
       const backTemplateName = $('#backTemplateInput')?.val();
@@ -921,8 +928,13 @@ define([
     return `${formattedDate}T${formattedTime}`;
   }
 
-  async function createPostcard() {
-    const url = 'https://api.postgrid.com/print-mail/v1/postcards';
+  async function createMessage() {
+    let messageType = $('input[name=\'msgType\']:checked').val();
+    const baseUrl = 'https://api.postgrid.com/print-mail/v1/';
+    let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    const url = selectedMessageType === 'SelfMailer' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
+    console.log('my url:'+url);
+    
     let data;
     
     let headers = {
@@ -949,8 +961,6 @@ define([
       data = new URLSearchParams({
         'to': toContact,
         'from': fromContact.id || '',
-        'frontHTML': previewPayload.frontHtmlContent,
-        'backHTML': previewPayload.backHtmlContent,
         'size': previewPayload.size,
         'sendDate': previewPayload.sendDate,
         'express': previewPayload.isExpressDelivery,
@@ -958,6 +968,14 @@ define([
         'mergeVariables[language]': 'english',
         'metadata[company]': 'PostGrid'
       });
+      if(messageType === 'Postcards'){
+        data.append('frontHTML', previewPayload.frontHtmlContent);
+        data.append('backHTML', previewPayload.backHtmlContent);
+      } else if(messageType === 'Self Mailer'){
+        data.append('insideHTML', previewPayload.frontHtmlContent);
+        data.append('outsideHTML', previewPayload.backHtmlContent);
+      }
+
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
       }
@@ -979,6 +997,8 @@ define([
       }
     }
 
+    console.log(data);
+    
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -992,6 +1012,10 @@ define([
       }
 
       const result = await response.json();
+      console.log('-------------------------API response');
+      console.log(JSON.stringify(result));
+      
+      
       previewPayload.pdfLink = result.uploadedPDF;
 
       return result;
@@ -1001,9 +1025,11 @@ define([
     }
   }
 
-  async function fetchPostcardDetails(postcardId) {
-    const apiUrl = `https://api.postgrid.com/print-mail/v1/postcards/${postcardId}?expand[]=frontTemplate&expand[]=backTemplate`;
-    const apiKey = previewPayload.test_api_key; 
+  async function fetchMessageDetails(messageId) {
+    let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    const urlMessageType = selectedMessageType === 'SelfMailer' ? 'self_mailers' : 'postcards';
+    const apiUrl = `https://api.postgrid.com/print-mail/v1/${urlMessageType}/${messageId}`;
+    const apiKey = previewPayload.test_api_key;
 
     try {
       const response = await fetch(apiUrl, {
@@ -1025,14 +1051,14 @@ define([
     }
   }
 
-  async function showPdfPreview(postcardId) {
+  async function showPdfPreview(messageId) {
     try {
       $('#pdf-preview').attr('src', '');
       $('#pdf-preview-container').css('display', 'none');
       $('.retry-preview-btn').css('display', 'none');
       $('.preview-message').css('display', 'none');
-      const postcardDetails = await fetchPostcardDetails(postcardId);
-      const pdfUrl = postcardDetails.url;
+      const messageDetails = await fetchMessageDetails(messageId);
+      const pdfUrl = messageDetails.url;
       console.log('PDF URL:', pdfUrl);
       connection.trigger('nextStep');
       if (pdfUrl) {
@@ -1053,7 +1079,7 @@ define([
         $('.preview-message').css('display', 'block');
         $('.retry-btn-wrap .loader').addClass('show');
         setTimeout(() => {
-          showPdfPreviewRetry(postcardId);
+          showPdfPreviewRetry(messageId);
         }, 2000);
       }
     } catch (error) {
@@ -1064,9 +1090,9 @@ define([
     }
   }
 
-  async function showPdfPreviewRetry(postcardId) {
-    const postcardDetails = await fetchPostcardDetails(postcardId);
-    const pdfUrl = postcardDetails.url;
+  async function showPdfPreviewRetry(messageId) {
+    const messageDetails = await fetchMessageDetails(messageId);
+    const pdfUrl = messageDetails.url;
 
     if (pdfUrl) {
       $('.retry-preview-btn').css('display', 'inline-block');
@@ -1084,19 +1110,19 @@ define([
       $('.retry-preview-btn').css('display', 'none');
       $('.preview-message').css('display', 'block');
       setTimeout(() => {
-        showPdfPreviewRetry(postcardId);
+        showPdfPreviewRetry(messageId);
       }, 2000);
     }
   }
 
   async function getPreviewURL () {
     try {
-      const postcardResponse = await createPostcard();
-      const postcardId = postcardResponse.id;
-      previewPayload.postcardId = postcardId;
+      const messageResponse = await createMessage();
+      const messageId = messageResponse.id;
+      previewPayload.messageId = messageId;
 
       setTimeout(async function() {
-        await showPdfPreview(postcardId);
+        await showPdfPreview(messageId);
       }, 2000);
 
     } catch (error) {
@@ -1151,10 +1177,10 @@ define([
   }
 
   $('.preview-container .retry-preview-btn').click(async function() {
-    await showPdfPreview(previewPayload.postcardId);
+    await showPdfPreview(previewPayload.messageId);
   });
 
-  $('.express-delivery-btn').on('click', function() {
+  $('.express-delivery-input').on('click', function() {
     var isChecked = $(this).prop('checked');
     var mailingClass = $(this).closest('.spacer').find('.mailing-class');
     
