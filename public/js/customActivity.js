@@ -1246,7 +1246,7 @@ define([
   }
 
   function selectTemplate(listId, template) {
-    //const inputId = listId === 'frontTemplateList' ? 'frontTemplateInput' : 'backTemplateInput';
+    const inputId = listId ;
     const inputElement = document.getElementById(inputId);
     if (inputElement) {
       inputElement.value = template.description || 'No description';
