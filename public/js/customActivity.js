@@ -1207,11 +1207,13 @@ define([
 
       // Populate dropdowns with sorted data
       let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+      console.log('-------------------Msg----------------', selectedMessageType);
       if(selectedMessageType === 'Postcards'){
         populateDropdown('frontTemplateList', sortedData);
         populateDropdown('backTemplateList', sortedData);
       }
       else if(selectedMessageType === 'Self Mailer'){
+        console.log("Insideeeeeeeeeeeeeeeee");
         populateDropdown('selfMailer-insideTemplateList', sortedData);
         populateDropdown('selfMailer-outsideTemplateList', sortedData);
       }
