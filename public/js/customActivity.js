@@ -1246,7 +1246,11 @@ define([
   }
 
   function selectTemplate(listId, template) {
-    const inputId = listId ;
+    const inputId = 
+    listId === 'selfMailer-outsideTemplateList' ? 'selfMailer-outsideTemplateInput' :
+    listId === 'selfMailer-insideTemplateList' ? 'selfMailer-insideTemplateInput' :
+    listId === 'frontTemplateList' ? 'frontTemplateInput' :
+    'backTemplateInput';
     const inputElement = document.getElementById(inputId);
     if (inputElement) {
       inputElement.value = template.description || 'No description';
