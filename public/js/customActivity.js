@@ -1284,54 +1284,37 @@ define([
     });
   }
 
-  async function authenticateApiKeys(){
+  async function validateApiKey(apiKey, inputSelector, errorSelector) {
+    if (!apiKey) return true;
+  
+    const url = 'https://api.postgrid.com/print-mail/v1/contacts?limit=1';
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: { 'x-api-key': apiKey }
+      });
+  
+      if (!response.ok) {
+        $(inputSelector).css('border', '1px solid red'); // Highlight input box
+        $(errorSelector).text(`Invalid API key: ${apiKey}`).show();
+        return false;
+      }
+    } catch (error) {
+      console.error(`Error Validating API Key: ${error.message}`);
+      throw error;
+    }
+  
+    return true;
+  }
+  
+  async function authenticateApiKeys() {
     const testApiKey = $('#test-api-key').val().trim();
     const liveApiKey = $('#live-api-key').val().trim();
-    let isValid = true;
-
-    const url = 'https://api.postgrid.com/print-mail/v1/contacts?limit=1';
-    if(testApiKey){
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'x-api-key': testApiKey
-          }
-        });
   
-        if (!response.ok) {
-          $('#test-api-key').css('border', '1px solid red'); // Highlight input box
-          $('#test-api-key-error').text(`Invalid API key: ${testApiKey}`).show(); 
-          console.log(response);
-          
-          isValid =  false;
-        }
-      } catch (error) {
-        console.error('Error Validating TestApiKey:', error.message);
-        throw error;
-      }
-    }
-    if(liveApiKey){
-      try {
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'x-api-key': liveApiKey
-          }
-        });
+    const isTestKeyValid = await validateApiKey(testApiKey, '#test-api-key', '#test-api-key-error');
+    const isLiveKeyValid = await validateApiKey(liveApiKey, '#live-api-key', '#live-api-key-error');
   
-        if (!response.ok) {
-          $('#live-api-key').css('border', '1px solid red'); // Highlight input box
-          $('#live-api-key-error').text(`Invalid API key: ${liveApiKey}`).show();
-          isValid = false;
-        }
-      } catch (error) {
-        console.error('Error Validating TestApiKey:', error.message);
-        throw error;
-      }
-    }
-
-    return isValid;
+    return isTestKeyValid && isLiveKeyValid;
   }
 
   // js event registration
