@@ -257,7 +257,7 @@ define([
       prepopulateToDeMapping();
       $('#dropdown-options').hide();
       if ($('.screen-3').css('display') === 'block') {
-        validateStep3() ? proceedToNext() : handleValidationFailure();
+        validateStep3A() ? proceedToNext() : handleValidationFailure();
       } else {
         validateStep3A()
           .then((isValid) => {
