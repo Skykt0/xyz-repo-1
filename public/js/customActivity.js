@@ -967,10 +967,10 @@ define([
       const pdfUrl = '';
       // const pdfUrl = messageDetails.url;
       console.log('PDF URL:', pdfUrl);
-      connection.trigger('nextStep');
   
       if (pdfUrl) {
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
+        $('.retry-preview-btn').text('Show Preview');
         $('.retry-btn-wrap .loader').removeClass('show');
   
         $('.retry-preview-btn').off('click').on('click', function () {
@@ -980,11 +980,15 @@ define([
           $('.retry-preview-btn, .preview-message').hide();
         });
       } else {
+        console.log('date now: '+Date.now());
+        console.log('startTime: '+startTime);
+        
         const elapsedTime = Date.now() - startTime;
         if (elapsedTime >= 60000) {
           console.warn('Retry limit reached (1 minute). Stopping retries.');
           $('.retry-btn-wrap .loader').removeClass('show');
-          $('.preview-message').text('Failed to load preview after multiple attempts.').show();
+          $('.preview-message').text('Failed to load the preview after several attempts. To try again, click the retry button.').show();
+          $('.retry-preview-btn').text('Retry').show();
           return;
         }
   
@@ -1011,6 +1015,7 @@ define([
       previewPayload.messageId = messageId;
 
       setTimeout(async function() {
+        connection.trigger('nextStep');
         await showPdfPreview(messageId);
       }, 2000);
 
