@@ -256,9 +256,6 @@ define([
     case 'step3':
       prepopulateToDeMapping();
       $('#dropdown-options').hide();
-      if ($('.screen-3').css('display') === 'block') {
-        validateStep3() ? proceedToNext() : handleValidationFailure();
-      } else {
         validateStep3A()
           .then((isValid) => {
             isValid ? proceedToNext() : handleValidationFailure();
@@ -267,7 +264,6 @@ define([
             console.error('Error during validation:', error);
             handleValidationFailure(); // Handle errors gracefully
           });
-      }
       break;
 
     case 'step4':
@@ -703,6 +699,20 @@ define([
         postcardHtmlEditorErrorMsg.removeClass('show');
       }
     };
+
+    if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block'){
+      let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-3 .description`));
+      if (!isDescriptionValid) {
+        isValid = false;
+      }
+      let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .frontTemplate`));
+      let backTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .backTemplate`));
+
+      if(!frontTemplateValid || !backTemplateValid){
+        isValid = false;
+      }
+
+    }
 
     return isValid;
   }
@@ -1142,13 +1152,7 @@ define([
     let isValid = true;
     $('.error-message').remove();
     $('.error-field').removeClass('error-field');
-    let today = new Date().toISOString().split('T')[0];
-    $('#sendDate3').attr('min', today);
-    if (!$('#description3').val().trim()) {
-      $('#description3').after('<span class="error-message">The input value is missing.</span>');
-      $('#description3').addClass('error-field');
-      isValid = false;
-    }
+
     // let selectedDate = $('#sendDate3').val();
     // if (!selectedDate || selectedDate < today) {
     //   $('#sendDate3').after('<span class="error-message">Send Date cannot be in the past.</span>');
@@ -1202,8 +1206,16 @@ define([
       });
 
       // Populate dropdowns with sorted data
-      populateDropdown('frontTemplateList', sortedData);
-      populateDropdown('backTemplateList', sortedData);
+      let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+      if(selectedMessageType === 'Postcards'){
+        populateDropdown('frontTemplateList', sortedData);
+        populateDropdown('backTemplateList', sortedData);
+      }
+      else if(selectedMessageType === 'SelfMailer'){
+        populateDropdown('selfMailer-insideTemplateList', sortedData);
+        populateDropdown('selfMailer-outsideTemplateList', sortedData);
+      }
+      
     } catch (error) {
       console.error('Error fetching templates:', error);
     }
@@ -1211,7 +1223,6 @@ define([
 
   function populateDropdown(listId, templates) {
     const $list = $('#' + listId);
-    
     if (!$list.length) {
       console.error(`Dropdown list with ID ${listId} not found.`);
       return;
@@ -1235,13 +1246,17 @@ define([
   }
 
   function selectTemplate(listId, template) {
-    const inputId = listId === 'frontTemplateList' ? 'frontTemplateInput' : 'backTemplateInput';
+    const inputId = 
+    listId === 'selfMailer-outsideTemplateList' ? 'selfMailer-outsideTemplateInput' :
+    listId === 'selfMailer-insideTemplateList' ? 'selfMailer-insideTemplateInput' :
+    listId === 'frontTemplateList' ? 'frontTemplateInput' :
+    'backTemplateInput';
     const inputElement = document.getElementById(inputId);
     if (inputElement) {
       inputElement.value = template.description || 'No description';
       inputElement.dataset.id = template.id; // Store ID for later use
     } else {
-      console.error(`Input element with ID ${inputId} not found.`);
+      console.error(`Input element not found.`);
     }
   }
 
@@ -1409,12 +1424,16 @@ define([
   $('#frontTemplateInput, #backTemplateInput').on('focus', function () {
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });  
+  $('#selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('focus', function () {
+    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
+  });  
 
   $(document).on('click', function (event) {
     const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact') || $(event.target).closest('#step4').length > 0;
     const isClickInsideFront = $(event.target).closest('#frontTemplateList, #frontTemplateInput').length > 0;
     const isClickInsideBack = $(event.target).closest('#backTemplateList, #backTemplateInput').length > 0;
-  
+    const isClickInsideFrontSelfMailer = $(event.target).closest('#selfMailer-insideTemplateList, #selfMailer-insideTemplateInput').length > 0;
+    const isClickInsideBackSelfMailer = $(event.target).closest('#selfMailer-outsideTemplateList, #selfMailer-outsideTemplateInput').length > 0;
     if (!isClickInsideDropdown) {
       $('#dropdown-options').hide();
     }
@@ -1424,9 +1443,18 @@ define([
     if (!isClickInsideBack) {
       $('#backTemplateList').hide();
     }
+    if(!isClickInsideFrontSelfMailer){
+      $('#selfMailer-insideTemplateList').hide();
+    }
+    if(!isClickInsideBackSelfMailer){
+      $('#selfMailer-outsideTemplateList').hide();
+    }
   });  
 
   $('#frontTemplateInput, #backTemplateInput').on('input', debounce(function () {
+    fetchTemplates($(this).val().trim());
+  }, 300));
+  $('#selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('input', debounce(function () {
     fetchTemplates($(this).val().trim());
   }, 300));
 
