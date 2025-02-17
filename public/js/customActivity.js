@@ -964,6 +964,7 @@ define([
       }
   
       $('.retry-btn-wrap .loader').addClass('show');
+      $('.retry-preview-btn').hide();
       const messageDetails = await fetchMessageDetails(messageId);
       const pdfUrl = '';
       // const pdfUrl = messageDetails.url;
@@ -980,9 +981,9 @@ define([
           $('#pdf-preview-container').show();
           $('.retry-preview-btn, .preview-message').hide();
         });
-      } else if(!retryOnce) {
+      } else  {
         const elapsedTime = Date.now() - startTime;
-        if (elapsedTime >= 60000) {
+        if (elapsedTime >= 10000 || retryOnce) {
           console.warn('Retry limit reached (1 minute). Stopping retries.');
           $('.retry-btn-wrap .loader').removeClass('show');
           $('.preview-message').text('Failed to load the preview after several attempts. To try again, click the retry button.').show();
