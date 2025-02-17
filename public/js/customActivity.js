@@ -843,7 +843,7 @@ define([
     let data;
     
     let headers = {
-      'x-api-key': previewPayload.test_api_key,
+      'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key,
     };
 
     console.log('existing template contact '+toContact);
@@ -919,10 +919,13 @@ define([
       const result = await response.json();
       console.log('-------------------------API response');
       console.log(JSON.stringify(result));
-      
-      
+
       previewPayload.pdfLink = result.uploadedPDF;
 
+      if(previewPayload.liveApiKeyEnabled) {
+        let msgType = selectedMessageType === 'SelfMailer' ? 'self_mailers' : 'postcards';
+        deleteMailItem(msgType, result.id);
+      }
       return result;
     } catch (error) {
       console.error('Error creating postcard:', error.message);
@@ -934,7 +937,7 @@ define([
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     const urlMessageType = selectedMessageType === 'SelfMailer' ? 'self_mailers' : 'postcards';
     const apiUrl = `https://api.postgrid.com/print-mail/v1/${urlMessageType}/${messageId}`;
-    const apiKey = previewPayload.test_api_key;
+    const apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
 
     try {
       const response = await fetch(apiUrl, {
@@ -1051,7 +1054,7 @@ define([
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'x-api-key': previewPayload.test_api_key
+        'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key
       },
       body: formData
     })
@@ -1073,7 +1076,7 @@ define([
       method: 'GET',
       data: searchQuery ? { search: searchQuery, limit: 10 } : { limit: 10 },
       headers: {
-        'x-api-key': previewPayload.test_api_key
+        'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key
       },
       success: function (response) {
         $('#dropdown-options').empty();
@@ -1095,6 +1098,31 @@ define([
       }
     });
   }
+
+  function deleteMailItem(messageType, mailItemId) {
+    const url = `https://api.postgrid.com/print-mail/v1/${messageType}/${mailItemId}`;
+  
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'x-api-key': previewPayload.live_api_key
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to delete ${messageType}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Postcard deleted successfully:', data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+  
 
   function debounce(func, delay) {
     let timeoutId;
@@ -1140,7 +1168,7 @@ define([
   async function fetchTemplates(searchQuery = '') {
     const requestOptions = {
       method: 'GET',
-      headers: { 'x-api-key': previewPayload.test_api_key },
+      headers: { 'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key },
       redirect: 'follow'
     };
 
