@@ -963,6 +963,7 @@ define([
         $('#pdf-preview-container, .retry-preview-btn, .preview-message').hide();
       }
   
+      $('.retry-btn-wrap .loader').addClass('show');
       const messageDetails = await fetchMessageDetails(messageId);
       const pdfUrl = '';
       // const pdfUrl = messageDetails.url;
@@ -1308,7 +1309,7 @@ define([
   });
 
   $('.preview-container .retry-preview-btn').click(async function() {
-    await showPdfPreview(previewPayload.messageId, true);
+    await showPdfPreview(previewPayload.messageId, true, true);
   });
 
   $('.express-delivery-input').on('click', function() {
