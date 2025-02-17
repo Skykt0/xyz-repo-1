@@ -973,10 +973,10 @@ define([
         $('#pdf-preview-container, .retry-preview-btn, .preview-message').hide();
       }
   
+      connection.trigger('nextStep');
       const messageDetails = await fetchMessageDetails2(messageId);
       const pdfUrl = messageDetails.url;
       console.log('PDF URL:', pdfUrl);
-      connection.trigger('nextStep');
   
       if (pdfUrl) {
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
