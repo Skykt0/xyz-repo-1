@@ -1068,7 +1068,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #fff !important;
 }
 
-.back-btn, .cancel {
+.fuelux .modal-footer a.back, .fuelux .modal-footer .cancel {
   color: #2569E6 !important;
   border: 0;
   padding: 5px 10px;
@@ -1076,7 +1076,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 3px;
 }
 
-.back-btn:hover, .cancel:hover {
+.fuelux .modal-footer a.back:hover, .fuelux .modal-footer .cancel:hover {
   background-color: #f1f1f1;
   border-color: #bbb;
 }
