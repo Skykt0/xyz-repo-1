@@ -964,7 +964,8 @@ define([
       }
   
       const messageDetails = await fetchMessageDetails(messageId);
-      const pdfUrl = messageDetails.url;
+      const pdfUrl = '';
+      // const pdfUrl = messageDetails.url;
       console.log('PDF URL:', pdfUrl);
       connection.trigger('nextStep');
   
