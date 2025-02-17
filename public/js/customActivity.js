@@ -262,7 +262,7 @@ define([
           })
           .catch((error) => {
             console.error('Error during validation:', error);
-            handleValidationFailure(); // Handle errors gracefully
+            handleValidationFailure();
           });
       break;
 
@@ -379,12 +379,10 @@ define([
       previewDEMapOptions[eleID]=optionSelect;
     });
 
-    // Coverting PDF in base64
     if (previewPayload.pdf) {
       await convertToBase64(previewPayload.pdf)
         .then((base64String) => {
           previewPayload.encodedPdf = base64String;
-          // You can now use this base64String in your logic
         })
         .catch((error) => {
           return;
@@ -455,26 +453,26 @@ define([
     const liveApiKey = $('#live-api-key').val().trim();
     const regexForTestApiKey = /^test_sk_[a-zA-Z0-9]{16,}$/;
     const regexForLiveApiKey = /^live_sk_[a-zA-Z0-9]{16,}$/;
-    // Validate Test API Key
+
     if (testApiKey === '') {
-      $('#test-api-key').css('border', '1px solid red'); // Highlight input box
-      $('#test-api-key-error').text('Missing or invalid authentication').show(); // Show error message
+      $('#test-api-key').css('border', '1px solid red');
+      $('#test-api-key-error').text('Missing or invalid authentication').show();
       isValid = false;
     } else if (!regexForTestApiKey.test(testApiKey)) {
-      $('#test-api-key').css('border', '1px solid red'); // Highlight input box
-      $('#test-api-key-error').text(`Invalid API key: ${testApiKey}`).show(); // Show error message with key value
+      $('#test-api-key').css('border', '1px solid red');
+      $('#test-api-key-error').text(`Invalid API key: ${testApiKey}`).show();
       isValid = false;
     } else {
       previewPayload.test_api_key = testApiKey;
-      $('#test-api-key-error').hide(); // Hide error message if valid
-      $('#test-api-key').css('border', ''); // Remove highlight
+      $('#test-api-key-error').hide();
+      $('#test-api-key').css('border', '');
     }
-    // Validate Live API Key (only if it's not empty)
+
     previewPayload.live_api_key = liveApiKey;
     if (liveApiKey !== '') {
       if (!regexForLiveApiKey.test(liveApiKey)) {
-        $('#live-api-key').css('border', '1px solid red'); // Highlight input box
-        $('#live-api-key-error').text(`Invalid API key: ${liveApiKey}`).show(); // Show error message with key value
+        $('#live-api-key').css('border', '1px solid red');
+        $('#live-api-key-error').text(`Invalid API key: ${liveApiKey}`).show();
         isValid = false;
         previewPayload.live_api_key = '';
       }
@@ -490,25 +488,22 @@ define([
     let isValid = true;
     let errorMessages = [];
 
-    // Validate Message Type
     if (!$('input[name=\'msgType\']:checked').length) {
       errorMessages.push('Message Type is required.');
       isValid = false;
       $('#msgType-error').text('Message Type is required.');
     } else {
-      $('#msgType-error').text('');  // Clear error if valid
+      $('#msgType-error').text('');
     }
 
-    // Validate Creation Type
     if (!$('input[name=\'createType\']:checked').length) {
       errorMessages.push('Creation Type is required.');
       isValid = false;
       $('#createType-error').text('Creation Type is required.');
     } else {
-      $('#createType-error').text('');  // Clear error if valid
+      $('#createType-error').text(''); 
     }
 
-    // Show general error message if any
     if (!errorMessages.length) {
       $('#step2-error').hide();
     } else {
@@ -540,28 +535,25 @@ define([
   }
 
   function executeScreenTwoMethods() {
-    // Handle showing Card Insert checkbox when "Letters" or "Self-Mailer" is selected
     $('input[name="msgType"]').change(function () {
+      if (this.id === 'letters' || this.id === 'self-mailer') {
+        $('#card-insert-container').addClass('visible');
+        $('.card-insert-wrapper').addClass('visible');
+      } else {
+        $('#card-insert-container').removeClass('visible');
+        $('.card-insert-wrapper').removeClass('visible');
+      }
 
       if (this.id === 'letters' || this.id === 'self-mailer') {
-        $('#card-insert-container').addClass('visible'); // Show Card Insert checkbox
-        $('.card-insert-wrapper').addClass('visible'); // Show Card Insert wrapper (if needed)
-      } else {
-        $('#card-insert-container').removeClass('visible'); // Hide Card Insert checkbox
-        $('.card-insert-wrapper').removeClass('visible'); // Hide Card Insert wrapper (if needed)
-      }
-      // If "Self-Mailer" is selected, uncheck "Card Insert"
-      if (this.id === 'letters' || this.id === 'self-mailer') {
-        $('#card-insert').prop('checked', false).trigger('change'); // Uncheck and trigger change event
+        $('#card-insert').prop('checked', false).trigger('change');
       }
     });
-    // Show/Hide Card Insert Type section when Card Insert is checked/unchecked
-    $('#card-insert').change(function () {
 
+    $('#card-insert').change(function () {
       if (this.checked) {
-        $('#card-insert-type').removeClass('hidden'); // Show Card Insert Type section
+        $('#card-insert-type').removeClass('hidden');
       } else {
-        $('#card-insert-type').addClass('hidden'); // Hide Card Insert Type section
+        $('#card-insert-type').addClass('hidden');
       }
     });
   }
@@ -641,7 +633,6 @@ define([
 
     if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
-      //   let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
       
       if (!isDescriptionValid) {
         isValid = false;
@@ -669,7 +660,6 @@ define([
 
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-1 .description`));
-      //   let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
       
       if (!isDescriptionValid) {
         isValid = false;
@@ -711,7 +701,6 @@ define([
       if(!frontTemplateValid || !backTemplateValid){
         isValid = false;
       }
-
     }
 
     return isValid;
@@ -773,7 +762,6 @@ define([
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
-      //   const sendDate = $('.screen-1 #sendDate').val();
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
       const frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val();
       const backHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val();
@@ -791,7 +779,6 @@ define([
       previewPayload.isExpressDelivery = isExpressDelivery;
     } else if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
-      //   const sendDate = $('#postcardScreen .screen-2 #sendDate').val();
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
       const size = $(`.${selectedMessageType} .pdf-size .radio-input:checked`).val();
       const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
@@ -808,7 +795,6 @@ define([
       previewPayload.pdfName = pdfFile.name;
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
-      //   const sendDate = document.querySelector('#sendDate3').value;
       const frontTemplateId = document.querySelector('#frontTemplateInput')?.dataset.id;
       const backTemplateId = document.querySelector('#backTemplateInput')?.dataset.id;
       const size = $('.screen-3 input[name=\'size\']:checked').val();
@@ -838,13 +824,12 @@ define([
     const sendDate = now.getFullYear() + '-' + 
                        String(now.getMonth() + 1).padStart(2, '0') + '-' + 
                        String(now.getDate()).padStart(2, '0');
-    let istOffset = 5.5 * 60 * 60 * 1000; // Convert 5.5 hours to milliseconds
+    let istOffset = 5.5 * 60 * 60 * 1000;
     let istTime = new Date(now.getTime() + istOffset);
 
     let formattedDate = sendDate;
-    let formattedTime = istTime.toISOString().split('T')[1]; // Extract the time part from IST
+    let formattedTime = istTime.toISOString().split('T')[1];
 
-    
     return `${formattedDate}T${formattedTime}`;
   }
 
@@ -1037,8 +1022,7 @@ define([
 
   function createContact () {
     const url = 'https://api.postgrid.com/print-mail/v1/contacts';
-                
-    // Data payload (form-encoded)
+
     const formData = new URLSearchParams();
     formData.append('firstName', 'Kevin');
     formData.append('lastName', 'Smith');
@@ -1123,7 +1107,7 @@ define([
     let isAnyFieldEmpty = false;
     requiredFields.forEach(selector => {
       let value = $(selector).val();
-      // Special validation for First Name or Company (one must be selected)
+
       if (selector === '#firstName' || selector === '#companyName') {
         if ($('#firstName').val() === 'Select' && $('#companyName').val() === 'Select') {
           $('#firstName, #companyName').css('border', '2px solid red');
@@ -1144,8 +1128,8 @@ define([
   }
 
   function resetToContactMappingErrors() {
-    $('.mapping-fields-group select').css('border', ''); // Reset border styles
-    $('.error-message-contactMapping').text('').hide(); // Clear and hide error messages
+    $('.mapping-fields-group select').css('border', '');
+    $('.error-message-contactMapping').text('').hide();
   }
 
   function validateStep3() {
@@ -1153,12 +1137,6 @@ define([
     $('.error-message').remove();
     $('.error-field').removeClass('error-field');
 
-    // let selectedDate = $('#sendDate3').val();
-    // if (!selectedDate || selectedDate < today) {
-    //   $('#sendDate3').after('<span class="error-message">Send Date cannot be in the past.</span>');
-    //   $('#sendDate3').addClass('error-field');
-    //   isValid = false;
-    // }
     if (!$('#mailingClass3').val()) {
       $('#mailingClass3').after('<span class="error-message">Mailing Class is required.</span>');
       $('#mailingClass3').addClass('error-field');
@@ -1168,13 +1146,13 @@ define([
       $('.radio-buttons').after('<span class="error-message">Please select at least one size.</span>');
       isValid = false;
     }
-    // Validate Front Template
+
     if (!$('#frontTemplateInput').val().trim()) {
       $('#frontTemplateInput').after('<span class="error-message">Please select the Front Template.</span>');
       $('#frontTemplateInput').addClass('error-field');
       isValid = false;
     }
-    // Validate Back Template
+
     if (!$('#backTemplateInput').val().trim()) {
       $('#backTemplateInput').after('<span class="error-message">Please select the Back Template.</span>');
       $('#backTemplateInput').addClass('error-field');
@@ -1198,14 +1176,12 @@ define([
       const dataJson = await response.json();
       const data = dataJson.data;
 
-      // Sort data by description
       const sortedData = data.sort((a, b) => {
         const descriptionA = a.description ? a.description.toString().toLowerCase() : '';
         const descriptionB = b.description ? b.description.toString().toLowerCase() : '';
         return descriptionA.localeCompare(descriptionB);
       });
 
-      // Populate dropdowns with sorted data
       let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
       if(selectedMessageType === 'Postcards'){
         populateDropdown('frontTemplateList', sortedData);
@@ -1237,7 +1213,7 @@ define([
         .addClass('dropdown-item')
         .on('click', function () {
           selectTemplate(listId, template);
-          $list.hide(); // Hide dropdown after selection
+          $list.hide();
         });
 
       $list.append($listItem);
@@ -1254,7 +1230,7 @@ define([
     const inputElement = document.getElementById(inputId);
     if (inputElement) {
       inputElement.value = template.description || 'No description';
-      inputElement.dataset.id = template.id; // Store ID for later use
+      inputElement.dataset.id = template.id;
     } else {
       console.error(`Input element not found.`);
     }
@@ -1351,7 +1327,6 @@ define([
       $('#postcardScreen').hide();
     }
 
-    // The "Next" button remains enabled
     connection.trigger('updateButton', {
       button: 'next',
       enabled: true
@@ -1415,18 +1390,15 @@ define([
         targetLabel.text(targetLabel.text() + ' *');
       }
     }  
-  });  
+  });
 
   $('.mapping-fields-group select').on('click', function () {
     resetToContactMappingErrors();
   });
 
-  $('#frontTemplateInput, #backTemplateInput').on('focus', function () {
+  $('#frontTemplateInput, #backTemplateInput, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('focus', function () {
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
-  });  
-  $('#selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('focus', function () {
-    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
-  });  
+  });
 
   $(document).on('click', function (event) {
     const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact') || $(event.target).closest('#step4').length > 0;
@@ -1449,12 +1421,9 @@ define([
     if(!isClickInsideBackSelfMailer){
       $('#selfMailer-outsideTemplateList').hide();
     }
-  });  
+  });
 
-  $('#frontTemplateInput, #backTemplateInput').on('input', debounce(function () {
-    fetchTemplates($(this).val().trim());
-  }, 300));
-  $('#selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('input', debounce(function () {
+  $('#frontTemplateInput, #backTemplateInput, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('input', debounce(function () {
     fetchTemplates($(this).val().trim());
   }, 300));
 
