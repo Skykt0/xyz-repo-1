@@ -930,16 +930,6 @@ define([
     }
   }
 
-  // Mock version of the fetchMessageDetails function to simulate a slow API response
-  async function fetchMessageDetails2(messageId) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simulating no PDF URL (empty response) after the delay
-        resolve({ url: '' }); // You can adjust this to simulate a successful or failed response
-      }, 70000); // Simulate a 70-second delay to exceed the 1-minute limit
-    });
-  }
-
   async function fetchMessageDetails(messageId) {
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     const urlMessageType = selectedMessageType === 'SelfMailer' ? 'self_mailers' : 'postcards';
@@ -973,10 +963,10 @@ define([
         $('#pdf-preview-container, .retry-preview-btn, .preview-message').hide();
       }
   
-      connection.trigger('nextStep');
-      const messageDetails = await fetchMessageDetails2(messageId);
+      const messageDetails = await fetchMessageDetails(messageId);
       const pdfUrl = messageDetails.url;
       console.log('PDF URL:', pdfUrl);
+      connection.trigger('nextStep');
   
       if (pdfUrl) {
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
