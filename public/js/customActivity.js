@@ -960,17 +960,17 @@ define([
     try {
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
-        $('#pdf-preview-container, .retry-preview-btn, .preview-message').hide();
+        // $('#pdf-preview-container, .retry-preview-btn, .preview-message').hide();
       }
   
       $('.retry-btn-wrap .loader').addClass('show');
       $('.retry-preview-btn').hide();
       const messageDetails = await fetchMessageDetails(messageId);
-      const pdfUrl = '';
-      // const pdfUrl = messageDetails.url;
+      const pdfUrl = messageDetails.url;
       console.log('PDF URL:', pdfUrl);
   
       if (pdfUrl) {
+        previewPayload.previewURL = pdfUrl;
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
         $('.retry-preview-btn').text('Show Preview');
         $('.retry-btn-wrap .loader').removeClass('show');
@@ -983,7 +983,7 @@ define([
         });
       } else  {
         const elapsedTime = Date.now() - startTime;
-        if (elapsedTime >= 10000 || retryOnce) {
+        if (elapsedTime >= 60000 || retryOnce) {
           console.warn('Retry limit reached (1 minute). Stopping retries.');
           $('.retry-btn-wrap .loader').removeClass('show');
           $('.preview-message').text('Failed to load the preview after several attempts. To try again, click the retry button.').show();
@@ -1015,7 +1015,7 @@ define([
 
       setTimeout(async function() {
         connection.trigger('nextStep');
-        await showPdfPreview(messageId, false);
+        await showPdfPreview(messageId);
       }, 2000);
 
     } catch (error) {
@@ -1309,8 +1309,12 @@ define([
     });
   });
 
-  $('.preview-container .retry-preview-btn').click(async function() {
-    await showPdfPreview(previewPayload.messageId, true, true);
+  $('.preview-container .retry-preview-btn').click(async function(e) {
+    if ($('.retry-preview-btn').text().toLowerCase().includes('retry')) {
+      await showPdfPreview(previewPayload.messageId, true, true);
+    } else {
+      $('#pdf-preview').attr('src', payload.previewURL + '#toolbar=0&navpanes=0');
+    }
   });
 
   $('.express-delivery-input').on('click', function() {
