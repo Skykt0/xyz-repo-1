@@ -256,14 +256,14 @@ define([
     case 'step3':
       prepopulateToDeMapping();
       $('#dropdown-options').hide();
-        validateStep3A()
-          .then((isValid) => {
-            isValid ? proceedToNext() : handleValidationFailure();
-          })
-          .catch((error) => {
-            console.error('Error during validation:', error);
-            handleValidationFailure();
-          });
+      validateStep3A()
+        .then((isValid) => {
+          isValid ? proceedToNext() : handleValidationFailure();
+        })
+        .catch((error) => {
+          console.error('Error during validation:', error);
+          handleValidationFailure();
+        });
       break;
 
     case 'step4':
@@ -1130,35 +1130,6 @@ define([
   function resetToContactMappingErrors() {
     $('.mapping-fields-group select').css('border', '');
     $('.error-message-contactMapping').text('').hide();
-  }
-
-  function validateStep3() {
-    let isValid = true;
-    $('.error-message').remove();
-    $('.error-field').removeClass('error-field');
-
-    if (!$('#mailingClass3').val()) {
-      $('#mailingClass3').after('<span class="error-message">Mailing Class is required.</span>');
-      $('#mailingClass3').addClass('error-field');
-      isValid = false;
-    }
-    if (!$('input[name="size"]:checked').length) {
-      $('.radio-buttons').after('<span class="error-message">Please select at least one size.</span>');
-      isValid = false;
-    }
-
-    if (!$('#frontTemplateInput').val().trim()) {
-      $('#frontTemplateInput').after('<span class="error-message">Please select the Front Template.</span>');
-      $('#frontTemplateInput').addClass('error-field');
-      isValid = false;
-    }
-
-    if (!$('#backTemplateInput').val().trim()) {
-      $('#backTemplateInput').after('<span class="error-message">Please select the Back Template.</span>');
-      $('#backTemplateInput').addClass('error-field');
-      isValid = false;
-    }
-    return isValid;
   }
 
   async function fetchTemplates(searchQuery = '') {
