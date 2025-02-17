@@ -956,7 +956,7 @@ define([
     }
   }
 
-  async function showPdfPreview(messageId, isRetry = false, startTime = Date.now()) {
+  async function showPdfPreview(messageId, retryOnce = false, isRetry = false, startTime = Date.now()) {
     try {
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
@@ -979,10 +979,7 @@ define([
           $('#pdf-preview-container').show();
           $('.retry-preview-btn, .preview-message').hide();
         });
-      } else {
-        console.log('date now: '+Date.now());
-        console.log('startTime: '+startTime);
-        
+      } else if(!retryOnce) {
         const elapsedTime = Date.now() - startTime;
         if (elapsedTime >= 60000) {
           console.warn('Retry limit reached (1 minute). Stopping retries.');
@@ -998,7 +995,7 @@ define([
         $('.retry-btn-wrap .loader').addClass('show');
   
         setTimeout(() => {
-          showPdfPreview(messageId, true, startTime);
+          showPdfPreview(messageId, false, true, startTime);
         }, 2000);
       }
     } catch (error) {
@@ -1016,7 +1013,7 @@ define([
 
       setTimeout(async function() {
         connection.trigger('nextStep');
-        await showPdfPreview(messageId);
+        await showPdfPreview(messageId, false);
       }, 2000);
 
     } catch (error) {
@@ -1311,7 +1308,7 @@ define([
   });
 
   $('.preview-container .retry-preview-btn').click(async function() {
-    await showPdfPreview(previewPayload.messageId);
+    await showPdfPreview(previewPayload.messageId, true);
   });
 
   $('.express-delivery-input').on('click', function() {
