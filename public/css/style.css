@@ -727,7 +727,7 @@ input:checked + .test-to-live-slider:before {
 .pdf-container .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
-	width: 30%;
+	flex-basis: calc(50% - 1rem);
 	gap: 0.5rem;
 }
 
