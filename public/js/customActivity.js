@@ -1310,11 +1310,7 @@ define([
   });
 
   $('.preview-container .retry-preview-btn').click(async function(e) {
-    if ($('.retry-preview-btn').text().toLowerCase().includes('retry')) {
-      await showPdfPreview(previewPayload.messageId, true, true);
-    } else {
-      $('#pdf-preview').attr('src', payload.previewURL + '#toolbar=0&navpanes=0');
-    }
+    await showPdfPreview(previewPayload.messageId, true, true);
   });
 
   $('.express-delivery-input').on('click', function() {
