@@ -148,11 +148,13 @@ body {
 	width: 100%;
 }
 .screen-3 input[type="text"] {
-	width: 100%;
-	padding: 8px;
-	box-sizing: border-box;
-	border: 3px solid lightgray;
-    box-shadow: 0px 0px 1px 1px lightgray;
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 3px;
+  outline: none;
+  box-sizing: border-box;
+  border: 3px solid lightgray;
+  box-shadow: 0px 0px 1px 1px lightgray;
 }
 
 /* Basic styling for dropdowns */
@@ -566,11 +568,19 @@ input:checked + .test-to-live-slider:before {
 	row-gap: 2rem;
 }
 
+.SelfMailer .html-screen-wrapper .outer-input-fields .input-fields {
+  flex-direction: column;
+}
+
 .html-screen-wrapper .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
 	width: 42%;
 	gap: 0.25rem;
+}
+
+.SelfMailer .html-screen-wrapper .input-fields .input-box {
+	width: 90%;
 }
 
 .html-screen-wrapper .input-fields .input-field {
@@ -729,6 +739,10 @@ input:checked + .test-to-live-slider:before {
 	flex-direction: column;
 	width: 30%;
 	gap: 0.5rem;
+}
+
+.SelfMailer .pdf-container .input-fields .input-box {
+  width: 50%;
 }
 
 .pdf-size {
