@@ -32,13 +32,13 @@
             <h2 class="step1-heading">Connect your PostGrid account</h2>
             <div class="step1-input-group">
                 <label for="test-api-key">Test Api Key*</label>
-                <input type="password" id="test-api-key" placeholder="Enter test API key" required />
+                <input type="password" id="test-api-key" class="api-key" placeholder="Enter test API key" required />
                 <span class="toggle-password" id="toggle-password-test-key"><i class="fa fa-eye-slash"></i></span>
                 <span class="error-message" id="test-api-key-error" style="color: red; display: none">Missing or invalid authentication.</span>
             </div>
             <div class="step1-input-group">
                 <label for="live-api-key">Live Api Key</label>
-                <input type="password" id="live-api-key" placeholder="Enter live API key" />
+                <input type="password" id="live-api-key" class="api-key" placeholder="Enter live API key" />
                 <span class="toggle-password" id="toggle-password-live-key"><i class="fa fa-eye-slash"></i></span>
                 <span class="error-message" id="live-api-key-error" style="color: red; display: none">Missing or invalid authentication.</span>
             </div>
@@ -134,12 +134,12 @@
         <!------------------- 3rd step Postcard Screen ---------------------->
         <div id="postcardScreen" class="Postcards">
             <!-- Third Step First Screen -->
-            <div class="screen-1">
+            <div class="screen-1 screen">
                 <div id="html-screen-container" class="container spacer HTML">
                     <!-- Postcard HTML Fields Section -->
                     <div class="html-screen-wrapper">
                         <h3 class="section-label">HTML</h3>
-                        <div class="postcard-input-fields">
+                        <div class="outer-input-fields">
                             <div class="input-fields">
                                 <div class="input-box">
                                     <label for="description" class="input-label">Description *</label>
@@ -168,21 +168,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="postcard-html-size">
+                        <div class="html-size">
                             <div class="input-label-radio">Size *</div>
                             <div class="size-radio-buttons-wrap">
                                 <div class="radio-buttons">
                                     <label class="radio-label size_radio_label">
-                                        <input type="radio" class="radio-input" id="six-four" name="postcardHtmlSize" value="6x4"
+                                        <input type="radio" class="radio-input" id="six-four" name="HtmlSize" value="6x4"
                                             checked />
                                         <span>6x4</span>
                                     </label>
                                     <label class="radio-label size_radio_label">
-                                        <input type="radio" class="radio-input" id="nine-six" name="postcardHtmlSize" value="9x6" />
+                                        <input type="radio" class="radio-input" id="nine-six" name="HtmlSize" value="9x6" />
                                         <span>9x6</span>
                                     </label>
                                     <label class="radio-label size_radio_label">
-                                        <input type="radio" class="radio-input" id="eleven-eight" name="postcardHtmlSize"
+                                        <input type="radio" class="radio-input" id="eleven-eight" name="HtmlSize"
                                             value="11x6" />
                                         <span>11x6</span>
                                     </label>
@@ -190,10 +190,10 @@
                                 <span class="error-msg">Please Select at least one size.</span>
                             </div>
                         </div>
-                        <div class="postcard-html-express-delivery">
+                        <div class="express-delivery">
                             <div class="two-checkboxes">
                                 <label class="checkbox-label">
-                                    <input type="checkbox" class="checkbox-input express-delivery-btn" id="expDelivery" name="expDelivery"/>
+                                    <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
                                     <span>Express Delivery</span>
                                 </label>
                             </div>
@@ -201,7 +201,7 @@
                     </div>
 
                     <!-- Postcard HTML Editor -->
-                    <div class="postcard-html-editor">
+                    <div class="html-editor">
                         <div class="html-btn-wrap">
                             <button type="button" class="btn btn-light html__btn--front show">
                                 Front
@@ -218,9 +218,9 @@
             </div>
 
             <!-- Third Step Second Screen -->
-            <div class="screen-2">
+            <div class="screen-2 screen">
                 <div class="spacer">
-                    <div class="postcard-pdf-container PDFUpload">
+                    <div class="pdf-container postcard-pdf-container PDFUpload">
                         <h3 class="section-label">PDF Upload</h3>
                         <div class="input-fields">
                             <div class="input-box">
@@ -249,21 +249,21 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="postcard-pdf-size">
+                        <div class="pdf-size postcard-pdf-size">
                             <div class="input-label-radio">Size *</div>
                             <div class="size-radio-buttons-wrap">
                                 <div class="radio-buttons">
                                     <label class="radio-label size_radio_label">
-                                        <input type="radio" class="radio-input" id="six-four" name="postcardPDFSize" value="6x4" data-dimentions="6.25x4.25"
+                                        <input type="radio" class="radio-input" id="six-four" name="Postcards-pdf-size" value="6x4" data-dimentions="6.25x4.25"
                                             checked />
                                         <span>6x4</span>
                                     </label>
                                     <label class="radio-label size_radio_label">
-                                        <input type="radio" class="radio-input" id="nine-six" name="postcardPDFSize" value="9x6" data-dimentions="9.25x6.25"/>
+                                        <input type="radio" class="radio-input" id="nine-six" name="Postcards-pdf-size" value="9x6" data-dimentions="9.25x6.25"/>
                                         <span>9x6</span>
                                     </label>
                                     <label class="radio-label size_radio_label">
-                                        <input type="radio" class="radio-input" id="eleven-eight" name="postcardPDFSize"
+                                        <input type="radio" class="radio-input" id="eleven-eight" name="Postcards-pdf-size"
                                             value="11x6" data-dimentions="11.25x6.25"/>
                                         <span>11x6</span>
                                     </label>
@@ -271,43 +271,35 @@
                                 <span class="error-msg">Please Select at least one size.</span>
                             </div>
                         </div>
-                        <div class="postcard-pdf-express-delivery">
+                        <div class="express-delivery">
                             <div class="two-checkboxes">
                                 <label class="checkbox-label">
-                                    <input type="checkbox" class="checkbox-input express-delivery-btn" id="expDelivery" name="expDelivery" />
+                                    <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery" />
                                     <span>Express Delivery</span>
                                 </label>
                             </div>
                         </div>
-                        <div class="drop-pdf upload-box" id="drop-area">
-                            <input type="file" id="pdf-upload" accept="application/pdf" class="hidden">
-                            <label for="pdf-upload">
-                                <span id="file-name">Drag or Upload PDF</span>
-                                <span id="remove-pdf" style="display: none;">✖</span>
-                            </label>
-                            <span class="pdf-error error-msg">Please select a PDF file</span>
+                        <div class="drop-pdf upload-box">
+                          <input type="file" class="pdf-upload hidden" id="postcard-pdf-upload" accept="application/pdf">
+                          <label for="postcard-pdf-upload">
+                              <span class="file-name">Drag or Upload PDF</span>
+                              <span class="remove-pdf" style="display: none;">✖</span>
+                          </label>
+                          <span class="pdf-error error-msg">Please select a PDF file</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Third Step Third Screen -->
-            <div class="screen-3">
+            <div class="screen-3 screen">
                 <div class="spacer ExistingTemplate">
                     <div class="section-label">Existing Template</div>
-                    <div class="six-input-field">
+                    <div class="existing-template-details">
                         <div class="input-box">
                             <label for="description3" class="input-label">Description *</label>
                             <input type="text" class="input-field description" id="description3" name="description3">
-                            <span class="error-message"></span>
-                        </div>
-                        <div class="input-box">
-                            <label for="sendDate3" class="input-label">Send Date *</label>
-                            <div class="date-wrap">
-                                <input type="date" placeholder="" class="input-field" id="sendDate3" name="sendDate3"> 
-                                <i class="fa fa-calendar calendar-icon"></i>
-                                <span class="error-message"></span>
-                            </div>                           
+                            <span class="error-msg">Please enter required field</span>
                         </div>
                         <div class="input-box">
                             <label for="mailingClass3" class="input-label">Mailing Class *</label>
@@ -322,9 +314,10 @@
                             <label for="frontTemplateInput" class="input-label">Front Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="frontTemplateInput" placeholder="Search or enter template"
+                                    <input type="text" id="frontTemplateInput" class = "frontTemplate" placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="frontTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
+                                    <span class="error-msg">Please enter front template</span>
                                         <i class="fa fa-angle-right dropdown-icon"></i>
                                 </div>
                                 <div id="frontTemplateList" class="dropdown-options" role="listbox"
@@ -337,9 +330,10 @@
                             <label for="backTemplateInput" class="input-label">Back Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="backTemplateInput" placeholder="Search or enter template"
+                                    <input type="text" id="backTemplateInput" class = "backTemplate" placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="backTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
+                                    <span class="error-msg">Please enter back template</span>
                                         <i class="fa fa-angle-right dropdown-icon"></i>
                                 </div>
                                  <!-- Add down arrow here -->
@@ -366,11 +360,233 @@
                         </label>
                         <span class="error-message"></span>
                     </div>
-                    <div class="checkboxes">
+                    <div class="checkboxes express-delivery">
                         <div class="five-checkboxes">
                             <label class="checkbox-label">
-                                <input type="checkbox" class="checkbox-input express-delivery-btn" id="expDelivery" name="expDelivery">
+                                <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery">
                                 Express Delivery
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="SelfMailer" id="selfMailerScreen">
+          <div class="screen-1 screen">
+            <div id="html-screen-container" class="container spacer HTML">
+                <!-- Self Mailer HTML Fields Section -->
+                <div class="html-screen-wrapper">
+                    <h3 class="section-label">HTML</h3>
+                    <div class="outer-input-fields">
+                        <div class="input-fields">
+                            <div class="input-box">
+                                <label for="description" class="input-label">Description *</label>
+                                <input type="text" class="input-field description" id="description" name="description" />
+                                <span class="error-msg">The input value is missing</span>
+                            </div>
+                            <div class="input-box">
+                                <label for="mailingClass" class="input-label">Mailing Class *</label>
+                                <select class="input-field mailing-class" id="mailingClass" name="mailingClass">
+                                    <option value="first_class" selected>
+                                        First Class (7 - 10 business days)
+                                    </option>
+                                    <option value="standard_class">
+                                        Standard Class (10 - 14 business days)
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="html-size">
+                        <div class="input-label-radio">Size *</div>
+                        <div class="size-radio-buttons-wrap">
+                            <div class="radio-buttons">
+                                <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" id="six-four" name="HtmlSize" value="8.5x11_bifold"
+                                        checked />
+                                    <span>8.5x11_bifold</span>
+                                </label>
+                                <!-- <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" id="nine-six" name="HtmlSize" value="9x6" />
+                                    <span>9x6</span>
+                                </label>
+                                <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" id="eleven-eight" name="HtmlSize"
+                                        value="11x6" />
+                                    <span>11x6</span>
+                                </label> -->
+                            </div>
+                            <span class="error-msg">Please Select at least one size.</span>
+                        </div>
+                    </div>
+                    <div class="express-delivery">
+                        <div class="two-checkboxes">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
+                                <span>Express Delivery</span>
+                            </label>
+                        </div>
+                    </div>
+
+                  </div>
+
+                <!-- Postcard HTML Editor -->
+                <div class="html-editor">
+                    <div class="html-btn-wrap">
+                        <button type="button" class="btn btn-light html__btn--front show">
+                          Inside
+                        </button>
+                        <button type="button" class="btn btn-light html__btn--back">
+                          Outside
+                        </button>
+
+                    </div>
+                    <textarea class="html-editor-front show"></textarea>
+                    <textarea class="html-editor-back"></textarea>
+                    <span class="error-msg">Please enter required field</span>
+                </div>
+            </div>
+        </div>
+            <div class="screen-2 screen">
+              <div class="spacer">
+                <div class="pdf-container self-mailer-pdf-container PDFUpload">
+                    <h3 class="section-label">PDF Upload</h3>
+                    <div class="input-fields">
+                        <div class="input-box">
+                            <label for="description" class="input-label">Description *</label>
+                            <input type="text" class="input-field description" id="self-mailer-pdf-description" name="self-mailer-pdf-description" />
+                            <span class="error-msg">Please enter required field</span>
+                        </div>
+                        <div class="input-box">
+                            <label for="mailingClass" class="input-label">Mailing Class *</label>
+                            <select class="input-field mailing-class" id="self-mailer-pdf-mailing-class" name="self-mailer-pdf-mailing-class">
+                                <option value="first_class" selected>
+                                    First Class (7 - 10 business days)
+                                </option>
+                                <option value="standard_class">
+                                    Standard Class (10 - 14 business days)
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="pdf-size">
+                        <div class="input-label-radio">Size *</div>
+                        <div class="size-radio-buttons-wrap">
+                            <div class="radio-buttons">
+                                <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="8.5x11_bifold" data-dimentions="8.625x11.125"
+                                        checked />
+                                    <span>8.5x11_bifold</span>
+                                </label>
+                                <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="8.5x11_trifold" data-dimentions="8.625x11.125"/>
+                                    <span>8.5x11_trifold</span>
+                                </label>
+                                <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="9.5x16_trifold" data-dimentions="9.625x16.125"/>
+                                    <span>9.5x16_trifold</span>
+                                </label>
+                            </div>
+                            <span class="error-msg">Please Select at least one size.</span>
+                        </div>
+                    </div>
+                    <div class="express-delivery">
+                        <div class="two-checkboxes">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input express-delivery-input" id="selfMailerexpDelivery" name="selfMailerexpDelivery" />
+                                <span>Express Delivery</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="drop-pdf upload-box">
+                      <input type="file" id="self-mailer-pdf-upload" class="pdf-upload hidden" accept="application/pdf">
+                      <label for="self-mailer-pdf-upload">
+                          <span class="file-name">Drag or Upload PDF</span>
+                          <span class="remove-pdf" style="display: none;">✖</span>
+                      </label>
+                      <span class="pdf-error error-msg">Please select a PDF file</span>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="screen-3 screen">
+                <div class="spacer ExistingTemplate">
+                    <div class="section-label">Existing Template</div>
+                    <div class="existing-template-details">
+                        <div class="input-box">
+                            <label for="description" class="input-label">Description *</label>
+                            <input type="text" class="input-field description" id="self-mailer-existing-description" name="self-mailer-existing-description" />
+                            <span class="error-msg">Please enter required field</span>
+                        </div>
+                        <div class="input-box">
+                            <label for="mailingClass" class="input-label">Mailing Class *</label>
+                            <select class="input-field mailing-class" id="self-mailer-existing-template-mailing-class" name="self-mailer-existing-template-mailing-class">
+                                <option value="first_class" selected>
+                                    First Class (7 - 10 business days)
+                                </option>
+                                <option value="standard_class">
+                                    Standard Class (10 - 14 business days)
+                                </option>
+                            </select>
+                        </div>
+                        <!-- Front Template Dropdown -->
+                        <div class="input-box">
+                            <label for="selfMailer-insideTemplateInput" class="input-label">Front Template *</label>
+                            <div class="mapping-dropdown">
+                                <div class="template-dropdown-wrap">
+                                    <input type="text" id="selfMailer-insideTemplateInput" class = "frontTemplate"  placeholder="Search or enter template"
+                                        autocomplete="off" aria-describedby="selfMailer-insideTemplateList" aria-haspopup="listbox"
+                                        aria-expanded="false" />
+                                    <span class="error-msg">Please enter inside template</span>
+                                        <i class="fa fa-angle-right dropdown-icon"></i>
+                                </div>
+                                <div id="selfMailer-insideTemplateList" class="dropdown-options" role="listbox"
+                                    aria-labelledby="selfMailer-insideTemplateInput"></div>
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+                        <!-- Back Template -->
+                        <div class="input-box">
+                            <label for="selfMailer-outsideTemplateInput" class="input-label">Back Template *</label>
+                            <div class="mapping-dropdown">
+                                <div class="template-dropdown-wrap">
+                                    <input type="text" id="selfMailer-outsideTemplateInput" class = "backTemplate"  placeholder="Search or enter template"
+                                        autocomplete="off" aria-describedby="selfMailer-outsideTemplateList" aria-haspopup="listbox"
+                                        aria-expanded="false" />
+                                    <span class="error-msg">Please enter outside template</span>
+                                        <i class="fa fa-angle-right dropdown-icon"></i>
+                                </div>
+                                 <!-- Add down arrow here -->
+                                <div id="selfMailer-outsideTemplateList" class="dropdown-options" role="listbox"
+                                    aria-labelledby="selfMailer-outsideTemplateInput"></div>
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-label-radio">Size *</div>
+                    <div class="radio-buttons">
+                        <label class="radio-label size_radio_label">
+                            <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_bifold" data-dimentions="6.25x4.25"
+                                checked />
+                            <span>8.5x11_bifold</span>
+                        </label>
+                        <label class="radio-label size_radio_label">
+                            <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_trifold" data-dimentions="9.25x6.25"/>
+                            <span>8.5x11_trifold</span>
+                        </label>
+                        <label class="radio-label size_radio_label">
+                            <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="9.5x16_trifold" data-dimentions="11.25x6.25"/>
+                            <span>9.5x16_trifold</span>
+                        </label>
+                    </div>
+                    <div class="express-delivery">
+                        <div class="two-checkboxes">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input express-delivery-input" id="selfMailerexpDelivery" name="selfMailerexpDelivery" />
+                                <span>Express Delivery</span>
                             </label>
                         </div>
                     </div>

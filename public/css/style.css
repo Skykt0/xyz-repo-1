@@ -35,7 +35,7 @@ body {
 .screen-3 .input-box {
 	display: flex;
 	flex-direction: column;
-	width: 30%;
+	flex-basis: calc(50% - 1rem);
 }
 .screen-3 .input-field {
 	padding: 5px 10px;
@@ -100,7 +100,7 @@ body {
 	height: 100%;
 	padding: 10px;
 }
-.screen-3 .six-input-field {
+.screen-3 .existing-template-details {
 	display: flex;
 	flex-wrap: wrap;
 	column-gap: 2rem;
@@ -148,9 +148,13 @@ body {
 	width: 100%;
 }
 .screen-3 input[type="text"] {
-	width: 100%;
-	padding: 8px;
-	box-sizing: border-box;
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 3px;
+  outline: none;
+  box-sizing: border-box;
+  border: 3px solid lightgray;
+  box-shadow: 0px 0px 1px 1px lightgray;
 }
 
 /* Basic styling for dropdowns */
@@ -535,16 +539,14 @@ input:checked + .test-to-live-slider:before {
 	vertical-align: text-bottom;
 }
 
-.postcard-html-express-delivery .checkbox-input,
-.postcard-pdf-express-delivery .checkbox-input {
+.express-delivery .checkbox-input {
 	margin: 0;
 	vertical-align: text-top;
 	width: 1rem;
 	height: 1rem;
 }
 
-.postcard-html-express-delivery .checkbox-label,
-.postcard-pdf-express-delivery .checkbox-label {
+.express-delivery .checkbox-label {
 	font-size: 16px;
 	display: inline-flex;
 	gap: 0.5rem;
@@ -559,11 +561,15 @@ input:checked + .test-to-live-slider:before {
 
 /* common css */
 
-.html-screen-wrapper .postcard-input-fields .input-fields {
+.html-screen-wrapper .outer-input-fields .input-fields {
 	display: flex;
 	flex-wrap: wrap;
 	column-gap: 2rem;
 	row-gap: 2rem;
+}
+
+.SelfMailer .html-screen-wrapper .outer-input-fields .input-fields {
+  flex-direction: column;
 }
 
 .html-screen-wrapper .input-fields .input-box {
@@ -571,6 +577,10 @@ input:checked + .test-to-live-slider:before {
 	flex-direction: column;
 	width: 42%;
 	gap: 0.25rem;
+}
+
+.SelfMailer .html-screen-wrapper .input-fields .input-box {
+	width: 90%;
 }
 
 .html-screen-wrapper .input-fields .input-field {
@@ -619,28 +629,25 @@ input:checked + .test-to-live-slider:before {
 	width: 50%;
 }
 
-.postcard-html-size .radio-buttons,
-.postcard-html-size .input-label-radio,
-.postcard-html-destinations .input-label-radio,
-.postcard-html-destinations .radio-buttons,
-.postcard-input-fields .input-fields {
+.html-size .radio-buttons,
+.html-size .input-label-radio,
+.outer-input-fields .input-fields {
 	margin: 0;
 }
 
-.postcard-html-editor {
+.html-editor {
 	position: relative;
 	width: 50%;
 	margin-top: 3rem;
 }
 
-.postcard-html-size,
-.postcard-html-destinations {
+.html-size{
 	display: flex;
 	flex-direction: column;
 	gap: 0.75rem;
 }
 
-.postcard-html-size .input-label-radio {
+.html-size .input-label-radio {
 	font-size: 18px;
 }
 
@@ -711,30 +718,39 @@ input:checked + .test-to-live-slider:before {
 	padding: 44px;
 }
 
-.postcard-pdf-container {
+.pdf-container {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
 }
 
-.postcard-pdf-container .input-fields {
+.pdf-container .input-fields {
 	display: flex;
 	justify-content: space-between;
 }
 
-.postcard-pdf-container .input-fields .input-box {
+.self-mailer-pdf-container .input-fields {
+  justify-content: flex-start;
+  gap: 4rem;
+}
+
+.pdf-container .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
 	width: 30%;
 	gap: 0.5rem;
 }
 
-.postcard-pdf-size {
+.SelfMailer .pdf-container .input-fields .input-box {
+  width: 50%;
+}
+
+.pdf-size {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
-.postcard-pdf-size .input-label-radio {
+.pdf-size .input-label-radio {
 	margin: 0;
 }
 
@@ -751,7 +767,8 @@ input:checked + .test-to-live-slider:before {
 	display: none;
 }
 
-label[for="pdf-upload"] {
+label[for="postcard-pdf-upload"],
+label[for="self-mailer-pdf-upload"] {
 	display: flex;
 	position: absolute;
 	width: 100%;
@@ -931,11 +948,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     gap: 0.5rem;
 }
 
-.postcard-input-fields .date-wrap {
+.outer-input-fields .date-wrap {
     gap: 0.3rem;
 }
 
-.six-input-field .date-wrap {
+.existing-template-details .date-wrap {
     gap: 0;
 }
 
@@ -993,8 +1010,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none
 }
 
-.postcard-input-fields .input-fields .input-label,
-.postcard-pdf-container .input-label {
+.outer-input-fields .input-fields .input-label,
+.pdf-container .input-label {
     font-size: 16px !important;
 }
 
