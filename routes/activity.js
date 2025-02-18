@@ -26,83 +26,54 @@ exports.save = function (req, res) {
 exports.execute = async function (req, res) {
   console.log('Starting of Execute Function');
   var contactKey = req.body.keyValue;
+  var journeyId = req.body.journeyId;
+  var activityId = req.body.activityId;
   var requestBody = req.body.inArguments[0];        
   var authToken = requestBody.authorization.authToken;
   var authTSSD = requestBody.authorization.authTSSD;
   console.log('authToken' ,authToken);
   console.log('authTSSD', authTSSD);
-  try{
-    // Contact create call    -------------------------------------------------
+  try {
+    var postcardJson = req.body.inArguments[0].postcardJson;
     var contactFields = req.body.inArguments[0].MapDESchema ;
+    postcardJson.to = contactFields;
+    let now = new Date();                // Get current date & time
+    now.setMinutes(now.getMinutes() + 5); // Add 5 minutes
+    postcardJson.sendDate = now.toISOString();
     var internalPostcardJson = req.body.inArguments[0].internalPostcardJson ;
-    console.log('contactFields : ',contactFields);
-    const conConfigOptions = {
+    const postcardConfigOptions = {
       method: 'POST',
-      url: 'https://api.postgrid.com/print-mail/v1/contacts',
+      url: 'https://api.postgrid.com/print-mail/v1/postcards',
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
         'X-API-KEY': internalPostcardJson.test_api_key
       },
-      data: contactFields
+      data: postcardJson
     };
-    var contactId;
-    try {
-      var contactCreateCall = await axios.request(conConfigOptions);
-      if (contactCreateCall.status === 200 || contactCreateCall.status === 201) {
-        contactId = contactCreateCall.data.id;
-        var postcardJson = req.body.inArguments[0].postcardJson;
-        postcardJson.to = contactId;
-        let now = new Date();                // Get current date & time
-        now.setMinutes(now.getMinutes() + 5); // Add 5 minutes
-        postcardJson.sendDate = now.toISOString();
-        const postcardConfigOptions = {
-          method: 'POST',
-          url: 'https://api.postgrid.com/print-mail/v1/postcards',
-          headers: {
-            accept: 'application/json',
-            'Content-Type': 'application/json',
-            'X-API-KEY': internalPostcardJson.test_api_key
-          },
-          data: postcardJson
-        };
-        try {
-          var postcardCreateCall = await axios.request(postcardConfigOptions);
-          if (postcardCreateCall.status === 200 || postcardCreateCall.status === 201) {
-            var postcardId = postcardCreateCall.data.id;
-            console.log(`Postcard created successfully. ID: ${postcardId}`);
-          } else {
-            console.error(`Postcard creation failed. Status: ${postcardCreateCall.status}`);
-            console.error(`Response: ${JSON.stringify(postcardCreateCall.data)}`);
-            res.status(500).send('Postcard creation failed');
-            return;
-          }
-        } catch (error) {
-          console.error('Error creating postcard:', error.response ? error.response.data : error.message);
-          const d = new Date();
-          let timeStamp = d.toISOString();
-          logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp, contactKey, 'postcard');
-          res.status(500).send('Error creating postcard');
-          return;
-        }
-      } else {
-        console.error(`Contact creation failed. Status: ${contactCreateCall.status}`);
-        console.error(`Response: ${JSON.stringify(contactCreateCall.data)}`);
-        res.status(500).send('Contact creation failed');
-        return;
-      }
-    } catch (error) {
-      console.error('Error creating contact:', error.response ? error.response.data : error.message);
+    var postcardCreateCall = await axios.request(postcardConfigOptions);
+    if (postcardCreateCall.status === 200 || postcardCreateCall.status === 201) {
+      var postcardId = postcardCreateCall.data.id;
+      console.log(`Postcard created successfully. ID: ${postcardId}`);
       const d = new Date();
       let timeStamp = d.toISOString();
-      logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp, contactKey, 'contact');
-      res.status(500).send('Error creating contact');
+      logToDataExtension(`Postcard created successfully. ID: ${postcardId}`, authTSSD, authToken, timeStamp, contactKey, 'Success', journeyId, activityId);
+
+    } else {
+      console.error(`Postcard creation failed. Status: ${postcardCreateCall.status}`);
+      console.error(`Response: ${JSON.stringify(postcardCreateCall.data)}`);
+      res.status(500).send('Postcard creation failed');
       return;
     }
-  }catch(error ){
-    console.log('---------------------Execution Function Error----------------------');
-    console.log(error.message);
+  } catch (error) {
+    console.error('Error creating postcard:', error.response ? error.response.data : error.message);
+    const d = new Date();
+    let timeStamp = d.toISOString();
+    logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp, contactKey, 'Error', journeyId, activityId);
+    res.status(500).send('Error creating postcard');
+    return;
   }
+  
   console.log('Ending of Execute Function');
   res.status(200).send('good');
 };
@@ -124,16 +95,17 @@ exports.validate = function (req, res) {
   // res.send(200, 'Validate');
   res.status(200).send('Validate');
 };
-function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contactKey, object) {
+function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contactKey, status, journeyId, activityId) {
 
   var payload = JSON.stringify({
     'items': [
       {
-        'Status': 'Error',
+        'Status': status,
         'Response': responseData,
         'TimeStamp': timeStamp,
         'ContactKey' : contactKey,
-        'Object': object
+        'JourneyId' : journeyId,
+        'ActivityId' : activityId
       }
     ]
   });
@@ -159,4 +131,3 @@ function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contac
       console.error('Error logging to data extension:', error);
     });
 }
-
