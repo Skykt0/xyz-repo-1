@@ -1440,7 +1440,7 @@ define([
     $(document).on('click', function (event) {
       console.log('doc click');
 
-      const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact') || $(event.target).closest('#step4').length > 0;
+      const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact');
       const isClickInsideFront = $(event.target).closest('#frontTemplateList, #frontTemplateInput').length > 0;
       const isClickInsideBack = $(event.target).closest('#backTemplateList, #backTemplateInput').length > 0;
       const isClickInsideFrontSelfMailer = $(event.target).closest('#selfMailer-insideTemplateList, #selfMailer-insideTemplateInput').length > 0;
