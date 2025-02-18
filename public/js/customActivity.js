@@ -666,9 +666,11 @@ define([
       }
       let isPostcardSizeSelected = $(`.${selectedMessageType} .html-size .radio-input:checked`).length;
       let frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val().trim();
+      let frontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
       let backtHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val().trim();
+      let backHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-back`).data('btn-label');
       let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .html-editor .error-msg`);
-  
+
       if (!(isPostcardSizeSelected > 0)) {
         $(`.${selectedMessageType} .html-size .error-msg`).addClass('show');
         isValid = false;
@@ -679,11 +681,11 @@ define([
       if (frontHtmlContent === '' || backtHtmlContent === '') {
         isValid = false;
         if (frontHtmlContent === '' && backtHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text('Please enter content in both Front and Back fields.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
         } else if (frontHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text('Please enter content in the Front field.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
         } else {
-          postcardHtmlEditorErrorMsg.text('Please enter content in the Back field.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
         }
       } else { 
         postcardHtmlEditorErrorMsg.removeClass('show');
@@ -843,10 +845,8 @@ define([
     let data;
     
     let headers = {
-      'x-api-key': previewPayload.test_api_key,
+      'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key,
     };
-
-    console.log('existing template contact '+toContact);
     console.log('preview payload: '+JSON.stringify(previewPayload));
 
     if(previewPayload.screen === 'pdf'){
@@ -919,10 +919,13 @@ define([
       const result = await response.json();
       console.log('-------------------------API response');
       console.log(JSON.stringify(result));
-      
-      
+
       previewPayload.pdfLink = result.uploadedPDF;
 
+      if(previewPayload.liveApiKeyEnabled) {
+        let msgType = selectedMessageType === 'SelfMailer' ? 'self_mailers' : 'postcards';
+        deleteMailItem(msgType, result.id);
+      }
       return result;
     } catch (error) {
       console.error('Error creating postcard:', error.message);
@@ -934,7 +937,7 @@ define([
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     const urlMessageType = selectedMessageType === 'SelfMailer' ? 'self_mailers' : 'postcards';
     const apiUrl = `https://api.postgrid.com/print-mail/v1/${urlMessageType}/${messageId}`;
-    const apiKey = previewPayload.test_api_key;
+    const apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
 
     try {
       const response = await fetch(apiUrl, {
@@ -956,20 +959,24 @@ define([
     }
   }
 
-  async function showPdfPreview(messageId, isRetry = false, startTime = Date.now()) {
+  async function showPdfPreview(messageId, retryOnce = false, isRetry = false, startTime = Date.now()) {
     try {
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
-        $('#pdf-preview-container, .retry-preview-btn, .preview-message').hide();
+        $('#pdf-preview-container').hide();
+        $('.preview-message').text('If you want to view the template preview, click the \'Show Preview\' button.').show();
       }
   
+      $('.retry-btn-wrap .loader').addClass('show');
+      $('.retry-preview-btn').hide();
       const messageDetails = await fetchMessageDetails(messageId);
       const pdfUrl = messageDetails.url;
       console.log('PDF URL:', pdfUrl);
-      connection.trigger('nextStep');
   
       if (pdfUrl) {
+        previewPayload.previewURL = pdfUrl;
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
+        $('.retry-preview-btn').text('Show Preview');
         $('.retry-btn-wrap .loader').removeClass('show');
   
         $('.retry-preview-btn').off('click').on('click', function () {
@@ -978,12 +985,13 @@ define([
           $('#pdf-preview-container').show();
           $('.retry-preview-btn, .preview-message').hide();
         });
-      } else {
+      } else  {
         const elapsedTime = Date.now() - startTime;
-        if (elapsedTime >= 60000) {
+        if (elapsedTime >= 60000 || retryOnce) {
           console.warn('Retry limit reached (1 minute). Stopping retries.');
           $('.retry-btn-wrap .loader').removeClass('show');
-          $('.preview-message').text('Failed to load preview after multiple attempts.').show();
+          $('.preview-message').text('Failed to load the preview after several attempts. To try again, click the retry button.').show();
+          $('.retry-preview-btn').text('Retry').show();
           return;
         }
   
@@ -993,7 +1001,7 @@ define([
         $('.retry-btn-wrap .loader').addClass('show');
   
         setTimeout(() => {
-          showPdfPreview(messageId, true, startTime);
+          showPdfPreview(messageId, false, true, startTime);
         }, 2000);
       }
     } catch (error) {
@@ -1010,6 +1018,7 @@ define([
       previewPayload.messageId = messageId;
 
       setTimeout(async function() {
+        connection.trigger('nextStep');
         await showPdfPreview(messageId);
       }, 2000);
 
@@ -1046,7 +1055,7 @@ define([
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'x-api-key': previewPayload.test_api_key
+        'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key
       },
       body: formData
     })
@@ -1054,8 +1063,6 @@ define([
       .then(data => {
         console.log('Contact Created:', data);
         toContact = data.id;
-        console.log('to contact: '+toContact);;
-        
       })
       .catch(error => {
         console.error('Error:', error);
@@ -1068,7 +1075,7 @@ define([
       method: 'GET',
       data: searchQuery ? { search: searchQuery, limit: 10 } : { limit: 10 },
       headers: {
-        'x-api-key': previewPayload.test_api_key
+        'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key
       },
       success: function (response) {
         $('#dropdown-options').empty();
@@ -1090,6 +1097,31 @@ define([
       }
     });
   }
+
+  function deleteMailItem(messageType, mailItemId) {
+    const url = `https://api.postgrid.com/print-mail/v1/${messageType}/${mailItemId}`;
+  
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'x-api-key': previewPayload.live_api_key
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to delete ${messageType}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Postcard deleted successfully:', data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+  
 
   function debounce(func, delay) {
     let timeoutId;
@@ -1135,7 +1167,7 @@ define([
   async function fetchTemplates(searchQuery = '') {
     const requestOptions = {
       method: 'GET',
-      headers: { 'x-api-key': previewPayload.test_api_key },
+      headers: { 'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key },
       redirect: 'follow'
     };
 
@@ -1304,8 +1336,8 @@ define([
     });
   });
 
-  $('.preview-container .retry-preview-btn').click(async function() {
-    await showPdfPreview(previewPayload.messageId);
+  $('.preview-container .retry-preview-btn').click(async function(e) {
+    await showPdfPreview(previewPayload.messageId, true, true);
   });
 
   $('.express-delivery-input').on('click', function() {
