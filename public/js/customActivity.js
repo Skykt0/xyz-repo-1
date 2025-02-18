@@ -964,6 +964,7 @@ define([
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
         $('#pdf-preview-container').hide();
+        $('.preview-message').text('If you want to view the template preview, click the \'Show Preview\' button.').show();
       }
   
       $('.retry-btn-wrap .loader').addClass('show');
