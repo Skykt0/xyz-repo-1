@@ -845,8 +845,6 @@ define([
     let headers = {
       'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key,
     };
-
-    console.log('existing template contact '+toContact);
     console.log('preview payload: '+JSON.stringify(previewPayload));
 
     if(previewPayload.screen === 'pdf'){
@@ -1063,8 +1061,6 @@ define([
       .then(data => {
         console.log('Contact Created:', data);
         toContact = data.id;
-        console.log('to contact: '+toContact);;
-        
       })
       .catch(error => {
         console.error('Error:', error);
