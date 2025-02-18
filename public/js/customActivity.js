@@ -666,9 +666,11 @@ define([
       }
       let isPostcardSizeSelected = $(`.${selectedMessageType} .html-size .radio-input:checked`).length;
       let frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val().trim();
+      let frontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
       let backtHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val().trim();
+      let backHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-back`).data('btn-label');
       let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .html-editor .error-msg`);
-  
+
       if (!(isPostcardSizeSelected > 0)) {
         $(`.${selectedMessageType} .html-size .error-msg`).addClass('show');
         isValid = false;
@@ -679,11 +681,11 @@ define([
       if (frontHtmlContent === '' || backtHtmlContent === '') {
         isValid = false;
         if (frontHtmlContent === '' && backtHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text('Please enter content in both Front and Back fields.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
         } else if (frontHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text('Please enter content in the Front field.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
         } else {
-          postcardHtmlEditorErrorMsg.text('Please enter content in the Back field.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
         }
       } else { 
         postcardHtmlEditorErrorMsg.removeClass('show');
