@@ -1435,7 +1435,11 @@ define([
     const today = new Date().toISOString().split('T')[0];
     $('#sendDate3').val(today).attr('min', today);
 
+    console.log('ready');
+    
     $(document).on('click', function (event) {
+      console.log('doc click');
+
       const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact') || $(event.target).closest('#step4').length > 0;
       const isClickInsideFront = $(event.target).closest('#frontTemplateList, #frontTemplateInput').length > 0;
       const isClickInsideBack = $(event.target).closest('#backTemplateList, #backTemplateInput').length > 0;
