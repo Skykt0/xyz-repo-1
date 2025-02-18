@@ -963,7 +963,7 @@ define([
     try {
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
-        $('#pdf-preview-container, .retry-preview-btn, .preview-message').hide();
+        $('#pdf-preview-container').hide();
       }
   
       $('.retry-btn-wrap .loader').addClass('show');
