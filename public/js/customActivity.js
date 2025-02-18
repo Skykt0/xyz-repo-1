@@ -969,7 +969,8 @@ define([
       $('.retry-btn-wrap .loader').addClass('show');
       $('.retry-preview-btn').hide();
       const messageDetails = await fetchMessageDetails(messageId);
-      const pdfUrl = messageDetails.url;
+      // const pdfUrl = messageDetails.url;
+      const pdfUrl = '';
       console.log('PDF URL:', pdfUrl);
   
       if (pdfUrl) {
