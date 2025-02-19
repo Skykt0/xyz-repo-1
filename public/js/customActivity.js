@@ -1145,7 +1145,7 @@ define([
     console.log(fromContactElement);
     console.log(fromContactElement.val().trim() === '');
     
-    if(selectedMessageType === 'SelfMailer' && validateInputField(fromContactElement)) {
+    if(selectedMessageType === 'SelfMailer' && !validateInputField(fromContactElement)) {
       console.log('error in fromcontact');
       isValid = false;
     } else {
