@@ -749,10 +749,16 @@ define([
 
   function validateInputField(element) {
     if (element.val().trim() === '') {
+      console.log('insdie empty');
+      
       element.addClass('error');
       element.siblings('.error-msg').addClass('show');
+      console.log('insienext empty');
+      
       return false;
     } else {
+      console.log('indide empty else');
+      
       element.removeClass('error');
       element.siblings('.error-msg').removeClass('show');
       return true;
