@@ -259,6 +259,8 @@ define([
       validateStep3A()
         .then((isValid) => {
           isValid ? proceedToNext() : handleValidationFailure();
+          $('.mapping-fields select').css('border', '');
+          $('.error-message-contactMapping').hide();
         })
         .catch((error) => {
           console.error('Error during validation:', error);
