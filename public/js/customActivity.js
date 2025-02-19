@@ -261,6 +261,8 @@ define([
           isValid ? proceedToNext() : handleValidationFailure();
           $('.mapping-fields select').css('border', '');
           $('.error-message-contactMapping').hide();
+          $('.contact-dropdown-container input').removeClass('error');
+          $('.contact-dropdown-container .error-msg').removeClass('show');
         })
         .catch((error) => {
           console.error('Error during validation:', error);
