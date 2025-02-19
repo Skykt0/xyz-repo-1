@@ -1133,6 +1133,10 @@ define([
 
   function validateToContact() {
     let isValid = true;
+    let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    if(selectedMessageType === 'SelfMailer' && $('#search-contact').val() === '') {
+      isValid = false;
+    }
     previewPayload.fromContact = fromContact;
     resetToContactMappingErrors();
     let requiredFields = ['#addressLine1', '#firstName', '#companyName', '#city', '#provinceOrState', '#countryCode'];
