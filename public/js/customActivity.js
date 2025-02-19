@@ -1136,6 +1136,10 @@ define([
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     if(selectedMessageType === 'SelfMailer' && validateInputField($('#search-contact'))) {
       isValid = false;
+    } else {
+      $('#search-contact').removeClass('error');
+      $('#search-contact').siblings('.error-msg').removeClass('show');
+      isValid = false;
     }
     previewPayload.fromContact = fromContact;
     resetToContactMappingErrors();

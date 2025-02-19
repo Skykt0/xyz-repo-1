@@ -704,8 +704,12 @@ input:checked + .test-to-live-slider:before {
 }
 
 .error-msg.show {
-	/* visibility: visible; */
 	display: block;
+}
+
+.dropdown-wrap .error-msg {
+  margin-left: -70px;
+  margin-top: 4px;
 }
 
 .error {
