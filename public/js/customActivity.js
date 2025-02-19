@@ -1136,7 +1136,7 @@ define([
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     console.log(selectedMessageType);
     
-    if(selectedMessageType === 'SelfMailer' && validateInputField($('..contact-dropdown-container #search-contact'))) {
+    if(selectedMessageType === 'SelfMailer' && validateInputField($('.contact-dropdown-container #search-contact'))) {
       console.log('error in fromcontact');
       isValid = false;
     } else {
