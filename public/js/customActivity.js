@@ -125,12 +125,12 @@ define([
         $(queryString).val(value);
         break;
       case 'frontTemplateName':
-        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' #frontTemplateInput';
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .frontTemplate';
         $(queryString).val(value);
         $(queryString).attr('data-id', postcardArguments.frontTemplateId);
         break;
       case 'backTemplateName':
-        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' #backTemplateInput';
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .backTemplate';
         $(queryString).val(value);
         $(queryString).attr('data-id', postcardArguments.backTemplateId);
         break;
@@ -416,6 +416,16 @@ define([
       } else if(previewPayload.creationType === 'Existing Template'){
         postCardJson.frontTemplate = previewPayload.frontTemplateId;
         postCardJson.backTemplate = previewPayload.backTemplateId;
+      } else if(previewPayload.creationType === 'PDF Upload'){
+        postCardJson.pdf = previewPayload.pdfLink;
+      }
+    } else if(previewPayload.messageType === 'Self Mailer'){
+      if(previewPayload.creationType === 'HTML'){
+        postCardJson.insideHTML = previewPayload.frontHtmlContent;
+        postCardJson.outsideHTML = previewPayload.backHtmlContent;
+      } else if(previewPayload.creationType === 'Existing Template'){
+        postCardJson.insideTemplate = previewPayload.frontTemplateId;
+        postCardJson.outsideTemplate = previewPayload.backTemplateId;
       } else if(previewPayload.creationType === 'PDF Upload'){
         postCardJson.pdf = previewPayload.pdfLink;
       }
@@ -801,13 +811,13 @@ define([
       previewPayload.pdfName = pdfFile.name;
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
-      const frontTemplateId = document.querySelector('#frontTemplateInput')?.dataset.id;
-      const backTemplateId = document.querySelector('#backTemplateInput')?.dataset.id;
-      const size = $('.screen-3 input[name=\'size\']:checked').val();
+      const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
+      const backTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`)?.attr('data-id');
+      const size = $(`.${selectedMessageType} .existingTemplate-size .radio-input:checked`).val();
       const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
-      const mailingClass = $('.screen-3 #mailingClass3').val();
-      const frontTemplateName = $('#frontTemplateInput')?.val();
-      const backTemplateName = $('#backTemplateInput')?.val();
+      const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
+      const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
+      const backTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val();
 
       previewPayload.screen = 'existing-template';
       previewPayload.description = description;
@@ -894,13 +904,18 @@ define([
       data = new URLSearchParams({
         'to': toContact,
         'from': fromContact.id || '',
-        frontTemplate: previewPayload.frontTemplateId,
-        backTemplate: previewPayload.backTemplateId,
         size: previewPayload.size,
         sendDate: previewPayload.sendDate,
         description: previewPayload.description,
         'express': previewPayload.isExpressDelivery,
       });
+      if(messageType === 'Postcards'){
+        data.append('frontTemplate', previewPayload.frontTemplateId);
+        data.append('backTemplate', previewPayload.backTemplateId);
+      } else if(messageType === 'Self Mailer'){
+        data.append('insideTemplate', previewPayload.frontTemplateId);
+        data.append('outsideTemplate', previewPayload.backTemplateId);
+      }
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
       }
@@ -1198,29 +1213,18 @@ define([
         const descriptionB = b.description ? b.description.toString().toLowerCase() : '';
         return descriptionA.localeCompare(descriptionB);
       });
-
-      let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-      if(selectedMessageType === 'Postcards'){
-        populateDropdown('frontTemplateList', sortedData);
-        populateDropdown('backTemplateList', sortedData);
-      }
-      else if(selectedMessageType === 'SelfMailer'){
-        populateDropdown('selfMailer-insideTemplateList', sortedData);
-        populateDropdown('selfMailer-outsideTemplateList', sortedData);
-      }
-      
+      populateDropdown('frontTemplate', sortedData);
+      populateDropdown('backTemplate', sortedData);
     } catch (error) {
       console.error('Error fetching templates:', error);
     }
   }
 
-  function populateDropdown(listId, templates) {
-    const $list = $('#' + listId);
-    if (!$list.length) {
-      console.error(`Dropdown list with ID ${listId} not found.`);
-      return;
-    }
-
+  function populateDropdown(templateName, templates) {
+    let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
+    const $templateInput = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}`);
+    const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}List`);
     $list.empty();
 
     templates.forEach(template => {
@@ -1229,28 +1233,13 @@ define([
         .attr('data-id', template.id)
         .addClass('dropdown-item')
         .on('click', function () {
-          selectTemplate(listId, template);
+          $templateInput.val(template.description || 'No description');  // Set input value
+          $templateInput.attr('data-id', template.id);
           $list.hide();
         });
-
       $list.append($listItem);
     });
 
-  }
-
-  function selectTemplate(listId, template) {
-    const inputId = 
-    listId === 'selfMailer-outsideTemplateList' ? 'selfMailer-outsideTemplateInput' :
-    listId === 'selfMailer-insideTemplateList' ? 'selfMailer-insideTemplateInput' :
-    listId === 'frontTemplateList' ? 'frontTemplateInput' :
-    'backTemplateInput';
-    const inputElement = document.getElementById(inputId);
-    if (inputElement) {
-      inputElement.value = template.description || 'No description';
-      inputElement.dataset.id = template.id;
-    } else {
-      console.error(`Input element not found.`);
-    }
   }
 
   function prepopulateToDeMapping(){
