@@ -67,6 +67,7 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    width: max-content;
 }
 .screen-3 .checkbox-input {
     margin-right: 5px;
@@ -556,6 +557,9 @@ input:checked + .test-to-live-slider:before {
 	display: flex;
 	gap: 8rem;
 	margin: 0 !important;
+}
+.SelfMailer .size-radio-buttons-wrap .radio-buttons {
+	gap: 2rem;
 }
 
 /* common css */
