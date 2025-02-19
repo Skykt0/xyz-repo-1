@@ -1160,7 +1160,6 @@ define([
     } else {
       fromContactElement.removeClass('error');
       fromContactElement.siblings('.error-msg').removeClass('show');
-      isValid = false;
     }
     previewPayload.fromContact = fromContact;
     resetToContactMappingErrors();
