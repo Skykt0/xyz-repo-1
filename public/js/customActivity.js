@@ -1137,7 +1137,7 @@ define([
     let fromContactElement = $('.contact-dropdown-container #search-contact');
     console.log(selectedMessageType);
     console.log(fromContactElement);
-    
+    console.log(fromContactElement.val());
     
     if(selectedMessageType === 'SelfMailer' && validateInputField(fromContactElement)) {
       console.log('error in fromcontact');
