@@ -1134,7 +1134,7 @@ define([
   function validateToContact() {
     let isValid = true;
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-    let fromContactElement = $('.contact-dropdown-container #search-contact')[0];
+    let fromContactElement = $('.contact-dropdown-container #search-contact');
     console.log(selectedMessageType);
     console.log(fromContactElement);
     
