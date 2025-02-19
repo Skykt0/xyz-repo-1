@@ -298,13 +298,13 @@
                             <label for="frontTemplateInput" class="input-label">Front Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="frontTemplateInput" class = "frontTemplate" placeholder="Search or enter template"
+                                    <input type="text" id="frontTemplateInput" class="frontTemplate" placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="frontTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter front template</span>
                                         <i class="fa fa-angle-right dropdown-icon"></i>
                                 </div>
-                                <div id="frontTemplateList" class="dropdown-options" role="listbox"
+                                <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
                                     aria-labelledby="frontTemplateInput"></div>
                                 <span class="error-message"></span>
                             </div>
@@ -314,35 +314,36 @@
                             <label for="backTemplateInput" class="input-label">Back Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="backTemplateInput" class = "backTemplate" placeholder="Search or enter template"
+                                    <input type="text" id="backTemplateInput" class="backTemplate" placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="backTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter back template</span>
                                         <i class="fa fa-angle-right dropdown-icon"></i>
                                 </div>
                                  <!-- Add down arrow here -->
-                                <div id="backTemplateList" class="dropdown-options" role="listbox"
+                                <div id="backTemplateList" class="dropdown-options backTemplateList" role="listbox"
                                     aria-labelledby="backTemplateInput"></div>
                                 <span class="error-message"></span>
                             </div>
                         </div>
                     </div>
-
-                    <div class="input-label-radio">Size *</div>
-                    <div class="radio-buttons width-50">
-                        <label class="radio-label size_radio_label">
-                            <input type="radio" class="radio-input" id="six-four" name="size" value="6x4" checked>
-                            6x4
-                        </label>
-                        <label class="radio-label size_radio_label">
-                            <input type="radio" class="radio-input" id="nine-six" name="size" value="9x6">
-                            9x6
-                        </label>
-                        <label class="radio-label size_radio_label">
-                            <input type="radio" class="radio-input" id="eleven-eight" name="size" value="11x6">
-                            11x6
-                        </label>
-                        <span class="error-message"></span>
+                    <div class="existingTemplate-size">
+                      <div class="input-label-radio">Size *</div>
+                      <div class="radio-buttons width-50">
+                          <label class="radio-label size_radio_label">
+                              <input type="radio" class="radio-input" id="six-four" name="size" value="6x4" checked>
+                              6x4
+                          </label>
+                          <label class="radio-label size_radio_label">
+                              <input type="radio" class="radio-input" id="nine-six" name="size" value="9x6">
+                              9x6
+                          </label>
+                          <label class="radio-label size_radio_label">
+                              <input type="radio" class="radio-input" id="eleven-eight" name="size" value="11x6">
+                              11x6
+                          </label>
+                          <span class="error-message"></span>
+                      </div>
                     </div>
                     <div class="checkboxes express-delivery">
                         <div class="five-checkboxes">
@@ -388,19 +389,19 @@
                         <div class="size-radio-buttons-wrap">
                             <div class="radio-buttons">
                                 <label class="radio-label size_radio_label">
-                                    <input type="radio" class="radio-input" id="six-four" name="HtmlSize" value="8.5x11_bifold"
+                                    <input type="radio" class="radio-input" id="six-four" name="SelfMailerHtmlSize" value="8.5x11_bifold" data-dimentions="8.625x11.125"
                                         checked />
-                                    <span>8.5x11_bifold</span>
-                                </label>
-                                <!-- <label class="radio-label size_radio_label">
-                                    <input type="radio" class="radio-input" id="nine-six" name="HtmlSize" value="9x6" />
-                                    <span>9x6</span>
+                                    <span>8.5x11 (Bifold)</span>
                                 </label>
                                 <label class="radio-label size_radio_label">
-                                    <input type="radio" class="radio-input" id="eleven-eight" name="HtmlSize"
-                                        value="11x6" />
-                                    <span>11x6</span>
-                                </label> -->
+                                    <input type="radio" class="radio-input" id="nine-six" name="SelfMailerHtmlSize" value="8.5x11_trifold" data-dimentions="8.625x11.125" />
+                                    <span>8.5x11 (Trifold)</span>
+                                </label>
+                                <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" id="eleven-eight" name="SelfMailerHtmlSize"
+                                    value="9.5x16_trifold" data-dimentions="9.625x16.125" />
+                                      <span>9.5x16 (Trifold)</span>
+                                </label>
                             </div>
                             <span class="error-msg">Please Select at least one size.</span>
                         </div>
@@ -462,15 +463,15 @@
                                 <label class="radio-label size_radio_label">
                                     <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="8.5x11_bifold" data-dimentions="8.625x11.125"
                                         checked />
-                                    <span>8.5x11_bifold</span>
+                                    <span>8.5x11 (Bifold)</span>
                                 </label>
                                 <label class="radio-label size_radio_label">
                                     <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="8.5x11_trifold" data-dimentions="8.625x11.125"/>
-                                    <span>8.5x11_trifold</span>
+                                    <span>8.5x11 (Trifold)</span>
                                 </label>
                                 <label class="radio-label size_radio_label">
                                     <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="9.5x16_trifold" data-dimentions="9.625x16.125"/>
-                                    <span>9.5x16_trifold</span>
+                                    <span>9.5x16 (Trifold)</span>
                                 </label>
                             </div>
                             <span class="error-msg">Please Select at least one size.</span>
@@ -520,13 +521,13 @@
                             <label for="selfMailer-insideTemplateInput" class="input-label">Front Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="selfMailer-insideTemplateInput" class = "frontTemplate"  placeholder="Search or enter template"
+                                    <input type="text" id="selfMailer-insideTemplateInput" class="frontTemplate"  placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="selfMailer-insideTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter inside template</span>
                                         <i class="fa fa-angle-right dropdown-icon"></i>
                                 </div>
-                                <div id="selfMailer-insideTemplateList" class="dropdown-options" role="listbox"
+                                <div id="selfMailer-insideTemplateList" class="dropdown-options frontTemplateList" role="listbox"
                                     aria-labelledby="selfMailer-insideTemplateInput"></div>
                                 <span class="error-message"></span>
                             </div>
@@ -536,35 +537,36 @@
                             <label for="selfMailer-outsideTemplateInput" class="input-label">Back Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="selfMailer-outsideTemplateInput" class = "backTemplate"  placeholder="Search or enter template"
+                                    <input type="text" id="selfMailer-outsideTemplateInput" class="backTemplate"  placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="selfMailer-outsideTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter outside template</span>
                                         <i class="fa fa-angle-right dropdown-icon"></i>
                                 </div>
                                  <!-- Add down arrow here -->
-                                <div id="selfMailer-outsideTemplateList" class="dropdown-options" role="listbox"
+                                <div id="selfMailer-outsideTemplateList" class="dropdown-options backTemplateList" role="listbox"
                                     aria-labelledby="selfMailer-outsideTemplateInput"></div>
                                 <span class="error-message"></span>
                             </div>
                         </div>
                     </div>
-
-                    <div class="input-label-radio">Size *</div>
-                    <div class="radio-buttons">
-                        <label class="radio-label size_radio_label">
-                            <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_bifold" data-dimentions="6.25x4.25"
-                                checked />
-                            <span>8.5x11_bifold</span>
-                        </label>
-                        <label class="radio-label size_radio_label">
-                            <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_trifold" data-dimentions="9.25x6.25"/>
-                            <span>8.5x11_trifold</span>
-                        </label>
-                        <label class="radio-label size_radio_label">
-                            <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="9.5x16_trifold" data-dimentions="11.25x6.25"/>
-                            <span>9.5x16_trifold</span>
-                        </label>
+                    <div class="existingTemplate-size">
+                      <div class="input-label-radio">Size *</div>
+                      <div class="radio-buttons">
+                          <label class="radio-label size_radio_label">
+                              <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_bifold" data-dimentions="6.25x4.25"
+                                  checked />
+                              <span>8.5x11 (Bifold)</span>
+                          </label>
+                          <label class="radio-label size_radio_label">
+                              <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_trifold" data-dimentions="9.25x6.25"/>
+                              <span>8.5x11 (Trifold)</span>
+                          </label>
+                          <label class="radio-label size_radio_label">
+                              <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="9.5x16_trifold" data-dimentions="11.25x6.25"/>
+                              <span>9.5x16 (Trifold)</span>
+                          </label>
+                      </div>
                     </div>
                     <div class="express-delivery">
                         <div class="two-checkboxes">
@@ -587,8 +589,11 @@
                 <h2 class="step4-heading" id="step4-heading">From Contact</h2>
                 <div class="mapping-dropdown contact-dropdown-wrap">
                     <div class="dropdown-wrap">
+                      <div class="contact-dropdown-container">
                         <input type="text" id="search-contact" placeholder="Search and select a contact..." autocomplete="off">
                         <i class="fa fa-angle-right dropdown-icon"></i>
+                        <span class="error-msg">Please select a contact.</span>
+                      </div>
                     </div>
                     <div id="dropdown-options" class="dropdown-options">
                     </div>

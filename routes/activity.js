@@ -41,9 +41,10 @@ exports.execute = async function (req, res) {
     now.setMinutes(now.getMinutes() + 5); // Add 5 minutes
     postcardJson.sendDate = now.toISOString();
     var internalPostcardJson = req.body.inArguments[0].internalPostcardJson ;
+    let baseUrl = 'https://api.postgrid.com/print-mail/v1/';
     const postcardConfigOptions = {
       method: 'POST',
-      url: 'https://api.postgrid.com/print-mail/v1/postcards',
+      url: internalPostcardJson.messageType === 'Postcards' ? baseUrl + 'postcards': baseUrl + 'self_mailers',
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',

@@ -50,7 +50,7 @@ body {
 	margin-bottom: 5px;
 }
 .screen-3 .input-label-radio {
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 10px;
     margin-top: 20px;
 }
@@ -67,6 +67,7 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    width: max-content;
 }
 .screen-3 .checkbox-input {
     margin-right: 5px;
@@ -528,7 +529,7 @@ input:checked + .test-to-live-slider:before {
 
 .input-fields .input-box .input-label,
 .input-label-radio {
-	font-size: 18px;
+	font-size: 16px;
 }
 
 .size-radio-buttons-wrap .radio-input {
@@ -556,6 +557,9 @@ input:checked + .test-to-live-slider:before {
 	display: flex;
 	gap: 8rem;
 	margin: 0 !important;
+}
+.SelfMailer .size-radio-buttons-wrap .radio-buttons {
+	gap: 2rem;
 }
 
 /* common css */
@@ -647,7 +651,7 @@ input:checked + .test-to-live-slider:before {
 }
 
 .html-size .input-label-radio {
-	font-size: 18px;
+	font-size: 16px;
 }
 
 .html__btn--front {
@@ -700,8 +704,12 @@ input:checked + .test-to-live-slider:before {
 }
 
 .error-msg.show {
-	/* visibility: visible; */
 	display: block;
+}
+
+.dropdown-wrap .error-msg {
+  margin-left: -70px;
+  margin-top: 4px;
 }
 
 .error {
