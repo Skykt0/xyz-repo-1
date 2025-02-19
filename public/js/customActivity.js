@@ -1134,14 +1134,17 @@ define([
   function validateToContact() {
     let isValid = true;
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let fromContactElement = $('.contact-dropdown-container #search-contact');
     console.log(selectedMessageType);
+    console.log(fromContactElement);
     
-    if(selectedMessageType === 'SelfMailer' && validateInputField($('.contact-dropdown-container #search-contact'))) {
+    
+    if(selectedMessageType === 'SelfMailer' && validateInputField(fromContactElement)) {
       console.log('error in fromcontact');
       isValid = false;
     } else {
-      $('.contact-dropdown-container #search-contact').removeClass('error');
-      $('.contact-dropdown-container #search-contact').siblings('.error-msg').removeClass('show');
+      fromContactElement.removeClass('error');
+      fromContactElement.siblings('.error-msg').removeClass('show');
       isValid = false;
     }
     previewPayload.fromContact = fromContact;
