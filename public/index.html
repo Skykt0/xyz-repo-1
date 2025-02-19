@@ -203,8 +203,8 @@
                                 Back
                             </button>
                         </div>
-                        <textarea class="html-editor-front show"></textarea>
-                        <textarea class="html-editor-back"></textarea>
+                        <textarea class="html-editor-front show" data-btn-label="Front"></textarea>
+                        <textarea class="html-editor-back" data-btn-label="Back"></textarea>
                         <span class="error-msg">Please enter required field</span>
                     </div>
                 </div>
@@ -388,19 +388,19 @@
                         <div class="size-radio-buttons-wrap">
                             <div class="radio-buttons">
                                 <label class="radio-label size_radio_label">
-                                    <input type="radio" class="radio-input" id="six-four" name="HtmlSize" value="8.5x11_bifold"
+                                    <input type="radio" class="radio-input" id="six-four" name="SelfMailerHtmlSize" value="8.5x11_bifold" data-dimentions="8.625x11.125"
                                         checked />
-                                    <span>8.5x11_bifold</span>
-                                </label>
-                                <!-- <label class="radio-label size_radio_label">
-                                    <input type="radio" class="radio-input" id="nine-six" name="HtmlSize" value="9x6" />
-                                    <span>9x6</span>
+                                    <span>8.5x11 (Bifold)</span>
                                 </label>
                                 <label class="radio-label size_radio_label">
-                                    <input type="radio" class="radio-input" id="eleven-eight" name="HtmlSize"
-                                        value="11x6" />
-                                    <span>11x6</span>
-                                </label> -->
+                                    <input type="radio" class="radio-input" id="nine-six" name="SelfMailerHtmlSize" value="8.5x11_trifold" data-dimentions="8.625x11.125" />
+                                    <span>8.5x11 (Trifold)</span>
+                                </label>
+                                <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" id="eleven-eight" name="SelfMailerHtmlSize"
+                                    value="9.5x16_trifold" data-dimentions="9.625x16.125" />
+                                      <span>9.5x16 (Trifold)</span>
+                                </label>
                             </div>
                             <span class="error-msg">Please Select at least one size.</span>
                         </div>
@@ -427,8 +427,8 @@
                         </button>
 
                     </div>
-                    <textarea class="html-editor-front show"></textarea>
-                    <textarea class="html-editor-back"></textarea>
+                    <textarea class="html-editor-front show" data-btn-label="Inside"></textarea>
+                    <textarea class="html-editor-back" data-btn-label="Outside"></textarea>
                     <span class="error-msg">Please enter required field</span>
                 </div>
             </div>
@@ -462,15 +462,15 @@
                                 <label class="radio-label size_radio_label">
                                     <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="8.5x11_bifold" data-dimentions="8.625x11.125"
                                         checked />
-                                    <span>8.5x11_bifold</span>
+                                    <span>8.5x11 (Bifold)</span>
                                 </label>
                                 <label class="radio-label size_radio_label">
                                     <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="8.5x11_trifold" data-dimentions="8.625x11.125"/>
-                                    <span>8.5x11_trifold</span>
+                                    <span>8.5x11 (Trifold)</span>
                                 </label>
                                 <label class="radio-label size_radio_label">
                                     <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="9.5x16_trifold" data-dimentions="9.625x16.125"/>
-                                    <span>9.5x16_trifold</span>
+                                    <span>9.5x16 (Trifold)</span>
                                 </label>
                             </div>
                             <span class="error-msg">Please Select at least one size.</span>
@@ -555,15 +555,15 @@
                         <label class="radio-label size_radio_label">
                             <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_bifold" data-dimentions="6.25x4.25"
                                 checked />
-                            <span>8.5x11_bifold</span>
+                            <span>8.5x11 (Bifold)</span>
                         </label>
                         <label class="radio-label size_radio_label">
                             <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_trifold" data-dimentions="9.25x6.25"/>
-                            <span>8.5x11_trifold</span>
+                            <span>8.5x11 (Trifold)</span>
                         </label>
                         <label class="radio-label size_radio_label">
                             <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="9.5x16_trifold" data-dimentions="11.25x6.25"/>
-                            <span>9.5x16_trifold</span>
+                            <span>9.5x16 (Trifold)</span>
                         </label>
                     </div>
                     <div class="express-delivery">
@@ -587,8 +587,11 @@
                 <h2 class="step4-heading" id="step4-heading">From Contact</h2>
                 <div class="mapping-dropdown contact-dropdown-wrap">
                     <div class="dropdown-wrap">
+                      <div class="contact-dropdown-container">
                         <input type="text" id="search-contact" placeholder="Search and select a contact..." autocomplete="off">
                         <i class="fa fa-angle-right dropdown-icon"></i>
+                        <span class="error-msg">Please select a contact.</span>
+                      </div>
                     </div>
                     <div id="dropdown-options" class="dropdown-options">
                     </div>

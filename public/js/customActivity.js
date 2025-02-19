@@ -259,6 +259,10 @@ define([
       validateStep3A()
         .then((isValid) => {
           isValid ? proceedToNext() : handleValidationFailure();
+          $('.mapping-fields select').css('border', '');
+          $('.error-message-contactMapping').hide();
+          $('.contact-dropdown-container input').removeClass('error');
+          $('.contact-dropdown-container .error-msg').removeClass('show');
         })
         .catch((error) => {
           console.error('Error during validation:', error);
@@ -666,9 +670,11 @@ define([
       }
       let isPostcardSizeSelected = $(`.${selectedMessageType} .html-size .radio-input:checked`).length;
       let frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val().trim();
+      let frontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
       let backtHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val().trim();
+      let backHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-back`).data('btn-label');
       let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .html-editor .error-msg`);
-  
+
       if (!(isPostcardSizeSelected > 0)) {
         $(`.${selectedMessageType} .html-size .error-msg`).addClass('show');
         isValid = false;
@@ -679,11 +685,11 @@ define([
       if (frontHtmlContent === '' || backtHtmlContent === '') {
         isValid = false;
         if (frontHtmlContent === '' && backtHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text('Please enter content in both Front and Back fields.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
         } else if (frontHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text('Please enter content in the Front field.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
         } else {
-          postcardHtmlEditorErrorMsg.text('Please enter content in the Back field.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
         }
       } else { 
         postcardHtmlEditorErrorMsg.removeClass('show');
@@ -1131,6 +1137,16 @@ define([
 
   function validateToContact() {
     let isValid = true;
+    let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let fromContactElement = $('.contact-dropdown-container #search-contact');
+
+    if(selectedMessageType === 'SelfMailer' && !validateInputField(fromContactElement)) {
+      isValid = false;
+    } else {
+      fromContactElement.removeClass('error');
+      fromContactElement.siblings('.error-msg').removeClass('show');
+      isValid = false;
+    }
     previewPayload.fromContact = fromContact;
     resetToContactMappingErrors();
     let requiredFields = ['#addressLine1', '#firstName', '#companyName', '#city', '#provinceOrState', '#countryCode'];
@@ -1401,29 +1417,6 @@ define([
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
-  $(document).on('click', function (event) {
-    const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact') || $(event.target).closest('#step4').length > 0;
-    const isClickInsideFront = $(event.target).closest('#frontTemplateList, #frontTemplateInput').length > 0;
-    const isClickInsideBack = $(event.target).closest('#backTemplateList, #backTemplateInput').length > 0;
-    const isClickInsideFrontSelfMailer = $(event.target).closest('#selfMailer-insideTemplateList, #selfMailer-insideTemplateInput').length > 0;
-    const isClickInsideBackSelfMailer = $(event.target).closest('#selfMailer-outsideTemplateList, #selfMailer-outsideTemplateInput').length > 0;
-    if (!isClickInsideDropdown) {
-      $('#dropdown-options').hide();
-    }
-    if (!isClickInsideFront) {
-      $('#frontTemplateList').hide();
-    }
-    if (!isClickInsideBack) {
-      $('#backTemplateList').hide();
-    }
-    if(!isClickInsideFrontSelfMailer){
-      $('#selfMailer-insideTemplateList').hide();
-    }
-    if(!isClickInsideBackSelfMailer){
-      $('#selfMailer-outsideTemplateList').hide();
-    }
-  });
-
   $('#frontTemplateInput, #backTemplateInput, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('input', debounce(function () {
     fetchTemplates($(this).val().trim());
   }, 300));
@@ -1455,6 +1448,33 @@ define([
   
     const today = new Date().toISOString().split('T')[0];
     $('#sendDate3').val(today).attr('min', today);
+
+    console.log('ready');
+    
+    $(document).on('click', function (event) {
+      console.log('doc click');
+
+      const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact');
+      const isClickInsideFront = $(event.target).closest('#frontTemplateList, #frontTemplateInput').length > 0;
+      const isClickInsideBack = $(event.target).closest('#backTemplateList, #backTemplateInput').length > 0;
+      const isClickInsideFrontSelfMailer = $(event.target).closest('#selfMailer-insideTemplateList, #selfMailer-insideTemplateInput').length > 0;
+      const isClickInsideBackSelfMailer = $(event.target).closest('#selfMailer-outsideTemplateList, #selfMailer-outsideTemplateInput').length > 0;
+      if (!isClickInsideDropdown) {
+        $('#dropdown-options').hide();
+      }
+      if (!isClickInsideFront) {
+        $('#frontTemplateList').hide();
+      }
+      if (!isClickInsideBack) {
+        $('#backTemplateList').hide();
+      }
+      if(!isClickInsideFrontSelfMailer){
+        $('#selfMailer-insideTemplateList').hide();
+      }
+      if(!isClickInsideBackSelfMailer){
+        $('#selfMailer-outsideTemplateList').hide();
+      }
+    });
   });
 
 });
