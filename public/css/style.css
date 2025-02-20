@@ -329,7 +329,7 @@ body {
 .radio-label,
 #card-insert-container label,
 #card-insert-type label {
-	font-size: 18px;
+	font-size: 16px;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
