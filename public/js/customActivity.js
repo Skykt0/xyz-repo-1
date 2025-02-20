@@ -228,8 +228,10 @@ define([
         let selectedMessageType;
 
         let selectedRadio = $('input[name="msgType"]:checked');
+        let isCartInsertEnabled = $('#card-insert').prop('checked');
         if (selectedRadio.length > 0) {
-          selectedMessageType = selectedRadio.val().replace(/\s+/g, '');
+          let selectedRadioValue = selectedRadio.val().replace(/\s+/g, '');
+          selectedMessageType = isCartInsertEnabled && selectedRadioValue === 'SelfMailer' ? 'Trifold'  : selectedRadioValue;
         }
 
         let isHtml = $('#htmlId').is(':checked');
@@ -1160,7 +1162,6 @@ define([
     } else {
       fromContactElement.removeClass('error');
       fromContactElement.siblings('.error-msg').removeClass('show');
-      isValid = false;
     }
     previewPayload.fromContact = fromContact;
     resetToContactMappingErrors();

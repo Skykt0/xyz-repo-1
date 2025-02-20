@@ -506,7 +506,7 @@ input:checked + .test-to-live-slider:before {
 /* start of step 3 css */
 /* Postcard HTML creation CSS */
 
-#html-screen-container {
+.container.spacer.HTML {
 	display: flex;
 	padding: 44px;
 }
@@ -970,7 +970,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none;
 }
 
-#html-screen-container .html-btn-wrap {
+.container.spacer.HTML .html-btn-wrap {
     position: absolute;
     width: 96%;
     background: white;
