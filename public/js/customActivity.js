@@ -495,7 +495,7 @@ define([
   }
   
   function hideError() {
-    $(this).css('border', '').next('.error-message').hide();
+    $(this).css('border', '').siblings('.error-message').hide();
   }
 
   function validateStep2() {
