@@ -996,6 +996,7 @@ define([
   
       if (pdfUrl) {
         previewPayload.previewURL = pdfUrl;
+        $('.preview-message').text('If you want to view the template preview, click the \'Show Preview\' button.');
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
         $('.retry-preview-btn').text('Show Preview');
         $('.retry-btn-wrap .loader').removeClass('show');
