@@ -1158,10 +1158,8 @@ define([
     let fromContactElement = $('.contact-dropdown-container #search-contact');
 
     if(selectedMessageType === 'SelfMailer' && !validateInputField(fromContactElement)) {
-      console.log('inif');
       isValid = false;
     } else {
-console.log('inelse');
       fromContactElement.removeClass('error');
       fromContactElement.siblings('.error-msg').removeClass('show');
     }
