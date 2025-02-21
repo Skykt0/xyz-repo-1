@@ -669,11 +669,11 @@ define([
         }
 
         console.log($(`.${selectedMessageType} .html-editor-front`));
-        let frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val().trim();
-        let frontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
-        let backtHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val().trim();
-        let backHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-back`).data('btn-label');
-        let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .html-editor .error-msg`);
+        let frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val().trim();
+        let frontHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-front`).data('btn-label');
+        let backtHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-back`).val().trim();
+        let backHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-back`).data('btn-label');
+        let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .screen-2 .html-editor .error-msg`);
 
         if (frontHtmlContent === '' || backtHtmlContent === '') {
           isValid = false;
