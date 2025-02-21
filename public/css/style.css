@@ -606,7 +606,7 @@ input:checked + .test-to-live-slider:before {
 }
 
 .html-editor-front,
-.html-editor-back, .html-editor-back-card-insert, .html-editor-front-card-insert {
+.html-editor-back {
 	display: none;
 	border: 3px solid lightgray;
 	border-radius: 8px;
@@ -974,7 +974,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     position: absolute;
     width: 96%;
     background: white;
-    padding: 1.5rem 0.75rem 0rem 0.75rem;
+    padding: 1.5rem 0.75rem;
     top: 3px;
     left: 4px;
     border-radius: 8px;
