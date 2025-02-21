@@ -125,12 +125,12 @@ define([
         $(queryString).val(value);
         break;
       case 'frontTemplateName':
-        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' #frontTemplateInput';
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .frontTemplate';
         $(queryString).val(value);
         $(queryString).attr('data-id', postcardArguments.frontTemplateId);
         break;
       case 'backTemplateName':
-        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' #backTemplateInput';
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .backTemplate';
         $(queryString).val(value);
         $(queryString).attr('data-id', postcardArguments.backTemplateId);
         break;
@@ -228,8 +228,10 @@ define([
         let selectedMessageType;
 
         let selectedRadio = $('input[name="msgType"]:checked');
+        let isCartInsertEnabled = $('#card-insert').prop('checked');
         if (selectedRadio.length > 0) {
-          selectedMessageType = selectedRadio.val().replace(/\s+/g, '');
+          let selectedRadioValue = selectedRadio.val().replace(/\s+/g, '');
+          selectedMessageType = isCartInsertEnabled && selectedRadioValue === 'SelfMailer' ? 'Trifold'  : selectedRadioValue;
         }
 
         let isHtml = $('#htmlId').is(':checked');
@@ -256,14 +258,18 @@ define([
     case 'step3':
       prepopulateToDeMapping();
       $('#dropdown-options').hide();
-        validateStep3A()
-          .then((isValid) => {
-            isValid ? proceedToNext() : handleValidationFailure();
-          })
-          .catch((error) => {
-            console.error('Error during validation:', error);
-            handleValidationFailure(); // Handle errors gracefully
-          });
+      validateStep3A()
+        .then((isValid) => {
+          isValid ? proceedToNext() : handleValidationFailure();
+          $('.mapping-fields select').css('border', '');
+          $('.error-message-contactMapping').hide();
+          $('.contact-dropdown-container input').removeClass('error');
+          $('.contact-dropdown-container .error-msg').removeClass('show');
+        })
+        .catch((error) => {
+          console.error('Error during validation:', error);
+          handleValidationFailure();
+        });
       break;
 
     case 'step4':
@@ -379,12 +385,10 @@ define([
       previewDEMapOptions[eleID]=optionSelect;
     });
 
-    // Coverting PDF in base64
     if (previewPayload.pdf) {
       await convertToBase64(previewPayload.pdf)
         .then((base64String) => {
           previewPayload.encodedPdf = base64String;
-          // You can now use this base64String in your logic
         })
         .catch((error) => {
           return;
@@ -414,6 +418,16 @@ define([
       } else if(previewPayload.creationType === 'Existing Template'){
         postCardJson.frontTemplate = previewPayload.frontTemplateId;
         postCardJson.backTemplate = previewPayload.backTemplateId;
+      } else if(previewPayload.creationType === 'PDF Upload'){
+        postCardJson.pdf = previewPayload.pdfLink;
+      }
+    } else if(previewPayload.messageType === 'Self Mailer'){
+      if(previewPayload.creationType === 'HTML'){
+        postCardJson.insideHTML = previewPayload.frontHtmlContent;
+        postCardJson.outsideHTML = previewPayload.backHtmlContent;
+      } else if(previewPayload.creationType === 'Existing Template'){
+        postCardJson.insideTemplate = previewPayload.frontTemplateId;
+        postCardJson.outsideTemplate = previewPayload.backTemplateId;
       } else if(previewPayload.creationType === 'PDF Upload'){
         postCardJson.pdf = previewPayload.pdfLink;
       }
@@ -455,26 +469,26 @@ define([
     const liveApiKey = $('#live-api-key').val().trim();
     const regexForTestApiKey = /^test_sk_[a-zA-Z0-9]{16,}$/;
     const regexForLiveApiKey = /^live_sk_[a-zA-Z0-9]{16,}$/;
-    // Validate Test API Key
+
     if (testApiKey === '') {
-      $('#test-api-key').css('border', '1px solid red'); // Highlight input box
-      $('#test-api-key-error').text('Missing or invalid authentication').show(); // Show error message
+      $('#test-api-key').css('border', '1px solid red');
+      $('#test-api-key-error').text('Missing or invalid authentication').show();
       isValid = false;
     } else if (!regexForTestApiKey.test(testApiKey)) {
-      $('#test-api-key').css('border', '1px solid red'); // Highlight input box
-      $('#test-api-key-error').text(`Invalid API key: ${testApiKey}`).show(); // Show error message with key value
+      $('#test-api-key').css('border', '1px solid red');
+      $('#test-api-key-error').text(`Invalid API key: ${testApiKey}`).show();
       isValid = false;
     } else {
       previewPayload.test_api_key = testApiKey;
-      $('#test-api-key-error').hide(); // Hide error message if valid
-      $('#test-api-key').css('border', ''); // Remove highlight
+      $('#test-api-key-error').hide();
+      $('#test-api-key').css('border', '');
     }
-    // Validate Live API Key (only if it's not empty)
+
     previewPayload.live_api_key = liveApiKey;
     if (liveApiKey !== '') {
       if (!regexForLiveApiKey.test(liveApiKey)) {
-        $('#live-api-key').css('border', '1px solid red'); // Highlight input box
-        $('#live-api-key-error').text(`Invalid API key: ${liveApiKey}`).show(); // Show error message with key value
+        $('#live-api-key').css('border', '1px solid red');
+        $('#live-api-key-error').text(`Invalid API key: ${liveApiKey}`).show();
         isValid = false;
         previewPayload.live_api_key = '';
       }
@@ -483,32 +497,29 @@ define([
   }
   
   function hideError() {
-    $(this).css('border', '').next('.error-message').hide();
+    $(this).css('border', '').siblings('.error-message').hide();
   }
 
   function validateStep2() {
     let isValid = true;
     let errorMessages = [];
 
-    // Validate Message Type
     if (!$('input[name=\'msgType\']:checked').length) {
       errorMessages.push('Message Type is required.');
       isValid = false;
       $('#msgType-error').text('Message Type is required.');
     } else {
-      $('#msgType-error').text('');  // Clear error if valid
+      $('#msgType-error').text('');
     }
 
-    // Validate Creation Type
     if (!$('input[name=\'createType\']:checked').length) {
       errorMessages.push('Creation Type is required.');
       isValid = false;
       $('#createType-error').text('Creation Type is required.');
     } else {
-      $('#createType-error').text('');  // Clear error if valid
+      $('#createType-error').text(''); 
     }
 
-    // Show general error message if any
     if (!errorMessages.length) {
       $('#step2-error').hide();
     } else {
@@ -540,28 +551,25 @@ define([
   }
 
   function executeScreenTwoMethods() {
-    // Handle showing Card Insert checkbox when "Letters" or "Self-Mailer" is selected
     $('input[name="msgType"]').change(function () {
+      if (this.id === 'letters' || this.id === 'self-mailer') {
+        $('#card-insert-container').addClass('visible');
+        $('.card-insert-wrapper').addClass('visible');
+      } else {
+        $('#card-insert-container').removeClass('visible');
+        $('.card-insert-wrapper').removeClass('visible');
+      }
 
       if (this.id === 'letters' || this.id === 'self-mailer') {
-        $('#card-insert-container').addClass('visible'); // Show Card Insert checkbox
-        $('.card-insert-wrapper').addClass('visible'); // Show Card Insert wrapper (if needed)
-      } else {
-        $('#card-insert-container').removeClass('visible'); // Hide Card Insert checkbox
-        $('.card-insert-wrapper').removeClass('visible'); // Hide Card Insert wrapper (if needed)
-      }
-      // If "Self-Mailer" is selected, uncheck "Card Insert"
-      if (this.id === 'letters' || this.id === 'self-mailer') {
-        $('#card-insert').prop('checked', false).trigger('change'); // Uncheck and trigger change event
+        $('#card-insert').prop('checked', false).trigger('change');
       }
     });
-    // Show/Hide Card Insert Type section when Card Insert is checked/unchecked
-    $('#card-insert').change(function () {
 
+    $('#card-insert').change(function () {
       if (this.checked) {
-        $('#card-insert-type').removeClass('hidden'); // Show Card Insert Type section
+        $('#card-insert-type').removeClass('hidden');
       } else {
-        $('#card-insert-type').addClass('hidden'); // Hide Card Insert Type section
+        $('#card-insert-type').addClass('hidden');
       }
     });
   }
@@ -641,7 +649,6 @@ define([
 
     if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
-      //   let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
       
       if (!isDescriptionValid) {
         isValid = false;
@@ -669,16 +676,17 @@ define([
 
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-1 .description`));
-      //   let isSendDateValid = validateInputField($('.postcard-pdf-container #sendDate'));
       
       if (!isDescriptionValid) {
         isValid = false;
       }
       let isPostcardSizeSelected = $(`.${selectedMessageType} .html-size .radio-input:checked`).length;
       let frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val().trim();
+      let frontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
       let backtHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val().trim();
+      let backHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-back`).data('btn-label');
       let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .html-editor .error-msg`);
-  
+
       if (!(isPostcardSizeSelected > 0)) {
         $(`.${selectedMessageType} .html-size .error-msg`).addClass('show');
         isValid = false;
@@ -689,11 +697,11 @@ define([
       if (frontHtmlContent === '' || backtHtmlContent === '') {
         isValid = false;
         if (frontHtmlContent === '' && backtHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text('Please enter content in both Front and Back fields.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
         } else if (frontHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text('Please enter content in the Front field.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
         } else {
-          postcardHtmlEditorErrorMsg.text('Please enter content in the Back field.').addClass('show');
+          postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
         }
       } else { 
         postcardHtmlEditorErrorMsg.removeClass('show');
@@ -711,7 +719,6 @@ define([
       if(!frontTemplateValid || !backTemplateValid){
         isValid = false;
       }
-
     }
 
     return isValid;
@@ -773,7 +780,6 @@ define([
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
-      //   const sendDate = $('.screen-1 #sendDate').val();
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
       const frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val();
       const backHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val();
@@ -791,7 +797,6 @@ define([
       previewPayload.isExpressDelivery = isExpressDelivery;
     } else if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
-      //   const sendDate = $('#postcardScreen .screen-2 #sendDate').val();
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
       const size = $(`.${selectedMessageType} .pdf-size .radio-input:checked`).val();
       const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
@@ -808,14 +813,13 @@ define([
       previewPayload.pdfName = pdfFile.name;
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
-      //   const sendDate = document.querySelector('#sendDate3').value;
-      const frontTemplateId = document.querySelector('#frontTemplateInput')?.dataset.id;
-      const backTemplateId = document.querySelector('#backTemplateInput')?.dataset.id;
-      const size = $('.screen-3 input[name=\'size\']:checked').val();
+      const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
+      const backTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`)?.attr('data-id');
+      const size = $(`.${selectedMessageType} .existingTemplate-size .radio-input:checked`).val();
       const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
-      const mailingClass = $('.screen-3 #mailingClass3').val();
-      const frontTemplateName = $('#frontTemplateInput')?.val();
-      const backTemplateName = $('#backTemplateInput')?.val();
+      const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
+      const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
+      const backTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val();
 
       previewPayload.screen = 'existing-template';
       previewPayload.description = description;
@@ -838,13 +842,12 @@ define([
     const sendDate = now.getFullYear() + '-' + 
                        String(now.getMonth() + 1).padStart(2, '0') + '-' + 
                        String(now.getDate()).padStart(2, '0');
-    let istOffset = 5.5 * 60 * 60 * 1000; // Convert 5.5 hours to milliseconds
+    let istOffset = 5.5 * 60 * 60 * 1000;
     let istTime = new Date(now.getTime() + istOffset);
 
     let formattedDate = sendDate;
-    let formattedTime = istTime.toISOString().split('T')[1]; // Extract the time part from IST
+    let formattedTime = istTime.toISOString().split('T')[1];
 
-    
     return `${formattedDate}T${formattedTime}`;
   }
 
@@ -858,10 +861,8 @@ define([
     let data;
     
     let headers = {
-      'x-api-key': previewPayload.test_api_key,
+      'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key,
     };
-
-    console.log('existing template contact '+toContact);
     console.log('preview payload: '+JSON.stringify(previewPayload));
 
     if(previewPayload.screen === 'pdf'){
@@ -905,13 +906,18 @@ define([
       data = new URLSearchParams({
         'to': toContact,
         'from': fromContact.id || '',
-        frontTemplate: previewPayload.frontTemplateId,
-        backTemplate: previewPayload.backTemplateId,
         size: previewPayload.size,
         sendDate: previewPayload.sendDate,
         description: previewPayload.description,
         'express': previewPayload.isExpressDelivery,
       });
+      if(messageType === 'Postcards'){
+        data.append('frontTemplate', previewPayload.frontTemplateId);
+        data.append('backTemplate', previewPayload.backTemplateId);
+      } else if(messageType === 'Self Mailer'){
+        data.append('insideTemplate', previewPayload.frontTemplateId);
+        data.append('outsideTemplate', previewPayload.backTemplateId);
+      }
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
       }
@@ -934,10 +940,13 @@ define([
       const result = await response.json();
       console.log('-------------------------API response');
       console.log(JSON.stringify(result));
-      
-      
+
       previewPayload.pdfLink = result.uploadedPDF;
 
+      if(previewPayload.liveApiKeyEnabled) {
+        let msgType = selectedMessageType === 'SelfMailer' ? 'self_mailers' : 'postcards';
+        deleteMailItem(msgType, result.id);
+      }
       return result;
     } catch (error) {
       console.error('Error creating postcard:', error.message);
@@ -949,7 +958,7 @@ define([
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     const urlMessageType = selectedMessageType === 'SelfMailer' ? 'self_mailers' : 'postcards';
     const apiUrl = `https://api.postgrid.com/print-mail/v1/${urlMessageType}/${messageId}`;
-    const apiKey = previewPayload.test_api_key;
+    const apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
 
     try {
       const response = await fetch(apiUrl, {
@@ -971,20 +980,25 @@ define([
     }
   }
 
-  async function showPdfPreview(messageId, isRetry = false, startTime = Date.now()) {
+  async function showPdfPreview(messageId, retryOnce = false, isRetry = false, startTime = Date.now()) {
     try {
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
-        $('#pdf-preview-container, .retry-preview-btn, .preview-message').hide();
+        $('#pdf-preview-container').hide();
+        $('.preview-message').text('If you want to view the template preview, click the \'Show Preview\' button.').show();
       }
   
+      $('.retry-btn-wrap .loader').addClass('show');
+      $('.retry-preview-btn').hide();
       const messageDetails = await fetchMessageDetails(messageId);
       const pdfUrl = messageDetails.url;
       console.log('PDF URL:', pdfUrl);
-      connection.trigger('nextStep');
   
       if (pdfUrl) {
+        previewPayload.previewURL = pdfUrl;
+        $('.preview-message').text('If you want to view the template preview, click the \'Show Preview\' button.');
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
+        $('.retry-preview-btn').text('Show Preview');
         $('.retry-btn-wrap .loader').removeClass('show');
   
         $('.retry-preview-btn').off('click').on('click', function () {
@@ -993,12 +1007,13 @@ define([
           $('#pdf-preview-container').show();
           $('.retry-preview-btn, .preview-message').hide();
         });
-      } else {
+      } else  {
         const elapsedTime = Date.now() - startTime;
-        if (elapsedTime >= 60000) {
+        if (elapsedTime >= 60000 || retryOnce) {
           console.warn('Retry limit reached (1 minute). Stopping retries.');
           $('.retry-btn-wrap .loader').removeClass('show');
-          $('.preview-message').text('Failed to load preview after multiple attempts.').show();
+          $('.preview-message').text('Failed to load the preview after several attempts. To try again, click the retry button.').show();
+          $('.retry-preview-btn').text('Retry').show();
           return;
         }
   
@@ -1008,7 +1023,7 @@ define([
         $('.retry-btn-wrap .loader').addClass('show');
   
         setTimeout(() => {
-          showPdfPreview(messageId, true, startTime);
+          showPdfPreview(messageId, false, true, startTime);
         }, 2000);
       }
     } catch (error) {
@@ -1025,6 +1040,7 @@ define([
       previewPayload.messageId = messageId;
 
       setTimeout(async function() {
+        connection.trigger('nextStep');
         await showPdfPreview(messageId);
       }, 2000);
 
@@ -1037,8 +1053,7 @@ define([
 
   function createContact () {
     const url = 'https://api.postgrid.com/print-mail/v1/contacts';
-                
-    // Data payload (form-encoded)
+
     const formData = new URLSearchParams();
     formData.append('firstName', 'Kevin');
     formData.append('lastName', 'Smith');
@@ -1062,7 +1077,7 @@ define([
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'x-api-key': previewPayload.test_api_key
+        'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key
       },
       body: formData
     })
@@ -1070,8 +1085,6 @@ define([
       .then(data => {
         console.log('Contact Created:', data);
         toContact = data.id;
-        console.log('to contact: '+toContact);;
-        
       })
       .catch(error => {
         console.error('Error:', error);
@@ -1084,7 +1097,7 @@ define([
       method: 'GET',
       data: searchQuery ? { search: searchQuery, limit: 10 } : { limit: 10 },
       headers: {
-        'x-api-key': previewPayload.test_api_key
+        'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key
       },
       success: function (response) {
         $('#dropdown-options').empty();
@@ -1107,6 +1120,31 @@ define([
     });
   }
 
+  function deleteMailItem(messageType, mailItemId) {
+    const url = `https://api.postgrid.com/print-mail/v1/${messageType}/${mailItemId}`;
+  
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'x-api-key': previewPayload.live_api_key
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to delete ${messageType}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Postcard deleted successfully:', data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+  
+
   function debounce(func, delay) {
     let timeoutId;
     return function (...args) {
@@ -1117,13 +1155,22 @@ define([
 
   function validateToContact() {
     let isValid = true;
+    let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let fromContactElement = $('.contact-dropdown-container #search-contact');
+
+    if(selectedMessageType === 'SelfMailer' && !validateInputField(fromContactElement)) {
+      isValid = false;
+    } else {
+      fromContactElement.removeClass('error');
+      fromContactElement.siblings('.error-msg').removeClass('show');
+    }
     previewPayload.fromContact = fromContact;
     resetToContactMappingErrors();
     let requiredFields = ['#addressLine1', '#firstName', '#companyName', '#city', '#provinceOrState', '#countryCode'];
     let isAnyFieldEmpty = false;
     requiredFields.forEach(selector => {
       let value = $(selector).val();
-      // Special validation for First Name or Company (one must be selected)
+
       if (selector === '#firstName' || selector === '#companyName') {
         if ($('#firstName').val() === 'Select' && $('#companyName').val() === 'Select') {
           $('#firstName, #companyName').css('border', '2px solid red');
@@ -1144,49 +1191,14 @@ define([
   }
 
   function resetToContactMappingErrors() {
-    $('.mapping-fields-group select').css('border', ''); // Reset border styles
-    $('.error-message-contactMapping').text('').hide(); // Clear and hide error messages
-  }
-
-  function validateStep3() {
-    let isValid = true;
-    $('.error-message').remove();
-    $('.error-field').removeClass('error-field');
-
-    // let selectedDate = $('#sendDate3').val();
-    // if (!selectedDate || selectedDate < today) {
-    //   $('#sendDate3').after('<span class="error-message">Send Date cannot be in the past.</span>');
-    //   $('#sendDate3').addClass('error-field');
-    //   isValid = false;
-    // }
-    if (!$('#mailingClass3').val()) {
-      $('#mailingClass3').after('<span class="error-message">Mailing Class is required.</span>');
-      $('#mailingClass3').addClass('error-field');
-      isValid = false;
-    }
-    if (!$('input[name="size"]:checked').length) {
-      $('.radio-buttons').after('<span class="error-message">Please select at least one size.</span>');
-      isValid = false;
-    }
-    // Validate Front Template
-    if (!$('#frontTemplateInput').val().trim()) {
-      $('#frontTemplateInput').after('<span class="error-message">Please select the Front Template.</span>');
-      $('#frontTemplateInput').addClass('error-field');
-      isValid = false;
-    }
-    // Validate Back Template
-    if (!$('#backTemplateInput').val().trim()) {
-      $('#backTemplateInput').after('<span class="error-message">Please select the Back Template.</span>');
-      $('#backTemplateInput').addClass('error-field');
-      isValid = false;
-    }
-    return isValid;
+    $('.mapping-fields-group select').css('border', '');
+    $('.error-message-contactMapping').text('').hide();
   }
 
   async function fetchTemplates(searchQuery = '') {
     const requestOptions = {
       method: 'GET',
-      headers: { 'x-api-key': previewPayload.test_api_key },
+      headers: { 'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key },
       redirect: 'follow'
     };
 
@@ -1198,36 +1210,23 @@ define([
       const dataJson = await response.json();
       const data = dataJson.data;
 
-      // Sort data by description
       const sortedData = data.sort((a, b) => {
         const descriptionA = a.description ? a.description.toString().toLowerCase() : '';
         const descriptionB = b.description ? b.description.toString().toLowerCase() : '';
         return descriptionA.localeCompare(descriptionB);
       });
-
-      // Populate dropdowns with sorted data
-      let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-      if(selectedMessageType === 'Postcards'){
-        populateDropdown('frontTemplateList', sortedData);
-        populateDropdown('backTemplateList', sortedData);
-      }
-      else if(selectedMessageType === 'SelfMailer'){
-        populateDropdown('selfMailer-insideTemplateList', sortedData);
-        populateDropdown('selfMailer-outsideTemplateList', sortedData);
-      }
-      
+      populateDropdown('frontTemplate', sortedData);
+      populateDropdown('backTemplate', sortedData);
     } catch (error) {
       console.error('Error fetching templates:', error);
     }
   }
 
-  function populateDropdown(listId, templates) {
-    const $list = $('#' + listId);
-    if (!$list.length) {
-      console.error(`Dropdown list with ID ${listId} not found.`);
-      return;
-    }
-
+  function populateDropdown(templateName, templates) {
+    let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
+    const $templateInput = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}`);
+    const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}List`);
     $list.empty();
 
     templates.forEach(template => {
@@ -1236,28 +1235,13 @@ define([
         .attr('data-id', template.id)
         .addClass('dropdown-item')
         .on('click', function () {
-          selectTemplate(listId, template);
-          $list.hide(); // Hide dropdown after selection
+          $templateInput.val(template.description || 'No description');  // Set input value
+          $templateInput.attr('data-id', template.id);
+          $list.hide();
         });
-
       $list.append($listItem);
     });
 
-  }
-
-  function selectTemplate(listId, template) {
-    const inputId = 
-    listId === 'selfMailer-outsideTemplateList' ? 'selfMailer-outsideTemplateInput' :
-    listId === 'selfMailer-insideTemplateList' ? 'selfMailer-insideTemplateInput' :
-    listId === 'frontTemplateList' ? 'frontTemplateInput' :
-    'backTemplateInput';
-    const inputElement = document.getElementById(inputId);
-    if (inputElement) {
-      inputElement.value = template.description || 'No description';
-      inputElement.dataset.id = template.id; // Store ID for later use
-    } else {
-      console.error(`Input element not found.`);
-    }
   }
 
   function prepopulateToDeMapping(){
@@ -1351,15 +1335,14 @@ define([
       $('#postcardScreen').hide();
     }
 
-    // The "Next" button remains enabled
     connection.trigger('updateButton', {
       button: 'next',
       enabled: true
     });
   });
 
-  $('.preview-container .retry-preview-btn').click(async function() {
-    await showPdfPreview(previewPayload.messageId);
+  $('.preview-container .retry-preview-btn').click(async function(e) {
+    await showPdfPreview(previewPayload.messageId, true, true);
   });
 
   $('.express-delivery-input').on('click', function() {
@@ -1415,46 +1398,17 @@ define([
         targetLabel.text(targetLabel.text() + ' *');
       }
     }  
-  });  
+  });
 
   $('.mapping-fields-group select').on('click', function () {
     resetToContactMappingErrors();
   });
 
-  $('#frontTemplateInput, #backTemplateInput').on('focus', function () {
+  $('#frontTemplateInput, #backTemplateInput, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('focus', function () {
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
-  });  
-  $('#selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('focus', function () {
-    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
-  });  
+  });
 
-  $(document).on('click', function (event) {
-    const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact') || $(event.target).closest('#step4').length > 0;
-    const isClickInsideFront = $(event.target).closest('#frontTemplateList, #frontTemplateInput').length > 0;
-    const isClickInsideBack = $(event.target).closest('#backTemplateList, #backTemplateInput').length > 0;
-    const isClickInsideFrontSelfMailer = $(event.target).closest('#selfMailer-insideTemplateList, #selfMailer-insideTemplateInput').length > 0;
-    const isClickInsideBackSelfMailer = $(event.target).closest('#selfMailer-outsideTemplateList, #selfMailer-outsideTemplateInput').length > 0;
-    if (!isClickInsideDropdown) {
-      $('#dropdown-options').hide();
-    }
-    if (!isClickInsideFront) {
-      $('#frontTemplateList').hide();
-    }
-    if (!isClickInsideBack) {
-      $('#backTemplateList').hide();
-    }
-    if(!isClickInsideFrontSelfMailer){
-      $('#selfMailer-insideTemplateList').hide();
-    }
-    if(!isClickInsideBackSelfMailer){
-      $('#selfMailer-outsideTemplateList').hide();
-    }
-  });  
-
-  $('#frontTemplateInput, #backTemplateInput').on('input', debounce(function () {
-    fetchTemplates($(this).val().trim());
-  }, 300));
-  $('#selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('input', debounce(function () {
+  $('#frontTemplateInput, #backTemplateInput, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('input', debounce(function () {
     fetchTemplates($(this).val().trim());
   }, 300));
 
@@ -1485,6 +1439,33 @@ define([
   
     const today = new Date().toISOString().split('T')[0];
     $('#sendDate3').val(today).attr('min', today);
+
+    console.log('ready');
+    
+    $(document).on('click', function (event) {
+      console.log('doc click');
+
+      const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact');
+      const isClickInsideFront = $(event.target).closest('#frontTemplateList, #frontTemplateInput').length > 0;
+      const isClickInsideBack = $(event.target).closest('#backTemplateList, #backTemplateInput').length > 0;
+      const isClickInsideFrontSelfMailer = $(event.target).closest('#selfMailer-insideTemplateList, #selfMailer-insideTemplateInput').length > 0;
+      const isClickInsideBackSelfMailer = $(event.target).closest('#selfMailer-outsideTemplateList, #selfMailer-outsideTemplateInput').length > 0;
+      if (!isClickInsideDropdown) {
+        $('#dropdown-options').hide();
+      }
+      if (!isClickInsideFront) {
+        $('#frontTemplateList').hide();
+      }
+      if (!isClickInsideBack) {
+        $('#backTemplateList').hide();
+      }
+      if(!isClickInsideFrontSelfMailer){
+        $('#selfMailer-insideTemplateList').hide();
+      }
+      if(!isClickInsideBackSelfMailer){
+        $('#selfMailer-outsideTemplateList').hide();
+      }
+    });
   });
 
 });

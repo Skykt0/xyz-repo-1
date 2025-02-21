@@ -5,7 +5,7 @@
 body {
     padding: 0;
     margin: 0;
-    font-family: inter;
+    font-family: "Roboto";
 }
 
 /* STEP 3 - SCREEN 3 CSS*/
@@ -50,7 +50,7 @@ body {
 	margin-bottom: 5px;
 }
 .screen-3 .input-label-radio {
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 10px;
     margin-top: 20px;
 }
@@ -67,6 +67,7 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    width: max-content;
 }
 .screen-3 .checkbox-input {
     margin-right: 5px;
@@ -148,11 +149,13 @@ body {
 	width: 100%;
 }
 .screen-3 input[type="text"] {
-	width: 100%;
-	padding: 8px;
-	box-sizing: border-box;
-	border: 3px solid lightgray;
-    box-shadow: 0px 0px 1px 1px lightgray;
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 3px;
+  outline: none;
+  box-sizing: border-box;
+  border: 3px solid lightgray;
+  box-shadow: 0px 0px 1px 1px lightgray;
 }
 
 /* Basic styling for dropdowns */
@@ -233,7 +236,6 @@ body {
 	font-weight: bold;
 	text-align: center;
 	margin-bottom: 0px;
-	font-family: inter;
 }
 .step1-heading {
 	max-width: 270px;
@@ -327,7 +329,7 @@ body {
 .radio-label,
 #card-insert-container label,
 #card-insert-type label {
-	font-size: 18px;
+	font-size: 16px;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
@@ -504,7 +506,7 @@ input:checked + .test-to-live-slider:before {
 /* start of step 3 css */
 /* Postcard HTML creation CSS */
 
-#html-screen-container {
+.container.spacer.HTML {
 	display: flex;
 	padding: 44px;
 }
@@ -527,7 +529,7 @@ input:checked + .test-to-live-slider:before {
 
 .input-fields .input-box .input-label,
 .input-label-radio {
-	font-size: 18px;
+	font-size: 16px;
 }
 
 .size-radio-buttons-wrap .radio-input {
@@ -556,6 +558,9 @@ input:checked + .test-to-live-slider:before {
 	gap: 8rem;
 	margin: 0 !important;
 }
+.SelfMailer .size-radio-buttons-wrap .radio-buttons {
+	gap: 2rem;
+}
 
 /* common css */
 
@@ -566,11 +571,19 @@ input:checked + .test-to-live-slider:before {
 	row-gap: 2rem;
 }
 
+.SelfMailer .html-screen-wrapper .outer-input-fields .input-fields {
+  flex-direction: column;
+}
+
 .html-screen-wrapper .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
-	width: 42%;
+	flex-basis: calc(100% - 1rem);
 	gap: 0.25rem;
+}
+
+.SelfMailer .html-screen-wrapper .input-fields .input-box {
+	width: 90%;
 }
 
 .html-screen-wrapper .input-fields .input-field {
@@ -638,7 +651,7 @@ input:checked + .test-to-live-slider:before {
 }
 
 .html-size .input-label-radio {
-	font-size: 18px;
+	font-size: 16px;
 }
 
 .html__btn--front {
@@ -691,8 +704,12 @@ input:checked + .test-to-live-slider:before {
 }
 
 .error-msg.show {
-	/* visibility: visible; */
 	display: block;
+}
+
+.dropdown-wrap .error-msg {
+  margin-left: -70px;
+  margin-top: 4px;
 }
 
 .error {
@@ -727,8 +744,12 @@ input:checked + .test-to-live-slider:before {
 .pdf-container .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
-	width: 30%;
+	flex-basis: calc(50% - 1rem);
 	gap: 0.5rem;
+}
+
+.SelfMailer .pdf-container .input-fields .input-box {
+  width: 50%;
 }
 
 .pdf-size {
@@ -949,7 +970,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none;
 }
 
-#html-screen-container .html-btn-wrap {
+.container.spacer.HTML .html-btn-wrap {
     position: absolute;
     width: 96%;
     background: white;
@@ -1049,3 +1070,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+.next-btn {
+  background: #2569E6 !important;
+  color: #fff !important;
+}
+
+.fuelux .modal-footer a.back, .fuelux .modal-footer .cancel {
+  color: #2569E6 !important;
+  border: 0;
+  padding: 5px 10px;
+  font-size: 11px;
+  border-radius: 3px;
+}
+
+.fuelux .modal-footer a.back:hover, .fuelux .modal-footer .cancel:hover {
+  background-color: #f1f1f1;
+  border-color: #bbb;
+}
