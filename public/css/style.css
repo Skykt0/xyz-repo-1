@@ -752,12 +752,12 @@ input:checked + .test-to-live-slider:before {
   width: 50%;
 }
 
-.pdf-size {
+.pdf-size, .pdf-card-size {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
-.pdf-size .input-label-radio {
+.pdf-size .input-label-radio, .pdf-card-size .input-label-radio {
 	margin: 0;
 }
 
