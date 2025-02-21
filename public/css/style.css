@@ -684,9 +684,7 @@ input:checked + .test-to-live-slider:before {
 	cursor: pointer;
 	background: #d1d1d1;
 }
-.Trifold .screen-1 .btn{
-	position: static;
-}
+
 
 .screen-1 .radio-buttons .radio-label,
 .screen-1 .checkboxes .checkbox-label {
