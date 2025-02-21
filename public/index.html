@@ -83,11 +83,11 @@
                         <div class="section-label">Card Insert Type</div>
                         <div class="input-container">
                             <div class="single-sided-radio-wrap">
-                                <input type="radio" id="single-sided" name="cardType" checked />
+                                <input type="radio" id="single-sided" name="cardType" value="SingleSided" checked />
                                 <label for="single-sided">Single-sided</label>
                             </div>
                             <div class="double-sided-radio-wrap">
-                                <input type="radio" id="double-sided" name="cardType" />
+                                <input type="radio" id="double-sided" name="cardType" value="DoubleSided"/>
                                 <label for="double-sided">Double-sided</label>
                             </div>
                         </div>
@@ -568,18 +568,19 @@
         <div id="TrifoldScreen" class="Trifold">
           <div class="screen-1 screen">
             <div class="container spacer HTML">
+                <!-- Trifold HTML Fields Section -->
                 <div class="html-screen-wrapper">
                     <h3 class="section-label">HTML</h3>
                     <div class="outer-input-fields">
                         <div class="input-fields">
                             <div class="input-box">
                                 <label for="description" class="input-label">Description *</label>
-                                <input type="text" class="input-field description" name="description" />
+                                <input type="text" class="input-field description" id="description" name="description" />
                                 <span class="error-msg">The input value is missing</span>
                             </div>
                             <div class="input-box">
                                 <label for="mailingClass" class="input-label">Mailing Class *</label>
-                                <select class="input-field mailing-class" name="mailingClass">
+                                <select class="input-field mailing-class" id="mailingClass" name="mailingClass">
                                     <option value="first_class" selected>
                                         First Class (7 - 10 business days)
                                     </option>
@@ -595,32 +596,34 @@
                         <div class="size-radio-buttons-wrap">
                             <div class="radio-buttons">
                                 <label class="radio-label size_radio_label">
-                                    <input type="radio" class="radio-input" name="TrifoldHtmlSize" value="8.5x11_bifold" data-dimentions="8.625x11.125"
-                                        checked />
-                                    <span>8.5x11 (Bifold)</span>
+                                    <input type="radio" class="radio-input" id="nine-six" name="HtmlSize" value="9x6" />
+                                    <span>8.5x11_trifold</span>
                                 </label>
                                 <label class="radio-label size_radio_label">
-                                    <input type="radio" class="radio-input" name="TrifoldHtmlSize" value="8.5x11_trifold" data-dimentions="8.625x11.125" />
-                                    <span>8.5x11 (Trifold)</span>
-                                </label>
-                                <label class="radio-label size_radio_label">
-                                    <input type="radio" class="radio-input" name="TrifoldHtmlSize"
-                                    value="9.5x16_trifold" data-dimentions="9.625x16.125" />
-                                      <span>9.5x16 (Trifold)</span>
-                                </label>
+                                    <input type="radio" class="radio-input" id="eleven-eight" name="HtmlSize"
+                                        value="11x6" />
+                                    <span>9.5x11_trifold</span>
+                                </label> 
                             </div>
                             <span class="error-msg">Please Select at least one size.</span>
                         </div>
                     </div>
-                    <div class="express-delivery">
-                        <div class="two-checkboxes">
-                            <label class="checkbox-label">
-                                <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
-                                <span>Express Delivery</span>
-                            </label>
+                    <div class="html-size">
+                        <div class="input-label-radio">Card Size *</div>
+                        <div class="size-radio-buttons-wrap">
+                            <div class="radio-buttons">
+                                <label class="radio-label size_radio_label">
+                                    <input type="radio" class="radio-input" id="six-four" name="HtmlSize" value="8.5x11_bifold"
+                                        checked />
+                                    <span>7.75 x 4.5</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                  </div>
+
+                <!-- Postcard HTML Editor -->
                 <div class="html-editor">
                     <div class="html-btn-wrap">
                         <button type="button" class="btn btn-light html__btn--front show">
@@ -629,9 +632,17 @@
                         <button type="button" class="btn btn-light html__btn--back">
                           Outside
                         </button>
+                        <button type="button" class="btn btn-light html__btn-card--front">
+                            Card Insert Front
+                          </button>
+                        <button type="button" class="btn btn-light html__btn-card--back">
+                        Card Insert Back
+                        </button>
                     </div>
                     <textarea class="html-editor-front show" data-btn-label="Inside"></textarea>
                     <textarea class="html-editor-back" data-btn-label="Outside"></textarea>
+                    <textarea class="html-editor-front-card-insert" data-btn-label="Card Insert Front"></textarea>
+                    <textarea class="html-editor-back-card-insert" data-btn-label="Card Insert Back"></textarea>
                     <span class="error-msg">Please enter required field</span>
                 </div>
             </div>

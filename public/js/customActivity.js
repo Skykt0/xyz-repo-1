@@ -645,7 +645,13 @@ define([
 
   async function validateStep3A() {
     let isValid = true;
+    let isCartInsertEnabled = $('#card-insert').prop('checked');
+    let selectedCardInsertType;
+    if(isCartInsertEnabled){
+      selectedCardInsertType = $('input[name="cardType"]:checked').val();
+    }
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
 
     if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
@@ -685,6 +691,12 @@ define([
       let frontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
       let backtHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val().trim();
       let backHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-back`).data('btn-label');
+
+      let cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
+      let cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
+      let cardbacktHtmlContent = $(`.${selectedMessageType} .html-editor-back-card-insert`).val().trim();
+      let cardbackHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
+      
       let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .html-editor .error-msg`);
 
       if (!(isPostcardSizeSelected > 0)) {
