@@ -668,6 +668,7 @@ define([
           isValid = false;
         }
 
+        console.log(`.${selectedMessageType} .html-editor-front`);
         let frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val().trim();
         let frontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
         let backtHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val().trim();
