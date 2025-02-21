@@ -35,7 +35,7 @@ body {
 .screen-3 .input-box {
 	display: flex;
 	flex-direction: column;
-	flex-basis: calc(50% - 1rem);
+	/* flex-basis: calc(50% - 1rem); */
 }
 .screen-3 .input-field {
 	padding: 5px 10px;
@@ -579,7 +579,7 @@ input:checked + .test-to-live-slider:before {
 .html-screen-wrapper .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
-	flex-basis: calc(100% - 1rem);
+	/* flex-basis: calc(100% - 1rem); */
 	gap: 0.25rem;
 }
 
@@ -748,7 +748,7 @@ input:checked + .test-to-live-slider:before {
 .pdf-container .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
-	flex-basis: calc(50% - 1rem);
+	/* flex-basis: calc(50% - 1rem); */
 	gap: 0.5rem;
 }
 
