@@ -658,6 +658,11 @@
                                   </option>
                               </select>
                           </div>
+                          <div class="input-box">
+                            <label for="pdfLink" class="input-label">PDF Link *</label>
+                            <input type="text" class="input-field pdfLink" id="pdfLink" name="pdfLink" />
+                            <span class="error-msg">The input value is missing</span>
+                        </div>
                       </div>
                   </div>
                   <div class="pdf-size">
@@ -672,6 +677,18 @@
                                   <input type="radio" class="radio-input" name="TrifoldPDFSize"
                                   value="9.5x16_trifold" data-dimentions="9.625x16.125" />
                                     <span>9.5x16 (Trifold)</span>
+                              </label>
+                          </div>
+                          <span class="error-msg">Please Select at least one size.</span>
+                      </div>
+                  </div>
+                  <div class="pdf-card-size">
+                      <div class="input-label-radio">Card Size *</div>
+                      <div class="size-radio-buttons-wrap">
+                          <div class="radio-buttons">
+                              <label class="radio-label size_radio_label">
+                                  <input type="radio" class="radio-input" name="TrifoldPdfCardSize" value="7.75x4.75" />
+                                  <span>7.75x4.75</span>
                               </label>
                           </div>
                           <span class="error-msg">Please Select at least one size.</span>
