@@ -661,24 +661,52 @@ define([
       if (!isDescriptionValid) {
         isValid = false;
       }
-      const pdfInput = $(`.${selectedMessageType} .screen-2 .drop-pdf .pdf-upload`)[0]; 
-      if (pdfInput.files.length > 0) {
-        const pdfFile = pdfInput.files[0];
-        try {
-          const pdfValidationResult = await validatePDFFile(pdfFile, selectedMessageType);
-          if (!pdfValidationResult.isValid) {
-            isValid = false;
-            $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text(pdfValidationResult.errorMessage).addClass('show');
-          } else {
-            $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).removeClass('show');
-          }
-        } catch (error) {
-          console.error('Error validating PDF:', error);
+
+      if(selectedMessageType === 'Trifold') {
+        let isPdfLinkValid = validateInputField($(`.${selectedMessageType} .screen-2 .pdfLink`));
+        if (!isPdfLinkValid) {
           isValid = false;
         }
+
+        let frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val().trim();
+        let frontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
+        let backtHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val().trim();
+        let backHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-back`).data('btn-label');
+        let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .html-editor .error-msg`);
+
+        if (frontHtmlContent === '' || backtHtmlContent === '') {
+          isValid = false;
+          if (frontHtmlContent === '' && backtHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
+          } else if (frontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
+          } else {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
+          }
+        } else { 
+          postcardHtmlEditorErrorMsg.removeClass('show');
+        }
+
       } else {
-        $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text('Please select a PDF file').addClass('show');
-        isValid = false;
+        const pdfInput = $(`.${selectedMessageType} .screen-2 .drop-pdf .pdf-upload`)[0]; 
+        if (pdfInput.files.length > 0) {
+          const pdfFile = pdfInput.files[0];
+          try {
+            const pdfValidationResult = await validatePDFFile(pdfFile, selectedMessageType);
+            if (!pdfValidationResult.isValid) {
+              isValid = false;
+              $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text(pdfValidationResult.errorMessage).addClass('show');
+            } else {
+              $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).removeClass('show');
+            }
+          } catch (error) {
+            console.error('Error validating PDF:', error);
+            isValid = false;
+          }
+        } else {
+          $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text('Please select a PDF file').addClass('show');
+          isValid = false;
+        }
       }
     }
 
