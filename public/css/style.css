@@ -36,6 +36,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	/* flex-basis: calc(50% - 1rem); */
+  width: 48%;
 }
 .screen-3 .input-field {
 	padding: 5px 10px;
@@ -580,6 +581,7 @@ input:checked + .test-to-live-slider:before {
 	display: flex;
 	flex-direction: column;
 	/* flex-basis: calc(100% - 1rem); */
+  width: 90%;
 	gap: 0.25rem;
 }
 
@@ -749,6 +751,7 @@ input:checked + .test-to-live-slider:before {
 	display: flex;
 	flex-direction: column;
 	/* flex-basis: calc(50% - 1rem); */
+  width: 48%;
 	gap: 0.5rem;
 }
 
