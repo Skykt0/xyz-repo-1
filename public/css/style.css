@@ -607,7 +607,7 @@ input:checked + .test-to-live-slider:before {
 }
 
 .html-editor-front,
-.html-editor-back {
+.html-editor-back, .html-editor-back-card-insert, .html-editor-front-card-insert {
 	display: none;
 	border: 3px solid lightgray;
 	border-radius: 8px;
@@ -676,7 +676,7 @@ input:checked + .test-to-live-slider:before {
 }
 
 .html__btn--front,
-.html__btn--back {
+.html__btn--back, .html__btn-card--front, .html__btn-card--back {
 	position: absolute;
 	padding: 0.3rem 1rem;
 	border-radius: 4px;
@@ -684,6 +684,9 @@ input:checked + .test-to-live-slider:before {
 	font-weight: 500;
 	cursor: pointer;
 	background: #d1d1d1;
+}
+.Trifold .screen-1 .btn{
+	position: static;
 }
 
 .screen-1 .radio-buttons .radio-label,
@@ -976,7 +979,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     position: absolute;
     width: 96%;
     background: white;
-    padding: 1.5rem 0.75rem;
+    padding: 1.5rem 0.75rem 0.2rem 0.75rem;
     top: 3px;
     left: 4px;
     border-radius: 8px;
