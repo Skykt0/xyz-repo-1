@@ -576,6 +576,8 @@ define([
 
   function setDefaultValuesForPostCardCreation() {
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let isCartInsertEnabled = $('#card-insert').prop('checked');
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
     $(`.${selectedMessageType} .html-editor .html__btn--front`).click(function () {
       $(this).addClass('show');
       $(`.${selectedMessageType} .html-editor .html__btn--back`).removeClass('show');
