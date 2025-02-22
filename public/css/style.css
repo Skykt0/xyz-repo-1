@@ -508,7 +508,7 @@ input:checked + .test-to-live-slider:before {
 /* Postcard HTML creation CSS */
 
 .container.spacer.HTML,
-.container.spacer.PDF {
+.container.spacer.PDFUpload {
 	display: flex;
 	padding: 44px;
 }
@@ -621,6 +621,7 @@ input:checked + .test-to-live-slider:before {
 	padding-top: 3.5rem;
 	line-height: 1.5rem;
 	font-size: 1rem;
+  height: 320px;
 }
 
 .html-editor-back.show,
@@ -978,9 +979,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .container.spacer.HTML .html-btn-wrap,
-.container.spacer.PDF .html-btn-wrap {
+.container.spacer.PDFUpload .html-btn-wrap {
     position: absolute;
-    width: 96%;
+    width: 94%;
     background: white;
     padding: 1.5rem 0.75rem 0.2rem 0.75rem;
     top: 3px;

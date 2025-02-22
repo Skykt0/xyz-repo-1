@@ -271,7 +271,7 @@ define([
     case 'step3':
       prepopulateToDeMapping();
       $('#dropdown-options').hide();
-      validateStep3A()
+      validateStep3()
         .then((isValid) => {
           isValid ? proceedToNext() : handleValidationFailure();
           $('.mapping-fields select').css('border', '');
@@ -692,7 +692,7 @@ define([
     });
   }
 
-  async function validateStep3A() {
+  async function validateStep3() {
     let isValid = true;
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedCardInsertType;
@@ -733,7 +733,6 @@ define([
         } else { 
           postcardHtmlEditorErrorMsg.removeClass('show');
         }
-
       } else {
         const pdfInput = $(`.${selectedMessageType} .screen-2 .drop-pdf .pdf-upload`)[0]; 
         if (pdfInput.files.length > 0) {
@@ -937,8 +936,8 @@ define([
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
-      const frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val();
-      const backHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val();
+      const frontHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-front`).val();
+      const backHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-back`).val();
       
       const size = $(`.${selectedMessageType} .html-size .radio-input:checked`).val();
       const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
@@ -974,20 +973,34 @@ define([
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
       const size = $(`.${selectedMessageType} .pdf-size .radio-input:checked`).val();
-      const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
-      const pdfInput = $(`.${selectedMessageType} .${selectedCreationType} .pdf-upload`)[0];
-      const pdfFile = pdfInput.files[0] ;
 
       previewPayload.screen = 'pdf';
       previewPayload.description = description;
       previewPayload.sendDate = getFormattedDate();
       previewPayload.mailingClass = mailingClass;
       previewPayload.size = size;
-      previewPayload.isExpressDelivery = isExpressDelivery;
-      previewPayload.pdf = pdfFile;
-      previewPayload.pdfName = pdfFile.name;
+
+      if(isCartInsertEnabled) {
+        const pdfLink = $(`.${selectedMessageType} .${selectedCreationType} .pdfLink`).val();
+        const pdfCardSize = $(`.${selectedMessageType} .pdf-card-size .radio-input:checked`).val();
+        const frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val();
+        const backHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-back`).val();
+
+        previewPayload.pdfLink = pdfLink;
+        previewPayload.pdfCardSize = pdfCardSize;
+        previewPayload.frontHtmlContent = frontHtmlContent;
+        previewPayload.backHtmlContent = backHtmlContent;
+      } else {
+        const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
+        const pdfInput = $(`.${selectedMessageType} .${selectedCreationType} .pdf-upload`)[0];
+        const pdfFile = pdfInput.files[0] ;
+        previewPayload.isExpressDelivery = isExpressDelivery;
+        previewPayload.pdf = pdfFile;
+        previewPayload.pdfName = pdfFile.name;
+      }
+
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
-      const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
+      const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
       const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
       const backTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`)?.attr('data-id');
       const size = $(`.${selectedMessageType} .existingTemplate-size .radio-input:checked`).val();
@@ -1032,6 +1045,7 @@ define([
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
+    const selectedCardInsertType = $('input[name="cardType"]:checked').val();
     const url = selectedMessageType === 'SelfMailer' || selectedMessageType === 'Trifold' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
     console.log('my url:'+url);
     
@@ -1046,12 +1060,21 @@ define([
       data = new FormData();
       data.append('to', toContact);
       data.append('from', fromContact.id || '');
-      data.append('sendDate', previewPayload.sendDate);
-      data.append('express', previewPayload.isExpressDelivery);
       data.append('description', previewPayload.description);
       data.append('size',previewPayload.size);
-      if(!previewPayload.isExpressDelivery) {
+      
+      if( isCartInsertEnabled|| !previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
+      }
+
+      if(isCartInsertEnabled) {
+        data.append('adhesiveInsert[size]',previewPayload.pdfCardSize);
+        let pdfLinkKey = selectedCardInsertType === 'DoubleSided' ? 'adhesiveInsert[singleSided][pdf]' : 'adhesiveInsert[doubleSided][pdf]';
+        data.append(pdfLinkKey,previewPayload.pdfLink);
+        data.append('insideHTML', previewPayload.frontHtmlContent);
+        data.append('outsideHTML', previewPayload.backHtmlContent);
+      } else {
+        data.append('express', previewPayload.isExpressDelivery);
       } 
       data.append('pdf', previewPayload.pdf);
     } else if (previewPayload.screen === 'html') {
@@ -1077,7 +1100,6 @@ define([
         data.append('insideHTML', previewPayload.frontHtmlContent);
         data.append('outsideHTML', previewPayload.backHtmlContent);
         data.delete('express');
-        const selectedCardInsertType = $('input[name="cardType"]:checked').val();
         if(selectedCardInsertType === 'DoubleSided'){
           data.append('adhesiveInsert[size]', previewPayload.cardInsertSize);
           data.append('adhesiveInsert[doubleSided][outsideHTML]', previewPayload.cardbacktHtmlContent);
