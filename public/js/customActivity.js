@@ -1045,6 +1045,7 @@ define([
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
+    let isTrifoldEnabled = selectedMessageType === 'Trifold';
     const selectedCardInsertType = $('input[name="cardType"]:checked').val();
     const url = selectedMessageType === 'SelfMailer' || selectedMessageType === 'Trifold' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
     console.log('my url:'+url);
@@ -1063,11 +1064,11 @@ define([
       data.append('description', previewPayload.description);
       data.append('size',previewPayload.size);
       
-      if( isCartInsertEnabled|| !previewPayload.isExpressDelivery) {
+      if(isTrifoldEnabled|| !previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
       }
 
-      if(isCartInsertEnabled) {
+      if(isTrifoldEnabled) {
         data.append('adhesiveInsert[size]',previewPayload.pdfCardSize);
         let pdfLinkKey = selectedCardInsertType === 'DoubleSided' ? 'adhesiveInsert[singleSided][pdf]' : 'adhesiveInsert[doubleSided][pdf]';
         data.append(pdfLinkKey,previewPayload.pdfLink);
