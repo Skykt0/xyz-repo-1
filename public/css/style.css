@@ -621,7 +621,7 @@ input:checked + .test-to-live-slider:before {
 }
 
 .html-editor-back.show,
-.html-editor-front.show {
+.html-editor-front.show, .html-editor-back-card-insert.show, .html-editor-front-card-insert.show{
 	display: block;
 }
 
@@ -665,12 +665,12 @@ input:checked + .test-to-live-slider:before {
 }
 
 .btn.btn-light.html__btn--front:hover,
-.btn.btn-light.html__btn--back:hover {
+.btn.btn-light.html__btn--back:hover, .btn.btn-light.html__btn-card--front:hover, .btn.btn-light.html__btn-card--back:hover {
 	background: #bfbfbf; /* Slightly darker gray on hover */
 }
 
 .btn.btn-light.html__btn--front.show,
-.btn.btn-light.html__btn--back.show {
+.btn.btn-light.html__btn--back.show,.btn.btn-light.html__btn-card--front.show, .btn.btn-light.html__btn-card--back.show {
 	background: #a9a9a9; /* Even darker gray when active */
 }
 
