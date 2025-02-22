@@ -930,6 +930,7 @@ define([
     selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
     let selectedCardInsertType;
+    let isTrifoldEnabled = selectedMessageType === 'Trifold';
     if(isCartInsertEnabled){
       selectedCardInsertType = $('input[name="cardType"]:checked').val();
     }
@@ -980,7 +981,7 @@ define([
       previewPayload.mailingClass = mailingClass;
       previewPayload.size = size;
 
-      if(isCartInsertEnabled) {
+      if(isTrifoldEnabled) {
         const pdfLink = $(`.${selectedMessageType} .${selectedCreationType} .pdfLink`).val();
         const pdfCardSize = $(`.${selectedMessageType} .pdf-card-size .radio-input:checked`).val();
         const frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val();
