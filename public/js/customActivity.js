@@ -1075,8 +1075,8 @@ define([
         data.append('outsideHTML', previewPayload.backHtmlContent);
       } else {
         data.append('express', previewPayload.isExpressDelivery);
+        data.append('pdf', previewPayload.pdf);
       } 
-      data.append('pdf', previewPayload.pdf);
     } else if (previewPayload.screen === 'html') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
