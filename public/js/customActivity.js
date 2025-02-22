@@ -1135,7 +1135,7 @@ define([
       }
     }
 
-    console.log(data);
+    console.log(JSON.stringify(data));
     
     try {
       const response = await fetch(url, {
