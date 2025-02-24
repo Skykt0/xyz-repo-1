@@ -12,7 +12,7 @@ body {
 .screen-3 .spacer {
 	padding: 44px;
 }
-.screen-3 .section-label {
+.Postcards .screen-3 .section-label {
 	font-size: 24px;
 	font-weight: 600;
 	margin-bottom: 30px;
@@ -508,9 +508,13 @@ input:checked + .test-to-live-slider:before {
 /* Postcard HTML creation CSS */
 
 .container.spacer.HTML,
-.container.spacer.PDFUpload {
+.container.spacer.PDFUpload,  .Trifold .ExistingTemplate {
 	display: flex;
 	padding: 44px;
+}
+
+.d-none {
+  display: none;
 }
 
 /* common css */
@@ -585,6 +589,7 @@ input:checked + .test-to-live-slider:before {
 	gap: 0.25rem;
 }
 
+.Trifold .html-screen-wrapper .input-fields .input-box,
 .SelfMailer .html-screen-wrapper .input-fields .input-box {
 	width: 90%;
 }

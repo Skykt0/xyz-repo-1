@@ -83,11 +83,11 @@
                         <div class="section-label">Card Insert Type</div>
                         <div class="input-container">
                             <div class="single-sided-radio-wrap">
-                                <input type="radio" id="single-sided" name="cardType" value="SingleSided" checked />
+                                <input type="radio" id="single-sided" name="cardType" value="singleSide" checked />
                                 <label for="single-sided">Single-sided</label>
                             </div>
                             <div class="double-sided-radio-wrap">
-                                <input type="radio" id="double-sided" name="cardType" value="DoubleSided"/>
+                                <input type="radio" id="double-sided" name="cardType"  value="doubleSide"/>
                                 <label for="double-sided">Double-sided</label>
                             </div>
                         </div>
@@ -575,12 +575,12 @@
                         <div class="input-fields">
                             <div class="input-box">
                                 <label for="description" class="input-label">Description *</label>
-                                <input type="text" class="input-field description" id="description" name="description" />
+                                <input type="text" class="input-field description" name="description" />
                                 <span class="error-msg">The input value is missing</span>
                             </div>
                             <div class="input-box">
                                 <label for="mailingClass" class="input-label">Mailing Class *</label>
-                                <select class="input-field mailing-class" id="mailingClass" name="mailingClass">
+                                <select class="input-field mailing-class" name="mailingClass">
                                     <option value="first_class" selected>
                                         First Class (7 - 10 business days)
                                     </option>
@@ -722,7 +722,115 @@
             </div>
           </div>
           <div class="screen-3 screen">
-              trifold existing template screen
+            <div class="container spacer ExistingTemplate">
+              <div class="html-screen-wrapper">
+                <div class="section-label">Existing Template</div>
+                <div class="outer-input-fields">
+                  <div class="input-fields">
+                  <div class="input-box">
+                      <label for="description" class="input-label">Description *</label>
+                      <input type="text" class="input-field description" id="self-mailer-existing-description" name="self-mailer-existing-description" />
+                      <span class="error-msg">Please enter required field</span>
+                  </div>
+                  <div class="input-box">
+                      <label for="mailingClass" class="input-label">Mailing Class *</label>
+                      <select class="input-field mailing-class" id="self-mailer-existing-template-mailing-class" name="self-mailer-existing-template-mailing-class">
+                          <option value="first_class" selected>
+                              First Class (7 - 10 business days)
+                          </option>
+                          <option value="standard_class">
+                              Standard Class (10 - 14 business days)
+                          </option>
+                      </select>
+                  </div>
+                    <div class="input-box singleSide">
+                      <label for="selfMailer-insideTemplateInput" class="input-label">Template *</label>
+                      <div class="mapping-dropdown">
+                          <div class="template-dropdown-wrap">
+                              <input type="text" id="selfMailer-insideTemplateInput" class="singleSideTemplate"  placeholder="Search or enter template"
+                                  autocomplete="off" aria-describedby="selfMailer-insideTemplateList" aria-haspopup="listbox"
+                                  aria-expanded="false" />
+                              <span class="error-msg">Please enter template</span>
+                                  <i class="fa fa-angle-right dropdown-icon"></i>
+                          </div>
+                          <div id="selfMailer-insideTemplateList" class="dropdown-options singleSideTemplateList" role="listbox"
+                              aria-labelledby="selfMailer-insideTemplateInput"></div>
+                          <span class="error-message"></span>
+                      </div>
+                  </div>
+                    <div class="input-box doubleSide">
+                        <label for="selfMailer-insideTemplateInput" class="input-label">Inside Template *</label>
+                        <div class="mapping-dropdown">
+                            <div class="template-dropdown-wrap">
+                                <input type="text" id="selfMailer-insideTemplateInput" class="frontTemplate"  placeholder="Search or enter template"
+                                    autocomplete="off" aria-describedby="selfMailer-insideTemplateList" aria-haspopup="listbox"
+                                    aria-expanded="false" />
+                                <span class="error-msg">Please enter inside template</span>
+                                    <i class="fa fa-angle-right dropdown-icon"></i>
+                            </div>
+                            <div id="selfMailer-insideTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                aria-labelledby="selfMailer-insideTemplateInput"></div>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+                    <div class="input-box doubleSide">
+                        <label for="selfMailer-outsideTemplateInput" class="input-label">Outside Template *</label>
+                        <div class="mapping-dropdown">
+                            <div class="template-dropdown-wrap">
+                                <input type="text" id="selfMailer-outsideTemplateInput" class="backTemplate"  placeholder="Search or enter template"
+                                    autocomplete="off" aria-describedby="selfMailer-outsideTemplateList" aria-haspopup="listbox"
+                                    aria-expanded="false" />
+                                <span class="error-msg">Please enter outside template</span>
+                                    <i class="fa fa-angle-right dropdown-icon"></i>
+                            </div>
+                            <div id="selfMailer-outsideTemplateList" class="dropdown-options backTemplateList" role="listbox"
+                                aria-labelledby="selfMailer-outsideTemplateInput"></div>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="existingTemplate-size">
+                    <div class="input-label-radio">Size *</div>
+                    <div class="radio-buttons">
+                        <label class="radio-label size_radio_label doubleSideSize">
+                            <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_trifold" data-dimentions="9.25x6.25"/>
+                            <span>8.5x11 (Trifold)</span>
+                        </label>
+                        <label class="radio-label size_radio_label doubleSideSize">
+                            <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="9.5x16_trifold" data-dimentions="11.25x6.25"/>
+                            <span>9.5x16 (Trifold)</span>
+                        </label>
+                    </div>
+                  </div>
+                  <div class="Template-card-size">
+                    <div class="input-label-radio">Card Size *</div>
+                    <div class="size-radio-buttons-wrap">
+                        <div class="radio-buttons">
+                            <label class="radio-label size_radio_label">
+                                <input type="radio" class="radio-input" name="TrifoldTemplateCardSize" value="7.75x4.5" checked/>
+                                <span>7.75x4.5</span>
+                            </label>
+                        </div>
+                        <span class="error-msg">Please Select at least one size.</span>
+                    </div>
+                </div>
+              </div>
+              
+              <div class="html-editor">
+                <div class="html-btn-wrap">
+                    <button type="button" class="btn btn-light html__btn--front show">
+                      Inside
+                    </button>
+                    <button type="button" class="btn btn-light html__btn--back">
+                      Outside
+                    </button>
+                </div>
+                <textarea class="html-editor-front html-area show" data-btn-label="Inside"></textarea>
+                <textarea class="html-editor-back html-area" data-btn-label="Outside"></textarea>
+                <span class="error-msg">Please enter required field</span>
+            </div>
+          </div>
           </div>
         </div>
     </div>
