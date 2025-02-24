@@ -233,8 +233,26 @@ define([
           let selectedRadioValue = selectedRadio.val().replace(/\s+/g, '');
           selectedMessageType = isCartInsertEnabled && selectedRadioValue === 'SelfMailer' ? 'Trifold'  : selectedRadioValue;
         }
+        if (isCartInsertEnabled) {
+          $('.Trifold .doubleSide, .Trifold .singleSide').hide();
+          let selectedCardType = $('input[name="cardType"]:checked').val();
+          $(`.Trifold .${selectedCardType}`).show();
+        }
 
         let isHtml = $('#htmlId').is(':checked');
+        //hiding errors for HTML
+        if(isHtml){
+          $(`.${selectedMessageType} .error-msg`).removeClass('show');
+        }
+        if(isCartInsertEnabled){ //hiding the additional button for single sided
+          let selectedCardInsertType = $('input[name="cardType"]:checked').val();
+          if(selectedCardInsertType === 'singleSide'){
+            $(`.${selectedMessageType} .html-editor .singleSided-hide`).hide();
+          }
+          else{
+            $(`.${selectedMessageType} .html-editor .singleSided-hide`).show();
+          }
+        }
         let isPdf = $('#pdfId').is(':checked');
         let isExtTemp = $('#extTempId').is(':checked');
 
@@ -258,7 +276,7 @@ define([
     case 'step3':
       prepopulateToDeMapping();
       $('#dropdown-options').hide();
-      validateStep3A()
+      validateStep3()
         .then((isValid) => {
           isValid ? proceedToNext() : handleValidationFailure();
           $('.mapping-fields select').css('border', '');
@@ -575,19 +593,55 @@ define([
   }
 
   function setDefaultValuesForPostCardCreation() {
+    let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
     $(`.${selectedMessageType} .html-editor .html__btn--front`).click(function () {
+      $(`.${selectedMessageType} .html-editor .btn-light`).removeClass('show');
+      $(`.${selectedMessageType} .html-editor .html-area`).removeClass('show');
       $(this).addClass('show');
-      $(`.${selectedMessageType} .html-editor .html__btn--back`).removeClass('show');
       $(`.${selectedMessageType} .html-editor-front`).addClass('show');
-      $(`.${selectedMessageType} .html-editor-back`).removeClass('show');
     });
-    $(`.${selectedMessageType} .html-editor .html__btn--back`).click(function () {
+    $(`.${selectedMessageType} .html-editor .html__btn--back`).click(function () {  
+      $(`.${selectedMessageType} .html-editor .btn-light`).removeClass('show');
+      $(`.${selectedMessageType} .html-editor .html-area`).removeClass('show');
       $(this).addClass('show');
-      $(`.${selectedMessageType} .html-editor .html__btn--front`).removeClass('show');
-      $(`.${selectedMessageType} .html-editor-front`).removeClass('show');
       $(`.${selectedMessageType} .html-editor-back`).addClass('show');
     });
+    $(`.${selectedMessageType} .html-editor .html__btn-card--front`).click(function () {  
+      $(`.${selectedMessageType} .html-editor .btn-light`).removeClass('show');
+      $(`.${selectedMessageType} .html-editor .html-area`).removeClass('show');
+      $(this).addClass('show');
+      $(`.${selectedMessageType} .html-editor-front-card-insert`).addClass('show');
+    });
+    $(`.${selectedMessageType} .html-editor .html__btn-card--back`).click(function () {  
+      $(`.${selectedMessageType} .html-editor .btn-light`).removeClass('show');
+      $(`.${selectedMessageType} .html-editor .html-area`).removeClass('show');
+      $(this).addClass('show');
+      $(`.${selectedMessageType} .html-editor-back-card-insert`).addClass('show');
+    });
+
+    $('input[name="cardType"]').change(function() {
+      let containerSelector = `.${selectedMessageType} .spacer.HTML`; // Dynamic class selector
+  
+      // Empty all input fields
+      $(`${containerSelector} input[type="text"]`).val('');
+      
+      // Reset select fields to their default option
+      $(`${containerSelector} select`).prop('selectedIndex', 0);
+  
+      // Uncheck all radio buttons
+      $(`${containerSelector} input[type="radio"]`).prop('checked', false);
+  
+      // Clear all textareas
+      $(`${containerSelector} textarea`).val('');
+  
+      // Optionally, reset the first radio button in each group
+      $(`${containerSelector} input[name="HtmlSize"]`).first().prop('checked', true);
+      $(`${containerSelector} input[name="HtmlCardSize"]`).first().prop('checked', true);
+
+      console.log(`Fields cleared for ${selectedMessageType} on card type change.`);
+  });
 
     const today = new Date().toISOString().split('T')[0];
     $('input[type="date"]').each(function () {
@@ -643,9 +697,15 @@ define([
     });
   }
 
-  async function validateStep3A() {
+  async function validateStep3() {
     let isValid = true;
+    let isCartInsertEnabled = $('#card-insert').prop('checked');
+    let selectedCardInsertType;
+    if(isCartInsertEnabled){
+      selectedCardInsertType = $('input[name="cardType"]:checked').val();
+    }
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
 
     if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
@@ -653,24 +713,51 @@ define([
       if (!isDescriptionValid) {
         isValid = false;
       }
-      const pdfInput = $(`.${selectedMessageType} .screen-2 .drop-pdf .pdf-upload`)[0]; 
-      if (pdfInput.files.length > 0) {
-        const pdfFile = pdfInput.files[0];
-        try {
-          const pdfValidationResult = await validatePDFFile(pdfFile, selectedMessageType);
-          if (!pdfValidationResult.isValid) {
-            isValid = false;
-            $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text(pdfValidationResult.errorMessage).addClass('show');
-          } else {
-            $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).removeClass('show');
-          }
-        } catch (error) {
-          console.error('Error validating PDF:', error);
+
+      if(selectedMessageType === 'Trifold') {
+        let isPdfLinkValid = validateInputField($(`.${selectedMessageType} .screen-2 .pdfLink`));
+        if (!isPdfLinkValid) {
           isValid = false;
         }
+
+        let frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val().trim();
+        let frontHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-front`).data('btn-label');
+        let backtHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-back`).val().trim();
+        let backHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-back`).data('btn-label');
+        let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .screen-2 .html-editor .error-msg`);
+
+        if (frontHtmlContent === '' || backtHtmlContent === '') {
+          isValid = false;
+          if (frontHtmlContent === '' && backtHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
+          } else if (frontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
+          } else {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
+          }
+        } else { 
+          postcardHtmlEditorErrorMsg.removeClass('show');
+        }
       } else {
-        $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text('Please select a PDF file').addClass('show');
-        isValid = false;
+        const pdfInput = $(`.${selectedMessageType} .screen-2 .drop-pdf .pdf-upload`)[0]; 
+        if (pdfInput.files.length > 0) {
+          const pdfFile = pdfInput.files[0];
+          try {
+            const pdfValidationResult = await validatePDFFile(pdfFile, selectedMessageType);
+            if (!pdfValidationResult.isValid) {
+              isValid = false;
+              $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text(pdfValidationResult.errorMessage).addClass('show');
+            } else {
+              $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).removeClass('show');
+            }
+          } catch (error) {
+            console.error('Error validating PDF:', error);
+            isValid = false;
+          }
+        } else {
+          $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text('Please select a PDF file').addClass('show');
+          isValid = false;
+        }
       }
     }
 
@@ -680,13 +767,91 @@ define([
       if (!isDescriptionValid) {
         isValid = false;
       }
+      let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .html-editor .error-msg`);
       let isPostcardSizeSelected = $(`.${selectedMessageType} .html-size .radio-input:checked`).length;
       let frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val().trim();
       let frontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
       let backtHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val().trim();
       let backHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-back`).data('btn-label');
-      let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .html-editor .error-msg`);
+      let cardfrontHtmlContent, cardfrontHtmlBtnLabel, cardbacktHtmlContent, cardbackHtmlBtnLabel;
 
+      if(isCartInsertEnabled && selectedCardInsertType === 'doubleSide'){
+        cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
+        cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front-card-insert`).data('btn-label');
+        cardbacktHtmlContent = $(`.${selectedMessageType} .html-editor-back-card-insert`).val().trim();
+        cardbackHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-back-card-insert`).data('btn-label');  
+
+        if (
+          frontHtmlContent === '' || 
+          backtHtmlContent === '' || 
+          cardfrontHtmlContent === '' || 
+          cardbacktHtmlContent === ''
+        ) {
+          isValid = false;
+          
+          if (
+            frontHtmlContent === '' && 
+            backtHtmlContent === '' && 
+            cardfrontHtmlContent === '' && 
+            cardbacktHtmlContent === ''
+          ) {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in all ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}, ${cardbackHtmlBtnLabel} fields.`).addClass('show');
+          } else if (frontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
+          } else if (backtHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
+          } else if (cardfrontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${cardfrontHtmlBtnLabel} field.`).addClass('show');
+          } else {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${cardbackHtmlBtnLabel} field.`).addClass('show');
+          }
+        
+        } else { 
+          postcardHtmlEditorErrorMsg.removeClass('show');
+        }        
+      }
+      else if(isCartInsertEnabled && selectedCardInsertType === 'singleSide'){
+        cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
+        cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front-card-insert`).data('btn-label');
+        if (
+          frontHtmlContent === '' || 
+          backtHtmlContent === '' || 
+          cardfrontHtmlContent === ''
+        ) {
+          isValid = false;
+          
+          if (
+            frontHtmlContent === '' && 
+            backtHtmlContent === '' && 
+            cardfrontHtmlContent === ''
+          ) {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in all ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel} fields.`).addClass('show');
+          } else if (frontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
+          } else if (backtHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
+          } else if (cardfrontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${cardfrontHtmlBtnLabel} field.`).addClass('show');
+          }
+        } else { 
+          postcardHtmlEditorErrorMsg.removeClass('show');
+        } 
+
+      }
+      else{
+        if (frontHtmlContent === '' || backtHtmlContent === '') {
+          isValid = false;
+          if (frontHtmlContent === '' && backtHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
+          } else if (frontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
+          } else {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
+          }
+        } else { 
+          postcardHtmlEditorErrorMsg.removeClass('show');
+        }
+      }
       if (!(isPostcardSizeSelected > 0)) {
         $(`.${selectedMessageType} .html-size .error-msg`).addClass('show');
         isValid = false;
@@ -694,18 +859,7 @@ define([
         $(`.${selectedMessageType} .html-size .error-msg`).removeClass('show');
       }
   
-      if (frontHtmlContent === '' || backtHtmlContent === '') {
-        isValid = false;
-        if (frontHtmlContent === '' && backtHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
-        } else if (frontHtmlContent === '') {
-          postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
-        } else {
-          postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
-        }
-      } else { 
-        postcardHtmlEditorErrorMsg.removeClass('show');
-      }
+      
     };
 
     if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block'){
@@ -713,12 +867,20 @@ define([
       if (!isDescriptionValid) {
         isValid = false;
       }
-      let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .frontTemplate`));
-      let backTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .backTemplate`));
+      if(selectedMessageType === 'Trifold' && selectedCardInsertType === 'singleSide'){
+        let singleSideTemplate = validateInputField($(`.${selectedMessageType} .screen-3 .singleSideTemplate`));
+        if(!singleSideTemplate){
+          isValid = false;
+        }
+      } else {
+        let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .frontTemplate`));
+        let backTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .backTemplate`));
+        if(!frontTemplateValid || !backTemplateValid){
+          isValid = false;
+        }
 
-      if(!frontTemplateValid || !backTemplateValid){
-        isValid = false;
       }
+
     }
 
     return isValid;
@@ -777,12 +939,19 @@ define([
 
   function setPreviewPayload() {
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let isCartInsertEnabled = $('#card-insert').prop('checked');
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
+    let selectedCardInsertType;
+    let isTrifoldEnabled = selectedMessageType === 'Trifold';
+    if(isCartInsertEnabled){
+      selectedCardInsertType = $('input[name="cardType"]:checked').val();
+    }
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
-      const frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val();
-      const backHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val();
+      const frontHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-front`).val();
+      const backHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-back`).val();
       
       const size = $(`.${selectedMessageType} .html-size .radio-input:checked`).val();
       const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
@@ -794,43 +963,95 @@ define([
       previewPayload.frontHtmlContent = frontHtmlContent;
       previewPayload.backHtmlContent = backHtmlContent;
       previewPayload.size = size;
-      previewPayload.isExpressDelivery = isExpressDelivery;
+      if(isCartInsertEnabled && selectedCardInsertType === 'doubleSide'){
+        const cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
+        const cardbacktHtmlContent = $(`.${selectedMessageType} .html-editor-back-card-insert`).val().trim();
+        const cardInsertSize = $(`.${selectedMessageType} .html-card-size .radio-input:checked`).val();
+        console.log('Card Insert SIze', cardInsertSize);
+        
+        previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
+        previewPayload.cardbacktHtmlContent = cardbacktHtmlContent;
+        previewPayload.cardInsertSize = cardInsertSize;
+        console.log('Preview payload card insert size', previewPayload.cardInsertSize);
+        
+      }else if(isCartInsertEnabled && selectedCardInsertType === 'singleSide'){
+        const cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
+        const cardInsertSize = $(`.${selectedMessageType} .html-card-size .radio-input:checked`).val();
+        previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
+        previewPayload.cardInsertSize = cardInsertSize;
+      }
+      else{
+        previewPayload.isExpressDelivery = isExpressDelivery;
+      }
     } else if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
       const size = $(`.${selectedMessageType} .pdf-size .radio-input:checked`).val();
-      const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
-      const pdfInput = $(`.${selectedMessageType} .${selectedCreationType} .pdf-upload`)[0];
-      const pdfFile = pdfInput.files[0] ;
 
       previewPayload.screen = 'pdf';
       previewPayload.description = description;
       previewPayload.sendDate = getFormattedDate();
       previewPayload.mailingClass = mailingClass;
       previewPayload.size = size;
-      previewPayload.isExpressDelivery = isExpressDelivery;
-      previewPayload.pdf = pdfFile;
-      previewPayload.pdfName = pdfFile.name;
+
+      if(isTrifoldEnabled) {
+        const pdfLink = $(`.${selectedMessageType} .${selectedCreationType} .pdfLink`).val();
+        const pdfCardSize = $(`.${selectedMessageType} .pdf-card-size .radio-input:checked`).val();
+        const frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val();
+        const backHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-back`).val();
+
+        previewPayload.pdfLink = pdfLink;
+        previewPayload.pdfCardSize = pdfCardSize;
+        previewPayload.frontHtmlContent = frontHtmlContent;
+        previewPayload.backHtmlContent = backHtmlContent;
+      } else {
+        const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
+        const pdfInput = $(`.${selectedMessageType} .${selectedCreationType} .pdf-upload`)[0];
+        const pdfFile = pdfInput.files[0] ;
+        previewPayload.isExpressDelivery = isExpressDelivery;
+        previewPayload.pdf = pdfFile;
+        previewPayload.pdfName = pdfFile.name;
+      }
+
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
-      const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
-      const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
-      const backTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`)?.attr('data-id');
+      const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
+
       const size = $(`.${selectedMessageType} .existingTemplate-size .radio-input:checked`).val();
       const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
-      const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
-      const backTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val();
+
+
+      if (isTrifoldEnabled && selectedCardInsertType === 'singleSide') {
+        const  singleSideTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .singleSideTemplate`) ?.attr('data-id');
+        const singleSideTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
+        previewPayload.singleSideTemplateId = singleSideTemplateId;
+        previewPayload.singleSideTemplateName = singleSideTemplateName;
+      } else {
+        const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
+        const backTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`)?.attr('data-id');
+        const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
+        const backTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val();
+        previewPayload.frontTemplateId = frontTemplateId;
+        previewPayload.backTemplateId = backTemplateId;
+        previewPayload.frontTemplateName = frontTemplateName;
+        previewPayload.backTemplateName = backTemplateName;
+      }
+
+      if(isTrifoldEnabled) {
+        const frontHtmlContent = $(`.${selectedMessageType} .screen-3 .html-editor-front`).val();
+        const backHtmlContent = $(`.${selectedMessageType} .screen-3 .html-editor-back`).val();
+        const templateCardSize = $(`.${selectedMessageType} .Template-card-size .radio-input:checked`).val();
+        previewPayload.frontHtmlContent = frontHtmlContent;
+        previewPayload.backHtmlContent = backHtmlContent;
+        previewPayload.templateCardSize = templateCardSize;
+      }
 
       previewPayload.screen = 'existing-template';
       previewPayload.description = description;
       previewPayload.sendDate = getFormattedDate();
-      previewPayload.frontTemplateId = frontTemplateId;
-      previewPayload.backTemplateId = backTemplateId;
       previewPayload.size = size;
       previewPayload.mailingClass = mailingClass;
       previewPayload.isExpressDelivery = isExpressDelivery;
-      previewPayload.frontTemplateName = frontTemplateName;
-      previewPayload.backTemplateName = backTemplateName;
     }
 
     console.log('set preview payload: '+JSON.stringify(previewPayload));
@@ -854,8 +1075,12 @@ define([
   async function createMessage() {
     let messageType = $('input[name=\'msgType\']:checked').val();
     const baseUrl = 'https://api.postgrid.com/print-mail/v1/';
+    let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-    const url = selectedMessageType === 'SelfMailer' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
+    let isTrifoldEnabled = selectedMessageType === 'Trifold';
+    const selectedCardInsertType = $('input[name="cardType"]:checked').val();
+    const url = selectedMessageType === 'SelfMailer' || selectedMessageType === 'Trifold' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
     console.log('my url:'+url);
     
     let data;
@@ -869,14 +1094,23 @@ define([
       data = new FormData();
       data.append('to', toContact);
       data.append('from', fromContact.id || '');
-      data.append('sendDate', previewPayload.sendDate);
-      data.append('express', previewPayload.isExpressDelivery);
       data.append('description', previewPayload.description);
       data.append('size',previewPayload.size);
-      if(!previewPayload.isExpressDelivery) {
+      
+      if(isTrifoldEnabled|| !previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
+      }
+
+      if(isTrifoldEnabled) {
+        data.append('adhesiveInsert[size]',previewPayload.pdfCardSize);
+        let pdfLinkKey = selectedCardInsertType === 'doubleSide' ? 'adhesiveInsert[singleSided][pdf]' : 'adhesiveInsert[doubleSided][pdf]';
+        data.append(pdfLinkKey,previewPayload.pdfLink);
+        data.append('insideHTML', previewPayload.frontHtmlContent);
+        data.append('outsideHTML', previewPayload.backHtmlContent);
+      } else {
+        data.append('express', previewPayload.isExpressDelivery);
+        data.append('pdf', previewPayload.pdf);
       } 
-      data.append('pdf', previewPayload.pdf);
     } else if (previewPayload.screen === 'html') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
@@ -896,7 +1130,19 @@ define([
         data.append('insideHTML', previewPayload.frontHtmlContent);
         data.append('outsideHTML', previewPayload.backHtmlContent);
       }
-
+      else if(selectedMessageType === 'Trifold'){
+        data.append('insideHTML', previewPayload.frontHtmlContent);
+        data.append('outsideHTML', previewPayload.backHtmlContent);
+        data.delete('express');
+        if(selectedCardInsertType === 'doubleSide'){
+          data.append('adhesiveInsert[size]', previewPayload.cardInsertSize);
+          data.append('adhesiveInsert[doubleSided][outsideHTML]', previewPayload.cardbacktHtmlContent);
+          data.append('adhesiveInsert[doubleSided][insideHTML]',  previewPayload.cardfrontHtmlContent);
+        }else{
+          data.append('adhesiveInsert[size]', previewPayload.cardInsertSize);
+          data.append('adhesiveInsert[singleSided][html]', previewPayload.cardfrontHtmlContent);
+        }
+      }
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
       }
@@ -915,15 +1161,32 @@ define([
         data.append('frontTemplate', previewPayload.frontTemplateId);
         data.append('backTemplate', previewPayload.backTemplateId);
       } else if(messageType === 'Self Mailer'){
-        data.append('insideTemplate', previewPayload.frontTemplateId);
-        data.append('outsideTemplate', previewPayload.backTemplateId);
+        if(isTrifoldEnabled) {
+          if(selectedCardInsertType === 'singleSide') {
+            data.append('adhesiveInsert[singleSided][template]', previewPayload.singleSideTemplateId);
+          } else if(selectedCardInsertType === 'doubleSide') {
+            data.append('adhesiveInsert[doubleSided][insideTemplate]', previewPayload.frontTemplateId);
+            data.append('adhesiveInsert[doubleSided][outsideTemplate]', previewPayload.backTemplateId);
+          }
+          data.append('adhesiveInsert[size]', previewPayload.templateCardSize);
+          data.append('insideHTML', previewPayload.frontHtmlContent);
+          data.append('outsideHTML', previewPayload.backHtmlContent);
+          data.delete('express');
+        }else {
+          data.append('insideTemplate', previewPayload.frontTemplateId);
+          data.append('outsideTemplate', previewPayload.backTemplateId);
+        }
       }
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
       }
     }
 
-    console.log(data);
+    console.log(data.toString());
+    console.log(JSON.stringify(Object.fromEntries(data), null, 2));
+    console.log(Object.fromEntries(data));
+
+
     
     try {
       const response = await fetch(url, {
@@ -1066,8 +1329,8 @@ define([
     formData.append('phoneNumber', '9059059059');
     formData.append('jobTitle', 'Manager');
     formData.append('postalOrZip', 'M5J 2N8');
-    formData.append('country', 'CA');
-    formData.append('countryCode', 'CA');
+    formData.append('country', 'US');
+    formData.append('countryCode', 'US');
     formData.append('description', 'Kevin Smith\'s contact information');
     formData.append('metadata[friend]', 'no');
     formData.append('skipVerification', 'false');
@@ -1215,15 +1478,26 @@ define([
         const descriptionB = b.description ? b.description.toString().toLowerCase() : '';
         return descriptionA.localeCompare(descriptionB);
       });
-      populateDropdown('frontTemplate', sortedData);
-      populateDropdown('backTemplate', sortedData);
+      let isCartInsertEnabled = $('#card-insert').prop('checked');
+      let selectedCardInsertType;
+      if(isCartInsertEnabled){
+        selectedCardInsertType = $('input[name="cardType"]:checked').val();
+      }
+      if (selectedCardInsertType === 'singleSide') {
+        populateDropdown('singleSideTemplate', sortedData);
+      } else {
+        populateDropdown('frontTemplate', sortedData);
+        populateDropdown('backTemplate', sortedData);
+      }
     } catch (error) {
       console.error('Error fetching templates:', error);
     }
   }
 
   function populateDropdown(templateName, templates) {
+    let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
     const $templateInput = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}`);
     const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}List`);

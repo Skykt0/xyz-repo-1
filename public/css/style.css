@@ -12,7 +12,7 @@ body {
 .screen-3 .spacer {
 	padding: 44px;
 }
-.screen-3 .section-label {
+.Postcards .screen-3 .section-label {
 	font-size: 24px;
 	font-weight: 600;
 	margin-bottom: 30px;
@@ -35,7 +35,8 @@ body {
 .screen-3 .input-box {
 	display: flex;
 	flex-direction: column;
-	flex-basis: calc(50% - 1rem);
+	/* flex-basis: calc(50% - 1rem); */
+  width: 48%;
 }
 .screen-3 .input-field {
 	padding: 5px 10px;
@@ -506,9 +507,14 @@ input:checked + .test-to-live-slider:before {
 /* start of step 3 css */
 /* Postcard HTML creation CSS */
 
-.container.spacer.HTML {
+.container.spacer.HTML,
+.container.spacer.PDFUpload,  .Trifold .ExistingTemplate {
 	display: flex;
 	padding: 44px;
+}
+
+.d-none {
+  display: none;
 }
 
 /* common css */
@@ -578,10 +584,12 @@ input:checked + .test-to-live-slider:before {
 .html-screen-wrapper .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
-	flex-basis: calc(100% - 1rem);
+	/* flex-basis: calc(100% - 1rem); */
+  width: 90%;
 	gap: 0.25rem;
 }
 
+.Trifold .html-screen-wrapper .input-fields .input-box,
 .SelfMailer .html-screen-wrapper .input-fields .input-box {
 	width: 90%;
 }
@@ -606,7 +614,7 @@ input:checked + .test-to-live-slider:before {
 }
 
 .html-editor-front,
-.html-editor-back {
+.html-editor-back, .html-editor-back-card-insert, .html-editor-front-card-insert {
 	display: none;
 	border: 3px solid lightgray;
 	border-radius: 8px;
@@ -618,10 +626,11 @@ input:checked + .test-to-live-slider:before {
 	padding-top: 3.5rem;
 	line-height: 1.5rem;
 	font-size: 1rem;
+  height: 320px;
 }
 
 .html-editor-back.show,
-.html-editor-front.show {
+.html-editor-front.show, .html-editor-back-card-insert.show, .html-editor-front-card-insert.show{
 	display: block;
 }
 
@@ -665,17 +674,17 @@ input:checked + .test-to-live-slider:before {
 }
 
 .btn.btn-light.html__btn--front:hover,
-.btn.btn-light.html__btn--back:hover {
+.btn.btn-light.html__btn--back:hover, .btn.btn-light.html__btn-card--front:hover, .btn.btn-light.html__btn-card--back:hover {
 	background: #bfbfbf; /* Slightly darker gray on hover */
 }
 
 .btn.btn-light.html__btn--front.show,
-.btn.btn-light.html__btn--back.show {
+.btn.btn-light.html__btn--back.show,.btn.btn-light.html__btn-card--front.show, .btn.btn-light.html__btn-card--back.show {
 	background: #a9a9a9; /* Even darker gray when active */
 }
 
 .html__btn--front,
-.html__btn--back {
+.html__btn--back, .html__btn-card--front, .html__btn-card--back {
 	position: absolute;
 	padding: 0.3rem 1rem;
 	border-radius: 4px;
@@ -683,6 +692,9 @@ input:checked + .test-to-live-slider:before {
 	font-weight: 500;
 	cursor: pointer;
 	background: #d1d1d1;
+}
+.Trifold .screen-1 .btn{
+	position: static;
 }
 
 .screen-1 .radio-buttons .radio-label,
@@ -744,7 +756,8 @@ input:checked + .test-to-live-slider:before {
 .pdf-container .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
-	flex-basis: calc(50% - 1rem);
+	/* flex-basis: calc(50% - 1rem); */
+  width: 48%;
 	gap: 0.5rem;
 }
 
@@ -752,12 +765,12 @@ input:checked + .test-to-live-slider:before {
   width: 50%;
 }
 
-.pdf-size {
+.pdf-size, .pdf-card-size {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
-.pdf-size .input-label-radio {
+.pdf-size .input-label-radio, .pdf-card-size .input-label-radio {
 	margin: 0;
 }
 
@@ -970,11 +983,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none;
 }
 
-.container.spacer.HTML .html-btn-wrap {
+.container.spacer.HTML .html-btn-wrap,
+.container.spacer.PDFUpload .html-btn-wrap {
     position: absolute;
-    width: 96%;
+    width: 94%;
     background: white;
-    padding: 1.5rem 0.75rem;
+    padding: 1.5rem 0.75rem 0.2rem 0.75rem;
     top: 3px;
     left: 4px;
     border-radius: 8px;
