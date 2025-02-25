@@ -1342,10 +1342,11 @@ define([
       const url = inputElement.val().trim();
       var pdfRegex = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?\.pdf$/i;
       if (pdfRegex.test(url)) {
+        inputElement.siblings('.error-msg').text('The input value is missing.');
         return true;
       } else {
         inputElement.addClass('error');
-        inputElement.siblings('.error-msg').addClass('show');
+        inputElement.siblings('.error-msg').text('Please enter a valid PDF URL.').addClass('show');
         return false;
       }
     }
