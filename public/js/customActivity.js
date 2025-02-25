@@ -1338,9 +1338,17 @@ define([
   } 
 
   function isValidPdfUrl(inputElement) {
-    const url = inputElement.val().trim();
-    var pdfRegex = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?\.pdf$/i;
-    return pdfRegex.test(url);
+    if(!validateInputField(inputElement)) {
+      const url = inputElement.val().trim();
+      var pdfRegex = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?\.pdf$/i;
+      if (pdfRegex.test(url)) {
+        return true;
+      } else {
+        inputElement.addClass('error');
+        inputElement.siblings('.error-msg').addClass('show');
+        return false;
+      }
+    }
   }
 
   function debounce(func, delay) {
