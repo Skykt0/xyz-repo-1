@@ -111,7 +111,7 @@ function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contac
     ]
   });
 
-  var logDEKey = 'Postgrid Error Logging DE';
+  var logDEKey = 'Postgrid_Logging_Data';
 
   // API call to Salesforce Marketing Cloud to insert record in Data Extension
   const config = {
