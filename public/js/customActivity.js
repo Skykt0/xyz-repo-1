@@ -767,7 +767,7 @@ define([
       }
 
       if(selectedMessageType === 'Trifold') {
-        let isPdfLinkValid = validateInputField($(`.${selectedMessageType} .screen-2 .pdfLink`));
+        let isPdfLinkValid = isValidPdfUrl($(`.${selectedMessageType} .screen-2 .pdfLink`));
         if (!isPdfLinkValid) {
           isValid = false;
         }
@@ -1335,7 +1335,13 @@ define([
         }
         return response.json();
       });
-  }  
+  } 
+
+  function isValidPdfUrl(inputElement) {
+    const url = inputElement.val().trim();
+    var pdfRegex = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?\.pdf$/i;
+    return pdfRegex.test(url);
+  }
 
   function debounce(func, delay) {
     let timeoutId;
