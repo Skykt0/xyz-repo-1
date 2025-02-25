@@ -595,6 +595,7 @@ define([
   function setDefaultValuesForPostCardCreation() {
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
     selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
     $(`.${selectedMessageType} .html-editor .html__btn--front`).click(function () {
       $(`.${selectedMessageType} .html-editor .btn-light`).removeClass('show');
@@ -622,7 +623,7 @@ define([
     });
 
     $('input[name="cardType"]').change(function() {
-      let containerSelector = `.${selectedMessageType} .spacer.HTML`; // Dynamic class selector
+      let containerSelector = `.${selectedMessageType} .spacer.${selectedCreationType}`; // Dynamic class selector
   
       // Empty all input fields
       $(`${containerSelector} input[type="text"]`).val('');
@@ -637,8 +638,7 @@ define([
       $(`${containerSelector} textarea`).val('');
   
       // Optionally, reset the first radio button in each group
-      $(`${containerSelector} input[name="HtmlSize"]`).first().prop('checked', true);
-      $(`${containerSelector} input[name="HtmlCardSize"]`).first().prop('checked', true);
+      $(`${containerSelector} .size_radio_label .radio-input`).first().prop('checked', true);
 
       console.log(`Fields cleared for ${selectedMessageType} on card type change.`);
   });
@@ -706,61 +706,6 @@ define([
     }
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
-
-    if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
-      let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
-      
-      if (!isDescriptionValid) {
-        isValid = false;
-      }
-
-      if(selectedMessageType === 'Trifold') {
-        let isPdfLinkValid = validateInputField($(`.${selectedMessageType} .screen-2 .pdfLink`));
-        if (!isPdfLinkValid) {
-          isValid = false;
-        }
-
-        let frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val().trim();
-        let frontHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-front`).data('btn-label');
-        let backtHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-back`).val().trim();
-        let backHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-back`).data('btn-label');
-        let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .screen-2 .html-editor .error-msg`);
-
-        if (frontHtmlContent === '' || backtHtmlContent === '') {
-          isValid = false;
-          if (frontHtmlContent === '' && backtHtmlContent === '') {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
-          } else if (frontHtmlContent === '') {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
-          } else {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
-          }
-        } else { 
-          postcardHtmlEditorErrorMsg.removeClass('show');
-        }
-      } else {
-        const pdfInput = $(`.${selectedMessageType} .screen-2 .drop-pdf .pdf-upload`)[0]; 
-        if (pdfInput.files.length > 0) {
-          const pdfFile = pdfInput.files[0];
-          try {
-            const pdfValidationResult = await validatePDFFile(pdfFile, selectedMessageType);
-            if (!pdfValidationResult.isValid) {
-              isValid = false;
-              $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text(pdfValidationResult.errorMessage).addClass('show');
-            } else {
-              $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).removeClass('show');
-            }
-          } catch (error) {
-            console.error('Error validating PDF:', error);
-            isValid = false;
-          }
-        } else {
-          $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text('Please select a PDF file').addClass('show');
-          isValid = false;
-        }
-      }
-    }
-
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-1 .description`));
       
@@ -861,11 +806,87 @@ define([
   
       
     };
+    
+    if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
+      let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
+      
+      if (!isDescriptionValid) {
+        isValid = false;
+      }
+
+      if(selectedMessageType === 'Trifold') {
+        let isPdfLinkValid = validateInputField($(`.${selectedMessageType} .screen-2 .pdfLink`));
+        if (!isPdfLinkValid) {
+          isValid = false;
+        }
+
+        let frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val().trim();
+        let frontHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-front`).data('btn-label');
+        let backtHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-back`).val().trim();
+        let backHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-back`).data('btn-label');
+        let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .screen-2 .html-editor .error-msg`);
+
+        if (frontHtmlContent === '' || backtHtmlContent === '') {
+          isValid = false;
+          if (frontHtmlContent === '' && backtHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
+          } else if (frontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
+          } else {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
+          }
+        } else { 
+          postcardHtmlEditorErrorMsg.removeClass('show');
+        }
+      } else {
+        const pdfInput = $(`.${selectedMessageType} .screen-2 .drop-pdf .pdf-upload`)[0]; 
+        if (pdfInput.files.length > 0) {
+          const pdfFile = pdfInput.files[0];
+          try {
+            const pdfValidationResult = await validatePDFFile(pdfFile, selectedMessageType);
+            if (!pdfValidationResult.isValid) {
+              isValid = false;
+              $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text(pdfValidationResult.errorMessage).addClass('show');
+            } else {
+              $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).removeClass('show');
+            }
+          } catch (error) {
+            console.error('Error validating PDF:', error);
+            isValid = false;
+          }
+        } else {
+          $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).text('Please select a PDF file').addClass('show');
+          isValid = false;
+        }
+      }
+    }
+
+    
 
     if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block'){
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-3 .description`));
       if (!isDescriptionValid) {
         isValid = false;
+      }
+      if (selectedMessageType === 'Trifold') {
+        let frontHtmlContent = $(`.${selectedMessageType} .screen-3 .html-editor-front`).val().trim();
+        let frontHtmlBtnLabel = $(`.${selectedMessageType} .screen-3 .html-editor-front`).data('btn-label');
+        let backtHtmlContent = $(`.${selectedMessageType} .screen-3 .html-editor-back`).val().trim();
+        let backHtmlBtnLabel = $(`.${selectedMessageType} .screen-3 .html-editor-back`).data('btn-label');
+        let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .screen-3 .html-editor .error-msg`);
+
+        if (frontHtmlContent === '' || backtHtmlContent === '') {
+          isValid = false;
+          if (frontHtmlContent === '' && backtHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
+          } else if (frontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
+          } else {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
+          }
+        } else { 
+          postcardHtmlEditorErrorMsg.removeClass('show');
+        }
       }
       if(selectedMessageType === 'Trifold' && selectedCardInsertType === 'singleSide'){
         let singleSideTemplate = validateInputField($(`.${selectedMessageType} .screen-3 .singleSideTemplate`));
@@ -880,6 +901,7 @@ define([
         }
 
       }
+
 
     }
 
