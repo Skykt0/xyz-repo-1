@@ -19,6 +19,16 @@ export default [
         $: 'readonly',
         define: 'readonly',
         document: 'readonly',
+        DataTransfer: 'readonly',
+        pdfjsLib: 'readonly',
+        FileReader: 'readonly',
+        FormData: 'readonly',
+        fetch: 'readonly',
+        File: 'readonly',
+        atob: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        URLSearchParams: 'readonly',
         window: 'readonly'
       }
     },
