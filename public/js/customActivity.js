@@ -15,7 +15,6 @@ define([
   var deData = {};
   var previewDEMapOptions = {};
   var authorization = {};
-  let deFields = {};
   let previewPayload = {
     isValid: true
   };
@@ -23,7 +22,7 @@ define([
   let fromContact = {};
   let toContact = '';
 
-  var steps = [ // initialize to the same value as what's set in config.json for consistency        
+  var steps = [
     { 'label': 'Connect Account', 'key': 'step1' },
     { 'label': 'Select Message type', 'key': 'step2' },
     { 'label': 'Create', 'key': 'step3' },
@@ -45,28 +44,19 @@ define([
   connection.on('gotoStep', onGotoStep);
 
   connection.on('requestedSchema', function (data) {
-    // save schema
-    deFields = data['schema'];
     var optionsData = '';
     data['schema'].forEach(ele => {
-      //change schema of field so that field with space between can also be render
       optionsData +=`<option value="${ele.name}">${ele.name}</option>`;
       var key = ele.key;
       const myArray = key.split('.');
       var value = myArray[0]+'.'+myArray[1]+'.'+'"'+ele.name+'"';  
       deData[ele.name]=value;        
-      //Storing data extension mapping
     });
     $('.mapping-fields-group select').append(optionsData);
-    console.log('-------------------shwoign the schema below -------------');
-    console.log(data['schema']);
-    console.log('showing the DE Data', deData);
-    connection.trigger('ready');
   });
 
   function setFileToInput(base64String, fileName) {
     let file = base64ToFile(base64String, fileName);
-
     let dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);
     $('#pdf-upload')[0].files = dataTransfer.files;
@@ -77,9 +67,6 @@ define([
   function initialize(data) {
     if (data) {
       payload = data;
-      console.log('ggggggggggggggggggggggggggggggggggggggg');
-      console.log('Payload on SAVE function: ' + JSON.stringify(payload['arguments'].execute.inArguments));
-      console.log(payload);
     }
     var hasPostcardArguments = Boolean(
       payload['arguments'] &&
@@ -97,13 +84,6 @@ define([
     );
     var postcardArguments = hasPostcardArguments ? payload['arguments'].execute.inArguments[0].internalPostcardJson : {};
     previewDEMapOptions = hasMapDESchema ?payload['arguments'].execute.inArguments[0].previewDEMapOptions : {};
-    console.log('postcard arguments below');
-    console.log(postcardArguments);
-    console.log('previewDEMapOptions below');
-    console.log('changes should reflect', postcardArguments.test_api_key);
-    console.log(previewDEMapOptions);
-
-    // Iterating over every postcardArguments for prepopulating
 
     $.each(postcardArguments, function(key, value) {
       switch (key) {
@@ -121,7 +101,6 @@ define([
         break;
       case 'description':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .description';
-        console.log('description query: '+queryString);
         $(queryString).val(value);
         break;
       case 'frontTemplateName':
@@ -158,7 +137,6 @@ define([
         $('#search-contact').val(value.name).change();
         fromContact.id = value.id;
         fromContact.name = value.name;
-        console.log('Setting up the names');
         break;
       case 'encodedPdf':
         var base64Data = 'data:application/pdf;base64,'+value;
@@ -172,33 +150,26 @@ define([
         $('.test-to-live-switch input').prop('checked', value).trigger('change');
         break;
       default:
-        console.log('Unknown key: ' + key);
+        break;
       }
     });
     
     connection.trigger('requestTokens');
     connection.trigger('requestEndpoints');
     initializeHandler();
-
   }
 
   connection.on('requestedEndpoints', onGetEndpoints);
   function onGetEndpoints (endpoints) {
-    // Response: endpoints = { restHost: <url> } i.e. "rest.s1.qa1.exacttarget.com"
-    console.log('Get End Points function: '+JSON.stringify(endpoints));
     et_subdomain = endpoints.restHost;        
-    //{"authTSSD":"https://mcp77m12wgt8vbq2j9n10v1dq.auth.marketingcloudapis.com"}
     authTSSD = (endpoints.authTSSD).split('//')[1].split('.')[0];
   }
 
   connection.on('requestedTokens', onGetTokens);
   function onGetTokens (tokens) {
-    // Response: tokens = { token: <legacy token>, fuel2token: <fuel api token> }
-    console.log('Get tokens function: '+JSON.stringify(tokens));
     authToken = tokens.fuel2token;
   }
 
-  // wizard step *******************************************************************************
   var currentStep = steps[0].key;
   function onClickedNext() {
     switch (currentStep.key) {
@@ -213,7 +184,7 @@ define([
             handleValidationFailure();
           }
         }).catch((error) => {
-          console.error('Authentication failed:', error);
+          throw error;
         });
       }
       else{
@@ -226,13 +197,14 @@ define([
         setDefaultValuesForPostCardCreation();
         $('#step3 .screen').toggle(false);
         let selectedMessageType;
-
         let selectedRadio = $('input[name="msgType"]:checked');
         let isCartInsertEnabled = $('#card-insert').prop('checked');
+
         if (selectedRadio.length > 0) {
           let selectedRadioValue = selectedRadio.val().replace(/\s+/g, '');
           selectedMessageType = isCartInsertEnabled && selectedRadioValue === 'SelfMailer' ? 'Trifold'  : selectedRadioValue;
         }
+
         if (isCartInsertEnabled) {
           $('.Trifold .doubleSide, .Trifold .singleSide').hide();
           let selectedCardType = $('input[name="cardType"]:checked').val();
@@ -240,11 +212,12 @@ define([
         }
 
         let isHtml = $('#htmlId').is(':checked');
-        //hiding errors for HTML
+
         if(isHtml){
           $(`.${selectedMessageType} .error-msg`).removeClass('show');
         }
-        if(isCartInsertEnabled){ //hiding the additional button for single sided
+
+        if(isCartInsertEnabled){
           let selectedCardInsertType = $('input[name="cardType"]:checked').val();
           if(selectedCardInsertType === 'singleSide'){
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).hide();
@@ -253,6 +226,7 @@ define([
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).show();
           }
         }
+
         let isPdf = $('#pdfId').is(':checked');
         let isExtTemp = $('#extTempId').is(':checked');
 
@@ -284,15 +258,12 @@ define([
           $('.contact-dropdown-container input').removeClass('error');
           $('.contact-dropdown-container .error-msg').removeClass('show');
         })
-        .catch((error) => {
-          console.error('Error during validation:', error);
+        .catch(() => {
           handleValidationFailure();
         });
       break;
 
     case 'step4':
-      console.log('to contact step: '+toContact);;
-        
       if (validateToContact()) {
         getPreviewURL();
       } else {
@@ -408,7 +379,7 @@ define([
         .then((base64String) => {
           previewPayload.encodedPdf = base64String;
         })
-        .catch((error) => {
+        .catch(() => {
           return;
         });
     }
@@ -454,13 +425,8 @@ define([
     authorization['authToken'] = authToken;
     authorization['et_subdomain'] = et_subdomain;
     authorization['authTSSD'] = authTSSD;
-    console.log('authorization', authorization);
     
     payload['arguments'].execute.inArguments[0]['authorization'] = authorization;
-    console.log('previewPayload');
-    console.log(JSON.stringify(previewPayload));
-    console.log('Payload on SAVE function: ' + JSON.stringify(payload['arguments'].execute.inArguments));
-    connection.trigger('updateActivity', payload);
   }
 
   function initializeHandler() {
@@ -623,25 +589,13 @@ define([
     });
 
     $('input[name="cardType"]').change(function() {
-      let containerSelector = `.${selectedMessageType} .spacer.${selectedCreationType}`; // Dynamic class selector
-  
-      // Empty all input fields
+      let containerSelector = `.${selectedMessageType} .spacer.${selectedCreationType}`;
       $(`${containerSelector} input[type="text"]`).val('');
-      
-      // Reset select fields to their default option
       $(`${containerSelector} select`).prop('selectedIndex', 0);
-  
-      // Uncheck all radio buttons
       $(`${containerSelector} input[type="radio"]`).prop('checked', false);
-  
-      // Clear all textareas
       $(`${containerSelector} textarea`).val('');
-  
-      // Optionally, reset the first radio button in each group
       $(`${containerSelector} .size_radio_label .radio-input`).first().prop('checked', true);
-
-      console.log(`Fields cleared for ${selectedMessageType} on card type change.`);
-  });
+    });
 
     const today = new Date().toISOString().split('T')[0];
     $('input[type="date"]').each(function () {
@@ -803,8 +757,6 @@ define([
       } else {
         $(`.${selectedMessageType} .html-size .error-msg`).removeClass('show');
       }
-  
-      
     };
     
     if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
@@ -815,7 +767,7 @@ define([
       }
 
       if(selectedMessageType === 'Trifold') {
-        let isPdfLinkValid = validateInputField($(`.${selectedMessageType} .screen-2 .pdfLink`));
+        let isPdfLinkValid = isValidPdfUrl($(`.${selectedMessageType} .screen-2 .pdfLink`));
         if (!isPdfLinkValid) {
           isValid = false;
         }
@@ -850,8 +802,7 @@ define([
             } else {
               $(`.${selectedMessageType} .screen-2 .drop-pdf .error-msg`).removeClass('show');
             }
-          } catch (error) {
-            console.error('Error validating PDF:', error);
+          } catch {
             isValid = false;
           }
         } else {
@@ -860,8 +811,6 @@ define([
         }
       }
     }
-
-    
 
     if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block'){
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-3 .description`));
@@ -899,12 +848,8 @@ define([
         if(!frontTemplateValid || !backTemplateValid){
           isValid = false;
         }
-
       }
-
-
     }
-
     return isValid;
   }
 
@@ -914,17 +859,14 @@ define([
 
       fileReader.onload = function (event) {
         const typedarray = new Uint8Array(event.target.result);
-
         pdfjsLib.getDocument(typedarray).promise.then(function (pdf) {
           const numPages = pdf.numPages;
           pdf.getPage(1).then(function (page) {
             const viewport = page.getViewport({ scale: 1 });
             const width = viewport.width;
             const height = viewport.height;
-            console.log('width: '+width +' height: '+height);
             const pdfDimensions = selectedMessageType === 'SelfMailer' ? `${(width / 72)}x${(height / 72)}` : `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
             const selectedPDFDimension = $(`.${selectedMessageType} .pdf-size input[name="${selectedMessageType}-pdf-size"]:checked`).data('dimentions');
-
             if (numPages !== 2) {
               resolve({
                 isValid: false,
@@ -989,12 +931,10 @@ define([
         const cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
         const cardbacktHtmlContent = $(`.${selectedMessageType} .html-editor-back-card-insert`).val().trim();
         const cardInsertSize = $(`.${selectedMessageType} .html-card-size .radio-input:checked`).val();
-        console.log('Card Insert SIze', cardInsertSize);
         
         previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
         previewPayload.cardbacktHtmlContent = cardbacktHtmlContent;
         previewPayload.cardInsertSize = cardInsertSize;
-        console.log('Preview payload card insert size', previewPayload.cardInsertSize);
         
       }else if(isCartInsertEnabled && selectedCardInsertType === 'singleSide'){
         const cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
@@ -1034,14 +974,12 @@ define([
         previewPayload.pdf = pdfFile;
         previewPayload.pdfName = pdfFile.name;
       }
-
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
 
       const size = $(`.${selectedMessageType} .existingTemplate-size .radio-input:checked`).val();
       const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
-
 
       if (isTrifoldEnabled && selectedCardInsertType === 'singleSide') {
         const  singleSideTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .singleSideTemplate`) ?.attr('data-id');
@@ -1075,9 +1013,6 @@ define([
       previewPayload.mailingClass = mailingClass;
       previewPayload.isExpressDelivery = isExpressDelivery;
     }
-
-    console.log('set preview payload: '+JSON.stringify(previewPayload));
-    
   }
 
   function getFormattedDate() {
@@ -1103,14 +1038,11 @@ define([
     let isTrifoldEnabled = selectedMessageType === 'Trifold';
     const selectedCardInsertType = $('input[name="cardType"]:checked').val();
     const url = selectedMessageType === 'SelfMailer' || selectedMessageType === 'Trifold' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
-    console.log('my url:'+url);
     
     let data;
-    
     let headers = {
       'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key,
     };
-    console.log('preview payload: '+JSON.stringify(previewPayload));
 
     if(previewPayload.screen === 'pdf'){
       data = new FormData();
@@ -1170,7 +1102,6 @@ define([
       }
     } else if(previewPayload.screen === 'existing-template') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      
       data = new URLSearchParams({
         'to': toContact,
         'from': fromContact.id || '',
@@ -1204,12 +1135,6 @@ define([
       }
     }
 
-    console.log(data.toString());
-    console.log(JSON.stringify(Object.fromEntries(data), null, 2));
-    console.log(Object.fromEntries(data));
-
-
-    
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -1223,8 +1148,6 @@ define([
       }
 
       const result = await response.json();
-      console.log('-------------------------API response');
-      console.log(JSON.stringify(result));
 
       previewPayload.pdfLink = result.uploadedPDF;
 
@@ -1234,7 +1157,6 @@ define([
       }
       return result;
     } catch (error) {
-      console.error('Error creating postcard:', error.message);
       throw error;
     }
   }
@@ -1260,7 +1182,6 @@ define([
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error('Error fetching postcard details:', error);
       throw error;
     }
   }
@@ -1277,7 +1198,6 @@ define([
       $('.retry-preview-btn').hide();
       const messageDetails = await fetchMessageDetails(messageId);
       const pdfUrl = messageDetails.url;
-      console.log('PDF URL:', pdfUrl);
   
       if (pdfUrl) {
         previewPayload.previewURL = pdfUrl;
@@ -1287,7 +1207,6 @@ define([
         $('.retry-btn-wrap .loader').removeClass('show');
   
         $('.retry-preview-btn').off('click').on('click', function () {
-          console.log('Show Preview button clicked!');
           $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
           $('#pdf-preview-container').show();
           $('.retry-preview-btn, .preview-message').hide();
@@ -1295,14 +1214,12 @@ define([
       } else  {
         const elapsedTime = Date.now() - startTime;
         if (elapsedTime >= 60000 || retryOnce) {
-          console.warn('Retry limit reached (1 minute). Stopping retries.');
           $('.retry-btn-wrap .loader').removeClass('show');
           $('.preview-message').text('Failed to load the preview after several attempts. To try again, click the retry button.').show();
           $('.retry-preview-btn').text('Retry').show();
           return;
         }
-  
-        console.warn('No PDF URL received! Retrying...');
+
         $('#pdf-preview-container, .retry-preview-btn').hide();
         $('.preview-message').show();
         $('.retry-btn-wrap .loader').addClass('show');
@@ -1311,8 +1228,7 @@ define([
           showPdfPreview(messageId, false, true, startTime);
         }, 2000);
       }
-    } catch (error) {
-      console.error('Error fetching PDF Preview:', error);
+    } catch {
       $('#pdf-preview-container, .retry-preview-btn').hide();
       $('.preview-message').text('An error occurred while loading the preview.').show();
     }
@@ -1329,7 +1245,7 @@ define([
         await showPdfPreview(messageId);
       }, 2000);
 
-    } catch (error) {
+    } catch {
       $('.preview-container .retry-preview-btn').addClass('show');
       $('#pdf-preview-container').css('display','none');
       $('.pdf-preview-error-msg').text('Failed to fetch preview.');
@@ -1368,11 +1284,10 @@ define([
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Contact Created:', data);
         toContact = data.id;
       })
       .catch(error => {
-        console.error('Error:', error);
+        throw error;
       });
   }
 
@@ -1386,7 +1301,6 @@ define([
       },
       success: function (response) {
         $('#dropdown-options').empty();
-
         response.data.forEach(function (contact) {
           $('#dropdown-options').append(
             $('<div>').text(contact.firstName ? contact.firstName : contact.companyName).data('contact', contact)
@@ -1399,8 +1313,8 @@ define([
           $('#dropdown-options').hide();
         }
       },
-      error: function (xhr, status, error) {
-        console.error('Error fetching contacts:', error);
+      error: function (error) {
+        throw error;
       }
     });
   }
@@ -1415,20 +1329,28 @@ define([
         'x-api-key': previewPayload.live_api_key
       }
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Failed to delete ${messageType}`);
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to delete ${messageType}`);
+        }
+        return response.json();
+      });
+  } 
+
+  function isValidPdfUrl(inputElement) {
+    inputElement.siblings('.error-msg').text('The input value is missing.');
+    if(validateInputField(inputElement)) {
+      const url = inputElement.val().trim();
+      var pdfRegex = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?\.pdf$/i;
+      if (pdfRegex.test(url)) {
+        return true;
+      } else {
+        inputElement.addClass('error');
+        inputElement.siblings('.error-msg').text('Please enter a valid PDF URL.').addClass('show');
+        return false;
       }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Postcard deleted successfully:', data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+    }
   }
-  
 
   function debounce(func, delay) {
     let timeoutId;
@@ -1453,9 +1375,9 @@ define([
     resetToContactMappingErrors();
     let requiredFields = ['#addressLine1', '#firstName', '#companyName', '#city', '#provinceOrState', '#countryCode'];
     let isAnyFieldEmpty = false;
+
     requiredFields.forEach(selector => {
       let value = $(selector).val();
-
       if (selector === '#firstName' || selector === '#companyName') {
         if ($('#firstName').val() === 'Select' && $('#companyName').val() === 'Select') {
           $('#firstName, #companyName').css('border', '2px solid red');
@@ -1468,6 +1390,7 @@ define([
         }
       }
     });
+
     if (isAnyFieldEmpty) {
       $('.error-message-contactMapping').text('Please fill all required fields.').css('color', 'red').show();
       isValid = false;
@@ -1512,7 +1435,7 @@ define([
         populateDropdown('backTemplate', sortedData);
       }
     } catch (error) {
-      console.error('Error fetching templates:', error);
+      throw error;
     }
   }
 
@@ -1537,7 +1460,6 @@ define([
         });
       $list.append($listItem);
     });
-
   }
 
   function prepopulateToDeMapping(){
@@ -1574,13 +1496,15 @@ define([
         $('#postalOrZip').val(value).change();
         break;
       default:
-        console.log('Unknown DE Map: ' + key);
+        break;
       }
     });
   }
 
   async function validateApiKey(apiKey, inputSelector, errorSelector) {
-    if (!apiKey) return true;
+    if (!apiKey) {
+      return true;
+    }
   
     const url = 'https://api.postgrid.com/print-mail/v1/contacts?limit=1';
     try {
@@ -1590,15 +1514,13 @@ define([
       });
   
       if (!response.ok) {
-        $(inputSelector).css('border', '1px solid red'); // Highlight input box
+        $(inputSelector).css('border', '1px solid red');
         $(errorSelector).text(`Invalid API key: ${apiKey}`).show();
         return false;
       }
     } catch (error) {
-      console.error(`Error Validating API Key: ${error.message}`);
       throw error;
     }
-  
     return true;
   }
   
@@ -1612,7 +1534,6 @@ define([
     return isTestKeyValid && isLiveKeyValid;
   }
 
-  // js event registration
   $('.toggle-password').on('click', toggleApiKeyVisibility);
   $('input.api-key').on('input', hideError);
 
@@ -1637,7 +1558,7 @@ define([
     });
   });
 
-  $('.preview-container .retry-preview-btn').click(async function(e) {
+  $('.preview-container .retry-preview-btn').click(async function() {
     await showPdfPreview(previewPayload.messageId, true, true);
   });
 
@@ -1708,7 +1629,6 @@ define([
     fetchTemplates($(this).val().trim());
   }, 300));
 
-  // document ready
   $(document).ready(function () {
     const $liveModeToggle = $('.test-to-live-switch input');
     const $errorMessage = $('#liveModeError');
@@ -1735,12 +1655,8 @@ define([
   
     const today = new Date().toISOString().split('T')[0];
     $('#sendDate3').val(today).attr('min', today);
-
-    console.log('ready');
     
     $(document).on('click', function (event) {
-      console.log('doc click');
-
       const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact');
       const isClickInsideFront = $(event.target).closest('#frontTemplateList, #frontTemplateInput').length > 0;
       const isClickInsideBack = $(event.target).closest('#backTemplateList, #backTemplateInput').length > 0;
@@ -1763,5 +1679,4 @@ define([
       }
     });
   });
-
 });
