@@ -767,7 +767,7 @@ define([
       }
 
       if(selectedMessageType === 'Trifold') {
-        let isPdfLinkValid = validateInputField($(`.${selectedMessageType} .screen-2 .pdfLink`));
+        let isPdfLinkValid = isValidPdfUrl($(`.${selectedMessageType} .screen-2 .pdfLink`));
         if (!isPdfLinkValid) {
           isValid = false;
         }
@@ -1335,7 +1335,22 @@ define([
         }
         return response.json();
       });
-  }  
+  } 
+
+  function isValidPdfUrl(inputElement) {
+    inputElement.siblings('.error-msg').text('The input value is missing.');
+    if(validateInputField(inputElement)) {
+      const url = inputElement.val().trim();
+      var pdfRegex = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?\.pdf$/i;
+      if (pdfRegex.test(url)) {
+        return true;
+      } else {
+        inputElement.addClass('error');
+        inputElement.siblings('.error-msg').text('Please enter a valid PDF URL.').addClass('show');
+        return false;
+      }
+    }
+  }
 
   function debounce(func, delay) {
     let timeoutId;
