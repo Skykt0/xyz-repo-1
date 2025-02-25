@@ -55,11 +55,18 @@ body {
     margin-bottom: 10px;
     margin-top: 20px;
 }
+
+.Trifold .screen-3 .input-label-radio {
+    margin-top: 0px;
+}
 .screen-3 .radio-buttons {
 	display: grid;
 	grid-template-columns: repeat(11, auto);
 	justify-content: space-between;
 	margin-bottom: 20px;
+}
+.Trifold .screen-3 .radio-buttons {
+	margin-bottom: 0px;
 }
 .screen-3 .checkbox-label {
     font-size: 16px;
