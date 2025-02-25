@@ -1338,7 +1338,7 @@ define([
   } 
 
   function isValidPdfUrl(inputElement) {
-    if(!validateInputField(inputElement)) {
+    if(validateInputField(inputElement)) {
       const url = inputElement.val().trim();
       var pdfRegex = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?\.pdf$/i;
       if (pdfRegex.test(url)) {
