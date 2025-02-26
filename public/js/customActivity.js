@@ -221,9 +221,11 @@ define([
           let selectedCardInsertType = $('input[name="cardType"]:checked').val();
           if(selectedCardInsertType === 'singleSide'){
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).hide();
+            $('.html__btn-card--front').text('Card Insert');
           }
           else{
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).show();
+            $('.html__btn-card--front').text('Card Inside');
           }
         }
 
@@ -384,7 +386,14 @@ define([
         });
     }
     previewPayload.xyz = 'live_deepakTest';
-    previewPayload.messageType = $('input[name=\'msgType\']:checked').val();
+    let isCartInsertEnabled = $('#card-insert').prop('checked');
+    let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
+    let selectedCardInsertType;
+    if(isCartInsertEnabled){
+      selectedCardInsertType = $('input[name="cardType"]:checked').val();
+    }
+    previewPayload.messageType = selectedMessageType;
     previewPayload.creationType = $('input[name=\'createType\']:checked').val();
     payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
     payload['arguments'].execute.inArguments[0]['MapDESchema']=MapDESchema;
@@ -410,7 +419,7 @@ define([
       } else if(previewPayload.creationType === 'PDF Upload'){
         postCardJson.pdf = previewPayload.pdfLink;
       }
-    } else if(previewPayload.messageType === 'Self Mailer'){
+    } else if(previewPayload.messageType === 'SelfMailer'){
       if(previewPayload.creationType === 'HTML'){
         postCardJson.insideHTML = previewPayload.frontHtmlContent;
         postCardJson.outsideHTML = previewPayload.backHtmlContent;
@@ -419,6 +428,33 @@ define([
         postCardJson.outsideTemplate = previewPayload.backTemplateId;
       } else if(previewPayload.creationType === 'PDF Upload'){
         postCardJson.pdf = previewPayload.pdfLink;
+      }
+    }else if(previewPayload.messageType === 'Trifold'){
+      postCardJson.insideHTML = previewPayload.frontHtmlContent;
+      postCardJson.outsideHTML = previewPayload.backHtmlContent;
+      postCardJson.adhesiveInsert = postCardJson.adhesiveInsert || {}; 
+      postCardJson.adhesiveInsert.size = previewPayload.cardInsertSize;  
+      if(previewPayload.creationType === 'HTML'){
+        if(selectedCardInsertType === 'singleSide'){
+          postCardJson.adhesiveInsert.singleSided = postCardJson.adhesiveInsert.singleSided || {};
+          postCardJson.adhesiveInsert.singleSided.html = previewPayload.cardfrontHtmlContent;
+        }
+        else if(selectedCardInsertType === 'doubleSide'){
+          postCardJson.adhesiveInsert.doubleSided = postCardJson.adhesiveInsert.doubleSided || {};
+          postCardJson.adhesiveInsert.doubleSided.outsideHTML = previewPayload.cardbacktHtmlContent;
+          postCardJson.adhesiveInsert.doubleSided.insideHTML = previewPayload.cardfrontHtmlContent;;
+        }
+      }
+      else if(previewPayload.creationType === 'PDF Upload'){
+        postCardJson.adhesiveInsert.size = previewPayload.pdfCardSize;
+        if(selectedCardInsertType === 'singleSide'){
+          postCardJson.adhesiveInsert.singleSided = postCardJson.adhesiveInsert.singleSided || {};
+          postCardJson.adhesiveInsert.singleSided.pdf = previewPayload.pdfLink;
+        }
+        else{
+          postCardJson.adhesiveInsert.doubleSided = postCardJson.adhesiveInsert.doubleSided || {};
+          postCardJson.adhesiveInsert.doubleSided.pdf = previewPayload.pdfLink;
+        }
       }
     }
     payload['arguments'].execute.inArguments[0]['postcardJson'] = postCardJson;
