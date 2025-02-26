@@ -804,11 +804,11 @@ define([
         if (frontHtmlContent === '' || backHtmlContent === '') {
           isValid = false;
           if (frontHtmlContent === '' && backHtmlContent === '') {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}.`).addClass('show');
           } else if (frontHtmlContent === '') {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}.`).addClass('show');
           } else {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${backHtmlBtnLabel}.`).addClass('show');
           }
         } else { 
           postcardHtmlEditorErrorMsg.removeClass('show');
@@ -845,11 +845,11 @@ define([
         if (frontHtmlContent === '' || backHtmlContent === '') {
           isValid = false;
           if (frontHtmlContent === '' && backHtmlContent === '') {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}.`).addClass('show');
           } else if (frontHtmlContent === '') {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}.`).addClass('show');
           } else {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${backHtmlBtnLabel}.`).addClass('show');
           }
         } else { 
           postcardHtmlEditorErrorMsg.removeClass('show');
@@ -891,11 +891,11 @@ define([
         if (frontHtmlContent === '' || backHtmlContent === '') {
           isValid = false;
           if (frontHtmlContent === '' && backHtmlContent === '') {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in both ${frontHtmlBtnLabel} and ${backHtmlBtnLabel} fields.`).addClass('show');
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}.`).addClass('show');
           } else if (frontHtmlContent === '') {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${frontHtmlBtnLabel} field.`).addClass('show');
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}.`).addClass('show');
           } else {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in the ${backHtmlBtnLabel} field.`).addClass('show');
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${backHtmlBtnLabel}.`).addClass('show');
           }
         } else { 
           postcardHtmlEditorErrorMsg.removeClass('show');
