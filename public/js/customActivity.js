@@ -628,13 +628,12 @@ define([
         let selectedMessageType = $('input[name="msgType"]:checked').val();
         if(selectedMessageType === 'Self Mailer') {
           $('#extTempId').css('display','none');
+          $('label[for="extTempId"]').css('display','none');
         }
       } else {
-        let selectedMessageType = $('input[name="msgType"]:checked').val();
         $('#card-insert-type').addClass('hidden');
-        if(selectedMessageType !== 'Self Mailer') {
-          $('#extTempId').css('display','block');
-        }
+        $('#extTempId').css('display','block');
+        $('label[for="extTempId"]').css('display','block');
       }
     });
   }
@@ -1628,11 +1627,14 @@ define([
     if(isSelfMailer) {
       if($('#card-insert').is(':checked')) {
         $('#extTempId').css('display','none');
+        $('label[for="extTempId"]').css('display','none');
       } else {
         $('#extTempId').css('display','block');
+        $('label[for="extTempId"]').css('display','block');
       }
     } else {
       $('#extTempId').css('display','block');
+      $('label[for="extTempId"]').css('display','block');
     }
 
     if (isPostcard) {
