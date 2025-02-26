@@ -994,6 +994,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .container.spacer.PDFUpload .html-btn-wrap {
     position: absolute;
     width: 94%;
+    height: 7%;
     background: white;
     padding: 1.5rem 0.75rem 0.2rem 0.75rem;
     top: 3px;
