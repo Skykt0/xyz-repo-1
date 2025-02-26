@@ -1602,15 +1602,12 @@ define([
   $('input.api-key').on('input', hideError);
 
   $('.step2radioBTN').change(function () {
-    var isPostcard = $('#postcard').is(':checked');
-    var isHtml = $('#htmlId').is(':checked');
-    var isPdf = $('#pdfId').is(':checked');
-    var isExtTemp = $('#extTempId').is(':checked');
     var isSelfMailer = $('#self-mailer').is(':checked');
 
     if(isSelfMailer) {
       if($('#card-insert').is(':checked')) {
         $('#extTempId').css('display','none');
+        $('#htmlId').prop('checked', true);
         $('label[for="extTempId"]').css('display','none');
       } else {
         $('#extTempId').css('display','block');
