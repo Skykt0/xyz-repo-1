@@ -94,7 +94,7 @@ function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contac
     ]
   });
 
-  var logDEKey = 'Postgrid Error Deepak Test';
+  var logDEKey = 'Postgrid_Logging_Data';
 
   const config = {
     method: 'post',
