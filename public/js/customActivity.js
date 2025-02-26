@@ -1621,15 +1621,6 @@ define([
       $('label[for="extTempId"]').css('display','block');
     }
 
-    if (isPostcard) {
-      $('#postcardScreen').show();
-      $('#postcardScreen > .screen-1').toggle(isHtml);
-      $('#postcardScreen > .screen-2').toggle(isPdf);
-      $('#postcardScreen > .screen-3').toggle(isExtTemp);
-    } else {
-      $('#postcardScreen').hide();
-    }
-
     connection.trigger('updateButton', {
       button: 'next',
       enabled: true
