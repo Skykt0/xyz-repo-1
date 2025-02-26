@@ -427,6 +427,7 @@ define([
     authorization['authTSSD'] = authTSSD;
     
     payload['arguments'].execute.inArguments[0]['authorization'] = authorization;
+    connection.trigger('updateActivity', payload);
   }
 
   function initializeHandler() {
