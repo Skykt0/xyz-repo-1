@@ -629,7 +629,7 @@ define([
         if(selectedMessageType === 'Self Mailer') {
           $('#extTempId').css('display','none');
           $('label[for="extTempId"]').css('display','none');
-          $('#htmlId').prop('checked', true).trigger('change');
+          $('#extTempId').prop('checked', false);
         }
       } else {
         $('#card-insert-type').addClass('hidden');
@@ -1602,17 +1602,13 @@ define([
   $('.toggle-password').on('click', toggleApiKeyVisibility);
   $('input.api-key').on('input', hideError);
 
-  let isHtmlSelected = false;
   $('.step2radioBTN').change(function () {
     var isSelfMailer = $('#self-mailer').is(':checked');
     if(isSelfMailer) {
       if($('#card-insert').is(':checked')) {
         $('#extTempId').css('display','none');
         $('label[for="extTempId"]').css('display','none');
-        if(!isHtmlSelected){
-          $('#htmlId').prop('checked', true).trigger('change');
-          isHtmlSelected = true;
-        }
+        $('#extTempId').prop('checked', false).trigger('change');
       } else {
         $('#extTempId').css('display','block');
         $('label[for="extTempId"]').css('display','block');
