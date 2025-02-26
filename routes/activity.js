@@ -50,7 +50,7 @@ exports.execute = async function (req, res) {
       var postcardId = postcardCreateCall.data.id;
       const d = new Date();
       let timeStamp = d.toISOString();
-      logToDataExtension(`Postcard created successfully. ID: ${postcardId}`, authTSSD, authToken, timeStamp, contactKey, 'Success', journeyId, activityId);
+      logToDataExtension(`${internalPostcardJson.messageType} created successfully. ID: ${postcardId}`, authTSSD, authToken, timeStamp, contactKey, 'Success', journeyId, activityId, `${internalPostcardJson.messageType}`);
 
     } else {
       res.status(500).send('Postcard creation failed');
@@ -59,7 +59,7 @@ exports.execute = async function (req, res) {
   } catch (error) {
     const d = new Date();
     let timeStamp = d.toISOString();
-    logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp, contactKey, 'Error', journeyId, activityId);
+    logToDataExtension(error.response ? JSON.stringify(error.response.data) : error.message, authTSSD, authToken, timeStamp, contactKey, 'Error', journeyId, activityId,`${internalPostcardJson.messageType}`);
     res.status(500).send('Error creating postcard');
     return;
   }
@@ -79,7 +79,7 @@ exports.publish = function (req, res) {
 exports.validate = function (req, res) {
   res.status(200).send('Validate');
 };
-function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contactKey, status, journeyId, activityId) {
+function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contactKey, status, journeyId, activityId, object) {
   var payload = JSON.stringify({
     'items': [
       {
@@ -88,12 +88,13 @@ function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contac
         'TimeStamp': timeStamp,
         'ContactKey' : contactKey,
         'JourneyId' : journeyId,
-        'ActivityId' : activityId
+        'ActivityId' : activityId,
+        'Object' : object
       }
     ]
   });
 
-  var logDEKey = 'Postgrid Error Logging DE';
+  var logDEKey = 'Postgrid Error Deepak Test';
 
   const config = {
     method: 'post',
