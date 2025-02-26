@@ -1603,12 +1603,15 @@ define([
 
   $('.step2radioBTN').change(function () {
     var isSelfMailer = $('#self-mailer').is(':checked');
-
+    let isHtmlSelected = false;
     if(isSelfMailer) {
       if($('#card-insert').is(':checked')) {
         $('#extTempId').css('display','none');
         $('label[for="extTempId"]').css('display','none');
-        $('#htmlId').prop('checked', true).trigger('change');
+        if(!isHtmlSelected){
+          $('#htmlId').prop('checked', true).trigger('change');
+          isHtmlSelected = true;
+        }
       } else {
         $('#extTempId').css('display','block');
         $('label[for="extTempId"]').css('display','block');
