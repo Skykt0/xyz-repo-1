@@ -41,7 +41,7 @@ exports.execute = async function (req, res) {
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
-        'X-API-KEY': internalPostcardJson.test_api_key
+        'X-API-KEY': internalPostcardJson.liveApiKeyEnabled && internalPostcardJson.live_api_key ? internalPostcardJson.live_api_key : internalPostcardJson.test_api_key
       },
       data: postcardJson
     };
