@@ -997,9 +997,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 7%;
     background: white;
     padding: 1.5rem 0.75rem 0.2rem 0.75rem;
-    top: 3px;
+    top: 2px;
+    border-top: 1px solid lightgray;
     left: 4px;
-    border-radius: 8px;
+    border-radius: 0px;
 }
 
 .retry-preview-btn {
