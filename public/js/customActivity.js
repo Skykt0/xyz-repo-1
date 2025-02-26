@@ -1608,7 +1608,7 @@ define([
       if($('#card-insert').is(':checked')) {
         $('#extTempId').css('display','none');
         $('label[for="extTempId"]').css('display','none');
-        $('#extTempId').prop('checked', false).trigger('change');
+        $('#extTempId').prop('checked', false);
       } else {
         $('#extTempId').css('display','block');
         $('label[for="extTempId"]').css('display','block');
