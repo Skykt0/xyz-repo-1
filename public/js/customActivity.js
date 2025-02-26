@@ -1607,7 +1607,7 @@ define([
     if(isSelfMailer) {
       if($('#card-insert').is(':checked')) {
         $('#extTempId').css('display','none');
-        $('#htmlId').prop('checked', true);
+        $('#htmlId').prop('checked', true).trigger('change');
         $('label[for="extTempId"]').css('display','none');
       } else {
         $('#extTempId').css('display','block');
