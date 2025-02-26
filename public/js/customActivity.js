@@ -589,8 +589,16 @@ define([
     $('#card-insert').change(function () {
       if (this.checked) {
         $('#card-insert-type').removeClass('hidden');
+        let selectedMessageType = $('input[name="msgType"]:checked').val();
+        if(selectedMessageType === 'Self Mailer') {
+          $('#extTempId').css('display','none');
+        }
       } else {
+        let selectedMessageType = $('input[name="msgType"]:checked').val();
         $('#card-insert-type').addClass('hidden');
+        if(selectedMessageType !== 'Self Mailer') {
+          $('#extTempId').css('display','block');
+        }
       }
     });
   }
@@ -1579,6 +1587,17 @@ define([
     var isHtml = $('#htmlId').is(':checked');
     var isPdf = $('#pdfId').is(':checked');
     var isExtTemp = $('#extTempId').is(':checked');
+    var isSelfMailer = $('#self-mailer').is(':checked');
+
+    if(isSelfMailer) {
+      if($('#card-insert').is(':checked')) {
+        $('#extTempId').css('display','none');
+      } else {
+        $('#extTempId').css('display','block');
+      }
+    } else {
+      $('#extTempId').css('display','block');
+    }
 
     if (isPostcard) {
       $('#postcardScreen').show();
