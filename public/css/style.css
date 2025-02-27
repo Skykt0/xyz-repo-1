@@ -11,6 +11,9 @@ body {
 /* STEP 3 - SCREEN 3 CSS*/
 .screen-3 .spacer {
 	padding: 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 .Postcards .screen-3 .section-label {
 	font-size: 24px;
@@ -333,6 +336,7 @@ body {
 	width: 18px;
 	height: 18px;
 	cursor: pointer;
+  margin: 0;
 }
 .radio-label,
 #card-insert-container label,
