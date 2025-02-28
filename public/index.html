@@ -66,7 +66,7 @@
                                 <label for="postcard" class="radio-label">Postcards</label>
                             </div>
                             <div class="self-mailer-radio radio-label-wrap">
-                                <input type="radio" class="radio-input step2radioBTN" id="self-mailer" name="msgType" value = "Self Mailer"/>
+                                <input type="radio" class="radio-input step2radioBTN" id="self-mailer" name="msgType" value="SelfMailer"/>
                                 <label for="self-mailer" class="radio-label">Self Mailer</label>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                         <div class="section-label">Creation Type *</div>
                         <div class="input-container">
                             <div class="html-radio-wrap radio-label-wrap">
-                                <input type="radio" class="radio-input step2radioBTN" id="htmlId" name="createType" value="HTML"/>
+                                <input type="radio" class="radio-input step2radioBTN" id="htmlId" name="createType" value="html"/>
                                 <label for="htmlId" class="radio-label">HTML</label>
                             </div>
                             <div class="pdf-radio-wrap radio-label-wrap">
@@ -135,7 +135,7 @@
     <div id="step3" class="step">
         <div id="postcardScreen" class="Postcards">
             <div class="screen-1 screen">
-                <div class="container spacer HTML">
+                <div class="container spacer html">
                     <div class="html-screen-wrapper">
                         <h3 class="section-label">HTML</h3>
                         <div class="outer-input-fields">
@@ -162,16 +162,16 @@
                             <div class="input-label-radio">Size *</div>
                             <div class="size-radio-buttons-wrap">
                                 <div class="radio-buttons">
-                                    <label class="radio-label size_radio_label">
+                                    <label class="radio-label size-radio-label">
                                         <input type="radio" class="radio-input"  name="HtmlSize" value="6x4"
                                             checked />
                                         <span>6x4</span>
                                     </label>
-                                    <label class="radio-label size_radio_label">
+                                    <label class="radio-label size-radio-label">
                                         <input type="radio" class="radio-input" name="HtmlSize" value="9x6" />
                                         <span>9x6</span>
                                     </label>
-                                    <label class="radio-label size_radio_label">
+                                    <label class="radio-label size-radio-label">
                                         <input type="radio" class="radio-input" name="HtmlSize"
                                             value="11x6" />
                                         <span>11x6</span>
@@ -191,10 +191,10 @@
                     </div>
                     <div class="html-editor">
                         <div class="html-btn-wrap">
-                            <button type="button" class="btn btn-light html__btn--front show">
+                            <button type="button" class="btn btn-light html-btn-front show">
                                 Front
                             </button>
-                            <button type="button" class="btn btn-light html__btn--back">
+                            <button type="button" class="btn btn-light html-btn-back">
                                 Back
                             </button>
                         </div>
@@ -207,7 +207,7 @@
 
             <div class="screen-2 screen">
                 <div class="spacer">
-                    <div class="pdf-container postcard-pdf-container PDFUpload">
+                    <div class="pdf-container postcard-pdf-container pdf-upload">
                         <h3 class="section-label">PDF Upload</h3>
                         <div class="input-fields">
                             <div class="input-box">
@@ -231,16 +231,16 @@
                             <div class="input-label-radio">Size *</div>
                             <div class="size-radio-buttons-wrap">
                                 <div class="radio-buttons">
-                                    <label class="radio-label size_radio_label">
+                                    <label class="radio-label size-radio-label">
                                         <input type="radio" class="radio-input"  name="Postcards-pdf-size" value="6x4" data-dimentions="6.25x4.25"
                                             checked />
                                         <span>6x4</span>
                                     </label>
-                                    <label class="radio-label size_radio_label">
+                                    <label class="radio-label size-radio-label">
                                         <input type="radio" class="radio-input" name="Postcards-pdf-size" value="9x6" data-dimentions="9.25x6.25"/>
                                         <span>9x6</span>
                                     </label>
-                                    <label class="radio-label size_radio_label">
+                                    <label class="radio-label size-radio-label">
                                         <input type="radio" class="radio-input" name="Postcards-pdf-size"
                                             value="11x6" data-dimentions="11.25x6.25"/>
                                         <span>11x6</span>
@@ -270,7 +270,7 @@
             </div>
 
             <div class="screen-3 screen">
-                <div class="spacer ExistingTemplate">
+                <div class="spacer existing-template">
                     <div class="section-label">Existing Template</div>
                     <div class="existing-template-details">
                         <div class="input-box">
@@ -288,26 +288,26 @@
                         </div>
                         <!-- Front Template Dropdown -->
                         <div class="input-box">
-                            <label for="frontTemplateInput" class="input-label">Front Template *</label>
+                            <label for="front-template-input" class="input-label">Front Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="frontTemplateInput" class="frontTemplate" placeholder="Search or enter template"
+                                    <input type="text" id="front-template-input" class="frontTemplate" placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="frontTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter front template</span>
                                         <i class="fa fa-angle-right dropdown-icon"></i>
                                 </div>
                                 <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
-                                    aria-labelledby="frontTemplateInput"></div>
+                                    aria-labelledby="front-template-input"></div>
                                 <span class="error-message"></span>
                             </div>
                         </div>
                         <!-- Back Template -->
                         <div class="input-box">
-                            <label for="backTemplateInput" class="input-label">Back Template *</label>
+                            <label for="back-template-input" class="input-label">Back Template *</label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="backTemplateInput" class="backTemplate" placeholder="Search or enter template"
+                                    <input type="text" id="back-template-input" class="backTemplate" placeholder="Search or enter template"
                                         autocomplete="off" aria-describedby="backTemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter back template</span>
@@ -315,7 +315,7 @@
                                 </div>
                                  <!-- Add down arrow here -->
                                 <div id="backTemplateList" class="dropdown-options backTemplateList" role="listbox"
-                                    aria-labelledby="backTemplateInput"></div>
+                                    aria-labelledby="back-template-input"></div>
                                 <span class="error-message"></span>
                             </div>
                         </div>
@@ -323,15 +323,15 @@
                     <div class="existingTemplate-size">
                       <div class="input-label-radio">Size *</div>
                       <div class="radio-buttons width-50">
-                          <label class="radio-label size_radio_label">
+                          <label class="radio-label size-radio-label">
                               <input type="radio" class="radio-input"  name="size" value="6x4" checked>
                               6x4
                           </label>
-                          <label class="radio-label size_radio_label">
+                          <label class="radio-label size-radio-label">
                               <input type="radio" class="radio-input" name="size" value="9x6">
                               9x6
                           </label>
-                          <label class="radio-label size_radio_label">
+                          <label class="radio-label size-radio-label">
                               <input type="radio" class="radio-input" name="size" value="11x6">
                               11x6
                           </label>
@@ -350,9 +350,9 @@
             </div>
         </div>
 
-        <div id="selfMailerScreen" class="SelfMailer">
+        <div id="selfMailerScreen" class="self-mailer">
           <div class="screen-1 screen">
-            <div class="container spacer HTML">
+            <div class="container spacer html">
                 <div class="html-screen-wrapper">
                     <h3 class="section-label">HTML</h3>
                     <div class="outer-input-fields">
@@ -379,16 +379,16 @@
                         <div class="input-label-radio">Size *</div>
                         <div class="size-radio-buttons-wrap">
                             <div class="radio-buttons">
-                                <label class="radio-label size_radio_label">
+                                <label class="radio-label size-radio-label">
                                     <input type="radio" class="radio-input"  name="SelfMailerHtmlSize" value="8.5x11_bifold" data-dimentions="8.625x11.125"
                                         checked />
                                     <span>8.5x11(Bifold)</span>
                                 </label>
-                                <label class="radio-label size_radio_label">
+                                <label class="radio-label size-radio-label">
                                     <input type="radio" class="radio-input" name="SelfMailerHtmlSize" value="8.5x11_trifold" data-dimentions="8.625x11.125" />
                                     <span>8.5x11(Trifold)</span>
                                 </label>
-                                <label class="radio-label size_radio_label">
+                                <label class="radio-label size-radio-label">
                                     <input type="radio" class="radio-input" name="SelfMailerHtmlSize"
                                     value="9.5x16_trifold" data-dimentions="9.625x16.125" />
                                       <span>9.5x16(Trifold)</span>
@@ -409,10 +409,10 @@
 
                 <div class="html-editor">
                     <div class="html-btn-wrap">
-                        <button type="button" class="btn btn-light html__btn--front show">
+                        <button type="button" class="btn btn-light html-btn-front show">
                           Inside
                         </button>
-                        <button type="button" class="btn btn-light html__btn--back">
+                        <button type="button" class="btn btn-light html-btn-back">
                           Outside
                         </button>
                     </div>
@@ -424,7 +424,7 @@
           </div>
           <div class="screen-2 screen">
             <div class="spacer">
-              <div class="pdf-container self-mailer-pdf-container PDFUpload">
+              <div class="pdf-container self-mailer-pdf-container pdf-upload">
                   <h3 class="section-label">PDF Upload</h3>
                   <div class="input-fields">
                       <div class="input-box">
@@ -448,16 +448,16 @@
                       <div class="input-label-radio">Size *</div>
                       <div class="size-radio-buttons-wrap">
                           <div class="radio-buttons">
-                              <label class="radio-label size_radio_label">
+                              <label class="radio-label size-radio-label">
                                   <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="8.5x11_bifold" data-dimentions="8.625x11.125"
                                       checked />
                                   <span>8.5x11(Bifold)</span>
                               </label>
-                              <label class="radio-label size_radio_label">
+                              <label class="radio-label size-radio-label">
                                   <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="8.5x11_trifold" data-dimentions="8.625x11.125"/>
                                   <span>8.5x11(Trifold)</span>
                               </label>
-                              <label class="radio-label size_radio_label">
+                              <label class="radio-label size-radio-label">
                                   <input type="radio" class="radio-input" name="SelfMailer-pdf-size" value="9.5x16_trifold" data-dimentions="9.625x16.125"/>
                                   <span>9.5x16(Trifold)</span>
                               </label>
@@ -485,7 +485,7 @@
             </div>
           </div>
           <div class="screen-3 screen">
-              <div class="spacer ExistingTemplate">
+              <div class="spacer existing-template">
                   <div class="section-label">Existing Template</div>
                   <div class="existing-template-details">
                       <div class="input-box">
@@ -538,16 +538,16 @@
                   <div class="existingTemplate-size">
                     <div class="input-label-radio">Size *</div>
                     <div class="radio-buttons">
-                        <label class="radio-label size_radio_label">
+                        <label class="radio-label size-radio-label">
                             <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_bifold" data-dimentions="6.25x4.25"
                                 checked />
                             <span>8.5x11(Bifold)</span>
                         </label>
-                        <label class="radio-label size_radio_label">
+                        <label class="radio-label size-radio-label">
                             <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_trifold" data-dimentions="9.25x6.25"/>
                             <span>8.5x11(Trifold)</span>
                         </label>
-                        <label class="radio-label size_radio_label">
+                        <label class="radio-label size-radio-label">
                             <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="9.5x16_trifold" data-dimentions="11.25x6.25"/>
                             <span>9.5x16(Trifold)</span>
                         </label>
@@ -565,9 +565,9 @@
           </div>
         </div>
 
-        <div id="TrifoldScreen" class="Trifold">
+        <div id="TrifoldScreen" class="trifold">
           <div class="screen-1 screen">
-            <div class="container spacer HTML">
+            <div class="container spacer html">
                 <!-- Trifold HTML Fields Section -->
                 <div class="html-screen-wrapper">
                     <h3 class="section-label">HTML</h3>
@@ -595,11 +595,11 @@
                         <div class="input-label-radio">Size *</div>
                         <div class="size-radio-buttons-wrap">
                             <div class="radio-buttons">
-                                <label class="radio-label size_radio_label">
+                                <label class="radio-label size-radio-label">
                                     <input type="radio" class="radio-input" id="nine-six" name="TrifoldHtmlSize" value="8.5x11_trifold" checked />
                                     <span>8.5x11(Trifold)</span>
                                 </label>
-                                <label class="radio-label size_radio_label">
+                                <label class="radio-label size-radio-label">
                                     <input type="radio" class="radio-input" id="eleven-eight" name="TrifoldHtmlSize"
                                         value="9.5x16_trifold" />
                                     <span>9.5x16(Trifold)</span>
@@ -612,7 +612,7 @@
                         <div class="input-label-radio">Card Size *</div>
                         <div class="size-radio-buttons-wrap">
                             <div class="radio-buttons">
-                                <label class="radio-label size_radio_label">
+                                <label class="radio-label size-radio-label">
                                     <input type="radio" class="radio-input" id="six-four" name="HtmlCardSize" value="7.75x4.5"
                                         checked />
                                     <span>7.75 x 4.5</span>
@@ -626,16 +626,16 @@
                 <!-- Postcard HTML Editor -->
                 <div class="html-editor">
                     <div class="html-btn-wrap">
-                        <button type="button" class="btn btn-light html__btn--front show">
+                        <button type="button" class="btn btn-light html-btn-front show">
                           Inside
                         </button>
-                        <button type="button" class="btn btn-light html__btn--back">
+                        <button type="button" class="btn btn-light html-btn-back">
                           Outside
                         </button>
-                        <button type="button" class="btn btn-light html__btn-card--front">
+                        <button type="button" class="btn btn-light html-btn-card-front">
                           Card Insert
                         </button>
-                        <button type="button" class="btn btn-light html__btn-card--back singleSided-hide">
+                        <button type="button" class="btn btn-light html-btn-card-back singleSided-hide">
                         Card Outside
                         </button>
                     </div>
@@ -648,7 +648,7 @@
             </div>
           </div>
           <div class="screen-2 screen">
-            <div class="container spacer PDFUpload">
+            <div class="container spacer pdf-upload">
               <div class="html-screen-wrapper">
                   <h3 class="section-label">PDF Link</h3>
                   <div class="outer-input-fields">
@@ -680,11 +680,11 @@
                       <div class="input-label-radio">Size *</div>
                       <div class="size-radio-buttons-wrap">
                           <div class="radio-buttons">
-                              <label class="radio-label size_radio_label">
+                              <label class="radio-label size-radio-label">
                                   <input type="radio" class="radio-input" name="TrifoldPDFSize" value="8.5x11_trifold" data-dimentions="8.625x11.125" checked/>
                                   <span>8.5x11(Trifold)</span>
                               </label>
-                              <label class="radio-label size_radio_label">
+                              <label class="radio-label size-radio-label">
                                   <input type="radio" class="radio-input" name="TrifoldPDFSize"
                                   value="9.5x16_trifold" data-dimentions="9.625x16.125" />
                                     <span>9.5x16(Trifold)</span>
@@ -697,7 +697,7 @@
                       <div class="input-label-radio">Card Size *</div>
                       <div class="size-radio-buttons-wrap">
                           <div class="radio-buttons">
-                              <label class="radio-label size_radio_label">
+                              <label class="radio-label size-radio-label">
                                   <input type="radio" class="radio-input" name="TrifoldPdfCardSize" value="7.75x4.5" checked/>
                                   <span>7.75x4.5</span>
                               </label>
@@ -708,10 +708,10 @@
               </div>
               <div class="html-editor">
                   <div class="html-btn-wrap">
-                      <button type="button" class="btn btn-light html__btn--front show">
+                      <button type="button" class="btn btn-light html-btn-front show">
                         Inside
                       </button>
-                      <button type="button" class="btn btn-light html__btn--back">
+                      <button type="button" class="btn btn-light html-btn-back">
                         Outside
                       </button>
                   </div>
@@ -722,7 +722,7 @@
             </div>
           </div>
           <div class="screen-3 screen">
-            <div class="container spacer ExistingTemplate">
+            <div class="container spacer existing-template">
               <div class="html-screen-wrapper">
                 <div class="section-label">Existing Template</div>
                 <div class="outer-input-fields">
@@ -793,12 +793,12 @@
                   <div class="existingTemplate-size">
                     <div class="input-label-radio">Size *</div>
                     <div class="radio-buttons">
-                        <label class="radio-label size_radio_label doubleSideSize">
-                            <input type="radio" class="radio-input" name="Trifold-existing-template-size" value="8.5x11_trifold" data-dimentions="9.25x6.25" checked/>
+                        <label class="radio-label size-radio-label doubleSideSize">
+                            <input type="radio" class="radio-input" name="trifold-existing-template-size" value="8.5x11_trifold" data-dimentions="9.25x6.25" checked/>
                             <span>8.5x11(Trifold)</span>
                         </label>
-                        <label class="radio-label size_radio_label doubleSideSize">
-                            <input type="radio" class="radio-input" name="Trifold-existing-template-size" value="9.5x16_trifold" data-dimentions="11.25x6.25"/>
+                        <label class="radio-label size-radio-label doubleSideSize">
+                            <input type="radio" class="radio-input" name="trifold-existing-template-size" value="9.5x16_trifold" data-dimentions="11.25x6.25"/>
                             <span>9.5x16(Trifold)</span>
                         </label>
                     </div>
@@ -807,7 +807,7 @@
                     <div class="input-label-radio">Card Size *</div>
                     <div class="size-radio-buttons-wrap">
                         <div class="radio-buttons">
-                            <label class="radio-label size_radio_label">
+                            <label class="radio-label size-radio-label">
                                 <input type="radio" class="radio-input" name="TrifoldTemplateCardSize" value="7.75x4.5" checked/>
                                 <span>7.75x4.5</span>
                             </label>
@@ -819,10 +819,10 @@
               
               <div class="html-editor">
                 <div class="html-btn-wrap">
-                    <button type="button" class="btn btn-light html__btn--front show">
+                    <button type="button" class="btn btn-light html-btn-front show">
                       Inside
                     </button>
-                    <button type="button" class="btn btn-light html__btn--back">
+                    <button type="button" class="btn btn-light html-btn-back">
                       Outside
                     </button>
                 </div>
@@ -931,7 +931,7 @@
                         </select>
                     </div>
                 </div>
-                <span class="error-message-contactMapping" style="display: block;"></span>
+                <span class="error-message-contact-mapping" style="display: block;"></span>
             </div>
         </div>
 

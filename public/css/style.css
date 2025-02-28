@@ -5,7 +5,7 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
 }
 
 .screen-3 .spacer {
@@ -30,6 +30,15 @@ body {
   width: 48%;
 }
 
+.input-field {
+	outline: none;
+	border: 4px solid lightgray;
+	border-radius: 4px;
+	height: 32px;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+
 .screen-3 .input-field {
 	padding: 5px 10px;
 	border-radius: 3px;
@@ -43,12 +52,42 @@ body {
 	margin-bottom: 5px;
 }
 
+.pdf-container .input-label,
+.outer-input-fields .input-fields .input-label {
+  font-size: 16px !important;
+}
+
+.input-fields .input-box .input-label,
+.input-label-radio {
+	font-size: 16px;
+}
+
 .screen-3 .input-label-radio {
   font-size: 16px;
   margin-bottom: 10px;
 }
 
-.Trifold .screen-3 .input-label-radio {
+.pdf-size .input-label-radio, .pdf-card-size .input-label-radio {
+	margin: 0;
+}
+
+.screen-2 .input-label-radio,
+.screen-2 .radio-buttons,
+.screen-2 .checkboxes {
+	margin-left: 3%;
+}
+
+.html-size .input-label-radio {
+	font-size: 16px;
+}
+
+.html-size .radio-buttons,
+.html-size .input-label-radio,
+.outer-input-fields .input-fields {
+	margin: 0;
+}
+
+.trifold .screen-3 .input-label-radio {
   margin-top: 0;
 }
 
@@ -59,17 +98,7 @@ body {
 }
 
 .screen-3 .checkbox-label {
-    font-size: 16px;
-    font-size: 16px;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
   font-size: 16px;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
   user-select: none;
   width: max-content;
 }
@@ -113,8 +142,7 @@ body {
 .screen-3 .existing-template-details {
 	display: flex;
 	flex-wrap: wrap;
-	column-gap: 2rem;
-	row-gap: 2rem;
+  gap: 2rem;
 }
 
 .screen-3 .five-checkboxes {
@@ -142,6 +170,12 @@ body {
 	user-select: none;
 }
 
+.error-message {
+	color: red;
+	font-size: 16px;
+	display: inline-block;
+}
+
 .screen-3 .error-message {
 	color: red;
 	font-size: 16px;
@@ -151,6 +185,11 @@ body {
 
 .screen-3 .error-field {
 	border: 1px solid red !important;
+}
+
+.mapping-dropdown {
+	display: flex;
+	flex-direction: column;
 }
 
 .screen-3 .mapping-dropdown {
@@ -168,15 +207,32 @@ body {
   box-shadow: 0 0 1px 1px lightgray;
 }
 
+.mapping-fields-group select,
+#dropdown-options,
+#search-contact {
+	width: 60%;
+	padding: 8px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#dropdown-options,
+#search-contact {
+	width: 50%;
+	margin: auto;
+}
+
 .screen-3 #search-contact,
-.screen-3 #frontTemplateInput,
-.screen-3 #backTemplateInput {
+.screen-3 #front-template-input,
+.screen-3 #back-template-input {
     width: 100%;
     padding: 8px 30px 8px 12px; 
     box-sizing: border-box;
     border: 3px solid #ccc;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 10%); 
+    box-shadow: 0 2px 4px rgba(0 0 0 0.1);
     font-size: 14px;
     background: transparent;
 }
@@ -209,7 +265,12 @@ body {
 	display: none;
 	z-index: 1000;
 	border-radius: 4px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 10%);
+	box-shadow: 0 2px 4px rgba(0 0 0 10%);
+}
+
+.dropdown-options div {
+	padding: 8px;
+	cursor: pointer;
 }
 
 .screen-3 .dropdown-options div,
@@ -217,6 +278,10 @@ body {
 	padding: 8px;
 	cursor: pointer;
 	list-style: none;
+}
+
+.dropdown-options div:hover {
+	background: rgb(37 150 190);
 }
 
 .screen-3 .dropdown-options div:hover,
@@ -262,11 +327,40 @@ body {
 	max-width: 350px;
 }
 
+.mapping-fields-group label {
+	font-weight: bold;
+	font-size: 14px;
+	color: #333;
+}
+
+.mapping-radio-group label {
+	display: flex;
+	align-items: center;
+	font-size: 1rem;
+	font-weight: 500;
+	cursor: pointer;
+}
+
 #step1 label {
 	display: block;
 	font-size: 20px;
 	font-weight: 500;
 	margin-bottom: 8px;
+}
+
+.test-to-live-switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.single-sided-radio-wrap input,
+.double-sided-radio-wrap input {
+	margin: 0;
+}
+
+.mapping-radio-group input {
+	display: none;
 }
 
 #step1 input {
@@ -370,6 +464,11 @@ body {
 	display: none;
 }
 
+.message-type-wrapper .input-container,
+.creation-type-wrapper .input-container {
+	margin: 0;
+}
+
 #card-insert-type .input-container {
 	display: flex;
 	align-items: center;
@@ -379,12 +478,6 @@ body {
 .input-container input[type="radio"] {
 	width: 18px;
 	height: 18px;
-}
-
-.error-message {
-	color: red;
-	font-size: 16px;
-	display: inline-block;
 }
 
 .right-box {
@@ -410,21 +503,12 @@ body {
 	height: 24px;
 }
 
-.test-to-live-switch input {
-	opacity: 0;
-	width: 0;
-	height: 0;
-}
-
 .test-to-live-slider {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: #ccc;
-	transition: 0.4s;
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  transition: 0.4s;
 }
 
 .test-to-live-slider::before {
@@ -434,8 +518,7 @@ body {
 	width: 20px;
 	left: 3px;
 	bottom: 2px;
-	background-color: white;
-	-webkit-transition: 0.4s;
+	background-color: white;  
 	transition: 0.4s;
 }
 
@@ -447,7 +530,7 @@ input:focus + .test-to-live-slider {
 	box-shadow: 0 0 1px #30c8ff;
 }
 
-input:checked + .test-to-live-slider:before {
+input:checked + .test-to-live-slider::before {
 	transform: translateX(24px);
 }
 
@@ -466,11 +549,6 @@ input:checked + .test-to-live-slider:before {
 }
 
 .radio-label-wrap .radio-input {
-	margin: 0;
-}
-
-.message-type-wrapper .input-container,
-.creation-type-wrapper .input-container {
 	margin: 0;
 }
 
@@ -504,33 +582,14 @@ input:checked + .test-to-live-slider:before {
 	gap: 0.5rem;
 }
 
-.single-sided-radio-wrap input,
-.double-sided-radio-wrap input {
-	margin: 0;
-}
-
-.container.spacer.HTML,
-.container.spacer.PDFUpload,  .Trifold .ExistingTemplate {
+.container.spacer.html,
+.container.spacer.pdf-upload,  .trifold .existing-template {
 	display: flex;
 	padding: 44px;
 }
 
 .d-none {
   display: none;
-}
-
-.input-field {
-	outline: none;
-	border: 4px solid lightgray;
-	border-radius: 4px;
-	height: 32px;
-	font-size: 16px;
-	box-sizing: border-box;
-}
-
-.input-fields .input-box .input-label,
-.input-label-radio {
-	font-size: 16px;
 }
 
 .size-radio-buttons-wrap .radio-input {
@@ -560,18 +619,27 @@ input:checked + .test-to-live-slider:before {
 	margin: 0 !important;
 }
 
-.SelfMailer .size-radio-buttons-wrap .radio-buttons {
+.self-mailer .size-radio-buttons-wrap .radio-buttons {
 	gap: 2rem;
+}
+
+.self-mailer-pdf-container .input-fields {
+  justify-content: flex-start;
+  gap: 4rem;
+}
+
+.pdf-container .input-fields {
+	display: flex;
+	justify-content: space-between;
 }
 
 .html-screen-wrapper .outer-input-fields .input-fields {
 	display: flex;
 	flex-wrap: wrap;
-	column-gap: 2rem;
-	row-gap: 2rem;
+  gap: 2rem;
 }
 
-.SelfMailer .html-screen-wrapper .outer-input-fields .input-fields {
+.self-mailer .html-screen-wrapper .outer-input-fields .input-fields {
   flex-direction: column;
 }
 
@@ -582,8 +650,15 @@ input:checked + .test-to-live-slider:before {
 	gap: 0.25rem;
 }
 
-.Trifold .html-screen-wrapper .input-fields .input-box,
-.SelfMailer .html-screen-wrapper .input-fields .input-box {
+.pdf-container .input-fields .input-box {
+	display: flex;
+	flex-direction: column;
+  width: 48%;
+	gap: 0.5rem;
+}
+
+.trifold .html-screen-wrapper .input-fields .input-box,
+.self-mailer .html-screen-wrapper .input-fields .input-box {
 	width: 90%;
 }
 
@@ -599,7 +674,7 @@ input:checked + .test-to-live-slider:before {
 	gap: 0.25rem;
 }
 
-.size-radio-buttons-wrap .size_radio_label {
+.size-radio-buttons-wrap .size-radio-label {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
@@ -614,7 +689,6 @@ input:checked + .test-to-live-slider:before {
 	outline: none;
 	resize: none;
 	width: 100%;
-	height: 100%;
 	padding: 10px;
 	padding-top: 3.5rem;
 	line-height: 1.5rem;
@@ -634,12 +708,6 @@ input:checked + .test-to-live-slider:before {
 	width: 50%;
 }
 
-.html-size .radio-buttons,
-.html-size .input-label-radio,
-.outer-input-fields .input-fields {
-	margin: 0;
-}
-
 .html-editor {
 	position: relative;
 	width: 50%;
@@ -652,32 +720,28 @@ input:checked + .test-to-live-slider:before {
 	gap: 0.75rem;
 }
 
-.html-size .input-label-radio {
-	font-size: 16px;
-}
-
-.html__btn--front {
+.html-btn-front {
 	left: 1rem;
 	top: 1.25rem;
 }
 
-.html__btn--back {
+.html-btn-back {
 	left: 6rem;
 	top: 1.25rem;
 }
 
-.btn.btn-light.html__btn--front:hover,
-.btn.btn-light.html__btn--back:hover, .btn.btn-light.html__btn-card--front:hover, .btn.btn-light.html__btn-card--back:hover {
+.btn.btn-light.html-btn-front:hover,
+.btn.btn-light.html-btn-back:hover, .btn.btn-light.html-btn-card-front:hover, .btn.btn-light.html-btn-card-back:hover {
 	background: #bfbfbf;
 }
 
-.btn.btn-light.html__btn--front.show,
-.btn.btn-light.html__btn--back.show,.btn.btn-light.html__btn-card--front.show, .btn.btn-light.html__btn-card--back.show {
+.btn.btn-light.html-btn-front.show,
+.btn.btn-light.html-btn-back.show,.btn.btn-light.html-btn-card-front.show, .btn.btn-light.html-btn-card-back.show {
 	background: #a9a9a9;
 }
 
-.html__btn--front,
-.html__btn--back, .html__btn-card--front, .html__btn-card--back {
+.html-btn-front,
+.html-btn-back, .html-btn-card-front, .html-btn-card-back {
 	position: absolute;
 	padding: 0.3rem 1rem;
 	border-radius: 4px;
@@ -687,19 +751,13 @@ input:checked + .test-to-live-slider:before {
 	background: #d1d1d1;
 }
 
-.Trifold .screen-1 .btn{
+.trifold .screen-1 .btn{
 	position: static;
 }
 
 .screen-1 .radio-buttons .radio-label,
 .screen-1 .checkboxes .checkbox-label {
 	font-size: 16px;
-}
-
-.screen-2 .input-label-radio,
-.screen-2 .radio-buttons,
-.screen-2 .checkboxes {
-	margin-left: 3%;
 }
 
 .error-msg {
@@ -732,24 +790,7 @@ input:checked + .test-to-live-slider:before {
 	gap: 2rem;
 }
 
-.pdf-container .input-fields {
-	display: flex;
-	justify-content: space-between;
-}
-
-.self-mailer-pdf-container .input-fields {
-  justify-content: flex-start;
-  gap: 4rem;
-}
-
-.pdf-container .input-fields .input-box {
-	display: flex;
-	flex-direction: column;
-  width: 48%;
-	gap: 0.5rem;
-}
-
-.SelfMailer .pdf-container .input-fields .input-box {
+.self-mailer .pdf-container .input-fields .input-box {
   width: 50%;
 }
 
@@ -757,10 +798,6 @@ input:checked + .test-to-live-slider:before {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
-}
-
-.pdf-size .input-label-radio, .pdf-card-size .input-label-radio {
-	margin: 0;
 }
 
 .upload-box {
@@ -826,18 +863,6 @@ label[for="self-mailer-pdf-upload"] {
 	margin-bottom: 20px;
 }
 
-.mapping-radio-group label {
-	display: flex;
-	align-items: center;
-	font-size: 1rem;
-	font-weight: 500;
-	cursor: pointer;
-}
-
-.mapping-radio-group input {
-	display: none;
-}
-
 .mapping-radio {
 	width: 16px;
 	height: 16px;
@@ -851,11 +876,6 @@ label[for="self-mailer-pdf-upload"] {
 .mapping-radio-group input:checked + .mapping-radio {
 	border-color: #007bff;
 	background: #007bff;
-}
-
-.mapping-dropdown {
-	display: flex;
-	flex-direction: column;
 }
 
 #step4 label {
@@ -878,42 +898,10 @@ label[for="self-mailer-pdf-upload"] {
 	margin-bottom: 12px;
 }
 
-.mapping-fields-group label {
-	font-weight: bold;
-	font-size: 14px;
-	color: #333;
-}
-
-.mapping-fields-group select,
-#dropdown-options,
-#search-contact {
-	width: 60%;
-	padding: 8px;
-	font-size: 14px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
-#dropdown-options,
-#search-contact {
-	width: 50%;
-	margin: auto;
-}
-
 .mapping-fields,
-.error-message-contactMapping {
+.error-message-contact-mapping {
 	width: 80%;
 	margin: auto;
-}
-
-.dropdown-options div {
-	padding: 8px;
-	cursor: pointer;
-}
-
-.dropdown-options div:hover {
-	background: rgb(37 150 190);
 }
 
 #search-contact:focus {
@@ -938,24 +926,13 @@ label[for="self-mailer-pdf-upload"] {
     overflow: hidden;
 }
 
-#sendDate, #sendDate3 {
-    box-sizing: border-box;
-    outline: 0;
-    padding: .75rem;
-    position: relative;
-    width: 100%;
-}
-
 input[type="date"]::-webkit-calendar-picker-indicator {
     background: transparent;
-    bottom: 0;
+    inset: 0;
     color: transparent;
     cursor: pointer;
     height: auto;
-    left: 0;
     position: absolute;
-    right: 0;
-    top: 0;
     width: auto;
 }
 
@@ -981,8 +958,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none;
 }
 
-.container.spacer.HTML .html-btn-wrap,
-.container.spacer.PDFUpload .html-btn-wrap {
+.container.spacer.html .html-btn-wrap,
+.container.spacer.pdf-upload .html-btn-wrap {
   position: absolute;
   width: 94%;
   height: 7%;
@@ -1025,11 +1002,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     top: 10px;
     transform: rotate(90deg);
     pointer-events: none
-}
-
-.outer-input-fields .input-fields .input-label,
-.pdf-container .input-label {
-  font-size: 16px !important;
 }
 
 .retry-btn-wrap {
