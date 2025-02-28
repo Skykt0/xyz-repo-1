@@ -56,13 +56,13 @@ define([
     connection.trigger('ready');
   });
 
-  function setFileToInput(base64String, fileName) {
+  function setFileToInput(msgType, base64String, fileName) {
     let file = base64ToFile(base64String, fileName);
     let dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);
-    $('#pdf-upload')[0].files = dataTransfer.files;
-    $('#file-name').text(dataTransfer.files[0].name);
-    $('#remove-pdf').show();
+    $(`.${msgType} .pdf-upload`)[0].files = dataTransfer.files;
+    $(`${msgType} .file-name`).text(dataTransfer.files[0].name);
+    $(`.${msgType} .remove-pdf`).show();
   };
 
   function initialize(data) {
@@ -148,7 +148,7 @@ define([
         break;
       case 'encodedPdf':
         var base64Data = 'data:application/pdf;base64,'+value;
-        setFileToInput(base64Data, postcardArguments['pdfName']);
+        setFileToInput(postcardArguments.messageType.replace(/\s+/g, ''), base64Data, postcardArguments['pdfName']);
         break;
       case 'mailingClass':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .mailing-class';
