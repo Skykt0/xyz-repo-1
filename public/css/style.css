@@ -576,7 +576,7 @@ input:checked + .test-to-live-slider::before {
 	gap: 0.5rem;
 }
 
-.container.spacer.html,
+.container.spacer.html-creation-type,
 .container.spacer.pdf-creation-type,  .trifold .template-creation-type {
 	display: flex;
 	padding: 44px;
@@ -948,7 +948,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none;
 }
 
-.container.spacer.html .html-btn-wrap,
+.container.spacer.html-creation-type .html-btn-wrap,
 .container.spacer.pdf-creation-type .html-btn-wrap {
   position: absolute;
   width: 94%;
