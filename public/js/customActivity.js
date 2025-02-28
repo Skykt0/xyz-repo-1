@@ -61,7 +61,7 @@ define([
     let dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);
     $(`.${msgType} .pdf-upload`)[0].files = dataTransfer.files;
-    $(`${msgType} .file-name`).text(dataTransfer.files[0].name);
+    $(`.${msgType} .file-name`).text(dataTransfer.files[0].name);
     $(`.${msgType} .remove-pdf`).show();
   };
 
