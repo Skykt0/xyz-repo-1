@@ -99,9 +99,9 @@ define([
         break;
       case 'messageType':
         if(value === 'trifold'){
-          value = 'SelfMailer';
+          value = 'selfmailer';
         }
-        if (value === 'SelfMailer') {
+        if (value === 'selfmailer') {
           $('#card-insert-container').addClass('visible');
           $('.card-insert-wrapper').addClass('visible');
         }
@@ -238,7 +238,7 @@ define([
 
         if (selectedRadio.length > 0) {
           let selectedRadioValue = selectedRadio.val().replace(/\s+/g, '');
-          selectedMessageType = isCartInsertEnabled && selectedRadioValue === 'SelfMailer' ? 'trifold'  : selectedRadioValue;
+          selectedMessageType = isCartInsertEnabled && selectedRadioValue === 'selfmailer' ? 'trifold'  : selectedRadioValue;
         }
 
         if (isCartInsertEnabled) {
@@ -429,7 +429,7 @@ define([
     }
     let selectedMessageType = $('input[name="msgType"]:checked').val();
     previewPayload.xyz = 'live_deepakTest';
-    previewPayload.messageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'trifold'  : selectedMessageType;
+    previewPayload.messageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
     previewPayload.creationType = $('input[name=\'createType\']:checked').val();
     payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
     payload['arguments'].execute.inArguments[0]['MapDESchema']=MapDESchema;
@@ -455,7 +455,7 @@ define([
       } else if(previewPayload.creationType === 'PDF Upload'){
         postCardJson.pdf = previewPayload.pdfLink;
       }
-    } else if(previewPayload.messageType === 'SelfMailer'){
+    } else if(previewPayload.messageType === 'selfmailer'){
       if(previewPayload.creationType === 'html'){
         postCardJson.insideHTML = previewPayload.frontHtmlContent;
         postCardJson.outsideHTML = previewPayload.backHtmlContent;
@@ -626,7 +626,7 @@ define([
       if (this.checked) {
         $('#card-insert-type').removeClass('hidden');
         let selectedMessageType = $('input[name="msgType"]:checked').val();
-        if(selectedMessageType === 'SelfMailer') {
+        if(selectedMessageType === 'selfmailer') {
           $('#extTempId').css('display','none');
           $('label[for="extTempId"]').css('display','none');
           $('#extTempId').prop('checked', false);
@@ -643,7 +643,7 @@ define([
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
-    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'trifold'  : selectedMessageType;
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
     $(`.${selectedMessageType} .html-editor .html-btn-front`).click(function () {
       $(`.${selectedMessageType} .html-editor .btn-light`).removeClass('show');
       $(`.${selectedMessageType} .html-editor .html-area`).removeClass('show');
@@ -740,7 +740,7 @@ define([
       selectedCardInsertType = $('input[name="cardType"]:checked').val();
     }
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'Trifold'  : selectedMessageType;
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'Trifold'  : selectedMessageType;
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-1 .description`));
       
@@ -930,7 +930,7 @@ define([
             const viewport = page.getViewport({ scale: 1 });
             const width = viewport.width;
             const height = viewport.height;
-            const pdfDimensions = selectedMessageType === 'SelfMailer' ? `${(width / 72)}x${(height / 72)}` : `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
+            const pdfDimensions = selectedMessageType === 'selfmailer' ? `${(width / 72)}x${(height / 72)}` : `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
             const selectedPDFDimension = $(`.${selectedMessageType} .pdf-size input[name="${selectedMessageType}-pdf-size"]:checked`).data('dimentions');
             if (numPages !== 2) {
               resolve({
@@ -969,7 +969,7 @@ define([
   function setPreviewPayload() {
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     let isCartInsertEnabled = $('#card-insert').prop('checked');
-    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'trifold'  : selectedMessageType;
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
     let selectedCardInsertType;
     let isTrifoldEnabled = selectedMessageType === 'trifold';
@@ -1099,10 +1099,10 @@ define([
     const baseUrl = 'https://api.postgrid.com/print-mail/v1/';
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'trifold'  : selectedMessageType;
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
     let isTrifoldEnabled = selectedMessageType === 'trifold';
     const selectedCardInsertType = $('input[name="cardType"]:checked').val();
-    const url = selectedMessageType === 'SelfMailer' || selectedMessageType === 'trifold' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
+    const url = selectedMessageType === 'selfmailer' || selectedMessageType === 'trifold' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
     
     let data;
     let headers = {
@@ -1145,7 +1145,7 @@ define([
       if(messageType === 'Postcards'){
         data.append('frontHTML', previewPayload.frontHtmlContent);
         data.append('backHTML', previewPayload.backHtmlContent);
-      } else if(messageType === 'SelfMailer'){
+      } else if(messageType === 'selfmailer'){
         data.append('insideHTML', previewPayload.frontHtmlContent);
         data.append('outsideHTML', previewPayload.backHtmlContent);
       }
@@ -1178,7 +1178,7 @@ define([
       if(messageType === 'Postcards'){
         data.append('frontTemplate', previewPayload.frontTemplateId);
         data.append('backTemplate', previewPayload.backTemplateId);
-      } else if(messageType === 'SelfMailer'){
+      } else if(messageType === 'selfmailer'){
         if(isTrifoldEnabled) {
           if(selectedCardInsertType === 'singleSide') {
             data.append('adhesiveInsert[singleSided][template]', previewPayload.singleSideTemplateId);
@@ -1217,7 +1217,7 @@ define([
       previewPayload.pdfLink = result.uploadedPDF;
 
       if(previewPayload.liveApiKeyEnabled) {
-        let msgType = selectedMessageType === 'SelfMailer' ? 'self_mailers' : 'postcards';
+        let msgType = selectedMessageType === 'selfmailer' ? 'self_mailers' : 'postcards';
         deleteMailItem(msgType, result.id);
       }
       return result;
@@ -1228,7 +1228,7 @@ define([
 
   async function fetchMessageDetails(messageId) {
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-    const urlMessageType = selectedMessageType === 'SelfMailer' ? 'self_mailers' : 'postcards';
+    const urlMessageType = selectedMessageType === 'selfmailer' ? 'self_mailers' : 'postcards';
     const apiUrl = `https://api.postgrid.com/print-mail/v1/${urlMessageType}/${messageId}`;
     const apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
 
@@ -1430,7 +1430,7 @@ define([
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     let fromContactElement = $('.contact-dropdown-container #search-contact');
 
-    if(selectedMessageType === 'SelfMailer' && !validateInputField(fromContactElement)) {
+    if(selectedMessageType === 'selfmailer' && !validateInputField(fromContactElement)) {
       isValid = false;
     } else {
       fromContactElement.removeClass('error');
@@ -1507,7 +1507,7 @@ define([
   function populateDropdown(templateName, templates) {
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'SelfMailer' ? 'trifold'  : selectedMessageType;
+    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
     const $templateInput = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}`);
     const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}List`);

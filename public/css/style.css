@@ -71,12 +71,6 @@ body {
 	margin: 0;
 }
 
-.screen-2 .input-label-radio,
-.screen-2 .radio-buttons,
-.screen-2 .checkboxes {
-	margin-left: 3%;
-}
-
 .html-size .input-label-radio {
 	font-size: 16px;
 }
@@ -619,11 +613,11 @@ input:checked + .test-to-live-slider::before {
 	margin: 0 !important;
 }
 
-.self-mailer .size-radio-buttons-wrap .radio-buttons {
+.selfmailer .size-radio-buttons-wrap .radio-buttons {
 	gap: 2rem;
 }
 
-.self-mailer-pdf-container .input-fields {
+.selfmailer-pdf-container .input-fields {
   justify-content: flex-start;
   gap: 4rem;
 }
@@ -639,7 +633,7 @@ input:checked + .test-to-live-slider::before {
   gap: 2rem;
 }
 
-.self-mailer .html-screen-wrapper .outer-input-fields .input-fields {
+.selfmailer .html-screen-wrapper .outer-input-fields .input-fields {
   flex-direction: column;
 }
 
@@ -658,7 +652,7 @@ input:checked + .test-to-live-slider::before {
 }
 
 .trifold .html-screen-wrapper .input-fields .input-box,
-.self-mailer .html-screen-wrapper .input-fields .input-box {
+.selfmailer .html-screen-wrapper .input-fields .input-box {
 	width: 90%;
 }
 
@@ -790,7 +784,7 @@ input:checked + .test-to-live-slider::before {
 	gap: 2rem;
 }
 
-.self-mailer .pdf-container .input-fields .input-box {
+.selfmailer .pdf-container .input-fields .input-box {
   width: 50%;
 }
 
