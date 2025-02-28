@@ -1033,7 +1033,7 @@ define([
         previewPayload.backHtmlContent = backHtmlContent;
       } else {
         const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
-        const pdfInput = $(`.${selectedMessageType} .${selectedCreationType} .pdf-creation-type`)[0];
+        const pdfInput = $(`.${selectedMessageType} .${selectedCreationType} .pdf-upload`)[0];
         const pdfFile = pdfInput.files[0] ;
         previewPayload.isExpressDelivery = isExpressDelivery;
         previewPayload.pdf = pdfFile;
@@ -1071,7 +1071,7 @@ define([
         previewPayload.cardSize = templateCardSize;
       }
 
-      previewPayload.screen = 'template-creation-type';
+      previewPayload.screen = 'existing-template';
       previewPayload.description = description;
       previewPayload.sendDate = getFormattedDate();
       previewPayload.size = size;
@@ -1165,7 +1165,7 @@ define([
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
       }
-    } else if(previewPayload.screen === 'template-creation-type') {
+    } else if(previewPayload.screen === 'existing-template') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
         'to': toContact,
