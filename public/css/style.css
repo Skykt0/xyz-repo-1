@@ -3,12 +3,11 @@
 }
 
 body {
-    padding: 0;
-    margin: 0;
-    font-family: "Roboto";
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, sans-serif;
 }
 
-/* STEP 3 - SCREEN 3 CSS*/
 .screen-3 .spacer {
 	padding: 44px;
   display: flex;
@@ -20,79 +19,109 @@ body {
 	display: grid;
 	grid-template-rows: repeat(2, auto);
 	grid-template-columns: repeat(2, auto);
-
 	align-content: start;
-	row-gap: 15px;
-	column-gap: 50px;
+  gap: 15px 50px;
 	margin-bottom: 40px;
 }
+
 .screen-3 .input-box {
 	display: flex;
 	flex-direction: column;
-	/* flex-basis: calc(50% - 1rem); */
   width: 48%;
 }
+
+.input-field {
+	outline: none;
+	border: 4px solid lightgray;
+	border-radius: 4px;
+	height: 32px;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+
 .screen-3 .input-field {
 	padding: 5px 10px;
 	border-radius: 3px;
 	border: 3px solid lightgray;
-	box-shadow: 0px 0px 1px 1px lightgray;
-	-webkit-transition: 0.5s;
+	box-shadow: 0 0 1px 1px lightgray;
 	transition: 0.5s;
 	outline: none;
 }
+
 .screen-3 .input-label {
 	margin-bottom: 5px;
 }
-.screen-3 .input-label-radio {
-    font-size: 16px;
-    margin-bottom: 10px;
-    /* margin-top: 20px; */
+
+.pdf-container .input-label,
+.outer-input-fields .input-fields .input-label {
+  font-size: 16px !important;
 }
 
-.Trifold .screen-3 .input-label-radio {
-    margin-top: 0px;
+.input-fields .input-box .input-label,
+.input-label-radio {
+	font-size: 16px;
 }
+
+.screen-3 .input-label-radio {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.pdf-size .input-label-radio, .pdf-card-size .input-label-radio {
+	margin: 0;
+}
+
+.html-size .input-label-radio {
+	font-size: 16px;
+}
+
+.html-size .radio-buttons,
+.html-size .input-label-radio,
+.outer-input-fields .input-fields {
+	margin: 0;
+}
+
+.trifold .screen-3 .input-label-radio {
+  margin-top: 0;
+}
+
 .screen-3 .radio-buttons {
 	display: grid;
 	grid-template-columns: repeat(11, auto);
 	justify-content: space-between;
-	/* margin-bottom: 20px; */
 }
-.Trifold .screen-3 .radio-buttons {
-	margin-bottom: 0px;
-}
+
 .screen-3 .checkbox-label {
-    font-size: 16px;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    width: max-content;
+  font-size: 16px;
+  user-select: none;
+  width: max-content;
 }
+
 .screen-3 .checkbox-input {
-    margin-right: 5px;
-    width: 1.2em;
-    height: 1.2em;
-    vertical-align: bottom;
+  margin-right: 5px;
+  width: 1.2em;
+  height: 1.2em;
+  vertical-align: bottom;
 }
+
 .screen-3 .checkboxes {
 	display: grid;
 	grid-template-rows: repeat(2, auto);
-	/* margin-top: 40px; */
 }
+
 .screen-3 .three-checkboxes {
 	display: grid;
 	grid-template-columns: repeat(3, auto);
 	justify-content: space-between;
 	margin-bottom: 15px;
 }
+
 .screen-3 .two-checkboxes {
 	display: grid;
 	grid-template-columns: repeat(2, auto);
 	justify-content: space-between;
 }
+
 .screen-3 .html-editior {
 	border: 3px solid lightgray;
 	border-radius: 10px;
@@ -103,19 +132,19 @@ body {
 	height: 100%;
 	padding: 10px;
 }
+
 .screen-3 .existing-template-details {
 	display: flex;
 	flex-wrap: wrap;
-	column-gap: 2rem;
-	row-gap: 2rem;
+  gap: 2rem;
 }
+
 .screen-3 .five-checkboxes {
 	display: grid;
 	grid-template-columns: repeat(5, auto);
 	justify-content: space-between;
-	/* margin-bottom: 15px;
-	margin-bottom: 40px; */
 }
+
 .screen-3 .drop-pdf {
 	width: 100%;
 	background-color: lightgrey;
@@ -125,31 +154,43 @@ body {
 	position: relative;
 	cursor: pointer;
 }
+
 .screen-3 .input-label-drop {
 	font-size: 18px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	-webkit-user-select: none;
-	-webkit-touch-callout: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 }
+
+.error-message {
+	color: red;
+	font-size: 16px;
+	display: inline-block;
+}
+
 .screen-3 .error-message {
 	color: red;
 	font-size: 16px;
 	display: block;
 	margin-top: 4px;
 }
+
 .screen-3 .error-field {
 	border: 1px solid red !important;
 }
+
+.mapping-dropdown {
+	display: flex;
+	flex-direction: column;
+}
+
 .screen-3 .mapping-dropdown {
 	position: relative;
 	width: 100%;
 }
+
 .screen-3 input[type="text"] {
   width: 100%;
   padding: 5px 10px;
@@ -157,38 +198,55 @@ body {
   outline: none;
   box-sizing: border-box;
   border: 3px solid lightgray;
-  box-shadow: 0px 0px 1px 1px lightgray;
+  box-shadow: 0 0 1px 1px lightgray;
 }
 
-/* Basic styling for dropdowns */
+.mapping-fields-group select,
+#dropdown-options,
+#search-contact {
+	width: 60%;
+	padding: 8px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#dropdown-options,
+#search-contact {
+	width: 50%;
+	margin: auto;
+}
+
 .screen-3 #search-contact,
-.screen-3 #frontTemplateInput,
-.screen-3 #backTemplateInput {
+.screen-3 #front-template-input,
+.screen-3 #back-template-input {
     width: 100%;
     padding: 8px 30px 8px 12px; 
     box-sizing: border-box;
     border: 3px solid #ccc;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
     font-size: 14px;
     background: transparent;
 }
 
-/* Arrow CSS */
 .screen-3 .arrow {
 	border: solid black;
 	border-width: 0 1.5px 1.5px 0;
 	display: inline-block;
 	padding: 3px;
 	position: absolute;
-	right: 10px; /* Position the arrow inside the input field */
+	right: 10px;
 	top: 50%;
-	transform: translateY(-50%) rotate(45deg); /* Center and rotate the arrow */
-	pointer-events: none; /* Ensure the arrow doesn't block clicks */
+	transform: translateY(-50%) rotate(45deg);
+	pointer-events: none;
 }
+
 .screen-3 .down {
-	transform: translateY(-50%) rotate(45deg); /* Down arrow rotation */
+	transform: translateY(-50%) rotate(45deg);
 }
+
 .screen-3 .dropdown-options {
 	position: absolute;
 	top: 100%;
@@ -200,23 +258,31 @@ body {
 	background: #fff;
 	display: none;
 	z-index: 1000;
-	border-radius: 4px; /* Rounded corners */
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
 }
+
+.dropdown-options div {
+	padding: 8px;
+	cursor: pointer;
+}
+
 .screen-3 .dropdown-options div,
 .screen-3 .dropdown-options li {
 	padding: 8px;
 	cursor: pointer;
-	list-style: none; /* Ensure no bullet points */
+	list-style: none;
 }
+
+.dropdown-options div:hover {
+	background: rgb(37 150 190);
+}
+
 .screen-3 .dropdown-options div:hover,
 .screen-3 .dropdown-options li:hover {
 	background: #f0f0f0;
 }
 
-/* STEP 3 - SCREEN 3C CSS*/
-
-/* step1 -css below */
 #step1 {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -237,11 +303,13 @@ body {
 	font-size: 24px;
 	font-weight: bold;
 	text-align: center;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
+
 .step1-heading {
 	max-width: 270px;
 }
+
 .step4-heading {
 	max-width: 100%;
 	margin-bottom: 20px;
@@ -253,6 +321,20 @@ body {
 	max-width: 350px;
 }
 
+.mapping-fields-group label {
+	font-weight: bold;
+	font-size: 14px;
+	color: #333;
+}
+
+.mapping-radio-group label {
+	display: flex;
+	align-items: center;
+	font-size: 1rem;
+	font-weight: 500;
+	cursor: pointer;
+}
+
 #step1 label {
 	display: block;
 	font-size: 20px;
@@ -260,16 +342,31 @@ body {
 	margin-bottom: 8px;
 }
 
+.test-to-live-switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.single-sided-radio-wrap input,
+.double-sided-radio-wrap input {
+	margin: 0;
+}
+
+.mapping-radio-group input {
+	display: none;
+}
+
 #step1 input {
 	width: 100%;
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	width: -webkit-fill-available;
 }
+
 #step1 input:focus {
-	border-color: #a0a0a0; /* Slightly darker gray when focused */
-	outline: none; /* Removes the default browser outline */
+	border-color: #a0a0a0;
+	outline: none;
 }
 
 .step1-right-panel {
@@ -277,6 +374,7 @@ body {
 	background-size: cover;
 	background-position: center;
 }
+
 .toggle-password {
 	position: absolute;
 	right: 2%;
@@ -285,50 +383,44 @@ body {
 	cursor: pointer;
 	user-select: none;
 }
-/* end of step1 css */
-
-/* start of step2 css */
 
 .second-step {
 	display: grid;
-	grid-template-columns: 1fr auto; /* Auto width for right box */
+	grid-template-columns: 1fr auto;
 	gap: 10px;
 	padding: 44px;
 	align-items: start;
 	position: relative;
 }
-/* Left Box */
+
 .left-box {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
 }
-/* Section Label */
+
 .section-label {
 	font-weight: 600;
 	user-select: none;
   margin: 0;
 	font-size: var(--heading);
-  -webkit-user-select: none;
-	-webkit-touch-callout: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 }
-/* Input Container */
+
 .input-container {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 20px; /* Increased gap */
+	gap: 20px;
 	align-items: center;
-	color: #6b6b6b; /* Light gray color for fading */
+	color: #6b6b6b;
 }
-/* Radio Buttons and Labels */
+
 .radio-input {
 	width: 18px;
 	height: 18px;
 	cursor: pointer;
   margin: 0;
 }
+
 .radio-label,
 #card-insert-container label,
 #card-insert-type label {
@@ -349,13 +441,13 @@ body {
 	align-items: center;
 	gap: 10px;
 }
-/* Checkbox Size */
+
 #card-insert {
 	width: 18px;
 	height: 18px;
 	cursor: pointer;
 }
-/* Card Insert Type */
+
 #card-insert-type {
 	display: flex;
 	flex-direction: column;
@@ -366,24 +458,22 @@ body {
 	display: none;
 }
 
+.message-type-wrapper .input-container,
+.creation-type-wrapper .input-container {
+	margin: 0;
+}
+
 #card-insert-type .input-container {
 	display: flex;
 	align-items: center;
-	gap: 20px; /* Increased gap */
+	gap: 20px;
 }
 
-/* Creation Type */
 .input-container input[type="radio"] {
 	width: 18px;
 	height: 18px;
 }
-/* Error Messages */
-.error-message {
-	color: red;
-	font-size: 16px;
-	display: inline-block;
-}
-/* Right Box (Toggle Field) */
+
 .right-box {
 	position: absolute;
 	margin-top: 40px;
@@ -392,66 +482,57 @@ body {
 	align-items: center;
 	justify-content: flex-end;
 }
-/* Align Toggle Properly */
+
 .align-right {
 	font-size: 18px;
 	display: flex;
 	align-items: center;
 	gap: 10px;
 }
-/* Toggle Switch */
+
 .test-to-live-switch {
 	position: relative;
 	display: inline-block;
 	width: 50px;
 	height: 24px;
 }
-/* Hide Default Checkbox */
-.test-to-live-switch input {
-	opacity: 0;
-	width: 0;
-	height: 0;
-}
-/* Toggle Slider */
+
 .test-to-live-slider {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: #ccc;
-	-webkit-transition: 0.4s;
-	transition: 0.4s;
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  transition: 0.4s;
 }
-.test-to-live-slider:before {
+
+.test-to-live-slider::before {
 	position: absolute;
 	content: "";
 	height: 20px;
 	width: 20px;
 	left: 3px;
 	bottom: 2px;
-	background-color: white;
-	-webkit-transition: 0.4s;
+	background-color: white;  
 	transition: 0.4s;
 }
-/* Toggle Active State */
+
 input:checked + .test-to-live-slider {
 	background-color: #30c8ff;
 }
+
 input:focus + .test-to-live-slider {
 	box-shadow: 0 0 1px #30c8ff;
 }
-input:checked + .test-to-live-slider:before {
-	-webkit-transform: translateX(24px);
-	-ms-transform: translateX(24px);
+
+input:checked + .test-to-live-slider::before {
 	transform: translateX(24px);
 }
-/* Rounded Sliders */
+
 .test-to-live-slider.round {
 	border-radius: 34px;
 }
-.test-to-live-slider.round:before {
+
+.test-to-live-slider.round::before {
 	border-radius: 50%;
 }
 
@@ -462,11 +543,6 @@ input:checked + .test-to-live-slider:before {
 }
 
 .radio-label-wrap .radio-input {
-	margin: 0;
-}
-
-.message-type-wrapper .input-container,
-.creation-type-wrapper .input-container {
 	margin: 0;
 }
 
@@ -500,37 +576,14 @@ input:checked + .test-to-live-slider:before {
 	gap: 0.5rem;
 }
 
-.single-sided-radio-wrap input,
-.double-sided-radio-wrap input {
-	margin: 0;
-}
-/* end of step2 css */
-
-/* start of step 3 css */
-/* Postcard HTML creation CSS */
-
-.container.spacer.HTML,
-.container.spacer.PDFUpload,  .Trifold .ExistingTemplate {
+.container.spacer.html-creation-type,
+.container.spacer.pdf-creation-type,  .trifold .template-creation-type {
 	display: flex;
 	padding: 44px;
 }
 
 .d-none {
   display: none;
-}
-
-.input-field {
-	outline: none;
-	border: 4px solid lightgray;
-	border-radius: 4px;
-	height: 32px;
-	font-size: 16px;
-	box-sizing: border-box;
-}
-
-.input-fields .input-box .input-label,
-.input-label-radio {
-	font-size: 16px;
 }
 
 .size-radio-buttons-wrap .radio-input {
@@ -559,33 +612,47 @@ input:checked + .test-to-live-slider:before {
 	gap: 8rem;
 	margin: 0 !important;
 }
-.SelfMailer .size-radio-buttons-wrap .radio-buttons {
+
+.selfmailer .size-radio-buttons-wrap .radio-buttons {
 	gap: 2rem;
 }
 
-/* common css */
+.selfmailer-pdf-container .input-fields {
+  justify-content: flex-start;
+  gap: 4rem;
+}
+
+.pdf-container .input-fields {
+	display: flex;
+	justify-content: space-between;
+}
 
 .html-screen-wrapper .outer-input-fields .input-fields {
 	display: flex;
 	flex-wrap: wrap;
-	column-gap: 2rem;
-	row-gap: 2rem;
+  gap: 2rem;
 }
 
-.SelfMailer .html-screen-wrapper .outer-input-fields .input-fields {
+.selfmailer .html-screen-wrapper .outer-input-fields .input-fields {
   flex-direction: column;
 }
 
 .html-screen-wrapper .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
-	/* flex-basis: calc(100% - 1rem); */
   width: 90%;
 	gap: 0.25rem;
 }
 
-.Trifold .html-screen-wrapper .input-fields .input-box,
-.SelfMailer .html-screen-wrapper .input-fields .input-box {
+.pdf-container .input-fields .input-box {
+	display: flex;
+	flex-direction: column;
+  width: 48%;
+	gap: 0.5rem;
+}
+
+.trifold .html-screen-wrapper .input-fields .input-box,
+.selfmailer .html-screen-wrapper .input-fields .input-box {
 	width: 90%;
 }
 
@@ -601,7 +668,7 @@ input:checked + .test-to-live-slider:before {
 	gap: 0.25rem;
 }
 
-.size-radio-buttons-wrap .size_radio_label {
+.size-radio-buttons-wrap .size-radio-label {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
@@ -616,7 +683,6 @@ input:checked + .test-to-live-slider:before {
 	outline: none;
 	resize: none;
 	width: 100%;
-	height: 100%;
 	padding: 10px;
 	padding-top: 3.5rem;
 	line-height: 1.5rem;
@@ -636,12 +702,6 @@ input:checked + .test-to-live-slider:before {
 	width: 50%;
 }
 
-.html-size .radio-buttons,
-.html-size .input-label-radio,
-.outer-input-fields .input-fields {
-	margin: 0;
-}
-
 .html-editor {
 	position: relative;
 	width: 50%;
@@ -654,32 +714,28 @@ input:checked + .test-to-live-slider:before {
 	gap: 0.75rem;
 }
 
-.html-size .input-label-radio {
-	font-size: 16px;
-}
-
-.html__btn--front {
+.html-btn-front {
 	left: 1rem;
 	top: 1.25rem;
 }
 
-.html__btn--back {
+.html-btn-back {
 	left: 6rem;
 	top: 1.25rem;
 }
 
-.btn.btn-light.html__btn--front:hover,
-.btn.btn-light.html__btn--back:hover, .btn.btn-light.html__btn-card--front:hover, .btn.btn-light.html__btn-card--back:hover {
-	background: #bfbfbf; /* Slightly darker gray on hover */
+.btn.btn-light.html-btn-front:hover,
+.btn.btn-light.html-btn-back:hover, .btn.btn-light.html-btn-card-front:hover, .btn.btn-light.html-btn-card-back:hover {
+	background: #bfbfbf;
 }
 
-.btn.btn-light.html__btn--front.show,
-.btn.btn-light.html__btn--back.show,.btn.btn-light.html__btn-card--front.show, .btn.btn-light.html__btn-card--back.show {
-	background: #a9a9a9; /* Even darker gray when active */
+.btn.btn-light.html-btn-front.show,
+.btn.btn-light.html-btn-back.show,.btn.btn-light.html-btn-card-front.show, .btn.btn-light.html-btn-card-back.show {
+	background: #a9a9a9;
 }
 
-.html__btn--front,
-.html__btn--back, .html__btn-card--front, .html__btn-card--back {
+.html-btn-front,
+.html-btn-back, .html-btn-card-front, .html-btn-card-back {
 	position: absolute;
 	padding: 0.3rem 1rem;
 	border-radius: 4px;
@@ -688,7 +744,8 @@ input:checked + .test-to-live-slider:before {
 	cursor: pointer;
 	background: #d1d1d1;
 }
-.Trifold .screen-1 .btn{
+
+.trifold .screen-1 .btn{
 	position: static;
 }
 
@@ -697,15 +754,8 @@ input:checked + .test-to-live-slider:before {
 	font-size: 16px;
 }
 
-.screen-2 .input-label-radio,
-.screen-2 .radio-buttons,
-.screen-2 .checkboxes {
-	margin-left: 3%;
-}
-
 .error-msg {
 	color: red;
-	/* visibility: hidden; */
 	display: none;
 	font-size: 16px;
 }
@@ -724,10 +774,6 @@ input:checked + .test-to-live-slider:before {
 	border-width: 1px !important;
 }
 
-/* Postcard HTML creation CSS */
-
-/* Postcard PDF creation CSS */
-
 .screen-2 .spacer {
 	padding: 44px;
 }
@@ -738,35 +784,10 @@ input:checked + .test-to-live-slider:before {
 	gap: 2rem;
 }
 
-.pdf-container .input-fields {
-	display: flex;
-	justify-content: space-between;
-}
-
-.self-mailer-pdf-container .input-fields {
-  justify-content: flex-start;
-  gap: 4rem;
-}
-
-.pdf-container .input-fields .input-box {
-	display: flex;
-	flex-direction: column;
-	/* flex-basis: calc(50% - 1rem); */
-  width: 48%;
-	gap: 0.5rem;
-}
-
-.SelfMailer .pdf-container .input-fields .input-box {
-  width: 50%;
-}
-
 .pdf-size, .pdf-card-size {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
-}
-.pdf-size .input-label-radio, .pdf-card-size .input-label-radio {
-	margin: 0;
 }
 
 .upload-box {
@@ -778,6 +799,7 @@ input:checked + .test-to-live-slider:before {
 	background-color: lightgray;
 	height: 80px;
 }
+
 .hidden {
 	display: none;
 }
@@ -796,7 +818,7 @@ label[for="self-mailer-pdf-upload"] {
 }
 
 .remove-pdf {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .pdf-error {
@@ -804,16 +826,12 @@ label[for="self-mailer-pdf-upload"] {
 	bottom: -20%;
 	left: 0;
 }
-/* Postcard PDF creation CSS */
-/* end of step 3Acss */
 
-/* step 4 css*/
-
-/* below is the css for step 4 */
 #step4-heading {
-	margin: 0px;
+	margin: 0;
 	margin-bottom: 20px;
 }
+
 .mapping-container {
 	display: flex;
 	align-items: flex-start;
@@ -821,27 +839,20 @@ label[for="self-mailer-pdf-upload"] {
 	padding: 44px;
 	gap: 20px;
 }
+
 .mapping-left,
 .mapping-right {
 	flex: 1;
 	background: white;
 }
+
 .mapping-radio-group {
 	display: flex;
 	gap: 15px;
 	align-items: center;
 	margin-bottom: 20px;
 }
-.mapping-radio-group label {
-	display: flex;
-	align-items: center;
-	font-size: 1rem;
-	font-weight: 500;
-	cursor: pointer;
-}
-.mapping-radio-group input {
-	display: none;
-}
+
 .mapping-radio {
 	width: 16px;
 	height: 16px;
@@ -851,13 +862,10 @@ label[for="self-mailer-pdf-upload"] {
 	margin-right: 5px;
 	position: relative;
 }
+
 .mapping-radio-group input:checked + .mapping-radio {
 	border-color: #007bff;
 	background: #007bff;
-}
-.mapping-dropdown {
-	display: flex;
-	flex-direction: column;
 }
 
 #step4 label {
@@ -865,94 +873,56 @@ label[for="self-mailer-pdf-upload"] {
 	font-weight: 500;
 	margin-bottom: 5px;
 }
+
 .mapping-divider {
 	width: 1px;
 	background: #cce4ff;
 	height: 100vh;
 	min-height: 250px;
 }
+
 .mapping-fields-group {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	margin-bottom: 12px;
 }
-.mapping-fields-group label {
-	font-weight: bold;
-	font-size: 14px;
-	color: #333;
-}
-.mapping-fields-group select,
-#dropdown-options,
-#search-contact {
-	width: 60%;
-	padding: 8px;
-	font-size: 14px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	cursor: pointer;
-}
-#dropdown-options,
-#search-contact {
-	width: 50%;
-	margin: auto;
-}
+
 .mapping-fields,
-.error-message-contactMapping {
+.error-message-contact-mapping {
 	width: 80%;
 	margin: auto;
 }
-.dropdown-options div {
-	padding: 8px;
-	cursor: pointer;
-}
-.dropdown-options div:hover {
-	background: rgb(37, 150, 190);
-}
+
 #search-contact:focus {
-	border-color: #a0a0a0; /* Slightly darker gray when focused */
+	border-color: #a0a0a0;
 	outline: none;
 }
+
 .mapping-fields-group select {
-	border-color: #a0a0a0; /* Slightly darker gray when focused */
+	border-color: #a0a0a0;
 	outline: none;
 }
-/* below is the css for step 4 */
 
 #step5 #pdf-preview {
-    height: 450px;
-    width: 100%;
-    zoom: 1;
-    -moz-transform: scale(1);
-    -moz-transform-origin: 0 0;
-    -o-transform: scale(1);
-    -o-transform-origin: 0 0;
-    -webkit-transform: scale(1);
-    -webkit-transform-origin: 0 0;
+  height: 450px;
+  width: 100%;
+  zoom: 1;
+  transform: scale(1);
+  transform-origin: 0 0;
 }
 
 #step5 {
     overflow: hidden;
 }
 
-#sendDate, #sendDate3 {
-    box-sizing: border-box;
-    outline: 0;
-    padding: .75rem;
-    position: relative;
-    width: 100%;
-}
-
 input[type="date"]::-webkit-calendar-picker-indicator {
     background: transparent;
-    bottom: 0;
+    inset: 0;
     color: transparent;
     cursor: pointer;
     height: auto;
-    left: 0;
     position: absolute;
-    right: 0;
-    top: 0;
     width: auto;
 }
 
@@ -978,21 +948,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none;
 }
 
-.container.spacer.HTML .html-btn-wrap,
-.container.spacer.PDFUpload .html-btn-wrap {
-    position: absolute;
-    width: 94%;
-    height: 7%;
-    background: white;
-    padding: 1.5rem 0.75rem 0.2rem 0.75rem;
-    top: 2px;
-    border-top: 1px solid lightgray;
-    left: 4px;
-    border-radius: 0px;
-}
-
-.retry-preview-btn {
-    display: none;
+.container.spacer.html-creation-type .html-btn-wrap,
+.container.spacer.pdf-creation-type .html-btn-wrap {
+  position: absolute;
+  width: 94%;
+  height: 7%;
+  background: white;
+  padding: 1.5rem 0.75rem 0.2rem;
+  top: 2px;
+  border-top: 1px solid lightgray;
+  left: 4px;
+  border-radius: 0;
 }
 
 .retry-preview-btn.show {
@@ -1028,11 +994,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none
 }
 
-.outer-input-fields .input-fields .input-label,
-.pdf-container .input-label {
-    font-size: 16px !important;
-}
-
 .retry-btn-wrap {
     display: flex;
     flex-direction: column;
@@ -1043,16 +1004,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-bottom: 20px;
     text-align: center;
 }
+
 .retry-preview-btn {
-    background: rgb(0, 118, 222);
-    color: white;
-    border: none;
-    padding: 0.5rem 2rem;
-    height: auto;
-    border-radius: 30px;
-    margin-top: 10px;
-    font-size: 16px;
+  display: none;
+  background: rgb(0 118 222);
+  color: white;
+  border: none;
+  padding: 0.5rem 2rem;
+  height: auto;
+  border-radius: 30px;
+  margin-top: 10px;
+  font-size: 16px;
 }
+
 .preview-message {
     font-size: 16px;
     color: #666;
@@ -1062,25 +1026,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .loader.show {
-    border: 8px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 8px solid #3498db;
-    width: 24px;
-    height: 24px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid #3498db;
+  width: 24px;
+  height: 24px;
+  animation: spin 2s linear infinite;
   }
   
-  /* Safari */
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 .next-btn {
   background: #2569E6 !important;
