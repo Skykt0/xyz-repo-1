@@ -226,7 +226,7 @@ body {
     box-sizing: border-box;
     border: 3px solid #ccc;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0 0 0 0.1);
+    box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
     font-size: 14px;
     background: transparent;
 }
@@ -259,7 +259,7 @@ body {
 	display: none;
 	z-index: 1000;
 	border-radius: 4px;
-	box-shadow: 0 2px 4px rgba(0 0 0 10%);
+	box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
 }
 
 .dropdown-options div {
@@ -577,7 +577,7 @@ input:checked + .test-to-live-slider::before {
 }
 
 .container.spacer.html,
-.container.spacer.pdf-upload,  .trifold .existing-template {
+.container.spacer.pdf-creation-type,  .trifold .template-creation-type {
 	display: flex;
 	padding: 44px;
 }
@@ -784,10 +784,6 @@ input:checked + .test-to-live-slider::before {
 	gap: 2rem;
 }
 
-.selfmailer .pdf-container .input-fields .input-box {
-  width: 50%;
-}
-
 .pdf-size, .pdf-card-size {
 	display: flex;
 	flex-direction: column;
@@ -953,7 +949,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .container.spacer.html .html-btn-wrap,
-.container.spacer.pdf-upload .html-btn-wrap {
+.container.spacer.pdf-creation-type .html-btn-wrap {
   position: absolute;
   width: 94%;
   height: 7%;

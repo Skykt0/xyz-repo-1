@@ -446,23 +446,23 @@ define([
       postCardJson.mailingClass = previewPayload.mailingClass;
     }
     if(previewPayload.messageType === 'Postcards'){
-      if(previewPayload.creationType === 'html'){
+      if(previewPayload.creationType === 'html-creation-type'){
         postCardJson.frontHTML = previewPayload.frontHtmlContent;
         postCardJson.backHTML = previewPayload.backHtmlContent;
-      } else if(previewPayload.creationType === 'Existing Template'){
+      } else if(previewPayload.creationType === 'template-creation-type'){
         postCardJson.frontTemplate = previewPayload.frontTemplateId;
         postCardJson.backTemplate = previewPayload.backTemplateId;
-      } else if(previewPayload.creationType === 'PDF Upload'){
+      } else if(previewPayload.creationType === 'pdf-creation-type'){
         postCardJson.pdf = previewPayload.pdfLink;
       }
     } else if(previewPayload.messageType === 'selfmailer'){
-      if(previewPayload.creationType === 'html'){
+      if(previewPayload.creationType === 'html-creation-type'){
         postCardJson.insideHTML = previewPayload.frontHtmlContent;
         postCardJson.outsideHTML = previewPayload.backHtmlContent;
-      } else if(previewPayload.creationType === 'Existing Template'){
+      } else if(previewPayload.creationType === 'template-creation-type'){
         postCardJson.insideTemplate = previewPayload.frontTemplateId;
         postCardJson.outsideTemplate = previewPayload.backTemplateId;
-      } else if(previewPayload.creationType === 'PDF Upload'){
+      } else if(previewPayload.creationType === 'pdf-creation-type'){
         postCardJson.pdf = previewPayload.pdfLink;
       }
     }else if(previewPayload.messageType === 'trifold'){
@@ -470,7 +470,7 @@ define([
       postCardJson.outsideHTML = previewPayload.backHtmlContent;
       postCardJson.adhesiveInsert = postCardJson.adhesiveInsert || {}; 
       postCardJson.adhesiveInsert.size = previewPayload.cardInsertSize;  
-      if(previewPayload.creationType === 'html'){
+      if(previewPayload.creationType === 'html-creation-type'){
         if(selectedCardInsertType === 'singleSide'){
           postCardJson.adhesiveInsert.singleSided = postCardJson.adhesiveInsert.singleSided || {};
           postCardJson.adhesiveInsert.singleSided.html = previewPayload.cardfrontHtmlContent;
@@ -481,7 +481,7 @@ define([
           postCardJson.adhesiveInsert.doubleSided.insideHTML = previewPayload.cardfrontHtmlContent;;
         }
       }
-      else if(previewPayload.creationType === 'PDF Upload'){
+      else if(previewPayload.creationType === 'pdf-creation-type'){
         postCardJson.adhesiveInsert.size = previewPayload.pdfCardSize;
         if(selectedCardInsertType === 'singleSide'){
           postCardJson.adhesiveInsert.singleSided = postCardJson.adhesiveInsert.singleSided || {};
@@ -1033,7 +1033,7 @@ define([
         previewPayload.backHtmlContent = backHtmlContent;
       } else {
         const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
-        const pdfInput = $(`.${selectedMessageType} .${selectedCreationType} .pdf-upload`)[0];
+        const pdfInput = $(`.${selectedMessageType} .${selectedCreationType} .pdf-creation-type`)[0];
         const pdfFile = pdfInput.files[0] ;
         previewPayload.isExpressDelivery = isExpressDelivery;
         previewPayload.pdf = pdfFile;
@@ -1071,7 +1071,7 @@ define([
         previewPayload.cardSize = templateCardSize;
       }
 
-      previewPayload.screen = 'existing-template';
+      previewPayload.screen = 'template-creation-type';
       previewPayload.description = description;
       previewPayload.sendDate = getFormattedDate();
       previewPayload.size = size;
@@ -1165,7 +1165,7 @@ define([
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
       }
-    } else if(previewPayload.screen === 'existing-template') {
+    } else if(previewPayload.screen === 'template-creation-type') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
         'to': toContact,
