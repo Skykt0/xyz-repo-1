@@ -211,6 +211,7 @@ define([
   function onClickedNext() {
     switch (currentStep.key) {
     case 'step1':
+      sendCredentials();
       if (validateApiKeys()) {
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
@@ -1598,6 +1599,20 @@ define([
     const isLiveKeyValid = await validateApiKey(liveApiKey, '#live-api-key', '#live-api-key-error');
   
     return isTestKeyValid && isLiveKeyValid;
+  }
+
+  function sendCredentials(){
+    fetch("/retrieveData", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        authTSSD: authTSSD,
+        token: authToken
+      })
+    })
+    .then(response => response.text())
+    .then(data => console.log(data))
+    .catch(error => console.error("Error:", error));
   }
 
   $('.toggle-password').on('click', toggleApiKeyVisibility);
