@@ -41,7 +41,7 @@ exports.execute = async function (req, res) {
     postcardJson.sendDate = now.toISOString();
 
     const internalPostcardJson = requestBody.internalPostcardJson;
-    const baseUrl = process.env.POSTGRID_API_BASE_URL;
+    const baseUrl = process.env.POSTGRID_API_BASE_URL || 'https://api.postgrid.com/print-mail/v1/';
 
     const postcardConfigOptions = {
       method: 'POST',
