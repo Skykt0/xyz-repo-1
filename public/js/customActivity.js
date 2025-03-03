@@ -21,6 +21,7 @@ define([
   var authToken, et_subdomain, authTSSD;
   let fromContact = {};
   let toContact = '';
+  const POSTGRID_API_BASE_URL = 'https://api.postgrid.com/print-mail/v1/';
 
   var steps = [
     { 'label': 'Connect Account', 'key': 'step1' },
@@ -1096,7 +1097,7 @@ define([
 
   async function createMessage() {
     let messageType = $('input[name=\'msgType\']:checked').val();
-    const baseUrl = 'https://api.postgrid.com/print-mail/v1/';
+    const baseUrl = POSTGRID_API_BASE_URL;
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
@@ -1229,7 +1230,7 @@ define([
   async function fetchMessageDetails(messageId) {
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     const urlMessageType = selectedMessageType === 'selfmailer' ? 'self_mailers' : 'postcards';
-    const apiUrl = `https://api.postgrid.com/print-mail/v1/${urlMessageType}/${messageId}`;
+    const apiUrl = `${POSTGRID_API_BASE_URL}${urlMessageType}/${messageId}`;
     const apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
 
     try {
@@ -1318,7 +1319,7 @@ define([
   }
 
   function createContact () {
-    const url = 'https://api.postgrid.com/print-mail/v1/contacts';
+    const url = `${POSTGRID_API_BASE_URL}contacts`;
 
     const formData = new URLSearchParams();
     formData.append('firstName', 'Kevin');
@@ -1358,7 +1359,7 @@ define([
 
   function fetchContacts(searchQuery) {
     $.ajax({
-      url: 'https://api.postgrid.com/print-mail/v1/contacts',
+      url: `${POSTGRID_API_BASE_URL}contacts`,
       method: 'GET',
       data: searchQuery ? { search: searchQuery, limit: 10 } : { limit: 10 },
       headers: {
@@ -1385,7 +1386,7 @@ define([
   }
 
   function deleteMailItem(messageType, mailItemId) {
-    const url = `https://api.postgrid.com/print-mail/v1/${messageType}/${mailItemId}`;
+    const url = `${POSTGRID_API_BASE_URL}${messageType}/${mailItemId}`;
   
     fetch(url, {
       method: 'DELETE',
@@ -1476,7 +1477,7 @@ define([
     };
 
     try {
-      const response = await fetch(`https://api.postgrid.com/print-mail/v1/templates?limit=10&search=${encodeURIComponent(searchQuery)}`, requestOptions);
+      const response = await fetch(`${POSTGRID_API_BASE_URL}templates?limit=10&search=${encodeURIComponent(searchQuery)}`, requestOptions);
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
       }
@@ -1571,7 +1572,7 @@ define([
       return true;
     }
   
-    const url = 'https://api.postgrid.com/print-mail/v1/contacts?limit=1';
+    const url = `${POSTGRID_API_BASE_URL}contacts?limit=1`;
     try {
       const response = await fetch(url, {
         method: 'GET',
