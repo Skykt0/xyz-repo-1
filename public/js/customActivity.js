@@ -826,9 +826,10 @@ define([
     };
     
     if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
+      const pdfLinkElement = $(`.${selectedMessageType} .screen-2 .pdfLink`);
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
-      $(`.${selectedMessageType} .screen-2 .pdfLink`).siblings('.error-msg').text('Please enter required field');
-      let isPdfLinkValid =validateInputField($(`.${selectedMessageType} .screen-2 .pdfLink`));
+      pdfLinkElement.siblings('.error-msg').text('Please enter required field');
+      let isPdfLinkValid =validateInputField(pdfLinkElement);
       
       if (!isDescriptionValid || !isPdfLinkValid) {
         isValid = false;
@@ -836,15 +837,12 @@ define([
       if (isPdfLinkValid) {
         setPreviewPayload();
         let pdfValidationResponse = await createMessage(true);
-        console.log('pdf validation response: '+JSON.stringify(pdfValidationResponse));
-        
-        // const pdfRegex = /^(https?:\/\/.*\.pdf)$/i;
-        // if (!pdfRegex.test($(`.${selectedMessageType} .screen-2 .pdfLink`).val().trim()) ){
-        //   isValid = false;
-        //   $(`.${selectedMessageType} .screen-2 .pdfLink`).siblings('.error-msg').text('Please enter a valid publicly accessible PDF URL.').addClass('show');
-        // } else {
-        //   $(`.${selectedMessageType} .screen-2 .pdfLink`).siblings('.error-msg').removeClass('show');
-        // }
+        if(pdfValidationResponse.error) {
+          isValid = false;
+          pdfLinkElement.siblings('.error-msg').text(pdfValidationResponse.errorMessage).addClass('show');
+        } else {
+          pdfLinkElement.siblings('.error-msg').removeClass('show');
+        }
       }
   
       if (selectedMessageType === 'trifold') {
@@ -1168,8 +1166,17 @@ define([
       });
 
       if(previewPayload.screen === 'pdf' && isPdfValidation) {
-        const validationResponse = await response.json();
-        return validationResponse;
+        if(!response.ok) {
+          const validationResponse = await response.json();
+          return {
+            error: true,
+            errorMessage: validationResponse.error.message
+          };
+        } else {
+          return {
+            error: false
+          };
+        }
       }
 
       if (!response.ok) {
