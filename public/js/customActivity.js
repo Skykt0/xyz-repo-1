@@ -1168,8 +1168,8 @@ define([
       });
 
       if(previewPayload.screen === 'pdf' && isPdfValidation) {
-        const response = await response.json();
-        return response;
+        const validationResponse = await response.json();
+        return validationResponse;
       }
 
       if (!response.ok) {
