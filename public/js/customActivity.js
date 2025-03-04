@@ -149,7 +149,6 @@ define([
         break;
       case 'pdf' :
         var queryString = `.${postcardArguments.messageType.replace(/\s+/g, '')} .${postcardArguments.creationType.replace(/\s+/g, '')} .pdfLink`;
-        console.log('pdf query string: '+queryString);
         $(queryString).val(value);
         break;
       case 'mailingClass':
