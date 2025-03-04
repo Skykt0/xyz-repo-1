@@ -1059,9 +1059,14 @@ define([
     const selectedCardInsertType = $('input[name="cardType"]:checked').val();
     const url = selectedMessageType === 'selfmailer' || selectedMessageType === 'trifold' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
     
+    let apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
+    if(previewPayload.screen === 'pdf' && isPdfValidation) {
+      apiKey = previewPayload.test_api_key;
+    }
+
     let data;
     let headers = {
-      'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key,
+      'x-api-key': apiKey
     };
 
     if(previewPayload.screen === 'pdf'){
