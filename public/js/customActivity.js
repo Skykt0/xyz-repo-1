@@ -834,7 +834,7 @@ define([
         isValid = false;
       }
       if (isPdfLinkValid) {
-        let pdfValidationResponse = createMessage(true);
+        let pdfValidationResponse = await createMessage(true);
         console.log('pdf validation response: '+pdfValidationResponse);
         
         // const pdfRegex = /^(https?:\/\/.*\.pdf)$/i;
