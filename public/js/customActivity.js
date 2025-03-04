@@ -147,9 +147,10 @@ define([
         fromContact.id = value.id;
         fromContact.name = value.name;
         break;
-      case 'encodedPdf':
-        var base64Data = 'data:application/pdf;base64,'+value;
-        setFileToInput(postcardArguments.messageType.replace(/\s+/g, ''), base64Data, postcardArguments['pdfName']);
+      case 'pdf' :
+        var queryString = `.${postcardArguments.messageType.replace(/\s+/g, '')} .${postcardArguments.creationType.replace(/\s+/g, '')} .pdfLink`;
+        console.log('pdf query string: '+queryString);
+        $(queryString).val(value);
         break;
       case 'mailingClass':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .mailing-class';
@@ -419,17 +420,7 @@ define([
       previewDEMapOptions[eleID]=optionSelect;
     });
 
-    if (previewPayload.pdf) {
-      await convertToBase64(previewPayload.pdf)
-        .then((base64String) => {
-          previewPayload.encodedPdf = base64String;
-        })
-        .catch(() => {
-          return;
-        });
-    }
     let selectedMessageType = $('input[name="msgType"]:checked').val();
-    previewPayload.xyz = 'live_deepakTest';
     previewPayload.messageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
     previewPayload.creationType = $('input[name=\'createType\']:checked').val();
     payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
@@ -990,7 +981,6 @@ define([
         const pdfLink = $(`.${selectedMessageType} .screen-2 .pdfLink`).val().trim();
         previewPayload.isExpressDelivery = isExpressDelivery;
         previewPayload.pdf = pdfLink;
-        previewPayload.pdfName = pdfLink.substring(pdfLink.lastIndexOf('/') + 1); // Extracts file name from URL
       }
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
