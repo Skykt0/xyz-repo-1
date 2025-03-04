@@ -836,7 +836,7 @@ define([
       if (isPdfLinkValid) {
         setPreviewPayload();
         let pdfValidationResponse = await createMessage(true);
-        console.log('pdf validation response: '+pdfValidationResponse);
+        console.log('pdf validation response: '+JSON.stringify(pdfValidationResponse));
         
         // const pdfRegex = /^(https?:\/\/.*\.pdf)$/i;
         // if (!pdfRegex.test($(`.${selectedMessageType} .screen-2 .pdfLink`).val().trim()) ){
