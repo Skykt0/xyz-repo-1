@@ -834,6 +834,7 @@ define([
         isValid = false;
       }
       if (isPdfLinkValid) {
+        setPreviewPayload();
         let pdfValidationResponse = await createMessage(true);
         console.log('pdf validation response: '+pdfValidationResponse);
         
