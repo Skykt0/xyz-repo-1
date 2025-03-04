@@ -834,13 +834,16 @@ define([
         isValid = false;
       }
       if (isPdfLinkValid) {
-        const pdfRegex = /^(https?:\/\/.*\.pdf)$/i;
-        if (!pdfRegex.test($(`.${selectedMessageType} .screen-2 .pdfLink`).val().trim()) ){
-          isValid = false;
-          $(`.${selectedMessageType} .screen-2 .pdfLink`).siblings('.error-msg').text('Please enter a valid publicly accessible PDF URL.').addClass('show');
-        } else {
-          $(`.${selectedMessageType} .screen-2 .pdfLink`).siblings('.error-msg').removeClass('show');
-        }
+        let pdfValidationResponse = createMessage(true);
+        console.log('pdf validation response: '+pdfValidationResponse);
+        
+        // const pdfRegex = /^(https?:\/\/.*\.pdf)$/i;
+        // if (!pdfRegex.test($(`.${selectedMessageType} .screen-2 .pdfLink`).val().trim()) ){
+        //   isValid = false;
+        //   $(`.${selectedMessageType} .screen-2 .pdfLink`).siblings('.error-msg').text('Please enter a valid publicly accessible PDF URL.').addClass('show');
+        // } else {
+        //   $(`.${selectedMessageType} .screen-2 .pdfLink`).siblings('.error-msg').removeClass('show');
+        // }
       }
   
       if (selectedMessageType === 'trifold') {
@@ -1045,7 +1048,7 @@ define([
     return `${formattedDate}T${formattedTime}`;
   }
 
-  async function createMessage() {
+  async function createMessage(isPdfValidation = false) {
     let messageType = $('input[name=\'msgType\']:checked').val();
     const baseUrl = POSTGRID_API_BASE_URL;
     let isCartInsertEnabled = $('#card-insert').prop('checked');
@@ -1157,6 +1160,10 @@ define([
         headers: headers,
         body: data
       });
+
+      if(previewPayload.screen === 'pdf' && isPdfValidation) {
+        return response;
+      }
 
       if (!response.ok) {
         const errorResponse = await response.json();
