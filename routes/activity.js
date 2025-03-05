@@ -117,6 +117,9 @@ exports.validate = function (req, res) {
 /**
  * Fetches client credentials from Salesforce Marketing Cloud (SFMC) using SOAP API.
  * This function retrieves credentials (Client_Secret, Client_Id) from the specified Data Extension in SFMC.
+ *
+ * @param {object} req - The request object containing the `authTSSD` (account identifier) and `token` (OAuth token) in the body.
+ * @param {object} res - The response object used to send back the data or error response.
  */
 exports.fetchClientCredentials = async function (req, res) {
   const { authTSSD, token } = req.body;
