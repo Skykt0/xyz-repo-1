@@ -114,7 +114,50 @@ exports.validate = function (req, res) {
   res.status(200).send('Validate');
 };
 
+/**
+ * Fetches client credentials from Salesforce Marketing Cloud (SFMC) using SOAP API.
+ * This function retrieves credentials (Client_Secret, Client_Id) from the specified Data Extension in SFMC.
+ */
+exports.fetchClientCredentials = async function (req, res) {
+  const { authTSSD, token } = req.body;
+  const SFMC_SOAP_URL = `https://${authTSSD}.soap.marketingcloudapis.com/Service.asmx`;
+  const xmlData = `<?xml version='1.0' encoding='UTF-8'?>
+      <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' 
+          xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' 
+          xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+          <soapenv:Header>
+              <fueloauth>${token}</fueloauth>
+          </soapenv:Header>
+          <soapenv:Body>
+              <RetrieveRequestMsg xmlns='http://exacttarget.com/wsdl/partnerAPI'>
+                  <RetrieveRequest>
+                      <ObjectType>DataExtensionObject[PostgridDEforAPI]</ObjectType>
+                      <Properties>Client_Secret</Properties>
+                      <Properties>Client_Id</Properties>
+                  </RetrieveRequest>
+              </RetrieveRequestMsg>
+          </soapenv:Body>
+      </soapenv:Envelope>`;
+  try {
+    const response = await axios.post(SFMC_SOAP_URL, xmlData, {
+      headers: {
+        'Content-Type': 'text/xml',
+        'Accept': 'text/xml',
+        'SoapAction': 'Retrieve'
+      }
+    });
+    res.send(response.data);
+  } catch (error) {
+    res.status(500).send(error.toString());
+  }
+};
 
+/**
+ * Fetches the authentication token from Marketing Cloud.
+ * 
+ * @param {string} payloadData - A JSON string containing the client credentials (clientId, clientSecret, and authTSSD) required for the authentication request.
+ * @returns {string} - The access token received from the Marketing Cloud API.
+ */
 async function getAuthToken(payloadData){
   payloadData = JSON.parse(payloadData);
   const authTokenPayload = {

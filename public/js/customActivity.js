@@ -1546,7 +1546,7 @@ define([
 
   
   function fetchClientCredentials(){
-    fetch('/fetch-client-credentials', {
+    fetch('/client-credentials', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

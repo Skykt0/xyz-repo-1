@@ -626,7 +626,7 @@ input:checked + .test-to-live-slider::before {
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
-    gap: 2rem;
+  gap: 2rem;
 }
 
 .html-screen-wrapper .outer-input-fields .input-fields {
