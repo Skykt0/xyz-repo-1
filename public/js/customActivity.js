@@ -1046,8 +1046,13 @@ define([
 
     if(previewPayload.screen === 'pdf'){
       data = new FormData();
-      data.append('to', toContact);
-      data.append('from', fromContact.id || '');
+      if(isPdfValidation) {
+        data.append('to', toContact);
+        data.append('from', toContact);
+      } else {
+        data.append('to', toContact);
+        data.append('from', fromContact.id || '');
+      }
       data.append('description', previewPayload.description);
       data.append('size',previewPayload.size);
       
