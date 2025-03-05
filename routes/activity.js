@@ -143,13 +143,13 @@ async function getAuthToken(payloadData){
  * @param {object} requestData - The data to be logged to the Data Extension.
  */
 async function logToDataExtension(requestData) {
-  requestData.authToken = await getAuthToken(requestData.payloadData);
+  requestData.authToken = await getAuthToken(requestData.payload);
   const payload = JSON.stringify({
     'items': [
       {
         'Status': requestData.status,
         'Response': requestData.responseData,
-        'TimeStamp': requestData.timeStamp,
+        'TimeStamp': requestData.timestamp,
         'ContactKey': requestData.contactKey,
         'JourneyId': requestData.journeyId,
         'ActivityId': requestData.activityId,
