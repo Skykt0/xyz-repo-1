@@ -265,8 +265,8 @@ define([
         $(`.${selectedMessageType} > .screen-2`).toggle(isPdf);
         $(`.${selectedMessageType} > .screen-3`).toggle(isExtTemp);
 
-        connection.trigger('nextStep');
         createContact();
+        connection.trigger('nextStep');
       } else {
         handleValidationFailure();
       }
