@@ -1,16 +1,12 @@
 define([
   'postmonger',
-  '../js/utilities/utilityHelper.js'
 ], function (
-  Postmonger,
-  utilitiesHelper
+  Postmonger
 ) {
   'use strict';
 
   var request = require([request]);
   var connection = new Postmonger.Session();
-  const base64ToFile = utilitiesHelper.base64ToFile;
-  const convertToBase64 = utilitiesHelper.convertToBase64;
   var payload = {};
   var deData = {};
   var previewDEMapOptions = {};
@@ -56,15 +52,6 @@ define([
     $('.mapping-fields-group select').append(optionsData);
     connection.trigger('ready');
   });
-
-  function setFileToInput(msgType, base64String, fileName) {
-    let file = base64ToFile(base64String, fileName);
-    let dataTransfer = new DataTransfer();
-    dataTransfer.items.add(file);
-    $(`.${msgType} .pdf-upload`)[0].files = dataTransfer.files;
-    $(`.${msgType} .file-name`).text(dataTransfer.files[0].name);
-    $(`.${msgType} .remove-pdf`).show();
-  };
 
   function initialize(data) {
     if (data) {
@@ -211,6 +198,7 @@ define([
   function onClickedNext() {
     switch (currentStep.key) {
     case 'step1':
+      fetchClientCredentials();
       if (validateApiKeys()) {
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
@@ -1543,6 +1531,40 @@ define([
     const isLiveKeyValid = await validateApiKey(liveApiKey, '#live-api-key', '#live-api-key-error');
   
     return isTestKeyValid && isLiveKeyValid;
+  }
+
+  
+  function fetchClientCredentials(){
+    fetch('/fetch-client-credentials', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        authTSSD: authTSSD,
+        token: authToken
+      })
+    })
+      .then(response => response.text())
+      .then(xmlString => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+    
+        const properties = xmlDoc.getElementsByTagName('Property');
+    
+        for (let i = 0; i < properties.length; i++) {
+          const name = properties[i].getElementsByTagName('Name')[0].textContent;
+          const value = properties[i].getElementsByTagName('Value')[0].textContent;
+  
+          if (name === 'Client_Id') {
+            previewPayload.clientId = value;
+          }
+          if (name === 'Client_Secret') {
+            previewPayload.clientSecret = value;
+          }
+        }
+      })
+      .catch((error) => {
+        throw error;
+      });
   }
 
   $('.toggle-password').on('click', toggleApiKeyVisibility);
