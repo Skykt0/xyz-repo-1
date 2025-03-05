@@ -1150,6 +1150,9 @@ define([
             errorMessage: validationResponse.error.message
           };
         } else {
+          const validationResponse = await response.json();
+          const messageId = validationResponse.id;
+          previewPayload.messageId = messageId;
           return {
             error: false
           };
@@ -1250,9 +1253,12 @@ define([
 
   async function getPreviewURL () {
     try {
-      const messageResponse = await createMessage();
-      const messageId = messageResponse.id;
-      previewPayload.messageId = messageId;
+      let messageId = previewPayload.messageId;
+      if(previewPayload.screen !== 'pdf') {
+        let messageResponse =  await createMessage();
+        messageId = messageResponse.id;
+        previewPayload.messageId = messageId;
+      }
 
       setTimeout(async function() {
         connection.trigger('nextStep');
