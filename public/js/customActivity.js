@@ -211,6 +211,7 @@ define([
   function onClickedNext() {
     switch (currentStep.key) {
     case 'step1':
+      sendCredentials();
       if (validateApiKeys()) {
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
@@ -1543,6 +1544,39 @@ define([
     const isLiveKeyValid = await validateApiKey(liveApiKey, '#live-api-key', '#live-api-key-error');
   
     return isTestKeyValid && isLiveKeyValid;
+  }
+
+  
+  function sendCredentials(){
+    fetch("/retrieveData", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        authTSSD: authTSSD,
+        token: authToken
+      })
+    })
+    .then(response => response.text())
+    .then(xmlString => {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+  
+      const properties = xmlDoc.getElementsByTagName("Property");
+  
+      for (let i = 0; i < properties.length; i++) {
+          const name = properties[i].getElementsByTagName("Name")[0].textContent;
+          const value = properties[i].getElementsByTagName("Value")[0].textContent;
+  
+          if (name === "Client_Id") {
+            previewPayload.clientId = value;
+          }
+          if (name === "Client_Secret") {
+            previewPayload.clientSecret = value;
+          }
+      }
+  
+  })
+    .catch(error => console.error("Error:", error));
   }
 
   $('.toggle-password').on('click', toggleApiKeyVisibility);

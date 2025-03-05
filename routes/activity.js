@@ -31,6 +31,8 @@ exports.execute = async function (req, res) {
   const requestBody = req.body.inArguments[0];
   const authToken = requestBody.authorization.authToken;
   const authTSSD = requestBody.authorization.authTSSD;
+  const internalPostcardJson = requestBody.internalPostcardJson;
+
 
   try {
     let postcardJson = requestBody.postcardJson;
@@ -40,7 +42,6 @@ exports.execute = async function (req, res) {
     now.setMinutes(now.getMinutes() + 5);
     postcardJson.sendDate = now.toISOString();
 
-    const internalPostcardJson = requestBody.internalPostcardJson;
     const baseUrl = process.env.POSTGRID_API_BASE_URL || 'https://api.postgrid.com/print-mail/v1/';
 
     const postcardConfigOptions = {
@@ -66,7 +67,7 @@ exports.execute = async function (req, res) {
       logToDataExtension(
         `${internalPostcardJson.messageType} created successfully. ID: ${postcardId}`,
         authTSSD, authToken, timestamp, contactKey, 'Success', journeyId, activityId,
-        internalPostcardJson.messageType
+        internalPostcardJson.messageType, JSON.stringify(internalPostcardJson)
       );
     } else {
       res.status(500).send('Postcard creation failed');
@@ -77,7 +78,7 @@ exports.execute = async function (req, res) {
     logToDataExtension(
       error.response ? JSON.stringify(error.response.data) : error.message,
       authTSSD, authToken, timestamp, contactKey, 'Error', journeyId, activityId,
-      requestBody.internalPostcardJson.messageType
+      requestBody.internalPostcardJson.messageType, JSON.stringify(internalPostcardJson)
     );
     res.status(500).send('Error creating postcard');
     return;
@@ -102,6 +103,29 @@ exports.validate = function (req, res) {
   res.status(200).send('Validate');
 };
 
+
+async function getAuthToken(payloadData){
+  payloadData = JSON.parse(payloadData);
+  const authTokenPayload = {
+    method: 'POST',
+    url: 'https://mc6vgk-sxj9p08pqwxqz9hw9-4my.auth.marketingcloudapis.com/v2/token',
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    data: {
+      grant_type: 'client_credentials',
+      client_id: payloadData.clientId,
+      client_secret: payloadData.clientSecret
+    }
+  };
+  let response = await axios.request(authTokenPayload);
+  return response.data.access_token;
+
+}
+
+
+
 /**
  * Logs the provided response data to the Data Extension in Marketing Cloud.
  * This function sends log entries to the Data Extension to track activity execution status.
@@ -116,7 +140,12 @@ exports.validate = function (req, res) {
  * @param {string} activityId - The activity ID associated with the activity.
  * @param {string} object - The object type being logged (e.g., 'Postcards').
  */
-function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contactKey, status, journeyId, activityId, object) {
+async function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contactKey, status, journeyId, activityId, object, payloadData) {
+  authToken = await getAuthToken(payloadData);
+  console.log('my details');
+  
+  console.log(authToken);
+  
   const payload = JSON.stringify({
     'items': [
       {
