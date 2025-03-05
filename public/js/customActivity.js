@@ -147,9 +147,9 @@ define([
         fromContact.id = value.id;
         fromContact.name = value.name;
         break;
-      case 'encodedPdf':
-        var base64Data = 'data:application/pdf;base64,'+value;
-        setFileToInput(postcardArguments.messageType.replace(/\s+/g, ''), base64Data, postcardArguments['pdfName']);
+      case 'pdf' :
+        var queryString = `.${postcardArguments.messageType.replace(/\s+/g, '')} .${postcardArguments.creationType.replace(/\s+/g, '')} .pdfLink`;
+        $(queryString).val(value);
         break;
       case 'mailingClass':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .mailing-class';
@@ -419,17 +419,7 @@ define([
       previewDEMapOptions[eleID]=optionSelect;
     });
 
-    if (previewPayload.pdf) {
-      await convertToBase64(previewPayload.pdf)
-        .then((base64String) => {
-          previewPayload.encodedPdf = base64String;
-        })
-        .catch(() => {
-          return;
-        });
-    }
     let selectedMessageType = $('input[name="msgType"]:checked').val();
-    previewPayload.xyz = 'live_deepakTest';
     previewPayload.messageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
     previewPayload.creationType = $('input[name=\'createType\']:checked').val();
     payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
@@ -826,44 +816,46 @@ define([
     };
     
     if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
+      const pdfLinkElement = $(`.${selectedMessageType} .screen-2 .pdfLink`);
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
-      $(`.${selectedMessageType} .screen-2 .pdfLink`).siblings('.error-msg').text('Please enter required field');
-      let isPdfLinkValid =validateInputField($(`.${selectedMessageType} .screen-2 .pdfLink`));
+      pdfLinkElement.siblings('.error-msg').text('Please enter required field');
+      let isPdfLinkValid =validateInputField(pdfLinkElement);
       
       if (!isDescriptionValid || !isPdfLinkValid) {
-          isValid = false;
-      }
-    if (isPdfLinkValid) {
-      const pdfRegex = /^(https?:\/\/.*\.pdf)$/i;
-      if (!pdfRegex.test($(`.${selectedMessageType} .screen-2 .pdfLink`).val().trim()) ){
         isValid = false;
-        $(`.${selectedMessageType} .screen-2 .pdfLink`).siblings('.error-msg').text('Please enter a valid publicly accessible PDF URL.').addClass('show');
-      } else {
-        $(`.${selectedMessageType} .screen-2 .pdfLink`).siblings('.error-msg').removeClass('show');
+      }
+      if (isPdfLinkValid) {
+        setPreviewPayload();
+        let pdfValidationResponse = await createMessage(true);
+        if(pdfValidationResponse.error) {
+          isValid = false;
+          pdfLinkElement.siblings('.error-msg').text(pdfValidationResponse.errorMessage).addClass('show');
+        } else {
+          pdfLinkElement.siblings('.error-msg').removeClass('show');
         }
-    }
+      }
   
       if (selectedMessageType === 'trifold') {
-          let frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val().trim();
-          let frontHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-front`).data('btn-label');
-          let backHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-back`).val().trim();
-          let backHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-back`).data('btn-label');
-          let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .screen-2 .html-editor .error-msg`);
+        let frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val().trim();
+        let frontHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-front`).data('btn-label');
+        let backHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-back`).val().trim();
+        let backHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-back`).data('btn-label');
+        let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .screen-2 .html-editor .error-msg`);
   
-          if (frontHtmlContent === '' || backHtmlContent === '') {
-              isValid = false;
-              if (frontHtmlContent === '' && backHtmlContent === '') {
-                  postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}.`).addClass('show');
-              } else if (frontHtmlContent === '') {
-                  postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}.`).addClass('show');
-              } else {
-                  postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${backHtmlBtnLabel}.`).addClass('show');
-              }
-          } else { 
-              postcardHtmlEditorErrorMsg.removeClass('show');
+        if (frontHtmlContent === '' || backHtmlContent === '') {
+          isValid = false;
+          if (frontHtmlContent === '' && backHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}.`).addClass('show');
+          } else if (frontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}.`).addClass('show');
+          } else {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${backHtmlBtnLabel}.`).addClass('show');
           }
+        } else { 
+          postcardHtmlEditorErrorMsg.removeClass('show');
+        }
       }
-  }
+    }
 
     if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block'){
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-3 .description`));
@@ -904,42 +896,6 @@ define([
       }
     }
     return isValid;
-  }
-
-  function validatePDFFile(pdfFile, selectedMessageType) {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-
-      fileReader.onload = function (event) {
-        const typedarray = new Uint8Array(event.target.result);
-        pdfjsLib.getDocument(typedarray).promise.then(function (pdf) {
-          const numPages = pdf.numPages;
-          pdf.getPage(1).then(function (page) {
-            const viewport = page.getViewport({ scale: 1 });
-            const width = viewport.width;
-            const height = viewport.height;
-            const pdfDimensions = selectedMessageType === 'selfmailer' ? `${(width / 72)}x${(height / 72)}` : `${(width / 72).toFixed(2)}x${(height / 72).toFixed(2)}`;
-            const selectedPDFDimension = $(`.${selectedMessageType} .pdf-size input[name="${selectedMessageType}-pdf-size"]:checked`).data('dimentions');
-            if (numPages !== 2) {
-              resolve({
-                isValid: false,
-                errorMessage: `File has an incorrect number of pages ${numPages} when expecting 2.`
-              });
-            } else if (pdfDimensions !== selectedPDFDimension) {
-              resolve({
-                isValid: false,
-                errorMessage: `File has incorrect page dimensions ${pdfDimensions} when expecting ${selectedPDFDimension}.`
-              });
-            } else {
-              resolve({ isValid: true });
-            }
-          }).catch(reject);
-        }).catch(reject);
-      };
-
-      fileReader.onerror = reject;
-      fileReader.readAsArrayBuffer(pdfFile);
-    });
   }
 
   function validateInputField(element) {
@@ -1024,7 +980,6 @@ define([
         const pdfLink = $(`.${selectedMessageType} .screen-2 .pdfLink`).val().trim();
         previewPayload.isExpressDelivery = isExpressDelivery;
         previewPayload.pdf = pdfLink;
-        previewPayload.pdfName = pdfLink.substring(pdfLink.lastIndexOf('/') + 1); // Extracts file name from URL
       }
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
@@ -1081,7 +1036,7 @@ define([
     return `${formattedDate}T${formattedTime}`;
   }
 
-  async function createMessage() {
+  async function createMessage(isPdfValidation = false) {
     let messageType = $('input[name=\'msgType\']:checked').val();
     const baseUrl = POSTGRID_API_BASE_URL;
     let isCartInsertEnabled = $('#card-insert').prop('checked');
@@ -1091,9 +1046,14 @@ define([
     const selectedCardInsertType = $('input[name="cardType"]:checked').val();
     const url = selectedMessageType === 'selfmailer' || selectedMessageType === 'trifold' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
     
+    let apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
+    if(previewPayload.screen === 'pdf' && isPdfValidation) {
+      apiKey = previewPayload.test_api_key;
+    }
+
     let data;
     let headers = {
-      'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key,
+      'x-api-key': apiKey
     };
 
     if(previewPayload.screen === 'pdf'){
@@ -1193,6 +1153,20 @@ define([
         headers: headers,
         body: data
       });
+
+      if(previewPayload.screen === 'pdf' && isPdfValidation) {
+        if(!response.ok) {
+          const validationResponse = await response.json();
+          return {
+            error: true,
+            errorMessage: validationResponse.error.message
+          };
+        } else {
+          return {
+            error: false
+          };
+        }
+      }
 
       if (!response.ok) {
         const errorResponse = await response.json();
@@ -1387,21 +1361,6 @@ define([
         }
         return response.json();
       });
-  } 
-
-  function isValidPdfUrl(inputElement) {
-    inputElement.siblings('.error-msg').text('The input value is missing.');
-    if(validateInputField(inputElement)) {
-      const url = inputElement.val().trim();
-      var pdfRegex = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,6}(\/[^\s]*)?\.pdf$/i;
-      if (pdfRegex.test(url)) {
-        return true;
-      } else {
-        inputElement.addClass('error');
-        inputElement.siblings('.error-msg').text('Please enter a valid PDF URL.').addClass('show');
-        return false;
-      }
-    }
   }
 
   function debounce(func, delay) {
