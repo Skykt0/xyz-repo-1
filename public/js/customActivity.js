@@ -265,8 +265,8 @@ define([
         $(`.${selectedMessageType} > .screen-2`).toggle(isPdf);
         $(`.${selectedMessageType} > .screen-3`).toggle(isExtTemp);
 
-        connection.trigger('nextStep');
         createContact();
+        connection.trigger('nextStep');
       } else {
         handleValidationFailure();
       }
@@ -1046,8 +1046,13 @@ define([
 
     if(previewPayload.screen === 'pdf'){
       data = new FormData();
-      data.append('to', toContact);
-      data.append('from', fromContact.id || '');
+      if(isPdfValidation) {
+        data.append('to', toContact);
+        data.append('from', toContact);
+      } else {
+        data.append('to', toContact);
+        data.append('from', fromContact.id || '');
+      }
       data.append('description', previewPayload.description);
       data.append('size',previewPayload.size);
       
@@ -1150,6 +1155,9 @@ define([
             errorMessage: validationResponse.error.message
           };
         } else {
+          const validationResponse = await response.json();
+          const messageId = validationResponse.id;
+          previewPayload.messageId = messageId;
           return {
             error: false
           };
@@ -1250,9 +1258,12 @@ define([
 
   async function getPreviewURL () {
     try {
-      const messageResponse = await createMessage();
-      const messageId = messageResponse.id;
-      previewPayload.messageId = messageId;
+      let messageId = previewPayload.messageId;
+      if(previewPayload.screen !== 'pdf') {
+        let messageResponse =  await createMessage();
+        messageId = messageResponse.id;
+        previewPayload.messageId = messageId;
+      }
 
       setTimeout(async function() {
         connection.trigger('nextStep');

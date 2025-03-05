@@ -134,8 +134,6 @@ async function getAuthToken(payloadData){
   return response.data.access_token;
 }
 
-
-
 /**
  * Logs the provided response data to the Data Extension in Marketing Cloud.
  * This function sends log entries to the Data Extension to track activity execution status.
