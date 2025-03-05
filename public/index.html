@@ -218,6 +218,11 @@
                                     </option>
                                 </select>
                             </div>
+                            <div class="input-box">
+                                <label for="pdfLink" class="input-label">Pdf Url *</label>
+                                <input type="text" class="input-field pdfLink" id="pdfLink" name="pdfLink" />
+                                <span class="error-msg">Please enter required field</span>
+                            </div>
                         </div>
                         <div class="pdf-size postcard-pdf-size">
                             <div class="input-label-radio">Size *</div>
@@ -248,14 +253,6 @@
                                     <span>Express Delivery</span>
                                 </label>
                             </div>
-                        </div>
-                        <div class="drop-pdf upload-box">
-                          <input type="file" id="postcard-pdf-upload" class="pdf-upload hidden" accept="application/pdf">
-                          <label for="postcard-pdf-upload">
-                              <span class="file-name">Drag or Upload PDF</span>
-                              <span class="remove-pdf" style="display: none;">✖</span>
-                          </label>
-                          <span class="pdf-error error-msg">Please select a PDF file</span>
                         </div>
                     </div>
                 </div>
@@ -430,6 +427,11 @@
                               </option>
                           </select>
                       </div>
+                      <div class="input-box">
+                        <label for="pdfLink" class="input-label">Pdf Url *</label>
+                        <input type="text" class="input-field pdfLink" id="pdfLink" name="pdfLink" />
+                        <span class="error-msg">Please enter required field</span>
+                    </div>
                   </div>
                   <div class="pdf-size">
                       <div class="input-label-radio">Size *</div>
@@ -459,14 +461,6 @@
                               <span>Express Delivery</span>
                           </label>
                       </div>
-                  </div>
-                  <div class="drop-pdf upload-box">
-                    <input type="file" id="self-mailer-pdf-upload" class="pdf-upload hidden" accept="application/pdf">
-                    <label for="self-mailer-pdf-upload">
-                        <span class="file-name">Drag or Upload PDF</span>
-                        <span class="remove-pdf" style="display: none;">✖</span>
-                    </label>
-                    <span class="pdf-error error-msg">Please select a PDF file</span>
                   </div>
               </div>
             </div>
@@ -906,7 +900,7 @@
     <div id="step5" class="step">
         <div class="container spacer">
             <div class="preview-container">
-                <div class="section-label">Preview Postcards</div>
+                <div class="section-label">Preview</div>
                 <div class="preview-box">
                     <div id="pdf-preview-container" style="display: none;">
                         <iframe id="pdf-preview" style="border: 1px solid #ccc; width: 100%; height: 500px;"></iframe>
