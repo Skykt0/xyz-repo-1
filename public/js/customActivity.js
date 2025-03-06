@@ -203,7 +203,6 @@ define([
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
             handleApiKeyToggle();
-            fetchContacts();
             connection.trigger('nextStep');
           } else {
             handleValidationFailure();
@@ -219,6 +218,7 @@ define([
 
     case 'step2':
       if (validateStep2()) {
+        fetchContacts();
         setDefaultValuesForPostCardCreation();
         $('#step3 .screen').toggle(false);
         let selectedMessageType;
