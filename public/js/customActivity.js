@@ -656,59 +656,6 @@ define([
       $(`${containerSelector} textarea`).val('');
       $(`${containerSelector} .size-radio-label .radio-input`).first().prop('checked', true);
     });
-
-    const today = new Date().toISOString().split('T')[0];
-    $('input[type="date"]').each(function () {
-      $(this).val(today);
-      $(this).attr('min', today);
-    });
-
-    $(document).on('change', '.pdf-upload', function () {
-      let $uploadBox = $(this).closest('.upload-box');
-      let file = this.files[0];
-
-      if (file && file.type === 'application/pdf') {
-        $uploadBox.find('.file-name').text(file.name);
-        $uploadBox.find('.remove-pdf').show();
-        $uploadBox.find('.pdf-error').removeClass('show');
-      } else {
-        $uploadBox.find('.pdf-error').text('Invalid file type! Please upload a PDF file.').addClass('show');
-      }
-    });
-
-    $(document).on('click', '.remove-pdf', function (e) {
-      e.preventDefault();
-
-      let $uploadBox = $(this).closest('.upload-box');
-      let $fileInput = $uploadBox.find('.pdf-upload');
-
-      $fileInput.val('');
-      $uploadBox.find('.file-name').text('Drag or Upload PDF');
-      $(this).hide();
-    });
-
-    $(document).on('dragover', '.drop-pdf', function (e) {
-      e.preventDefault();
-    });
-
-    $(document).on('drop', '.drop-pdf', function (e) {
-      e.preventDefault();
-      let $uploadBox = $(this).closest('.upload-box');
-      let $fileInput = $uploadBox.find('.pdf-upload');
-      let droppedFile = e.originalEvent.dataTransfer.files[0];
-
-      if (droppedFile && droppedFile.type === 'application/pdf') {
-        let fileList = new DataTransfer();
-        fileList.items.add(droppedFile);
-        $fileInput[0].files = fileList.files;
-
-        $uploadBox.find('.file-name').text(droppedFile.name);
-        $uploadBox.find('.remove-pdf').show();
-        $uploadBox.find('.pdf-error').removeClass('show');
-      } else {
-        $uploadBox.find('.pdf-error').text('Invalid file type! Please upload a PDF file.').addClass('show');
-      }
-    });
   }
 
   async function validateStep3() {
