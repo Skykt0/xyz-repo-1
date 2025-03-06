@@ -1158,6 +1158,7 @@ define([
           const validationResponse = await response.json();
           const messageId = validationResponse.id;
           previewPayload.messageId = messageId;
+          previewPayload.pdfLink = validationResponse.uploadedPDF;
           return {
             error: false
           };
