@@ -763,14 +763,14 @@ define([
         isValid = false;
       }
       if (isPdfLinkValid) {
-        setPreviewPayload();
-        let pdfValidationResponse = await createMessage(true);
-        if(pdfValidationResponse.error) {
-          isValid = false;
-          pdfLinkElement.siblings('.error-msg').text(pdfValidationResponse.errorMessage).addClass('show');
-        } else {
-          pdfLinkElement.siblings('.error-msg').removeClass('show');
-        }
+
+        // let pdfValidationResponse = await createMessage(true);
+        // if(pdfValidationResponse.error) {
+        //   isValid = false;
+        //   pdfLinkElement.siblings('.error-msg').text(pdfValidationResponse.errorMessage).addClass('show');
+        // } else {
+        //   pdfLinkElement.siblings('.error-msg').removeClass('show');
+        // }
       }
   
       if (selectedMessageType === 'trifold') {
@@ -974,7 +974,7 @@ define([
     return `${formattedDate}T${formattedTime}`;
   }
 
-  async function createMessage(isPdfValidation = false) {
+  async function createMessage() {
     let messageType = $('input[name=\'msgType\']:checked').val();
     const baseUrl = POSTGRID_API_BASE_URL;
     let isCartInsertEnabled = $('#card-insert').prop('checked');
@@ -985,9 +985,6 @@ define([
     const url = selectedMessageType === 'selfmailer' || selectedMessageType === 'trifold' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
     
     let apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
-    if(previewPayload.screen === 'pdf' && isPdfValidation) {
-      apiKey = previewPayload.test_api_key;
-    }
 
     let data;
     let headers = {
@@ -996,13 +993,8 @@ define([
 
     if(previewPayload.screen === 'pdf'){
       data = new FormData();
-      if(isPdfValidation) {
-        data.append('to', toContact);
-        data.append('from', toContact);
-      } else {
-        data.append('to', toContact);
-        data.append('from', fromContact.id || '');
-      }
+      data.append('to', toContact);
+      data.append('from', fromContact.id || '');
       data.append('description', previewPayload.description);
       data.append('size',previewPayload.size);
       
@@ -1097,32 +1089,15 @@ define([
         body: data
       });
 
-      if(previewPayload.screen === 'pdf' && isPdfValidation) {
-        if(!response.ok) {
-          const validationResponse = await response.json();
-          return {
-            error: true,
-            errorMessage: validationResponse.error.message
-          };
-        } else {
-          const validationResponse = await response.json();
-          const messageId = validationResponse.id;
-          previewPayload.messageId = messageId;
-          previewPayload.pdfLink = validationResponse.uploadedPDF;
-          return {
-            error: false
-          };
-        }
-      }
-
       if (!response.ok) {
         const errorResponse = await response.json();
-        $('.error-toast-wrap').addClass('show');
         $('.error-toast-message').text(`HTTP error! Status: ${response.status}, Message: ${JSON.stringify(errorResponse.error)}`);
-        return;
+        $('.error-toast-wrap').addClass('show');
+        throw new Error(`HTTP error! Status: ${response.status}, Message: ${JSON.stringify(errorResponse.error)}`);
+      } else {
+        $('.error-toast-wrap').removeClass('show');
+        $('.error-toast-message').text('');
       }
-      $('.error-toast-wrap').removeClass('show');
-      $('.error-toast-message').text('');
 
       const result = await response.json();
 
@@ -1134,8 +1109,9 @@ define([
       }
       return result;
     } catch (error) {
-      $('.error-toast-wrap').addClass('show');
       $('.error-toast-message').text(`ErrorMessage: ${JSON.stringify(error.message)}`);
+      $('.error-toast-wrap').addClass('show');
+      throw error;
     }
   }
 
@@ -1214,12 +1190,9 @@ define([
 
   async function getPreviewURL () {
     try {
-      let messageId = previewPayload.messageId;
-      if(previewPayload.screen !== 'pdf') {
-        let messageResponse =  await createMessage();
-        messageId = messageResponse.id;
-        previewPayload.messageId = messageId;
-      }
+      const messageResponse =  await createMessage();
+      const messageId = messageResponse.id;
+      previewPayload.messageId = messageId;
 
       setTimeout(async function() {
         connection.trigger('nextStep');
