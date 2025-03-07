@@ -203,6 +203,7 @@ define([
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
             handleApiKeyToggle();
+            fetchContacts();
             connection.trigger('nextStep');
           } else {
             handleValidationFailure();
@@ -218,7 +219,7 @@ define([
 
     case 'step2':
       if (validateStep2()) {
-        fetchContacts();
+        // fetchContacts();
         setDefaultValuesForPostCardCreation();
         $('#step3 .screen').toggle(false);
         let selectedMessageType;
@@ -289,6 +290,7 @@ define([
       break;
 
     case 'step4':
+      $('error-toast-message').text('').removeClass('show');
       if (validateToContact()) {
         getPreviewURL();
       } else {
@@ -1114,7 +1116,8 @@ define([
 
       if (!response.ok) {
         const errorResponse = await response.json();
-        throw new Error(`HTTP error! Status: ${response.status}, Message: ${JSON.stringify(errorResponse.error)}`);
+        $('error-toast-message').text(`HTTP error! Status: ${response.status}, Message: ${JSON.stringify(errorResponse.error)}`).addClass('show');
+        return;
       }
 
       const result = await response.json();

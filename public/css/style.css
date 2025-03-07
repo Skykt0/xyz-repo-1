@@ -1059,3 +1059,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-color: #f1f1f1;
   border-color: #bbb;
 }
+
+.error-toast-message {
+  display: none;
+  color: white;
+  padding: 1rem;
+  width: 90%;
+  border-radius: 4px;
+  background-color: rgba(255, 0, 0, 0.75);
+}
+
+.error-toast-message.show {
+  display: block;
+}
