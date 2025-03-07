@@ -1090,9 +1090,7 @@ define([
 
       if (!response.ok) {
         const errorResponse = await response.json();
-        $('.error-toast-message').text(`HTTP error! Status: ${response.status}, Type: ${errorResponse.error.type} Message: ${JSON.stringify(errorResponse.error.message)}`);
-        $('.error-toast-wrap').addClass('show');
-        throw new Error(`HTTP error! Status: ${response.status}, Message: ${JSON.stringify(errorResponse.error)}`);
+        throw new Error(`HTTP error! Status: ${response.status}, Type: ${errorResponse.error.type} Message: ${JSON.stringify(errorResponse.error.message)}`);
       } else {
         $('.error-toast-wrap').removeClass('show');
         $('.error-toast-message').text('');
@@ -1110,7 +1108,7 @@ define([
     } catch (error) {
       $('.error-toast-message').text(`Error: ${JSON.stringify(error.message)}`);
       $('.error-toast-wrap').addClass('show');
-      throw error;
+      handleValidationFailure();
     }
   }
 
