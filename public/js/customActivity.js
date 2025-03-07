@@ -290,7 +290,7 @@ define([
       break;
 
     case 'step4':
-      $('error-toast-message').text('').removeClass('show');
+      $('.error-toast-message').text('').removeClass('show');
       if (validateToContact()) {
         getPreviewURL();
       } else {
@@ -1116,7 +1116,7 @@ define([
 
       if (!response.ok) {
         const errorResponse = await response.json();
-        $('error-toast-message').text(`HTTP error! Status: ${response.status}, Message: ${JSON.stringify(errorResponse.error)}`).addClass('show');
+        $('.error-toast-message').text(`HTTP error! Status: ${response.status}, Message: ${JSON.stringify(errorResponse.error)}`).addClass('show');
         return;
       }
 
