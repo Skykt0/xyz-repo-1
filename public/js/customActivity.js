@@ -1131,7 +1131,7 @@ define([
       }
       return result;
     } catch (error) {
-      throw error;
+      $('.error-toast-message').text(`ErrorMessage: ${JSON.stringify(error)}`).addClass('show');
     }
   }
 
