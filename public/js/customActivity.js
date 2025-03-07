@@ -290,7 +290,8 @@ define([
       break;
 
     case 'step4':
-      $('.error-toast-message').text('').removeClass('show');
+      $('.error-toast-wrap').removeClass('show');
+      $('.error-toast-message').text('');
       if (validateToContact()) {
         getPreviewURL();
       } else {
@@ -1116,10 +1117,12 @@ define([
 
       if (!response.ok) {
         const errorResponse = await response.json();
-        $('.error-toast-message').text(`HTTP error! Status: ${response.status}, Message: ${JSON.stringify(errorResponse.error)}`).addClass('show');
+        $('.error-toast-wrap').addClass('show');
+        $('.error-toast-message').text(`HTTP error! Status: ${response.status}, Message: ${JSON.stringify(errorResponse.error)}`);
         return;
       }
-      $('.error-toast-message').text('').removeClass('show');
+      $('.error-toast-wrap').removeClass('show');
+      $('.error-toast-message').text('');
 
       const result = await response.json();
 
@@ -1131,7 +1134,8 @@ define([
       }
       return result;
     } catch (error) {
-      $('.error-toast-message').text(`ErrorMessage: ${JSON.stringify(error)}`).addClass('show');
+      $('.error-toast-wrap').addClass('show');
+      $('.error-toast-message').text(`ErrorMessage: ${JSON.stringify(error.message)}`);
     }
   }
 
@@ -1625,6 +1629,10 @@ define([
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput').on('input', debounce(function () {
     fetchTemplates($(this).val().trim());
   }, 300));
+
+  $('.remove-error-toast').on('click',()=>{
+    $('.error-toast-wrap').removeClass('show');
+  });
 
   $(document).ready(function () {
     const $liveModeToggle = $('.test-to-live-switch input');

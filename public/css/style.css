@@ -1060,15 +1060,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-color: #bbb;
 }
 
-.error-toast-message {
+.error-toast-wrap {
   display: none;
   color: white;
   padding: 1rem;
-  width: 100%;
+  width: 95%;
   border-radius: 4px;
   background-color: rgba(255, 0, 0, 0.75);
+  gap: 1rem;
 }
 
-.error-toast-message.show {
-  display: block;
+.error-toast-wrap.show {
+  display: flex;
 }
