@@ -1119,6 +1119,7 @@ define([
         $('.error-toast-message').text(`HTTP error! Status: ${response.status}, Message: ${JSON.stringify(errorResponse.error)}`).addClass('show');
         return;
       }
+      $('.error-toast-message').text().removeClass('show');
 
       const result = await response.json();
 
