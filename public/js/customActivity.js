@@ -203,7 +203,6 @@ define([
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
             handleApiKeyToggle();
-            fetchContacts();
             connection.trigger('nextStep');
           } else {
             handleValidationFailure();
@@ -219,7 +218,7 @@ define([
 
     case 'step2':
       if (validateStep2()) {
-        // fetchContacts();
+        fetchContacts();
         setDefaultValuesForPostCardCreation();
         $('#step3 .screen').toggle(false);
         let selectedMessageType;
@@ -1200,6 +1199,7 @@ define([
       }, 2000);
 
     } catch {
+      handleValidationFailure();
       $('.preview-container .retry-preview-btn').addClass('show');
       $('#pdf-preview-container').css('display','none');
       $('.pdf-preview-error-msg').text('Failed to fetch preview.');
