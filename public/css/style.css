@@ -1064,7 +1064,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
   color: white;
   padding: 1rem;
-  width: 95%;
+  width: 100%;
   border-radius: 4px;
   background-color: rgba(255, 0, 0, 0.75);
   gap: 1rem;
@@ -1072,4 +1072,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .error-toast-wrap.show {
   display: flex;
+  align-items: center;
+}
+
+.remove-error-toast {
+  height: fit-content;
+  cursor: pointer;
 }
