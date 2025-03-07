@@ -1059,3 +1059,32 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-color: #f1f1f1;
   border-color: #bbb;
 }
+
+.error-toast-wrap {
+  display: none;
+  color: white;
+  padding: 1rem;
+  width: 97%;
+  border-radius: 4px;
+  background-color: rgba(255, 0, 0, 1);
+  gap: 1rem;
+}
+
+.error-toast-wrap.show {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  position: absolute;
+  top: 35%;
+  left: 25%;
+}
+
+.remove-error-toast {
+  height: fit-content;
+  cursor: pointer;
+}
+
+#step4 {
+  position: relative;
+}
