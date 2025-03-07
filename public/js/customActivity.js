@@ -284,6 +284,7 @@ define([
           $('.contact-dropdown-container .error-msg').removeClass('show');
           $('.error-toast-wrap').removeClass('show');
           $('.error-toast-message').text('');
+          $('body').css('overflow', 'auto');
         })
         .catch(() => {
           handleValidationFailure();
@@ -1093,6 +1094,7 @@ define([
         throw new Error(`HTTP error! Status: ${response.status}, Type: ${errorResponse.error.type} Message: ${errorResponse.error.message}`);
       } else {
         $('.error-toast-wrap').removeClass('show');
+        $('body').css('overflow', 'auto');
         $('.error-toast-message').text('');
       }
 
@@ -1108,6 +1110,7 @@ define([
     } catch (error) {
       $('.error-toast-message').text(`Error: ${JSON.stringify(error.message)}`);
       $('.error-toast-wrap').addClass('show');
+      $('body').css('overflow', 'hidden');
       handleValidationFailure();
     }
   }
@@ -1603,6 +1606,7 @@ define([
 
   $('.remove-error-toast').on('click',()=>{
     $('.error-toast-wrap').removeClass('show');
+    $('body').css('overflow', 'auto');
   });
 
   $(document).ready(function () {
