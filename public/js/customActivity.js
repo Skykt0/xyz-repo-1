@@ -282,6 +282,8 @@ define([
           $('.error-message-contact-mapping').hide();
           $('.contact-dropdown-container input').removeClass('error');
           $('.contact-dropdown-container .error-msg').removeClass('show');
+          $('.error-toast-wrap').removeClass('show');
+          $('.error-toast-message').text('');
         })
         .catch(() => {
           handleValidationFailure();
@@ -289,8 +291,6 @@ define([
       break;
 
     case 'step4':
-      $('.error-toast-wrap').removeClass('show');
-      $('.error-toast-message').text('');
       if (validateToContact()) {
         getPreviewURL();
       } else {
