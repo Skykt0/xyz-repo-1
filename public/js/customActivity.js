@@ -225,6 +225,7 @@ define([
         let selectedMessageType;
         let selectedRadio = $('input[name="msgType"]:checked');
         let isCartInsertEnabled = $('#card-insert').prop('checked');
+        let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
 
         if (selectedRadio.length > 0) {
           let selectedRadioValue = selectedRadio.val().replace(/\s+/g, '');
@@ -261,7 +262,8 @@ define([
         if (isExtTemp) {
           let currentEnabledEnvironmenet = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
           if(previewPayload.templateEnvironment !== currentEnabledEnvironmenet) {
-            alert('template field should clear');
+            $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('');
+            $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('');
           }
           fetchTemplates();
         }
