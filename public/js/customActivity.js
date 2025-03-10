@@ -12,7 +12,8 @@ define([
   var previewDEMapOptions = {};
   var authorization = {};
   let previewPayload = {
-    isValid: true
+    isValid: true,
+    templateEnvironment : ''
   };
   var authToken, et_subdomain, authTSSD;
   let fromContact = {};
@@ -224,6 +225,7 @@ define([
         let selectedMessageType;
         let selectedRadio = $('input[name="msgType"]:checked');
         let isCartInsertEnabled = $('#card-insert').prop('checked');
+        let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
 
         if (selectedRadio.length > 0) {
           let selectedRadioValue = selectedRadio.val().replace(/\s+/g, '');
@@ -258,6 +260,11 @@ define([
         let isExtTemp = $('#extTempId').is(':checked');
 
         if (isExtTemp) {
+          let currentEnabledEnvironmenet = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
+          if(previewPayload.templateEnvironment !== currentEnabledEnvironmenet) {
+            $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('');
+            $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('');
+          }
           fetchTemplates();
         }
 
@@ -1346,6 +1353,8 @@ define([
       headers: { 'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key },
       redirect: 'follow'
     };
+
+    previewPayload.templateEnvironment = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
 
     try {
       const response = await fetch(`${POSTGRID_API_BASE_URL}templates?limit=10&search=${encodeURIComponent(searchQuery)}`, requestOptions);
