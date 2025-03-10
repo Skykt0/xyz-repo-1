@@ -1561,6 +1561,9 @@ define([
     } else {
       $('#dropdown-options').empty().hide();
     }
+    if ($(this).val().trim() === '') {
+      $(this).blur();
+    }
   }, 300));  
 
   $('#dropdown-options').on('click', 'div', function () {
