@@ -12,7 +12,8 @@ define([
   var previewDEMapOptions = {};
   var authorization = {};
   let previewPayload = {
-    isValid: true
+    isValid: true,
+    templateEnvironment : ''
   };
   var authToken, et_subdomain, authTSSD;
   let fromContact = {};
@@ -258,6 +259,10 @@ define([
         let isExtTemp = $('#extTempId').is(':checked');
 
         if (isExtTemp) {
+          let currentEnabledEnvironmenet = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
+          if(previewPayload.templateEnvironment !== currentEnabledEnvironmenet) {
+            alert('template field should clear');
+          }
           fetchTemplates();
         }
 
@@ -1346,6 +1351,8 @@ define([
       headers: { 'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key },
       redirect: 'follow'
     };
+
+    previewPayload.templateEnvironment = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
 
     try {
       const response = await fetch(`${POSTGRID_API_BASE_URL}templates?limit=10&search=${encodeURIComponent(searchQuery)}`, requestOptions);
