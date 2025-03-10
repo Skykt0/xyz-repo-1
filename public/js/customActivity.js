@@ -1556,7 +1556,7 @@ define([
 
   $('#search-contact').on('input', debounce(function () {
     const searchQuery = $(this).val();
-    if (searchQuery.length > 2) {
+    if (searchQuery.length > 1) {
       fetchContacts(searchQuery);
     } else {
       $('#dropdown-options').empty().hide();
