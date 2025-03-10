@@ -10,6 +10,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.post('/client-credentials/', activity.fetchClientCredentials);
+app.post('/data-extensions/', activity.fetchSFMCDataExtension);
 app.post('/save/', activity.save);
 app.post('/validate/', activity.validate);
 app.post('/publish/', activity.publish);

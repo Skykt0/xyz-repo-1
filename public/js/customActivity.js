@@ -199,6 +199,7 @@ define([
     switch (currentStep.key) {
     case 'step1':
       fetchClientCredentials();
+      fetchExternalKey();
       if (validateApiKeys()) {
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
@@ -1498,6 +1499,35 @@ define([
           if (name === 'Client_Secret') {
             previewPayload.clientSecret = value;
           }
+        }
+      })
+      .catch((error) => {
+        throw error;
+      });
+  }
+
+  function fetchExternalKey(){
+    fetch('/data-extensions', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        authTSSD: authTSSD,
+        token: authToken
+      })
+    })
+      .then(response => response.text())
+      .then(xmlString => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+    
+        const properties = xmlDoc.getElementsByTagName('Property');
+    
+        for (let i = 0; i < properties.length; i++) {
+          const name = properties[i].getElementsByTagName('CustomerKey')[0].textContent;
+          const value = properties[i].getElementsByTagName('Value')[0].textContent;
+  
+          console.log("Externanl Key is : "+value);
+          
         }
       })
       .catch((error) => {
