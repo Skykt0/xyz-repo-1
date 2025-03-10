@@ -31,6 +31,18 @@ exports.execute = async function (req, res) {
   const requestBody = req.body.inArguments[0];
   const authToken = requestBody.authorization.authToken;
   const authTSSD = requestBody.authorization.authTSSD;
+  const internalPostcardJson = requestBody.internalPostcardJson;
+  internalPostcardJson.authTSSD = authTSSD;
+
+  let requestData = {
+    authTSSD: authTSSD,
+    authToken: authToken,
+    contactKey: contactKey,
+    journeyId: journeyId,
+    activityId: activityId,
+    object: internalPostcardJson.messageType,
+    payload: JSON.stringify(internalPostcardJson)
+  };
 
   try {
     let postcardJson = requestBody.postcardJson;
@@ -40,7 +52,6 @@ exports.execute = async function (req, res) {
     now.setMinutes(now.getMinutes() + 5);
     postcardJson.sendDate = now.toISOString();
 
-    const internalPostcardJson = requestBody.internalPostcardJson;
     const baseUrl = process.env.POSTGRID_API_BASE_URL || 'https://api.postgrid.com/print-mail/v1/';
 
     const postcardConfigOptions = {
@@ -62,23 +73,24 @@ exports.execute = async function (req, res) {
     if (postcardCreateCall.status === 200 || postcardCreateCall.status === 201) {
       const postcardId = postcardCreateCall.data.id;
       const timestamp = new Date().toISOString();
+
+      requestData.timestamp = timestamp;
+      requestData.responseData = `${internalPostcardJson.messageType} created successfully. ID: ${postcardId}`;
+      requestData.status = 'Success';
       
-      logToDataExtension(
-        `${internalPostcardJson.messageType} created successfully. ID: ${postcardId}`,
-        authTSSD, authToken, timestamp, contactKey, 'Success', journeyId, activityId,
-        internalPostcardJson.messageType
-      );
+      logToDataExtension(requestData);
     } else {
       res.status(500).send('Postcard creation failed');
       return;
     }
   } catch (error) {
     const timestamp = new Date().toISOString();
-    logToDataExtension(
-      error.response ? JSON.stringify(error.response.data) : error.message,
-      authTSSD, authToken, timestamp, contactKey, 'Error', journeyId, activityId,
-      requestBody.internalPostcardJson.messageType
-    );
+
+    requestData.timestamp = timestamp;
+    requestData.responseData = error.response ? JSON.stringify(error.response.data) : error.message;
+    requestData.status = 'Error';
+
+    logToDataExtension(requestData);
     res.status(500).send('Error creating postcard');
     return;
   }
@@ -103,30 +115,89 @@ exports.validate = function (req, res) {
 };
 
 /**
+ * Fetches client credentials from Salesforce Marketing Cloud (SFMC) using SOAP API.
+ * This function retrieves credentials (Client_Secret, Client_Id) from the specified Data Extension in SFMC.
+ *
+ * @param {object} req - The request object containing the `authTSSD` (account identifier) and `token` (OAuth token) in the body.
+ * @param {object} res - The response object used to send back the data or error response.
+ */
+exports.fetchClientCredentials = async function (req, res) {
+  const { authTSSD, token } = req.body;
+  const SFMC_SOAP_URL = `https://${authTSSD}.soap.marketingcloudapis.com/Service.asmx`;
+  const xmlData = `<?xml version='1.0' encoding='UTF-8'?>
+      <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' 
+          xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' 
+          xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+          <soapenv:Header>
+              <fueloauth>${token}</fueloauth>
+          </soapenv:Header>
+          <soapenv:Body>
+              <RetrieveRequestMsg xmlns='http://exacttarget.com/wsdl/partnerAPI'>
+                  <RetrieveRequest>
+                      <ObjectType>DataExtensionObject[PostgridDEforAPI]</ObjectType>
+                      <Properties>Client_Secret</Properties>
+                      <Properties>Client_Id</Properties>
+                  </RetrieveRequest>
+              </RetrieveRequestMsg>
+          </soapenv:Body>
+      </soapenv:Envelope>`;
+  try {
+    const response = await axios.post(SFMC_SOAP_URL, xmlData, {
+      headers: {
+        'Content-Type': 'text/xml',
+        'Accept': 'text/xml',
+        'SoapAction': 'Retrieve'
+      }
+    });
+    res.send(response.data);
+  } catch (error) {
+    res.status(500).send(error.toString());
+  }
+};
+
+/**
+ * Fetches the authentication token from Marketing Cloud.
+ * 
+ * @param {string} payloadData - A JSON string containing the client credentials (clientId, clientSecret, and authTSSD) required for the authentication request.
+ * @returns {string} - The access token received from the Marketing Cloud API.
+ */
+async function getAuthToken(payloadData){
+  payloadData = JSON.parse(payloadData);
+  const authTokenPayload = {
+    method: 'POST',
+    url: `https://${payloadData.authTSSD}.auth.marketingcloudapis.com/v2/token`,
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    data: {
+      grant_type: 'client_credentials',
+      client_id: payloadData.clientId,
+      client_secret: payloadData.clientSecret
+    }
+  };
+  let response = await axios.request(authTokenPayload);
+  return response.data.access_token;
+}
+
+/**
  * Logs the provided response data to the Data Extension in Marketing Cloud.
  * This function sends log entries to the Data Extension to track activity execution status.
  * 
- * @param {string} responseData - The response data or error message to log.
- * @param {string} authTSSD - The subdomain of the Marketing Cloud instance.
- * @param {string} authToken - The authentication token for the Marketing Cloud API.
- * @param {string} timeStamp - The timestamp of the log entry.
- * @param {string} contactKey - The contact key related to the request.
- * @param {string} status - The status of the request (e.g., 'Success', 'Error').
- * @param {string} journeyId - The journey ID associated with the activity.
- * @param {string} activityId - The activity ID associated with the activity.
- * @param {string} object - The object type being logged (e.g., 'Postcards').
+ * @param {object} requestData - The data to be logged to the Data Extension.
  */
-function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contactKey, status, journeyId, activityId, object) {
+async function logToDataExtension(requestData) {
+  requestData.authToken = await getAuthToken(requestData.payload);
   const payload = JSON.stringify({
     'items': [
       {
-        'Status': status,
-        'Response': responseData,
-        'TimeStamp': timeStamp,
-        'ContactKey': contactKey,
-        'JourneyId': journeyId,
-        'ActivityId': activityId,
-        'Object': object
+        'Status': requestData.status,
+        'Response': requestData.responseData,
+        'TimeStamp': requestData.timestamp,
+        'ContactKey': requestData.contactKey,
+        'JourneyId': requestData.journeyId,
+        'ActivityId': requestData.activityId,
+        'Object': requestData.object
       }
     ]
   });
@@ -135,10 +206,10 @@ function logToDataExtension(responseData, authTSSD, authToken, timeStamp, contac
 
   const config = {
     method: 'post',
-    url: `https://${authTSSD}.rest.marketingcloudapis.com/data/v1/async/dataextensions/key:${logDEKey}/rows`,
+    url: `https://${requestData.authTSSD}.rest.marketingcloudapis.com/data/v1/async/dataextensions/key:${logDEKey}/rows`,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + authToken
+      'Authorization': 'Bearer ' + requestData.authToken
     },
     data: payload
   };

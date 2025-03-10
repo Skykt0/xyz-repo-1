@@ -5,7 +5,6 @@
     <meta charset="utf-8" />
     <title>Custom Journey Builder Activity</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script type="text/javascript" src="./js/require.js"></script>
     <script type="text/javascript">
         (function () {
@@ -18,16 +17,11 @@
             require(config, dependencies);
         })();
     </script>
-
-    <!--Styles-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&family=Lato:ital,wght@0,300;0,400;1,100&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./css/styles.css" />
     <link rel="stylesheet" href="./css/style.css" />
 </head>
-
 <body>
     <div id="step1" class="step">
         <div class="step1-left-panel">
@@ -102,7 +96,7 @@
                             </div>
                             <div class="pdf-radio-wrap radio-label-wrap">
                                 <input type="radio" class="radio-input step2radioBTN" id="pdfId" name="createType" value="pdf-creation-type"/>
-                                <label for="pdfId" class="radio-label">PDF Upload</label>
+                                <label for="pdfId" class="radio-label">PDF</label>
                             </div>
                             <dev class="existing-template-radio-wrap radio-label-wrap">
                                 <input type="radio" class="radio-input step2radioBTN" id="extTempId" name="createType" value="template-creation-type" />
@@ -203,7 +197,7 @@
             <div class="screen-2 screen">
                 <div class="spacer">
                     <div class="pdf-container postcard-pdf-container pdf-creation-type">
-                        <h3 class="section-label">PDF Upload</h3>
+                        <h3 class="section-label">PDF</h3>
                         <div class="input-fields">
                             <div class="input-box">
                                 <label for="description" class="input-label">Description *</label>
@@ -220,6 +214,11 @@
                                         Standard Class (10 - 14 business days)
                                     </option>
                                 </select>
+                            </div>
+                            <div class="input-box">
+                                <label for="pdfLink" class="input-label">PDF URL *</label>
+                                <input type="text" class="input-field pdfLink" id="pdfLink" name="pdfLink" />
+                                <span class="error-msg">Please enter required field</span>
                             </div>
                         </div>
                         <div class="pdf-size postcard-pdf-size">
@@ -251,14 +250,6 @@
                                     <span>Express Delivery</span>
                                 </label>
                             </div>
-                        </div>
-                        <div class="drop-pdf upload-box">
-                          <input type="file" id="postcard-pdf-upload" class="pdf-upload hidden" accept="application/pdf">
-                          <label for="postcard-pdf-upload">
-                              <span class="file-name">Drag or Upload PDF</span>
-                              <span class="remove-pdf" style="display: none;">✖</span>
-                          </label>
-                          <span class="pdf-error error-msg">Please select a PDF file</span>
                         </div>
                     </div>
                 </div>
@@ -415,7 +406,7 @@
           <div class="screen-2 screen">
             <div class="spacer">
               <div class="pdf-container self-mailer-pdf-container pdf-creation-type">
-                  <h3 class="section-label">PDF Upload</h3>
+                  <h3 class="section-label">PDF</h3>
                   <div class="input-fields">
                       <div class="input-box">
                           <label for="description" class="input-label">Description *</label>
@@ -433,6 +424,11 @@
                               </option>
                           </select>
                       </div>
+                      <div class="input-box">
+                        <label for="pdfLink" class="input-label">PDF URL *</label>
+                        <input type="text" class="input-field pdfLink" id="pdfLink" name="pdfLink" />
+                        <span class="error-msg">Please enter required field</span>
+                    </div>
                   </div>
                   <div class="pdf-size">
                       <div class="input-label-radio">Size *</div>
@@ -462,14 +458,6 @@
                               <span>Express Delivery</span>
                           </label>
                       </div>
-                  </div>
-                  <div class="drop-pdf upload-box">
-                    <input type="file" id="self-mailer-pdf-upload" class="pdf-upload hidden" accept="application/pdf">
-                    <label for="self-mailer-pdf-upload">
-                        <span class="file-name">Drag or Upload PDF</span>
-                        <span class="remove-pdf" style="display: none;">✖</span>
-                    </label>
-                    <span class="pdf-error error-msg">Please select a PDF file</span>
                   </div>
               </div>
             </div>
@@ -821,6 +809,10 @@
     </div>
 
     <div id="step4" class="step">
+      <div class="error-toast-wrap">
+        <div class="error-toast-message"></div>
+        <div class="remove-error-toast">✖</div>
+      </div>
         <div class="mapping-container">
             <div class="mapping-left">
                 <h2 class="step4-heading" id="step4-heading">From Contact</h2>
@@ -909,7 +901,7 @@
     <div id="step5" class="step">
         <div class="container spacer">
             <div class="preview-container">
-                <div class="section-label">Preview Postcards</div>
+                <div class="section-label">Preview</div>
                 <div class="preview-box">
                     <div id="pdf-preview-container" style="display: none;">
                         <iframe id="pdf-preview" style="border: 1px solid #ccc; width: 100%; height: 500px;"></iframe>
@@ -926,5 +918,4 @@
         </div>
     </div>
 </body>
-
 </html>
