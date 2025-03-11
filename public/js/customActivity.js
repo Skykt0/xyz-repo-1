@@ -69,7 +69,7 @@ define([
         }
       });
     }, 3000);
-    
+
     if (data) {
       payload = data;
     }
@@ -204,6 +204,10 @@ define([
     et_subdomain = endpoints.restHost;        
     authTSSD = (endpoints.authTSSD).split('//')[1].split('.')[0];
   }
+
+  connection.on('requestedInteraction', function(data){
+    console.log('interaction requested');
+  });
 
   connection.on('requestedTokens', onGetTokens);
   function onGetTokens (tokens) {
