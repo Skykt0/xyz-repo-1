@@ -31,8 +31,10 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
-    connection.trigger('ready');
     connection.trigger('requestSchema');
+    connection.trigger('requestTokens');
+    connection.trigger('requestEndpoints');
+    connection.trigger('ready');
     $('#card-insert-type').addClass('hidden');
   }
   
@@ -179,8 +181,6 @@ define([
       }
     });
     
-    connection.trigger('requestTokens');
-    connection.trigger('requestEndpoints');
     initializeHandler();
   }
 
@@ -190,9 +190,13 @@ define([
     authTSSD = (endpoints.authTSSD).split('//')[1].split('.')[0];
   }
 
-  connection.on('requestedTokens', onGetTokens);
-  function onGetTokens (tokens) {
+  connection.on('requestedTokens', async (tokens) => {
+    await onGetTokens(tokens);
+  });
+  async function onGetTokens (tokens) {
     authToken = tokens.fuel2token;
+    await fetchExternalKey('PostgridDEforAPI');
+    await fetchExternalKey('Postgrid_Logging_Data');
   }
 
   var currentStep = steps[0].key;
@@ -1477,7 +1481,8 @@ define([
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         authTSSD: authTSSD,
-        token: authToken
+        token: authToken,
+        externalKey : previewPayload.credentialExternalKey
       })
     })
       .then(response => response.text())
@@ -1497,6 +1502,35 @@ define([
           if (name === 'Client_Secret') {
             previewPayload.clientSecret = value;
           }
+        }
+      })
+      .catch((error) => {
+        throw error;
+      });
+  }
+
+  async function fetchExternalKey(deName){
+    fetch('/fetch-external-key', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        authTSSD: authTSSD,
+        token: authToken, 
+        deName : deName
+      })
+    })
+      .then(response => response.text())
+      .then(xmlString => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+    
+        const properties = xmlDoc.getElementsByTagName('CustomerKey');
+        const externalKey = properties[0].textContent;
+        if(deName === 'Postgrid_Logging_Data') {
+          previewPayload.loggingExternalKey = externalKey;
+          fetchClientCredentials();
+        } else {
+          previewPayload.credentialExternalKey = externalKey;
         }
       })
       .catch((error) => {
