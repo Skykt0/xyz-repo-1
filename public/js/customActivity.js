@@ -197,6 +197,8 @@ define([
 
   var currentStep = steps[0].key;
   function onClickedNext() {
+    console.log('clicked next button');
+    
     switch (currentStep.key) {
     case 'step1':
       fetchClientCredentials();
