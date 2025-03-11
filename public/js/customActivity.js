@@ -55,6 +55,8 @@ define([
   });
 
   function initialize(data) {
+    console.log('initialize called');
+    
     if (data) {
       payload = data;
     }
