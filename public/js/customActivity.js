@@ -203,7 +203,6 @@ define([
   function onClickedNext() {
     switch (currentStep.key) {
     case 'step1':
-      fetchClientCredentials();
       if (validateApiKeys()) {
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
@@ -1528,9 +1527,9 @@ define([
         const externalKey = properties[0].textContent;
         if(deName === 'Postgrid_Logging_Data') {
           previewPayload.loggingExternalKey = externalKey;
-          fetchClientCredentials();
         } else {
           previewPayload.credentialExternalKey = externalKey;
+          fetchClientCredentials();
         }
       })
       .catch((error) => {
