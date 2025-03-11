@@ -31,6 +31,8 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
+    console.log('on render');
+    
     connection.trigger('ready');
     connection.trigger('requestSchema');
     $('#card-insert-type').addClass('hidden');
