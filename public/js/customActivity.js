@@ -55,21 +55,6 @@ define([
   });
 
   function initialize(data) {
-
-    connection.trigger('requestInteraction', {
-      interaction: {
-        status: 'pending'
-      }
-    });
-
-    setTimeout(() => {
-      connection.trigger('requestInteraction', {
-        interaction: {
-          status: 'complete'
-        }
-      });
-    }, 3000);
-
     if (data) {
       payload = data;
     }
@@ -1624,6 +1609,14 @@ define([
 
   $('.remove-error-toast').on('click',()=>{
     $('.error-toast-wrap').removeClass('show');
+  });
+
+  $('.test-btn').on('click',()=>{
+    connection.trigger('requestInteraction', {
+      interaction: {
+        status: 'pending'
+      }
+    });
   });
 
   $(document).ready(function () {
