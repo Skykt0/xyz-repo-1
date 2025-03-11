@@ -31,8 +31,19 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
-    alert('on render');
-    
+    connection.trigger('requestInteraction', {
+      interaction: {
+        status: 'pending'
+      }
+    });
+
+    setTimeout(() => {
+      connection.trigger('requestInteraction', {
+        interaction: {
+          status: 'complete'
+        }
+      });
+    }, 3000);
     connection.trigger('ready');
     connection.trigger('requestSchema');
     $('#card-insert-type').addClass('hidden');
@@ -57,8 +68,6 @@ define([
   });
 
   function initialize(data) {
-    alert('initialize called');
-    
     if (data) {
       payload = data;
     }
@@ -201,8 +210,6 @@ define([
 
   var currentStep = steps[0].key;
   function onClickedNext() {
-    alert('clicked next button');
-    
     switch (currentStep.key) {
     case 'step1':
       fetchClientCredentials();
