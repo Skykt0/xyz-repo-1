@@ -768,16 +768,6 @@ define([
       if (!isDescriptionValid || !isPdfLinkValid) {
         isValid = false;
       }
-      if (isPdfLinkValid) {
-
-        // let pdfValidationResponse = await createMessage(true);
-        // if(pdfValidationResponse.error) {
-        //   isValid = false;
-        //   pdfLinkElement.siblings('.error-msg').text(pdfValidationResponse.errorMessage).addClass('show');
-        // } else {
-        //   pdfLinkElement.siblings('.error-msg').removeClass('show');
-        // }
-      }
   
       if (selectedMessageType === 'trifold') {
         let frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val().trim();
