@@ -31,7 +31,7 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
-    console.log('on render');
+    alert('on render');
     
     connection.trigger('ready');
     connection.trigger('requestSchema');
@@ -57,7 +57,7 @@ define([
   });
 
   function initialize(data) {
-    console.log('initialize called');
+    alert('initialize called');
     
     if (data) {
       payload = data;
@@ -201,7 +201,7 @@ define([
 
   var currentStep = steps[0].key;
   function onClickedNext() {
-    console.log('clicked next button');
+    alert('clicked next button');
     
     switch (currentStep.key) {
     case 'step1':
