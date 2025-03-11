@@ -213,7 +213,7 @@ define([
         });
       }
       else{
-        // handleValidationFailure();
+        handleValidationFailure();
       }
       break;
 
