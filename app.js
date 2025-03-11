@@ -1,8 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const axios = require('axios');
-const fs = require('fs');
-const credentialPath = '../../public/js/credentials.json'
 const path = require('path');
 var activity = require('./routes/activity');
 const app = express();

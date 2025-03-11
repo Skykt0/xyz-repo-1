@@ -160,6 +160,13 @@ exports.fetchClientCredentials = async function (req, res) {
   }
 };
 
+/**
+ * Fetches the External Key (CustomerKey) of a Data Extension from Salesforce Marketing Cloud using the SOAP API.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {void} - Sends the SOAP response or an error message.
+ */
 exports.fetchExternalKey = async function (req, res) {
   const { authTSSD, token, deName } = req.body;
   const SFMC_SOAP_URL = `https://${authTSSD}.soap.marketingcloudapis.com/Service.asmx`;
@@ -198,6 +205,7 @@ exports.fetchExternalKey = async function (req, res) {
     res.status(500).send(error.toString());
   }
 };
+
 /**
  * Fetches the authentication token from Marketing Cloud.
  * 
