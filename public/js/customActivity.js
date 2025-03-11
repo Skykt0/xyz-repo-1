@@ -31,19 +31,6 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
-    connection.trigger('requestInteraction', {
-      interaction: {
-        status: 'pending'
-      }
-    });
-
-    setTimeout(() => {
-      connection.trigger('requestInteraction', {
-        interaction: {
-          status: 'complete'
-        }
-      });
-    }, 3000);
     connection.trigger('ready');
     connection.trigger('requestSchema');
     $('#card-insert-type').addClass('hidden');
@@ -68,6 +55,21 @@ define([
   });
 
   function initialize(data) {
+
+    connection.trigger('requestInteraction', {
+      interaction: {
+        status: 'pending'
+      }
+    });
+
+    setTimeout(() => {
+      connection.trigger('requestInteraction', {
+        interaction: {
+          status: 'complete'
+        }
+      });
+    }, 3000);
+    
     if (data) {
       payload = data;
     }
