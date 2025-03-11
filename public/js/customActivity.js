@@ -1498,8 +1498,14 @@ define([
           if (name === 'Client_Id') {
             previewPayload.clientId = value;
           }
-          if (name === 'Client_Secret') {
+          else if (name === 'Client_Secret') {
             previewPayload.clientSecret = value;
+          }
+          else if (name === 'TestAPIKey') {
+            $('#test-api-key').val(value);
+          }
+          else if (name === 'LiveAPIKey') {
+            $('#live-api-key').val(value);
           }
         }
       })
