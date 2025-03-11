@@ -12,7 +12,8 @@ define([
   var previewDEMapOptions = {};
   var authorization = {};
   let previewPayload = {
-    isValid: true
+    isValid: true,
+    templateEnvironment : ''
   };
   var authToken, et_subdomain, authTSSD;
   let fromContact = {};
@@ -224,6 +225,7 @@ define([
         let selectedMessageType;
         let selectedRadio = $('input[name="msgType"]:checked');
         let isCartInsertEnabled = $('#card-insert').prop('checked');
+        let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
 
         if (selectedRadio.length > 0) {
           let selectedRadioValue = selectedRadio.val().replace(/\s+/g, '');
@@ -258,6 +260,11 @@ define([
         let isExtTemp = $('#extTempId').is(':checked');
 
         if (isExtTemp) {
+          let currentEnabledEnvironmenet = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
+          if(previewPayload.templateEnvironment !== currentEnabledEnvironmenet) {
+            $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('');
+            $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('');
+          }
           fetchTemplates();
         }
 
@@ -760,16 +767,6 @@ define([
       
       if (!isDescriptionValid || !isPdfLinkValid) {
         isValid = false;
-      }
-      if (isPdfLinkValid) {
-
-        // let pdfValidationResponse = await createMessage(true);
-        // if(pdfValidationResponse.error) {
-        //   isValid = false;
-        //   pdfLinkElement.siblings('.error-msg').text(pdfValidationResponse.errorMessage).addClass('show');
-        // } else {
-        //   pdfLinkElement.siblings('.error-msg').removeClass('show');
-        // }
       }
   
       if (selectedMessageType === 'trifold') {
@@ -1347,6 +1344,8 @@ define([
       redirect: 'follow'
     };
 
+    previewPayload.templateEnvironment = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
+
     try {
       const response = await fetch(`${POSTGRID_API_BASE_URL}templates?limit=10&search=${encodeURIComponent(searchQuery)}`, requestOptions);
       if (!response.ok) {
@@ -1547,10 +1546,13 @@ define([
 
   $('#search-contact').on('input', debounce(function () {
     const searchQuery = $(this).val();
-    if (searchQuery.length > 2) {
+    if (searchQuery.length > 1) {
       fetchContacts(searchQuery);
     } else {
       $('#dropdown-options').empty().hide();
+    }
+    if ($(this).val().trim() === '') {
+      $(this).blur();
     }
   }, 300));  
 
