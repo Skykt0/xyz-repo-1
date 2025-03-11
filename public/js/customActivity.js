@@ -190,10 +190,6 @@ define([
     authTSSD = (endpoints.authTSSD).split('//')[1].split('.')[0];
   }
 
-  connection.on('requestedInteraction', function(data){
-    console.log('interaction requested');
-  });
-
   connection.on('requestedTokens', onGetTokens);
   function onGetTokens (tokens) {
     authToken = tokens.fuel2token;
@@ -217,7 +213,7 @@ define([
         });
       }
       else{
-        handleValidationFailure();
+        // handleValidationFailure();
       }
       break;
 
@@ -1609,14 +1605,6 @@ define([
 
   $('.remove-error-toast').on('click',()=>{
     $('.error-toast-wrap').removeClass('show');
-  });
-
-  $('.test-btn').on('click',()=>{
-    connection.trigger('requestInteraction', {
-      interaction: {
-        status: 'pending'
-      }
-    });
   });
 
   $(document).ready(function () {
