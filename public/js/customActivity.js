@@ -57,6 +57,8 @@ define([
   });
 
   function initialize(data) {
+    $('.loader-overlay').addClass('show');
+    $('.activity-loader').addClass('show');
     if (data) {
       payload = data;
     }
@@ -193,6 +195,7 @@ define([
   connection.on('requestedTokens', async (tokens) => {
     await onGetTokens(tokens);
   });
+
   async function onGetTokens (tokens) {
     authToken = tokens.fuel2token;
     await fetchExternalKey('PostgridDEforAPI');
@@ -1507,6 +1510,9 @@ define([
           else if (name === 'LiveAPIKey') {
             $('#live-api-key').val(value);
           }
+
+          $('.loader-overlay').removeClass('show');
+          $('.activity-loader').removeClass('show');
         }
       })
       .catch((error) => {
