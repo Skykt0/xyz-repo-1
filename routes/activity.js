@@ -33,6 +33,8 @@ exports.execute = async function (req, res) {
   const authTSSD = requestBody.authorization.authTSSD;
   const internalPostcardJson = requestBody.internalPostcardJson;
   internalPostcardJson.authTSSD = authTSSD;
+  const loggingExternalKey = internalPostcardJson.loggingExternalKey;
+
 
   let requestData = {
     authTSSD: authTSSD,
@@ -41,7 +43,8 @@ exports.execute = async function (req, res) {
     journeyId: journeyId,
     activityId: activityId,
     object: internalPostcardJson.messageType,
-    payload: JSON.stringify(internalPostcardJson)
+    payload: JSON.stringify(internalPostcardJson),
+    loggingExternalKey : loggingExternalKey
   };
 
   try {
@@ -122,7 +125,7 @@ exports.validate = function (req, res) {
  * @param {object} res - The response object used to send back the data or error response.
  */
 exports.fetchClientCredentials = async function (req, res) {
-  const { authTSSD, token } = req.body;
+  const { authTSSD, token, externalKey } = req.body;
   const SFMC_SOAP_URL = `https://${authTSSD}.soap.marketingcloudapis.com/Service.asmx`;
   const xmlData = `<?xml version='1.0' encoding='UTF-8'?>
       <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' 
@@ -134,9 +137,57 @@ exports.fetchClientCredentials = async function (req, res) {
           <soapenv:Body>
               <RetrieveRequestMsg xmlns='http://exacttarget.com/wsdl/partnerAPI'>
                   <RetrieveRequest>
-                      <ObjectType>DataExtensionObject[PostgridDEforAPI]</ObjectType>
+                      <ObjectType>DataExtensionObject[${externalKey}]</ObjectType>
                       <Properties>Client_Secret</Properties>
                       <Properties>Client_Id</Properties>
+                      <Properties>TestAPIKey</Properties>
+                      <Properties>LiveAPIKey</Properties>
+                  </RetrieveRequest>
+              </RetrieveRequestMsg>
+          </soapenv:Body>
+      </soapenv:Envelope>`;
+  try {
+    const response = await axios.post(SFMC_SOAP_URL, xmlData, {
+      headers: {
+        'Content-Type': 'text/xml',
+        'Accept': 'text/xml',
+        'SoapAction': 'Retrieve'
+      }
+    });
+    res.send(response.data);
+  } catch (error) {
+    res.status(500).send(error.toString());
+  }
+};
+
+/**
+ * Fetches the External Key (CustomerKey) of a Data Extension from Salesforce Marketing Cloud using the SOAP API.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {void} - Sends the SOAP response or an error message.
+ */
+exports.fetchExternalKey = async function (req, res) {
+  const { authTSSD, token, deName } = req.body;
+  const SFMC_SOAP_URL = `https://${authTSSD}.soap.marketingcloudapis.com/Service.asmx`;
+  const xmlData = `<?xml version='1.0' encoding='UTF-8'?>
+      <soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' 
+          xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' 
+          xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+          <soapenv:Header>
+              <fueloauth>${token}</fueloauth>
+          </soapenv:Header>
+          <soapenv:Body>
+              <RetrieveRequestMsg xmlns='http://exacttarget.com/wsdl/partnerAPI'>
+                  <RetrieveRequest>
+                      <ObjectType>DataExtension</ObjectType>
+                      <Properties>ObjectID</Properties>
+                      <Properties>CustomerKey</Properties>
+                      <Filter xsi:type="SimpleFilterPart">
+                      <Property>Name</Property>
+                      <SimpleOperator>equals</SimpleOperator>
+                      <Value>${deName}</Value>
+                      </Filter>
                   </RetrieveRequest>
               </RetrieveRequestMsg>
           </soapenv:Body>
@@ -202,7 +253,7 @@ async function logToDataExtension(requestData) {
     ]
   });
 
-  const logDEKey = 'Postgrid_Logging_Data';
+  const logDEKey = requestData.loggingExternalKey;
 
   const config = {
     method: 'post',
