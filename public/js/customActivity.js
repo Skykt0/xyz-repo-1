@@ -4,7 +4,6 @@ define([
   Postmonger
 ) {
   'use strict';
-
   var request = require([request]);
   var connection = new Postmonger.Session();
   var payload = {};
@@ -17,6 +16,7 @@ define([
   };
   var authToken, et_subdomain, authTSSD;
   let fromContact = {};
+  let doesPayloadHasAPIKeys = true;
   let toContact = '';
   const POSTGRID_API_BASE_URL = 'https://api.postgrid.com/print-mail/v1/';
 
@@ -31,6 +31,7 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
+    $('.activity-loader').addClass('show');
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
     connection.trigger('requestEndpoints');
@@ -67,6 +68,7 @@ define([
       payload['arguments'].execute.inArguments.length > 0 &&
       payload['arguments'].execute.inArguments[0].internalPostcardJson
     );
+    doesPayloadHasAPIKeys = hasPostcardArguments;
     var hasMapDESchema = Boolean(
       payload['arguments'] &&
       payload['arguments'].execute &&
@@ -193,6 +195,7 @@ define([
   connection.on('requestedTokens', async (tokens) => {
     await onGetTokens(tokens);
   });
+
   async function onGetTokens (tokens) {
     authToken = tokens.fuel2token;
     await fetchExternalKey('PostgridDEforAPI');
@@ -1502,11 +1505,19 @@ define([
             previewPayload.clientSecret = value;
           }
           else if (name === 'TestAPIKey') {
-            $('#test-api-key').val(value);
+            if(!doesPayloadHasAPIKeys) {
+              $('#test-api-key').val(value);
+            }
           }
           else if (name === 'LiveAPIKey') {
-            $('#live-api-key').val(value);
+            if(!doesPayloadHasAPIKeys) {
+              $('#live-api-key').val(value);
+            }
           }
+
+          $('.loader-overlay').removeClass('show');
+          $('.activity-loader').removeClass('show');
+          $("body").css("overflow", "");
         }
       })
       .catch((error) => {
