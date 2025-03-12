@@ -349,7 +349,7 @@ define([
         button: 'next',
         text: 'next',
         visible: true, 
-        enabled : !$('.loader-overlay').hasClass('show')
+        enabled : false
       });
       break;
     case 'step2':
