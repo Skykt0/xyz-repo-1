@@ -31,6 +31,8 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
+    $('.loader-overlay').addClass('show');
+    $('.activity-loader').addClass('show');
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
     connection.trigger('requestEndpoints');
@@ -57,8 +59,6 @@ define([
   });
 
   function initialize(data) {
-    $('.loader-overlay').addClass('show');
-    $('.activity-loader').addClass('show');
     if (data) {
       payload = data;
     }
