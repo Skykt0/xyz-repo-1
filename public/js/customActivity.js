@@ -31,6 +31,7 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
+    $('.btn.btn-primary.next-btn.multi-view-wizard-next').prop('disabled',true);
     $('.activity-loader').addClass('show');
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
@@ -348,8 +349,7 @@ define([
       connection.trigger('updateButton', {
         button: 'next',
         text: 'next',
-        visible: true, 
-        enabled : false
+        visible: true
       });
       break;
     case 'step2':
@@ -1518,11 +1518,7 @@ define([
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
           $("body").css("overflow", "");
-          connection.trigger('updateButton', {
-            button: 'next',
-            text: 'next',
-            enabled: true,
-          });
+          $('.btn.btn-primary.next-btn.multi-view-wizard-next').prop('disabled',false);
 
         }
       })
