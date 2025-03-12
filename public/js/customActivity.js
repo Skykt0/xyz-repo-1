@@ -31,11 +31,6 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
-    connection.trigger('updateButton', {
-      button: 'next',
-      text: 'next',
-      visible: false,
-    });
     $('.activity-loader').addClass('show');
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
@@ -1483,6 +1478,11 @@ define([
 
   
   function fetchClientCredentials(){
+    connection.trigger('updateButton', {
+      button: 'next',
+      text: 'next',
+      visible: false,
+    });
     fetch('/client-credentials', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
