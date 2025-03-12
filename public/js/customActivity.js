@@ -4,8 +4,6 @@ define([
   Postmonger
 ) {
   'use strict';
-  $('.loader-overlay').addClass('show');
-  $('.activity-loader').addClass('show');
   var request = require([request]);
   var connection = new Postmonger.Session();
   var payload = {};
@@ -32,6 +30,7 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
+    $('.activity-loader').addClass('show');
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
     connection.trigger('requestEndpoints');
