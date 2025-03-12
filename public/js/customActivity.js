@@ -31,6 +31,7 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
+    console.log("Inside Render");
     $('.btn.btn-primary.next-btn.multi-view-wizard-next').prop('disabled',true);
     $('.activity-loader').addClass('show');
     connection.trigger('requestSchema');
@@ -336,6 +337,8 @@ define([
   }
 
   function showStep(step) {
+    console.log("Inside Show Step");
+    
     currentStep = step;
     $('.step').hide();
 
