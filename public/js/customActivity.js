@@ -30,7 +30,7 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
-    $('.activity-loader').addClass('show');
+    // $('.activity-loader').addClass('show');
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
     connection.trigger('requestEndpoints');
