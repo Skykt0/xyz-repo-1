@@ -31,7 +31,11 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
-    $('.next-btn').prop('disabled', true);
+    connection.trigger('updateButton', {
+      button: 'next',
+      text: 'next',
+      visible: false,
+    });
     $('.activity-loader').addClass('show');
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
@@ -345,7 +349,7 @@ define([
       connection.trigger('updateButton', {
         button: 'back',
         visible: false,
-      });
+      });    
       connection.trigger('updateButton', {
         button: 'next',
         text: 'next',
@@ -1515,10 +1519,15 @@ define([
               $('#live-api-key').val(value);
             }
           }
-          $('.next-btn').prop('disabled', false); 
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
           $("body").css("overflow", "");
+          connection.trigger('updateButton', {
+            button: 'next',
+            text: 'next',
+            visible: true,
+          });
+
         }
       })
       .catch((error) => {
