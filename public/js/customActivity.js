@@ -31,11 +31,6 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
-    connection.trigger('updateButton', {
-      button: 'next',
-      text: 'next',
-      enabled: false,
-    });
     $('.activity-loader').addClass('show');
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
@@ -353,7 +348,8 @@ define([
       connection.trigger('updateButton', {
         button: 'next',
         text: 'next',
-        visible: true,
+        visible: true, 
+        enabled : !$('.activity-loader').hasClass('show')
       });
       break;
     case 'step2':
