@@ -1517,6 +1517,7 @@ define([
 
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
+          $("body").css("overflow", "");
         }
       })
       .catch((error) => {
