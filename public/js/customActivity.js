@@ -31,6 +31,7 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
+    $('.next-btn').prop('disabled', true);
     $('.activity-loader').addClass('show');
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
@@ -1514,7 +1515,7 @@ define([
               $('#live-api-key').val(value);
             }
           }
-
+          $('.next-btn').prop('disabled', false); 
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
           $("body").css("overflow", "");

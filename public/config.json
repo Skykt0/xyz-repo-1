@@ -7,7 +7,7 @@
 	"type": "REST",
 	"lang": {
 		"en-US": {
-			"name": "PostGrid",
+			"name": "PostGrid Akash",
 			"description": "Send letter and postcard from journey Builder using postgrid platform"
 		}
 	},
@@ -15,7 +15,7 @@
 		"execute": {
 			"inArguments": [],
 			"outArguments": [],
-			"url": "https://xyz-repo-1-production.up.railway.app/execute",
+			"url": "https://xyz-repo-1-production-937f.up.railway.app/execute",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -24,9 +24,9 @@
 		}
 	},
 	"configurationArguments": {
-		"applicationExtensionKey": "b2556cf2-85b9-4239-a0a9-b10edbf3f4c0",
+		"applicationExtensionKey": "a7a0a0d6-3162-4b18-ba46-479cfb383e1b",
 		"save": {
-			"url": "https://xyz-repo-1-production.up.railway.app/save",
+			"url": "https://xyz-repo-1-production-937f.up.railway.app/save",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -34,7 +34,7 @@
 			"timeout": 2000
 		},
 		"publish": {
-			"url": "https://xyz-repo-1-production.up.railway.app/publish",
+			"url": "https://xyz-repo-1-production-937f.up.railway.app/publish",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -42,7 +42,7 @@
 			"timeout": 2000
 		},
 		"validate": {
-			"url": "https://xyz-repo-1-production.up.railway.app/validate",
+			"url": "https://xyz-repo-1-production-937f.up.railway.app/validate",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -50,7 +50,7 @@
 			"timeout": 2000
 		},
 		"stop": {
-			"url": "https://xyz-repo-1-production.up.railway.app/stop",
+			"url": "https://xyz-repo-1-production-937f.up.railway.app/stop",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
