@@ -198,7 +198,7 @@ define([
 
   async function onGetTokens (tokens) {
     authToken = tokens.fuel2token;
-    await fetchExternalKey('PostgridDEforAPI');
+    await fetchExternalKey('PostGrid_API_Credentials');
     await fetchExternalKey('Postgrid_Logging_Data');
   }
 
@@ -349,7 +349,7 @@ define([
         button: 'next',
         text: 'next',
         visible: true, 
-        enabled : !$('.activity-loader').hasClass('show')
+        enabled : !$('.loader-overlay').hasClass('show')
       });
       break;
     case 'step2':
