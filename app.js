@@ -9,11 +9,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.post('/client-credentials/', activity.fetchClientCredentials);
-app.post('/get-external-keys/', activity.fetchExternalKey);
-app.post('/test', (req, res) => {  // No need for a trailing slash in the route
-  console.log('Test route is running');
-  res.json({ message: 'Test route is working!' }); // Send a response
-});
+app.post('/fetch-external-key/', activity.fetchExternalKey);
 app.post('/save/', activity.save);
 app.post('/validate/', activity.validate);
 app.post('/publish/', activity.publish);
