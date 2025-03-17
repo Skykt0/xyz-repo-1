@@ -149,6 +149,7 @@ define([
         break;
       case 'liveApiKeyEnabled':
         $('.test-to-live-switch input').prop('checked', value).trigger('change');
+        previewPayload.templateEnvironment = value ? 'Live' : 'Test';
         break;
       case 'cardInsertType':
         if(value){
@@ -337,7 +338,6 @@ define([
   function showStep(step) {
     currentStep = step;
     $('.step').hide();
-
     switch (currentStep.key) {
     case 'step1':
       $('#step1').show();
@@ -348,7 +348,7 @@ define([
       connection.trigger('updateButton', {
         button: 'next',
         text: 'next',
-        visible: true,
+        visible: true
       });
       break;
     case 'step2':
@@ -1514,10 +1514,9 @@ define([
               $('#live-api-key').val(value);
             }
           }
-
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
-          $("body").css("overflow", "");
+          $('body').css('overflow', '');
         }
       })
       .catch((error) => {
