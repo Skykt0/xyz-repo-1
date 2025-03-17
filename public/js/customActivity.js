@@ -344,7 +344,7 @@ define([
       connection.trigger('updateButton', {
         button: 'back',
         visible: false,
-      });    
+      });
       connection.trigger('updateButton', {
         button: 'next',
         text: 'next',
