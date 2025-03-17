@@ -151,6 +151,7 @@ define([
         break;
       case 'liveApiKeyEnabled':
         $('.test-to-live-switch input').prop('checked', value).trigger('change');
+        previewPayload.templateEnvironment = value ? 'Live' : 'Test';
         break;
       case 'cardInsertType':
         if(value){
