@@ -1525,7 +1525,7 @@ define([
   }
 
   async function fetchExternalKey(deName){
-    fetch('/fetch-external-key', {
+    fetch('/get-external-keys', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
