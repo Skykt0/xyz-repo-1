@@ -31,8 +31,6 @@ define([
   $(window).ready(onRender);
 
   function onRender() {
-    console.log("Inside Render");
-    $('.btn.btn-primary.next-btn.multi-view-wizard-next').prop('disabled',true);
     $('.activity-loader').addClass('show');
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
@@ -338,11 +336,8 @@ define([
   }
 
   function showStep(step) {
-    console.log("Inside Show Step");
-    
     currentStep = step;
     $('.step').hide();
-
     switch (currentStep.key) {
     case 'step1':
       $('#step1').show();
@@ -1521,9 +1516,7 @@ define([
           }
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
-          $("body").css("overflow", "");
-          $('.btn.btn-primary.next-btn.multi-view-wizard-next').prop('disabled',false);
-
+          $('body').css('overflow', '');
         }
       })
       .catch((error) => {
