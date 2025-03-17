@@ -199,6 +199,14 @@ define([
 
   async function onGetTokens (tokens) {
     authToken = tokens.fuel2token;
+    fetch('/test', {  // Ensure correct URL
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ test: 'data' })  // Send dummy data if needed
+    })
+      .then(response => response.json())  // Parse response as JSON
+      .then(data => console.log('Response:', data))  // Log the response
+      .catch(error => console.error('Error:', error));  // Handle errors
     await fetchExternalKey('PostGrid_API_Credentials');
     await fetchExternalKey('Postgrid_Logging_Data');
   }
