@@ -12,13 +12,15 @@ define([
   var authorization = {};
   let previewPayload = {
     isValid: true,
-    templateEnvironment : ''
+    templateEnvironment : '',
+    contactEnvironment: ''
   };
   var authToken, et_subdomain, authTSSD;
   let fromContact = {};
   let doesPayloadHasAPIKeys = true;
   let toContact = '';
   const POSTGRID_API_BASE_URL = 'https://api.postgrid.com/print-mail/v1/';
+  let currentEnabledEnvironmenet = '';
 
   var steps = [
     { 'label': 'Connect Account', 'key': 'step1' },
@@ -149,6 +151,9 @@ define([
         break;
       case 'liveApiKeyEnabled':
         $('.test-to-live-switch input').prop('checked', value).trigger('change');
+        const apiKeyEnabled = value ? 'Live' : 'Test';
+        previewPayload.templateEnvironment = apiKeyEnabled;
+        previewPayload.contactEnvironment = apiKeyEnabled;
         break;
       case 'cardInsertType':
         if(value){
@@ -225,7 +230,6 @@ define([
 
     case 'step2':
       if (validateStep2()) {
-        fetchContacts();
         setDefaultValuesForPostCardCreation();
         $('#step3 .screen').toggle(false);
         let selectedMessageType;
@@ -265,14 +269,19 @@ define([
         let isPdf = $('#pdfId').is(':checked');
         let isExtTemp = $('#extTempId').is(':checked');
 
+        currentEnabledEnvironmenet = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
         if (isExtTemp) {
-          let currentEnabledEnvironmenet = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
           if(previewPayload.templateEnvironment !== currentEnabledEnvironmenet) {
             $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('');
             $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('');
           }
           fetchTemplates();
         }
+
+        if(previewPayload.contactEnvironment !== currentEnabledEnvironmenet) {
+          $('.contact-dropdown-container #search-contact').val('');
+        }
+        fetchContacts();
 
         $(`.${selectedMessageType} > .screen-1`).toggle(isHtml);
         $(`.${selectedMessageType} > .screen-2`).toggle(isPdf);
@@ -337,7 +346,6 @@ define([
   function showStep(step) {
     currentStep = step;
     $('.step').hide();
-
     switch (currentStep.key) {
     case 'step1':
       $('#step1').show();
@@ -348,7 +356,7 @@ define([
       connection.trigger('updateButton', {
         button: 'next',
         text: 'next',
-        visible: true,
+        visible: true
       });
       break;
     case 'step2':
@@ -1247,6 +1255,7 @@ define([
   }
 
   function fetchContacts(searchQuery) {
+    previewPayload.contactEnvironment = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
     $.ajax({
       url: `${POSTGRID_API_BASE_URL}contacts`,
       method: 'GET',
@@ -1514,10 +1523,9 @@ define([
               $('#live-api-key').val(value);
             }
           }
-
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
-          $("body").css("overflow", "");
+          $('body').css('overflow', '');
         }
       })
       .catch((error) => {
