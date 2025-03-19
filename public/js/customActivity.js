@@ -1109,7 +1109,7 @@ define([
 
       const result = await response.json();
 
-      previewPayload.pdfLink = result.uploadedPDF;
+      previewPayload.pdfLink = previewPayload.pdf;
 
       if(previewPayload.liveApiKeyEnabled) {
         let msgType = selectedMessageType === 'selfmailer' ? 'self_mailers' : 'postcards';
