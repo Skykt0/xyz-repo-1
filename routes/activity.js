@@ -265,5 +265,11 @@ async function logToDataExtension(requestData) {
     data: payload
   };
 
-  return axios.request(config);
+  return axios.request(config)
+      .then((response) => {
+        console.log('Data extension log response:', JSON.stringify(response.data));
+      })
+      .catch((error) => {
+          console.error('Error logging to data extension:', error);
+      });
 }
