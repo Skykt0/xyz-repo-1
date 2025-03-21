@@ -13,7 +13,8 @@ define([
   let previewPayload = {
     isValid: true,
     templateEnvironment : '',
-    contactEnvironment: ''
+    contactEnvironment: '',
+    liveApiKeyEnabled: false
   };
   var authToken, et_subdomain, authTSSD;
   let fromContact = {};
