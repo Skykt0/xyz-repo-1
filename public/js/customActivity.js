@@ -1509,9 +1509,11 @@ define([
   
           if (name === 'Client_Id') {
             previewPayload.clientId = value;
+            console.log("Client  ID", value); 
           }
           else if (name === 'Client_Secret') {
             previewPayload.clientSecret = value;
+            console.log('Client Secret', value);
           }
           else if (name === 'TestAPIKey') {
             if(!doesPayloadHasAPIKeys) {
@@ -1552,8 +1554,11 @@ define([
         const externalKey = properties[0].textContent;
         if(deName === 'Postgrid_Logging_Data') {
           previewPayload.loggingExternalKey = externalKey;
+          console.log('Loggigne External Key ', externalKey);
+          
         } else {
           previewPayload.credentialExternalKey = externalKey;
+          console.log('Errror Loggign DE ', externalKey);
           fetchClientCredentials();
         }
       })
