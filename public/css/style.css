@@ -594,14 +594,14 @@ input:checked + .test-to-live-slider::before {
 	vertical-align: text-bottom;
 }
 
-.express-delivery .checkbox-input {
+.express-delivery .checkbox-input, .checkbox-wrap .checkbox-label {
 	margin: 0;
 	vertical-align: text-top;
 	width: 1rem;
 	height: 1rem;
 }
 
-.express-delivery .checkbox-label, .checkbox-wrap .checkbox-label {
+.express-delivery .checkbox-label {
 	font-size: 16px;
 	display: inline-flex;
 	gap: 0.5rem;
