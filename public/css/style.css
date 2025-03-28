@@ -608,6 +608,12 @@ input:checked + .test-to-live-slider::before {
 	align-items: center;
 }
 
+.Letters .checkbox{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+}
+
 .size-radio-buttons-wrap .radio-buttons {
 	display: flex;
 	gap: 8rem;
@@ -647,7 +653,7 @@ input:checked + .test-to-live-slider::before {
 	gap: 0.25rem;
 }
 
-.Letters .input-fields .input-box, .Letter .express-delivery {
+.Letters .input-fields .input-box{
 	display: flex;
 	flex-direction: column;
     width: 45%;
