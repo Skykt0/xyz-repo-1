@@ -609,8 +609,8 @@ input:checked + .test-to-live-slider::before {
 }
 
 .Letters .checkbox{
-	display: flex;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 	gap: 10px;
 }
 
