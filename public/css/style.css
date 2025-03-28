@@ -611,7 +611,7 @@ input:checked + .test-to-live-slider::before {
 .Letters .checkbox{
 	display: flex;
 	flex-wrap: wrap;
-	gap: 5px;
+	gap: 10px;
 }
 
 .size-radio-buttons-wrap .radio-buttons {
