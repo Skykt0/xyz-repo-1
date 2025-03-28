@@ -100,10 +100,10 @@
                                 <input type="radio" class="radio-input step2radioBTN" id="pdfId" name="createType" value="pdf-creation-type"/>
                                 <label for="pdfId" class="radio-label">PDF</label>
                             </div>
-                            <dev class="existing-template-radio-wrap radio-label-wrap">
+                            <div class="existing-template-radio-wrap radio-label-wrap">
                                 <input type="radio" class="radio-input step2radioBTN" id="extTempId" name="createType" value="template-creation-type" />
                                 <label for="extTempId" class="radio-label">Existing Template</label>
-                            </dev>
+                            </div>
                         </div>
                     </div>
                     <span id="createType-error" class="error-message"></span>
@@ -811,8 +811,64 @@
 
         <div id="letterScreen" class="Letters">
           <div class="screen-1 screen">
-            <div class="spacer html-creation-type">
-              letter - html creation type
+            <div class="container spacer html-creation-type">
+              <div class="html-screen-wrapper">
+                <h3 class="section-label">Letters - HTML</h3>
+                <div class="outer-input-fields">
+                    <div class="input-fields">
+                        <div class="input-box">
+                            <label for="description" class="input-label">Description *</label>
+                            <input type="text" class="input-field description" name="description" />
+                            <span class="error-msg">The input value is missing</span>
+                        </div>
+                        <div class="input-box">
+                            <label for="mailingClass" class="input-label">Mailing Class *</label>
+                            <select class="input-field mailing-class" name="mailingClass">
+                                <option value="first_class" selected>
+                                    First Class (7 - 10 business days)
+                                </option>
+                                <option value="standard_class">
+                                    Standard Class (10 - 14 business days)
+                                </option>
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <label for="letter-html-extra-service" class="input-label">Extra Service *</label>
+                            <select class="input-field mailing-class" id="letter-html-extra-service" name="extraService">
+                                <option value="registered" selected>Registered Mail</option>
+                                <option value="certified" selected>Certified</option>
+                                <option value="certified_return_receipt" selected>Certified With Return Reciept</option>
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <label for="letter-html-envelope-type" class="input-label">Envelope Type *</label>
+                            <select class="input-field envelope-type" id="letter-html-envelope-type" name="envelopeType">
+                                <option value="standard_double_window" selected>Standard Double Window</option>
+                                <option value="flat" selected>Flat Mailer</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkboxes-container">
+                  <div class="express-delivery">
+                      <div class="two-checkboxes">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
+                              <span>Express Delivery</span>
+                          </label>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div class="html-editor">
+                <div class="html-btn-wrap">
+                    <button type="button" class="btn btn-light html-btn-front show">
+                        HTML
+                    </button>
+                </div>
+                <textarea class="html-editor-front show html-area" data-btn-label="Front"></textarea>
+                <span class="error-msg">Please enter required field</span>
+            </div>
             </div>
           </div>
           <div class="screen-2 screen">
