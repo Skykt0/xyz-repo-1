@@ -173,7 +173,7 @@
                             </div>
                         </div>
                         <div class="express-delivery">
-                            <div class="two-checkboxes">
+                            <div class="checkbox-wrapper">
                                 <label class="checkbox-label">
                                     <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
                                     <span>Express Delivery</span>
@@ -246,7 +246,7 @@
                             </div>
                         </div>
                         <div class="express-delivery">
-                            <div class="two-checkboxes">
+                            <div class="checkbox-wrapper">
                                 <label class="checkbox-label">
                                     <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery" />
                                     <span>Express Delivery</span>
@@ -382,7 +382,7 @@
                         </div>
                     </div>
                     <div class="express-delivery">
-                        <div class="two-checkboxes">
+                        <div class="checkbox-wrapper">
                             <label class="checkbox-label">
                                 <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
                                 <span>Express Delivery</span>
@@ -454,7 +454,7 @@
                       </div>
                   </div>
                   <div class="express-delivery">
-                      <div class="two-checkboxes">
+                      <div class="checkbox-wrapper">
                           <label class="checkbox-label">
                               <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery" />
                               <span>Express Delivery</span>
@@ -534,7 +534,7 @@
                     </div>
                   </div>
                   <div class="express-delivery">
-                      <div class="two-checkboxes">
+                      <div class="checkbox-wrapper">
                           <label class="checkbox-label">
                               <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery" />
                               <span>Express Delivery</span>
@@ -836,25 +836,72 @@
                             <label for="letter-html-extra-service" class="input-label">Extra Service *</label>
                             <select class="input-field mailing-class" id="letter-html-extra-service" name="extraService">
                                 <option value="registered" selected>Registered Mail</option>
-                                <option value="certified" selected>Certified</option>
-                                <option value="certified_return_receipt" selected>Certified With Return Reciept</option>
+                                <option value="certified">Certified</option>
+                                <option value="certified_return_receipt">Certified With Return Reciept</option>
                             </select>
                         </div>
                         <div class="input-box">
                             <label for="letter-html-envelope-type" class="input-label">Envelope Type *</label>
                             <select class="input-field envelope-type" id="letter-html-envelope-type" name="envelopeType">
                                 <option value="standard_double_window" selected>Standard Double Window</option>
-                                <option value="flat" selected>Flat Mailer</option>
+                                <option value="flat">Flat Mailer</option>
                             </select>
                         </div>
+                        <div class="input-box">
+                          <label for="return-envelope-input" class="input-label">Return Envelope *</label>
+                          <div class="mapping-dropdown">
+                              <div class="return-envelope-dropdown-wrap">
+                                  <input type="text" id="return-envelope-input" class="returnEnvelope" placeholder="Search or enter return envelope"
+                                      autocomplete="off" aria-describedby="returnEnvelopeList" aria-haspopup="listbox"
+                                      aria-expanded="false" />
+                                  <span class="error-msg">Please enter return envelope</span>
+                                      <i class="fa fa-angle-right dropdown-icon"></i>
+                              </div>
+                              <div id="returnEnvelopeList" class="dropdown-options returnEnvelopeList" role="listbox"
+                                  aria-labelledby="return-envelope-input"></div>
+                              <span class="error-message"></span>
+                          </div>
+                      </div>
                     </div>
                 </div>
                 <div class="checkboxes-container">
+                  <div class="color">
+                      <div class="checkbox-wrapper">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input color-input" name="color"/>
+                              <span>Color</span>
+                          </label>
+                      </div>
+                  </div>
+                  <div class="perforate-first-page">
+                      <div class="checkbox-wrapper">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input preforate-first-page-input" name="perforateFirstPage"/>
+                              <span>Perforate First Page</span>
+                          </label>
+                      </div>
+                  </div>
                   <div class="express-delivery">
-                      <div class="two-checkboxes">
+                      <div class="checkbox-wrapper">
                           <label class="checkbox-label">
                               <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
                               <span>Express Delivery</span>
+                          </label>
+                      </div>
+                  </div>
+                  <div class="double-sided">
+                      <div class="checkbox-wrapper">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input double-sided-input" name="doubleSided"/>
+                              <span>Express Delivery</span>
+                          </label>
+                      </div>
+                  </div>
+                  <div class="insert-blank-page">
+                      <div class="checkbox-wrapper">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input insert-blank-page-input" name="insertBlankPage"/>
+                              <span>Insert Blank Page for Address</span>
                           </label>
                       </div>
                   </div>

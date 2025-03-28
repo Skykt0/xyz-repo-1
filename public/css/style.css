@@ -116,7 +116,7 @@ body {
 	margin-bottom: 15px;
 }
 
-.screen-3 .two-checkboxes {
+.screen-3 .checkbox-wrapper {
 	display: grid;
 	grid-template-columns: repeat(2, auto);
 	justify-content: space-between;
