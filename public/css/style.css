@@ -594,7 +594,7 @@ input:checked + .test-to-live-slider::before {
 	vertical-align: text-bottom;
 }
 
-.express-delivery .checkbox-input {
+.express-delivery .checkbox-input, .checkbox-wrap .checkbox-input {
 	margin: 0;
 	vertical-align: text-top;
 	width: 1rem;
