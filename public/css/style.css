@@ -647,7 +647,7 @@ input:checked + .test-to-live-slider::before {
 	gap: 0.25rem;
 }
 
-.Letters .input-fields .input-box {
+.Letters .input-fields .input-box, .Letter .express-delivery {
 	display: flex;
 	flex-direction: column;
     width: 45%;
