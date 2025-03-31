@@ -1142,7 +1142,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   row-gap: 1rem;
 }
 
-.pdf-container .checkboxes-container {
+.pdf-container .checkboxes-container, 
+.template-container .checkboxes-container {
   display: flex;
   column-gap: 3rem;
 }
@@ -1152,7 +1153,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 0.5rem;
 }
 
-.letter-pdf-fields {
+.letter-pdf-fields, .letter-template-fields {
   display: flex;
   flex-direction: column;
   gap: 4rem;
