@@ -1386,7 +1386,6 @@ define([
       } else {
         populateDropdown('frontTemplate', sortedData);
         populateDropdown('backTemplate', sortedData);
-        populateDropdown('returnEnvelope', sortedData);
       }
     } catch (error) {
       throw error;
@@ -1409,14 +1408,13 @@ define([
       }
       const dataJson = await response.json();
       const data = dataJson.data;
-      let a = data;
 
-      // const sortedData = data.sort((a, b) => {
-      //   const descriptionA = a.description ? a.description.toString().toLowerCase() : '';
-      //   const descriptionB = b.description ? b.description.toString().toLowerCase() : '';
-      //   return descriptionA.localeCompare(descriptionB);
-      // });
-      // populateDropdown('returnEnvelope', sortedData);
+      const sortedData = data.sort((a, b) => {
+        const descriptionA = a.description ? a.description.toString().toLowerCase() : '';
+        const descriptionB = b.description ? b.description.toString().toLowerCase() : '';
+        return descriptionA.localeCompare(descriptionB);
+      });
+      populateDropdown('returnEnvelope', sortedData);
     } catch (error) {
       throw error;
     }
@@ -1690,6 +1688,14 @@ define([
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('input', debounce(function () {
     fetchTemplates($(this).val().trim());
+  }, 300));
+
+  $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input').on('focus', function () {
+    $(this).closest('.return-envelope-dropdown-wrap').next('.dropdown-options').show();
+  });
+
+  $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input').on('input', debounce(function () {
+    fetchReturnEnvelope($(this).val().trim());
   }, 300));
 
   $('.remove-error-toast').on('click',()=>{
