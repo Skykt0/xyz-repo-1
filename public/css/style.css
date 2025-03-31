@@ -184,6 +184,7 @@ body {
 .mapping-dropdown {
 	display: flex;
 	flex-direction: column;
+  position: relative;
 }
 
 .screen-3 .mapping-dropdown {
@@ -276,8 +277,8 @@ body {
 
 .screen-3 .dropdown-options div,
 .screen-3 .dropdown-options li,
-.letterScreen .dropdown-options div,
-.letterScreen .dropdown-options li {
+#letterScreen .dropdown-options div,
+#letterScreen .dropdown-options li {
 	padding: 8px;
 	cursor: pointer;
 	list-style: none;
@@ -289,8 +290,8 @@ body {
 
 .screen-3 .dropdown-options div:hover,
 .screen-3 .dropdown-options li:hover,
-.letterScreen .dropdown-options div:hover,
-.letterScreen .dropdown-options li:hover  {
+#letterScreen .dropdown-options div:hover,
+#letterScreen .dropdown-options li:hover  {
 	background: #f0f0f0;
 }
 
