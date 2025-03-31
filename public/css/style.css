@@ -222,7 +222,7 @@ body {
 .screen-3 #search-contact,
 .screen-3 #front-template-input,
 .screen-3 #back-template-input
-#return-envelope-input {
+.screen-1 #return-envelope-input {
     width: 100%;
     padding: 8px 30px 8px 12px; 
     box-sizing: border-box;
@@ -231,6 +231,10 @@ body {
     box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
     font-size: 16px;
     background: transparent;
+}
+
+.screen-1 #return-envelope-input {
+  padding: 4px;
 }
 
 .screen-3 .arrow {
