@@ -278,6 +278,7 @@ define([
           }
           fetchTemplates();
         }
+        fetchReturnEnvelope();
 
         if(previewPayload.contactEnvironment !== currentEnabledEnvironmenet) {
           $('.contact-dropdown-container #search-contact').val('');
@@ -1385,7 +1386,37 @@ define([
       } else {
         populateDropdown('frontTemplate', sortedData);
         populateDropdown('backTemplate', sortedData);
+        populateDropdown('returnEnvelope', sortedData);
       }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function fetchReturnEnvelope(searchQuery = '') {
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key },
+      redirect: 'follow'
+    };
+
+    previewPayload.templateEnvironment = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
+
+    try {
+      const response = await fetch(`${POSTGRID_API_BASE_URL}return_envelopes?limit=10&search=${encodeURIComponent(searchQuery)}`, requestOptions);
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+      const dataJson = await response.json();
+      const data = dataJson.data;
+      let a = data;
+
+      // const sortedData = data.sort((a, b) => {
+      //   const descriptionA = a.description ? a.description.toString().toLowerCase() : '';
+      //   const descriptionB = b.description ? b.description.toString().toLowerCase() : '';
+      //   return descriptionA.localeCompare(descriptionB);
+      // });
+      // populateDropdown('returnEnvelope', sortedData);
     } catch (error) {
       throw error;
     }
@@ -1486,7 +1517,6 @@ define([
     return isTestKeyValid && isLiveKeyValid;
   }
 
-  
   function fetchClientCredentials(){
     fetch('/client-credentials', {
       method: 'POST',
