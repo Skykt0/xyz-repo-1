@@ -664,6 +664,10 @@ input:checked + .test-to-live-slider::before {
 	gap: 0.5rem;
 }
 
+#letterScreen .pdf-container .input-fields .input-box {
+  width: 30%;
+}
+
 .trifold .html-screen-wrapper .input-fields .input-box,
 .selfmailer .html-screen-wrapper .input-fields .input-box {
 	width: 90%;
@@ -1138,7 +1142,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   row-gap: 1rem;
 }
 
+.pdf-container .checkboxes-container {
+  display: flex;
+  column-gap: 3rem;
+}
+
 .checkbox-wrap .checkbox-label {
   display: flex;
   gap: 0.5rem;
+}
+
+.letter-pdf-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
 }
