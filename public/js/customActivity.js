@@ -1694,6 +1694,9 @@ define([
     $('#sendDate3').val(today).attr('min', today);
     
     $(document).on('click', function (event) {
+      let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+      selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
+      let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
       const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact');
       const isClickInsideFront = $(event.target).closest('#frontTemplateList, #front-template-input, #letter-template-input').length > 0;
       const isClickInsideBack = $(event.target).closest('#backTemplateList, #back-template-input').length > 0;
@@ -1703,10 +1706,10 @@ define([
         $('#dropdown-options').hide();
       }
       if (!isClickInsideFront) {
-        $('#frontTemplateList').hide();
+        $(`.${selectedMessageType} .${selectedCreationType} #frontTemplateList`).hide();
       }
       if (!isClickInsideBack) {
-        $('#backTemplateList').hide();
+        $(`.${selectedMessageType} .${selectedCreationType} #backTemplateList`).hide();
       }
       if(!isClickInsideFrontSelfMailer){
         $('#selfMailer-insideTemplateList').hide();
