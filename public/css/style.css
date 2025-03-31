@@ -664,8 +664,9 @@ input:checked + .test-to-live-slider::before {
 	gap: 0.5rem;
 }
 
-#letterScreen .pdf-container .input-fields .input-box {
-  width: 30%;
+#letterScreen .pdf-container .input-fields .input-box,
+#letterScreen .template-container .input-fields .input-box {
+  width: 31%;
 }
 
 .trifold .html-screen-wrapper .input-fields .input-box,
@@ -795,7 +796,7 @@ input:checked + .test-to-live-slider::before {
 	padding: 44px;
 }
 
-.pdf-container {
+.pdf-container, .template-container {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
