@@ -222,7 +222,7 @@ body {
 .screen-3 #search-contact,
 .screen-3 #front-template-input,
 .screen-3 #back-template-input,
-.screen-1 #return-envelope-input {
+.return-envelope-input {
     width: 100%;
     padding: 8px 30px 8px 12px; 
     box-sizing: border-box;
@@ -233,8 +233,9 @@ body {
     background: transparent;
 }
 
-.screen-1 #return-envelope-input {
+.return-envelope-input {
   padding: 4px;
+  outline: none;
 }
 
 .screen-3 .arrow {
@@ -253,7 +254,7 @@ body {
 	transform: translateY(-50%) rotate(45deg);
 }
 
-.screen-3 .dropdown-options, .screen-1 .dropdown-options {
+.screen-3 .dropdown-options, #letterScreen .dropdown-options {
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -275,8 +276,8 @@ body {
 
 .screen-3 .dropdown-options div,
 .screen-3 .dropdown-options li,
-.screen-1 .dropdown-options div,
-.screen-1 .dropdown-options li {
+.letterScreen .dropdown-options div,
+.letterScreen .dropdown-options li {
 	padding: 8px;
 	cursor: pointer;
 	list-style: none;
@@ -287,7 +288,9 @@ body {
 }
 
 .screen-3 .dropdown-options div:hover,
-.screen-3 .dropdown-options li:hover {
+.screen-3 .dropdown-options li:hover,
+.letterScreen .dropdown-options div:hover,
+.letterScreen .dropdown-options li:hover  {
 	background: #f0f0f0;
 }
 
