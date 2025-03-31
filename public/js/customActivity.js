@@ -1694,6 +1694,7 @@ define([
     $('#sendDate3').val(today).attr('min', today);
     
     $(document).on('click', function (event) {
+      let isCartInsertEnabled = $('#card-insert').prop('checked');
       let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
       selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
       let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
