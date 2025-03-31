@@ -364,7 +364,7 @@ define([
     case 'step2':
       $('#step2').show();
       connection.trigger('updateButton', {
-        button: 'back',
+        button: 'api key',
         visible: true,
       });
       connection.trigger('updateButton', {
