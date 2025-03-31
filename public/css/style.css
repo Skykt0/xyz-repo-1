@@ -665,7 +665,7 @@ input:checked + .test-to-live-slider::before {
 }
 
 #letterScreen .pdf-container .input-fields .input-box,
-#letterScreen .template-container .input-fields .input-box {
+#letterScreen .template-container .existing-template-details .input-box {
   width: 31%;
 }
 
