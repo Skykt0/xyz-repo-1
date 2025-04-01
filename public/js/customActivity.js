@@ -792,7 +792,10 @@ define([
       const pdfLinkElement = $(`.${selectedMessageType} .screen-2 .pdfLink`);
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
       pdfLinkElement.siblings('.error-msg').text('Please enter required field');
-      let isPdfLinkValid =validateInputField(pdfLinkElement);
+      let isPdfLinkValid = validateInputField(pdfLinkElement);
+      if(selectedMessageType === 'Letters') {
+        isValid = !validateInputField($(`.${selectedMessageType} .screen-2 .return-envelope-input`)) ? false : isValid;
+      }
       
       if (!isDescriptionValid || !isPdfLinkValid) {
         isValid = false;
@@ -856,6 +859,9 @@ define([
         if(!frontTemplateValid || !backTemplateValid){
           isValid = false;
         }
+      }
+      if(selectedMessageType === 'Letters') {
+        isValid = !validateInputField($(`.${selectedMessageType} .screen-2 .return-envelope-input`)) ? false : isValid;
       }
     }
     return isValid;
