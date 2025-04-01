@@ -756,6 +756,8 @@ define([
         if(frontHtmlContent === '') {
           isValid = false;
           postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}.`).addClass('show');
+        } else { 
+          postcardHtmlEditorErrorMsg.removeClass('show');
         }
       } else{
         if (frontHtmlContent === '' || backHtmlContent === '') {
