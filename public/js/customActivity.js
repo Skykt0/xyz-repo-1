@@ -365,7 +365,6 @@ define([
       $('#step2').show();
       connection.trigger('updateButton', {
         button: 'back',
-        text: 'api',
         visible: true,
       });
       connection.trigger('updateButton', {
@@ -703,8 +702,8 @@ define([
       let isPostcardSizeSelected = $(`.${selectedMessageType} .html-size .radio-input:checked`).length;
       let frontHtmlContent = $(`.${selectedMessageType} .html-editor-front`).val().trim();
       let frontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front`).data('btn-label');
-      let backHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val().trim();
-      let backHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-back`).data('btn-label');
+      let backHtmlContent = $(`.${selectedMessageType} .html-editor-back`).val() === undefined ? undefined : $(`.${selectedMessageType} .html-editor-back`).val().trim();
+      let backHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-back`).val() === undefined ? undefined : $(`.${selectedMessageType} .html-editor-back`).data('btn-label');
       let cardfrontHtmlContent, cardfrontHtmlBtnLabel, cardbackHtmlContent, cardbackHtmlBtnLabel;
 
       if(isCartInsertEnabled && selectedCardInsertType === 'doubleSide') {
@@ -752,6 +751,10 @@ define([
           }
         } else { 
           postcardHtmlEditorErrorMsg.removeClass('show');
+        }
+      } else if(selectedMessageType === 'Letters') {
+        if(frontHtmlContent === '') {
+          isValid = false;
         }
       } else{
         if (frontHtmlContent === '' || backHtmlContent === '') {
