@@ -855,7 +855,12 @@ define([
         }
       } else {
         let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .frontTemplate`));
-        let backTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .backTemplate`));
+        let backTemplateValid;
+        if(selectedMessageType !== 'Letters') {
+          backTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .backTemplate`));
+        } else {
+          backTemplateValid = true;
+        }
         if(!frontTemplateValid || !backTemplateValid){
           isValid = false;
         }
