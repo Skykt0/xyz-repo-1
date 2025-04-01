@@ -778,11 +778,13 @@ define([
         }
       }
 
-      if (!(isPostcardSizeSelected > 0)) {
-        $(`.${selectedMessageType} .html-size .error-msg`).addClass('show');
-        isValid = false;
-      } else {
-        $(`.${selectedMessageType} .html-size .error-msg`).removeClass('show');
+      if(selectedMessageType !== 'Letters'){
+        if (!(isPostcardSizeSelected > 0)) {
+          $(`.${selectedMessageType} .html-size .error-msg`).addClass('show');
+          isValid = false;
+        } else {
+          $(`.${selectedMessageType} .html-size .error-msg`).removeClass('show');
+        }
       }
     };
     
