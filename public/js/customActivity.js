@@ -753,6 +753,10 @@ define([
           postcardHtmlEditorErrorMsg.removeClass('show');
         }
       } else if(selectedMessageType === 'Letters') {
+        let isReturnEnvelopeValid = validateInputField($(`.${selectedMessageType} .screen-1 .return-envelope-input`));
+        if(!isReturnEnvelopeValid) {
+          isValid = false;
+        }   
         if(frontHtmlContent === '') {
           isValid = false;
           postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}.`).addClass('show');
