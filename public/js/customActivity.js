@@ -861,7 +861,7 @@ define([
         }
       }
       if(selectedMessageType === 'Letters') {
-        isValid = !validateInputField($(`.${selectedMessageType} .screen-2 .return-envelope-input`)) ? false : isValid;
+        isValid = !validateInputField($(`.${selectedMessageType} .screen-3 .return-envelope-input`)) ? false : isValid;
       }
     }
     return isValid;
