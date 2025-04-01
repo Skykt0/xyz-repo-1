@@ -755,6 +755,7 @@ define([
       } else if(selectedMessageType === 'Letters') {
         if(frontHtmlContent === '') {
           isValid = false;
+          postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}.`).addClass('show');
         }
       } else{
         if (frontHtmlContent === '' || backHtmlContent === '') {
