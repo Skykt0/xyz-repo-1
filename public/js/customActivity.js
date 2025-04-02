@@ -905,7 +905,7 @@ define([
     if(selectedMessageType === 'Letters') {
       extraService = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).val();
       envelopeType = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).val();
-      returnEnvelope = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val();
+      returnEnvelope = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).data('id');
       colorInput = $(`.${selectedMessageType} .${selectedCreationType} .color-input`).is(':checked');
       perforateFirstPageInput = $(`.${selectedMessageType} .${selectedCreationType} .preforate-first-page-input`).is(':checked');
       doubleSidedInput = $(`.${selectedMessageType} .${selectedCreationType} .double-sided-input`).is(':checked');
