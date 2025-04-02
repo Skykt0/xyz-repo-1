@@ -997,14 +997,16 @@ define([
         previewPayload.singleSideTemplateId = singleSideTemplateId;
         previewPayload.singleSideTemplateName = singleSideTemplateName;
       } else {
+        if(selectedMessageType !== 'Letters') {
+          const backTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`)?.attr('data-id');
+          const backTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val();
+          previewPayload.backTemplateId = backTemplateId;
+          previewPayload.backTemplateName = backTemplateName;
+        }
         const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
-        const backTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`)?.attr('data-id');
         const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
-        const backTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val();
         previewPayload.frontTemplateId = frontTemplateId;
-        previewPayload.backTemplateId = backTemplateId;
         previewPayload.frontTemplateName = frontTemplateName;
-        previewPayload.backTemplateName = backTemplateName;
       }
 
       if(isTrifoldEnabled) {
@@ -1109,7 +1111,6 @@ define([
       data = new URLSearchParams({
         'to': toContact,
         'from': fromContact.id || '',
-        'size': previewPayload.size,
         'description': previewPayload.description,
         'express': previewPayload.isExpressDelivery,
       });
@@ -1132,6 +1133,11 @@ define([
           data.append('insideTemplate', previewPayload.frontTemplateId);
           data.append('outsideTemplate', previewPayload.backTemplateId);
         }
+      } else if(selectedMessageType !== 'Letters'){
+        data.append('size', previewPayload.size);
+      } else {
+        data.append('template', previewPayload.frontTemplateId);
+        setLetterPreviewPayload(data, previewPayload);
       }
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
