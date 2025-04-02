@@ -1171,7 +1171,9 @@ define([
 
   function setLetterPreviewPayload(data, previewPayload) {
     data.append('extraService', previewPayload.extraService);
-    data.append('perforatedPage', previewPayload.perforateFirstPageInput);
+    if (previewPayload.perforateFirstPageInput) {
+      data.append('perforatedPage', 1);
+    }
     data.append('envelopeType', previewPayload.envelopeType);
     data.append('returnEnvelope', previewPayload.returnEnvelope);
     data.append('color', previewPayload.colorInput);
