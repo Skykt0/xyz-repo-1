@@ -184,6 +184,34 @@ define([
         $(queryString).val(value);
         $(queryString).attr('data-id', postcardArguments.singleSideTemplateId);
         break;
+      case 'extraService':
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .extra-service';
+        $(queryString).val(value);
+        break;
+      case 'envelopeType':
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .envelope-type';
+        $(queryString).val(value);
+        break;
+      case 'returnEnvelope':
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .returnEnvelope';
+        $(queryString).val(value);
+        break;
+      case 'colorInput':
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .color-input';
+        $(queryString).prop('checked',value);
+        break;
+      case 'perforateFirstPageInput':
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .preforate-first-page-input';
+        $(queryString).prop('checked',value);
+        break;
+      case 'doubleSidedInput':
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .double-sided-input';
+        $(queryString).prop('checked',value);
+        break;
+      case 'insertBlankPageInput':
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .insert-blank-page-input';
+        $(queryString).prop('checked',value);
+        break;
       default:
         break;
       }
@@ -468,7 +496,7 @@ define([
       } else if(previewPayload.creationType === 'pdf-creation-type'){
         postCardJson.pdf = previewPayload.pdfLink;
       }
-    }else if(previewPayload.messageType === 'trifold'){
+    } else if(previewPayload.messageType === 'trifold'){
       postCardJson.insideHTML = previewPayload.frontHtmlContent;
       postCardJson.outsideHTML = previewPayload.backHtmlContent;
       postCardJson.adhesiveInsert = postCardJson.adhesiveInsert || {}; 
@@ -494,6 +522,21 @@ define([
           postCardJson.adhesiveInsert.doubleSided = postCardJson.adhesiveInsert.doubleSided || {};
           postCardJson.adhesiveInsert.doubleSided.pdf = previewPayload.pdfLink;
         }
+      }
+    } else if(previewPayload.messageType === 'Letters'){
+      postCardJson.extraService = previewPayload.extraService;
+      postCardJson.envelopeType = previewPayload.envelopeType;
+      postCardJson.returnEnvelope = previewPayload.returnEnvelope;
+      postCardJson.colorInput = previewPayload.colorInput;
+      postCardJson.perforateFirstPageInput = previewPayload.perforateFirstPageInput;
+      postCardJson.doubleSidedInput = previewPayload.doubleSidedInput;
+      postCardJson.insertBlankPageInput = previewPayload.insertBlankPageInput;
+      if(previewPayload.creationType === 'html-creation-type'){
+        postCardJson.frontHTML = previewPayload.frontHtmlContent;
+      } else if(previewPayload.creationType === 'template-creation-type'){
+        postCardJson.frontTemplate = previewPayload.frontTemplateId;
+      } else if(previewPayload.creationType === 'pdf-creation-type'){
+        postCardJson.pdf = previewPayload.pdfLink;
       }
     }
     payload['arguments'].execute.inArguments[0]['postcardJson'] = postCardJson;
