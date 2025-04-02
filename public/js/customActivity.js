@@ -1196,7 +1196,7 @@ define([
 
   async function fetchMessageDetails(messageId) {
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-    const urlMessageType = selectedMessageType === 'selfmailer' ? 'self_mailers' : 'postcards';
+    const urlMessageType = selectedMessageType === 'selfmailer' ? 'self_mailers' : selectedMessageType.toLowerCase();
     const apiUrl = `${POSTGRID_API_BASE_URL}${urlMessageType}/${messageId}`;
     const apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
 
