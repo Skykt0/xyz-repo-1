@@ -909,7 +909,7 @@ define([
       colorInput = $(`.${selectedMessageType} .${selectedCreationType} .color-input`).is(':checked');
       perforateFirstPageInput = $(`.${selectedMessageType} .${selectedCreationType} .preforate-first-page-input`).is(':checked');
       doubleSidedInput = $(`.${selectedMessageType} .${selectedCreationType} .double-sided-input`).is(':checked');
-      insertBlankPageInput = $(`.${selectedMessageType} .${selectedCreationType} . insert-blank-page-input`).is(':checked');
+      insertBlankPageInput = $(`.${selectedMessageType} .${selectedCreationType} .insert-blank-page-input`).is(':checked');
       
       previewPayload.extraService = extraService;
       previewPayload.envelopeType = envelopeType;
