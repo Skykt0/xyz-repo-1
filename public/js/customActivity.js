@@ -1036,7 +1036,7 @@ define([
     selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
     let isTrifoldEnabled = selectedMessageType === 'trifold';
     const selectedCardInsertType = $('input[name="cardType"]:checked').val();
-    const url = selectedMessageType === 'selfmailer' || selectedMessageType === 'trifold' ? baseUrl + 'self_mailers' : baseUrl + 'postcards';
+    const url = selectedMessageType === 'selfmailer' || selectedMessageType === 'trifold' ? baseUrl + 'self_mailers' : baseUrl + selectedMessageType.toLowerCase();
     
     let apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
 
@@ -1071,20 +1071,19 @@ define([
       data = new URLSearchParams({
         'to': toContact,
         'from': fromContact.id || '',
-        'size': previewPayload.size,
         'express': previewPayload.isExpressDelivery,
         'description': previewPayload.description,
         'mergeVariables[language]': 'english',
         'metadata[company]': 'PostGrid'
       });
+
       if(messageType === 'Postcards'){
         data.append('frontHTML', previewPayload.frontHtmlContent);
         data.append('backHTML', previewPayload.backHtmlContent);
       } else if(messageType === 'selfmailer'){
         data.append('insideHTML', previewPayload.frontHtmlContent);
         data.append('outsideHTML', previewPayload.backHtmlContent);
-      }
-      else if(selectedMessageType === 'trifold'){
+      } else if(selectedMessageType === 'trifold'){
         data.append('insideHTML', previewPayload.frontHtmlContent);
         data.append('outsideHTML', previewPayload.backHtmlContent);
         data.delete('express');
@@ -1096,6 +1095,11 @@ define([
           data.append('adhesiveInsert[size]', previewPayload.cardSize);
           data.append('adhesiveInsert[singleSided][html]', previewPayload.cardfrontHtmlContent);
         }
+      } else if(selectedMessageType !== 'Letters'){
+        data.append('size', previewPayload.size);
+      } else {
+        data.append('html', previewPayload.frontHtmlContent);
+        setLetterPreviewPayload(data, previewPayload);
       }
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
@@ -1154,7 +1158,7 @@ define([
       previewPayload.pdfLink = previewPayload.pdf;
 
       if(previewPayload.liveApiKeyEnabled) {
-        let msgType = selectedMessageType === 'selfmailer' ? 'self_mailers' : 'postcards';
+        let msgType = selectedMessageType === 'selfmailer' ? 'self_mailers' : selectedMessageType.toLowerCase();
         deleteMailItem(msgType, result.id);
       }
       return result;
@@ -1162,6 +1166,20 @@ define([
       $('.error-toast-message').text(`Error: ${JSON.stringify(error.message)}`);
       $('.error-toast-wrap').addClass('show');
       handleValidationFailure();
+    }
+  }
+
+  function setLetterPreviewPayload(data, previewPayload) {
+    data.append('extraService', previewPayload.extraService);
+    data.append('perforatedPage', previewPayload.perforateFirstPageInput);
+    data.append('envelopeType', previewPayload.envelopeType);
+    data.append('returnEnvelope', previewPayload.returnEnvelope);
+    data.append('color', previewPayload.colorInput);
+    data.append('doubleSided', previewPayload.doubleSidedInput);
+    if(previewPayload.insertBlankPageInput === true) {
+      data.append('addressPlacement', 'insert_blank_page');
+    } else {
+      data.append('addressPlacement', 'top_first_page');
     }
   }
 
