@@ -1070,6 +1070,7 @@ define([
       } else {
         data.append('express', previewPayload.isExpressDelivery);
         data.append('pdf', previewPayload.pdf);
+        setLetterPreviewPayload(data, previewPayload);
       } 
     } else if (previewPayload.screen === 'html') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
