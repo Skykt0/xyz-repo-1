@@ -1052,7 +1052,10 @@ define([
       data.append('to', toContact);
       data.append('from', fromContact.id || '');
       data.append('description', previewPayload.description);
-      data.append('size',previewPayload.size);
+
+      if(selectedMessageType !== 'Letters') {
+        data.append('size',previewPayload.size);
+      }
       
       if(isTrifoldEnabled|| !previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
