@@ -794,11 +794,7 @@ define([
         } else { 
           postcardHtmlEditorErrorMsg.removeClass('show');
         }
-      } else if(selectedMessageType === 'Letters') {
-        let isReturnEnvelopeValid = validateInputField($(`.${selectedMessageType} .screen-1 .return-envelope-input`));
-        if(!isReturnEnvelopeValid) {
-          isValid = false;
-        }   
+      } else if(selectedMessageType === 'Letters') { 
         if(frontHtmlContent === '') {
           isValid = false;
           postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}.`).addClass('show');
@@ -835,9 +831,6 @@ define([
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
       pdfLinkElement.siblings('.error-msg').text('Please enter required field');
       let isPdfLinkValid = validateInputField(pdfLinkElement);
-      if(selectedMessageType === 'Letters') {
-        isValid = !validateInputField($(`.${selectedMessageType} .screen-2 .return-envelope-input`)) ? false : isValid;
-      }
       
       if (!isDescriptionValid || !isPdfLinkValid) {
         isValid = false;
@@ -906,9 +899,6 @@ define([
         if(!frontTemplateValid || !backTemplateValid){
           isValid = false;
         }
-      }
-      if(selectedMessageType === 'Letters') {
-        isValid = !validateInputField($(`.${selectedMessageType} .screen-3 .return-envelope-input`)) ? false : isValid;
       }
     }
     return isValid;
