@@ -762,7 +762,7 @@ input:checked + .test-to-live-slider::before {
 
 .btn.btn-light.html-btn-front.show,
 .btn.btn-light.html-btn-back.show,.btn.btn-light.html-btn-card-front.show, .btn.btn-light.html-btn-card-back.show {
-	background: #a9a9a9;
+	background: #2569E6;
 }
 
 .html-btn-front,
@@ -773,7 +773,8 @@ input:checked + .test-to-live-slider::before {
 	border: none;
 	font-weight: 500;
 	cursor: pointer;
-	background: #d1d1d1;
+	background: #2569E6;
+  color: white;
 }
 
 .trifold .screen-1 .btn{
@@ -1018,11 +1019,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .template-dropdown-wrap .dropdown-icon, .return-envelope-dropdown-wrap .dropdown-icon {
-    position: absolute;
-    right: 4%;
-    top: 10px;
-    transform: rotate(90deg);
-    pointer-events: none
+  position: absolute;
+  right: 4%;
+  top: 9px;
+  transform: rotate(90deg);
+  pointer-events: none;
+  font-weight: bold;
 }
 
 .retry-btn-wrap {
@@ -1147,13 +1149,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 #letterScreen .html-creation-type .input-fields .input-box {
-  width: 43%;
+  width: 45%;
 }
 
 .checkboxes-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  row-gap: 1rem;
+  row-gap: 1.75rem;
 }
 
 .pdf-container .checkboxes-container, 
@@ -1171,4 +1173,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
   flex-direction: column;
   gap: 4rem;
+}
+
+.asterisk {
+  color: red;
 }
