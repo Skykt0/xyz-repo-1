@@ -1213,12 +1213,18 @@ define([
   }
 
   function setLetterPreviewPayload(data, previewPayload) {
-    data.append('extraService', previewPayload.extraService);
+    if(previewPayload.extraService !== '' && previewPayload.extraService !== undefined) {
+      data.append('extraService', previewPayload.extraService);
+    }
+    if(previewPayload.envelopeType !== '' && previewPayload.extraService !== undefined) {
+      data.append('envelopeType', previewPayload.envelopeType);
+    }
+    if(previewPayload.returnEnvelope !== '' && previewPayload.extraService !== undefined) {
+      data.append('returnEnvelope', previewPayload.returnEnvelope);
+    }
     if (previewPayload.perforateFirstPageInput) {
       data.append('perforatedPage', 1);
     }
-    data.append('envelopeType', previewPayload.envelopeType);
-    data.append('returnEnvelope', previewPayload.returnEnvelope);
     data.append('color', previewPayload.colorInput);
     data.append('doubleSided', previewPayload.doubleSidedInput);
     if(previewPayload.insertBlankPageInput === true) {
