@@ -842,14 +842,6 @@
                             </select>
                         </div>
                         <div class="input-box">
-                            <label for="letter-html-envelope-type" class="input-label">Envelope Type</label>
-                            <select class="input-field envelope-type" id="letter-html-envelope-type" name="envelopeType">
-                                <option value="" selected>Select Envelope Type</option>
-                                <option value="standard_double_window">Standard Double Window</option>
-                                <option value="flat">Flat Mailer</option>
-                            </select>
-                        </div>
-                        <div class="input-box">
                           <label for="letter-html-return-envelope-input" class="input-label">Return Envelope</label>
                           <div class="mapping-dropdown">
                               <div class="return-envelope-dropdown-wrap">
@@ -863,6 +855,14 @@
                                   aria-labelledby="return-envelope-input"></div>
                               <span class="error-message"></span>
                           </div>
+                        </div>
+                        <div class="input-box">
+                          <label for="letter-html-envelope-type" class="input-label">Envelope Type</label>
+                          <select class="input-field envelope-type" id="letter-html-envelope-type" name="envelopeType">
+                              <option value="" selected>Select Envelope Type</option>
+                              <option value="standard_double_window">Standard Double Window</option>
+                              <option value="flat">Flat Mailer</option>
+                          </select>
                         </div>
                     </div>
                 </div>
@@ -943,11 +943,12 @@
                           </select>
                       </div>
                       <div class="input-box">
-                        <label for="letter-pdf-envelope-type" class="input-label">Envelope Type</label>
-                        <select class="input-field envelope-type" id="letter-pdf-envelope-type" name="envelopeType">
-                            <option value="" selected>Select Envelope Type</option>
-                            <option value="standard_double_window">Standard Double Window</option>
-                            <option value="flat">Flat Mailer</option>
+                        <label for="letter-pdf-extra-service" class="input-label">Extra Service</label>
+                        <select class="input-field extra-service" id="letter-pdf-extra-service" name="extraService">
+                            <option value="" selected>Select Extra Service</option>
+                            <option value="registered">Registered Mail</option>
+                            <option value="certified">Certified</option>
+                            <option value="certified_return_receipt">Certified With Return Reciept</option>
                         </select>
                       </div>
                       <div class="input-box">
@@ -966,12 +967,11 @@
                         </div>
                       </div>
                       <div class="input-box">
-                        <label for="letter-pdf-extra-service" class="input-label">Extra Service</label>
-                        <select class="input-field extra-service" id="letter-pdf-extra-service" name="extraService">
-                            <option value="" selected>Select Extra Service</option>
-                            <option value="registered">Registered Mail</option>
-                            <option value="certified">Certified</option>
-                            <option value="certified_return_receipt">Certified With Return Reciept</option>
+                        <label for="letter-pdf-envelope-type" class="input-label">Envelope Type</label>
+                        <select class="input-field envelope-type" id="letter-pdf-envelope-type" name="envelopeType">
+                            <option value="" selected>Select Envelope Type</option>
+                            <option value="standard_double_window">Standard Double Window</option>
+                            <option value="flat">Flat Mailer</option>
                         </select>
                       </div>
                       <div class="input-box">
@@ -1006,12 +1006,12 @@
                           </div>
                       </div>
                       <div class="double-sided checkbox-wrap">
-                          <div class="checkbox-wrapper">
-                              <label class="checkbox-label">
-                                  <input type="checkbox" class="checkbox-input double-sided-input" name="doubleSided"/>
-                                  <span>Double Sided</span>
-                              </label>
-                          </div>
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input double-sided-input" name="doubleSided"/>
+                                <span>Double Sided</span>
+                            </label>
+                        </div>
                       </div>
                       <div class="insert-blank-page checkbox-wrap">
                           <div class="checkbox-wrapper">
@@ -1049,11 +1049,12 @@
                           </select>
                       </div>
                       <div class="input-box">
-                        <label for="letter-template-envelope-type" class="input-label">Envelope Type</label>
-                        <select class="input-field envelope-type" id="letter-template-envelope-type" name="envelopeType">
-                            <option value="" selected>Select Envelope Type</option>
-                            <option value="standard_double_window">Standard Double Window</option>
-                            <option value="flat">Flat Mailer</option>
+                        <label for="letter-template-extra-service" class="input-label">Extra Service</label>
+                        <select class="input-field extra-service" id="letter-template-extra-service" name="extraService">
+                            <option value="" selected>Select Extra Service</option>
+                            <option value="registered">Registered Mail</option>
+                            <option value="certified">Certified</option>
+                            <option value="certified_return_receipt">Certified With Return Reciept</option>
                         </select>
                       </div>
                       <div class="input-box">
@@ -1072,12 +1073,11 @@
                         </div>
                       </div>
                       <div class="input-box">
-                        <label for="letter-template-extra-service" class="input-label">Extra Service</label>
-                        <select class="input-field extra-service" id="letter-template-extra-service" name="extraService">
-                            <option value="" selected>Select Extra Service</option>
-                            <option value="registered">Registered Mail</option>
-                            <option value="certified">Certified</option>
-                            <option value="certified_return_receipt">Certified With Return Reciept</option>
+                        <label for="letter-template-envelope-type" class="input-label">Envelope Type</label>
+                        <select class="input-field envelope-type" id="letter-template-envelope-type" name="envelopeType">
+                            <option value="" selected>Select Envelope Type</option>
+                            <option value="standard_double_window">Standard Double Window</option>
+                            <option value="flat">Flat Mailer</option>
                         </select>
                       </div>
                       <div class="input-box">
@@ -1122,12 +1122,12 @@
                           </div>
                       </div>
                       <div class="double-sided checkbox-wrap">
-                          <div class="checkbox-wrapper">
-                              <label class="checkbox-label">
-                                  <input type="checkbox" class="checkbox-input double-sided-input" name="doubleSided"/>
-                                  <span>Double Sided</span>
-                              </label>
-                          </div>
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input double-sided-input" name="doubleSided"/>
+                                <span>Double Sided</span>
+                            </label>
+                        </div>
                       </div>
                       <div class="insert-blank-page checkbox-wrap">
                           <div class="checkbox-wrapper">

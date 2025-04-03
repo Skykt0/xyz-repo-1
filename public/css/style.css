@@ -1143,7 +1143,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .checkboxes-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  row-gap: 1rem;
+  row-gap: 1.75rem;
 }
 
 .pdf-container .checkboxes-container, 
