@@ -817,12 +817,12 @@
                 <div class="outer-input-fields">
                     <div class="input-fields">
                         <div class="input-box">
-                            <label for="letter-html-description" class="input-label">Description *</label>
+                            <label for="letter-html-description" class="input-label">Description <span class="asterisk">*</span></label>
                             <input type="text" class="input-field description" id="letter-html-description" name="description" />
                             <span class="error-msg">The input value is missing</span>
                         </div>
                         <div class="input-box">
-                            <label for="letter-html-mailingClass" class="input-label">Mailing Class *</label>
+                            <label for="letter-html-mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
                             <select class="input-field mailing-class" id="letter-html-mailingClass" name="mailingClass">
                                 <option value="first_class" selected>
                                     First Class (7 - 10 business days)
@@ -833,22 +833,24 @@
                             </select>
                         </div>
                         <div class="input-box">
-                            <label for="letter-html-extra-service" class="input-label">Extra Service *</label>
+                            <label for="letter-html-extra-service" class="input-label">Extra Service</label>
                             <select class="input-field extra-service" id="letter-html-extra-service" name="extraService">
-                                <option value="registered" selected>Registered Mail</option>
+                                <option value="Select" selected>Select Extra Service</option>
+                                <option value="registered">Registered Mail</option>
                                 <option value="certified">Certified</option>
                                 <option value="certified_return_receipt">Certified With Return Reciept</option>
                             </select>
                         </div>
                         <div class="input-box">
-                            <label for="letter-html-envelope-type" class="input-label">Envelope Type *</label>
+                            <label for="letter-html-envelope-type" class="input-label">Envelope Type</label>
                             <select class="input-field envelope-type" id="letter-html-envelope-type" name="envelopeType">
-                                <option value="standard_double_window" selected>Standard Double Window</option>
+                                <option value="Select" selected>Select Envelope Type</option>
+                                <option value="standard_double_window">Standard Double Window</option>
                                 <option value="flat">Flat Mailer</option>
                             </select>
                         </div>
                         <div class="input-box">
-                          <label for="letter-html-return-envelope-input" class="input-label">Return Envelope *</label>
+                          <label for="letter-html-return-envelope-input" class="input-label">Return Envelope</label>
                           <div class="mapping-dropdown">
                               <div class="return-envelope-dropdown-wrap">
                                   <input type="text" id="letter-html-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or enter return envelope"
