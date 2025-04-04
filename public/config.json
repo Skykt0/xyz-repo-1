@@ -7,7 +7,7 @@
 	"type": "REST",
 	"lang": {
 		"en-US": {
-			"name": "PostGrid Sky",
+			"name": "PostGrid",
 			"description": "Send letter and postcard from journey Builder using postgrid platform"
 		}
 	},
@@ -24,7 +24,7 @@
 		}
 	},
 	"configurationArguments": {
-		"applicationExtensionKey": "a7a0a0d6-3162-4b18-ba46-479cfb383e1b",
+		"applicationExtensionKey": "b2556cf2-85b9-4239-a0a9-b10edbf3f4c0",
 		"save": {
 			"url": "https://xyz-repo-1-production-3cab.up.railway.app/save",
 			"verb": "POST",
