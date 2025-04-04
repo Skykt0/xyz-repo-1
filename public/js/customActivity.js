@@ -469,10 +469,12 @@ define([
     payload['metaData'].isConfigured = true;
     var postCardJson = {
       from: previewPayload.fromContact ? previewPayload.fromContact.id : '',
-      size: previewPayload.size,
       express: previewPayload.isExpressDelivery,
       description: previewPayload.description,
     };
+    if(previewPayload.messageType !== 'Letters') {
+      postCardJson.size = previewPayload.size;
+    }
     if(!previewPayload.isExpressDelivery) {
       postCardJson.mailingClass = previewPayload.mailingClass;
     }
@@ -524,9 +526,15 @@ define([
         }
       }
     } else if(previewPayload.messageType === 'Letters'){
-      postCardJson.extraService = previewPayload.extraService;
-      postCardJson.envelopeType = previewPayload.envelopeType;
-      postCardJson.returnEnvelope = previewPayload.returnEnvelope;
+      if(previewPayload.extraService !== '' && previewPayload.extraService !== undefined) {
+        postCardJson.extraService = previewPayload.extraService;
+      }
+      if(previewPayload.envelopeType !== '' && previewPayload.envelopeType !== undefined){
+        postCardJson.envelopeType = previewPayload.envelopeType;
+      }
+      if(previewPayload.returnEnvelope !== '' && previewPayload.returnEnvelope !== undefined){
+        postCardJson.returnEnvelope = previewPayload.returnEnvelope;
+      }
       postCardJson.colorInput = previewPayload.colorInput;
       postCardJson.perforateFirstPageInput = previewPayload.perforateFirstPageInput;
       postCardJson.doubleSidedInput = previewPayload.doubleSidedInput;
