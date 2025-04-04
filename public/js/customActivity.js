@@ -200,16 +200,18 @@ define([
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .color-input';
         $(queryString).prop('checked',value);
         break;
-      case 'perforateFirstPageInput':
+      case 'perforatedPage':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .preforate-first-page-input';
+        value = value === 1 ? true : false;
         $(queryString).prop('checked',value);
         break;
       case 'doubleSidedInput':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .double-sided-input';
         $(queryString).prop('checked',value);
         break;
-      case 'insertBlankPageInput':
+      case 'addressPlacement':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .insert-blank-page-input';
+        value = value === 'insert_blank_page' ? true : false;
         $(queryString).prop('checked',value);
         break;
       default:
@@ -536,9 +538,15 @@ define([
         postCardJson.returnEnvelope = previewPayload.returnEnvelope;
       }
       postCardJson.colorInput = previewPayload.colorInput;
-      postCardJson.perforateFirstPageInput = previewPayload.perforateFirstPageInput;
       postCardJson.doubleSidedInput = previewPayload.doubleSidedInput;
-      postCardJson.insertBlankPageInput = previewPayload.insertBlankPageInput;
+      if (previewPayload.perforateFirstPageInput) {
+        postCardJson.perforatedPage = 1;
+      }
+      if(previewPayload.insertBlankPageInput === true) {
+        postCardJson.addressPlacement = 'insert_blank_page';
+      } else {
+        postCardJson.addressPlacement = 'top_first_page';
+      }
       if(previewPayload.creationType === 'html-creation-type'){
         postCardJson.frontHTML = previewPayload.frontHtmlContent;
       } else if(previewPayload.creationType === 'template-creation-type'){
