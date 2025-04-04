@@ -72,13 +72,7 @@ exports.execute = async function (req, res) {
       data: postcardJson
     };
 
-    const postcardCreateCall = await axios.request(postcardConfigOptions)
-      .then((response) => {
-        console.log('postcard create call success:', JSON.stringify(response.data));
-      })
-      .catch((error) => {
-        console.error('postcard create call failure:', error);
-      });
+    const postcardCreateCall = await axios.request(postcardConfigOptions);
     if (postcardCreateCall.status === 200 || postcardCreateCall.status === 201) {
       const postcardId = postcardCreateCall.data.id;
       const timestamp = new Date().toISOString();
