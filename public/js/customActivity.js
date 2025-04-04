@@ -559,7 +559,6 @@ define([
     authorization['authToken'] = authToken;
     authorization['et_subdomain'] = et_subdomain;
     authorization['authTSSD'] = authTSSD;
-    console.log('postcardjson: '+JSON.stringify(postCardJson));
     
     payload['arguments'].execute.inArguments[0]['authorization'] = authorization;
     connection.trigger('updateActivity', payload);
