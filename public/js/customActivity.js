@@ -196,7 +196,7 @@ define([
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .returnEnvelope';
         $(queryString).val(value);
         break;
-      case 'colorInput':
+      case 'color':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .color-input';
         $(queryString).prop('checked',value);
         break;
@@ -205,7 +205,7 @@ define([
         value = value === 1 ? true : false;
         $(queryString).prop('checked',value);
         break;
-      case 'doubleSidedInput':
+      case 'doubleSided':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .double-sided-input';
         $(queryString).prop('checked',value);
         break;
@@ -537,8 +537,8 @@ define([
       if(previewPayload.returnEnvelope !== '' && previewPayload.returnEnvelope !== undefined){
         postCardJson.returnEnvelope = previewPayload.returnEnvelope;
       }
-      postCardJson.colorInput = previewPayload.colorInput;
-      postCardJson.doubleSidedInput = previewPayload.doubleSidedInput;
+      postCardJson.color = previewPayload.colorInput;
+      postCardJson.doubleSided = previewPayload.doubleSidedInput;
       if (previewPayload.perforateFirstPageInput) {
         postCardJson.perforatedPage = 1;
       }
@@ -548,9 +548,9 @@ define([
         postCardJson.addressPlacement = 'top_first_page';
       }
       if(previewPayload.creationType === 'html-creation-type'){
-        postCardJson.frontHTML = previewPayload.frontHtmlContent;
+        postCardJson.html = previewPayload.frontHtmlContent;
       } else if(previewPayload.creationType === 'template-creation-type'){
-        postCardJson.frontTemplate = previewPayload.frontTemplateId;
+        postCardJson.template = previewPayload.frontTemplateId;
       } else if(previewPayload.creationType === 'pdf-creation-type'){
         postCardJson.pdf = previewPayload.pdfLink;
       }
