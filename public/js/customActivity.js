@@ -1,3 +1,5 @@
+const { json } = require("express");
+
 define([
   'postmonger',
 ], function (
@@ -553,6 +555,7 @@ define([
     authorization['authTSSD'] = authTSSD;
     
     payload['arguments'].execute.inArguments[0]['authorization'] = authorization;
+    console.log('postCardJson: '+JSON.stringify(postCardJson));
     connection.trigger('updateActivity', payload);
   }
 
