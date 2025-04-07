@@ -328,6 +328,7 @@ define([
 
     case 'step3':
       prepopulateToDeMapping();
+      placeholder('#letter-html-extra-service');
       $('#dropdown-options').hide();
       validateStep3()
         .then((isValid) => {
@@ -1566,6 +1567,23 @@ define([
         });
       $list.append($listItem);
     });
+  }
+
+  function placeholder(selector) {
+    const select = document.querySelector(selector);
+  
+    if (!select) return;
+  
+    function updateColor() {
+      if (select.value === '') {
+        select.style.color = 'grey';
+      } else {
+        select.style.color = 'black';
+      }
+    }
+  
+    updateColor(); // Set initial color
+    select.addEventListener('change', updateColor);
   }
 
   function prepopulateToDeMapping(){
