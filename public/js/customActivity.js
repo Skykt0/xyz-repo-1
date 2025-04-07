@@ -1570,20 +1570,18 @@ define([
   }
 
   function placeholder(selector) {
-    const select = document.querySelector(selector);
-  
-    if (!select) return;
+    const $select = $(selector);
   
     function updateColor() {
-      if (select.value === '') {
-        select.style.color = 'grey';
+      if ($select.val() === '') {
+        $select.css('color', 'grey');
       } else {
-        select.style.color = 'black';
+        $select.css('color', 'black');
       }
     }
   
-    updateColor(); // Set initial color
-    select.addEventListener('change', updateColor);
+    updateColor();
+    $select.on('change', updateColor);
   }
 
   function prepopulateToDeMapping(){
