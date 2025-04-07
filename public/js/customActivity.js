@@ -196,20 +196,22 @@ define([
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .returnEnvelope';
         $(queryString).val(value);
         break;
-      case 'colorInput':
+      case 'color':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .color-input';
         $(queryString).prop('checked',value);
         break;
-      case 'perforateFirstPageInput':
+      case 'perforatedPage':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .preforate-first-page-input';
+        value = value === 1 ? true : false;
         $(queryString).prop('checked',value);
         break;
-      case 'doubleSidedInput':
+      case 'doubleSided':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .double-sided-input';
         $(queryString).prop('checked',value);
         break;
-      case 'insertBlankPageInput':
+      case 'addressPlacement':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .insert-blank-page-input';
+        value = value === 'insert_blank_page' ? true : false;
         $(queryString).prop('checked',value);
         break;
       default:
@@ -469,10 +471,12 @@ define([
     payload['metaData'].isConfigured = true;
     var postCardJson = {
       from: previewPayload.fromContact ? previewPayload.fromContact.id : '',
-      size: previewPayload.size,
       express: previewPayload.isExpressDelivery,
       description: previewPayload.description,
     };
+    if(previewPayload.messageType !== 'Letters') {
+      postCardJson.size = previewPayload.size;
+    }
     if(!previewPayload.isExpressDelivery) {
       postCardJson.mailingClass = previewPayload.mailingClass;
     }
@@ -524,17 +528,29 @@ define([
         }
       }
     } else if(previewPayload.messageType === 'Letters'){
-      postCardJson.extraService = previewPayload.extraService;
-      postCardJson.envelopeType = previewPayload.envelopeType;
-      postCardJson.returnEnvelope = previewPayload.returnEnvelope;
-      postCardJson.colorInput = previewPayload.colorInput;
-      postCardJson.perforateFirstPageInput = previewPayload.perforateFirstPageInput;
-      postCardJson.doubleSidedInput = previewPayload.doubleSidedInput;
-      postCardJson.insertBlankPageInput = previewPayload.insertBlankPageInput;
+      if(previewPayload.extraService !== '' && previewPayload.extraService !== undefined) {
+        postCardJson.extraService = previewPayload.extraService;
+      }
+      if(previewPayload.envelopeType !== '' && previewPayload.envelopeType !== undefined){
+        postCardJson.envelopeType = previewPayload.envelopeType;
+      }
+      if(previewPayload.returnEnvelope !== '' && previewPayload.returnEnvelope !== undefined){
+        postCardJson.returnEnvelope = previewPayload.returnEnvelope;
+      }
+      postCardJson.color = previewPayload.colorInput;
+      postCardJson.doubleSided = previewPayload.doubleSidedInput;
+      if (previewPayload.perforateFirstPageInput) {
+        postCardJson.perforatedPage = 1;
+      }
+      if(previewPayload.insertBlankPageInput === true) {
+        postCardJson.addressPlacement = 'insert_blank_page';
+      } else {
+        postCardJson.addressPlacement = 'top_first_page';
+      }
       if(previewPayload.creationType === 'html-creation-type'){
-        postCardJson.frontHTML = previewPayload.frontHtmlContent;
+        postCardJson.html = previewPayload.frontHtmlContent;
       } else if(previewPayload.creationType === 'template-creation-type'){
-        postCardJson.frontTemplate = previewPayload.frontTemplateId;
+        postCardJson.template = previewPayload.frontTemplateId;
       } else if(previewPayload.creationType === 'pdf-creation-type'){
         postCardJson.pdf = previewPayload.pdfLink;
       }
