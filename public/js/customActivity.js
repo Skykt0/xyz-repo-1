@@ -1570,18 +1570,12 @@ define([
   }
 
   function placeholder(selector) {
-    const $select = $(selector);
+    const $select = $(selector).on('change', function () {
+      $(this).css('color', this.value === '' ? 'grey' : 'black');
+    });
   
-    function updateColor() {
-      if ($select.val() === '') {
-        $select.css('color', 'grey');
-      } else {
-        $select.css('color', 'black');
-      }
-    }
-  
-    updateColor();
-    $select.on('change', updateColor);
+    // Set initial color
+    $select.css('color', $select.val() === '' ? 'grey' : 'black');
   }
 
   function prepopulateToDeMapping(){
