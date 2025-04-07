@@ -328,7 +328,7 @@ define([
 
     case 'step3':
       prepopulateToDeMapping();
-      placeholder('#letter-html-extra-service');
+      placeholder('.extra-service');
       $('#dropdown-options').hide();
       validateStep3()
         .then((isValid) => {
