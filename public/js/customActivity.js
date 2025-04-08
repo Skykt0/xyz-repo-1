@@ -1198,7 +1198,9 @@ define([
       }
     }
     console.log("Kuch bhi")
-    console.log(data)
+    console.log(Object.fromEntries(data.entries()))
+    console.log("DatatoString")
+    console.log(data.toString())
     try {
       const response = await fetch(url, {
         method: 'POST',
