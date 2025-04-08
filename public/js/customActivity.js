@@ -342,7 +342,6 @@ define([
         .catch(() => {
           handleValidationFailure();
         });
-        placeholderExtraService('.extra-service');
       break;
 
     case 'step4':
@@ -415,6 +414,7 @@ define([
         text: 'next',
         visible: true,
       });
+      placeholderExtraService('.extra-service');
       break;
     case 'step4':
       $('#step4').show();
