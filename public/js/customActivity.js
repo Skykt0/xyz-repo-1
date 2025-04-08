@@ -1573,10 +1573,8 @@ define([
     $(selector).each(function () {
       const $select = $(this);
   
-      // Set initial color
       $select.css('color', $select.val() === '' ? 'grey' : 'black');
   
-      // Change event
       $select.on('change', function () {
         $(this).css('color', this.value === '' ? 'grey' : 'black');
       });
