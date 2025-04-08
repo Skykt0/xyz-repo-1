@@ -1197,7 +1197,8 @@ define([
         data.append('mailingClass', previewPayload.mailingClass);
       }
     }
-    console.log(data.toString())
+    console.log("Kuch bhi")
+    console.log(data)
     try {
       const response = await fetch(url, {
         method: 'POST',
