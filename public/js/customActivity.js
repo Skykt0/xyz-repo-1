@@ -1203,6 +1203,10 @@ define([
         headers: headers,
         body: data
       });
+      console.log("here is the data");
+      console.log(data.toString());
+      
+      
 
       if (!response.ok) {
         const errorResponse = await response.json();
