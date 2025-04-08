@@ -619,6 +619,12 @@ input:checked + .test-to-live-slider::before {
 	align-items: center;
 }
 
+.Letters .checkboxes-container{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+}
+
 .size-radio-buttons-wrap .radio-buttons {
 	display: flex;
 	gap: 8rem;
@@ -656,6 +662,12 @@ input:checked + .test-to-live-slider::before {
 	flex-direction: column;
   width: 90%;
 	gap: 0.25rem;
+}
+
+.Letters .input-fields .input-box{
+	display: flex;
+	flex-direction: column;
+    width: 45%;
 }
 
 .pdf-container .input-fields .input-box {
