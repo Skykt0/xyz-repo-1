@@ -1201,6 +1201,8 @@ define([
     console.log(Object.fromEntries(data.entries()))
     console.log("DatatoString")
     console.log(data.toString())
+    console.log("payload")
+    console.log(previewPayload)
     try {
       const response = await fetch(url, {
         method: 'POST',
