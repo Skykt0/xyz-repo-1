@@ -328,7 +328,7 @@ define([
 
     case 'step3':
       prepopulateToDeMapping();
-      placeholder('.extra-service');
+      placeholderExtraService('.extra-service');
       $('#dropdown-options').hide();
       validateStep3()
         .then((isValid) => {
@@ -1569,12 +1569,11 @@ define([
     });
   }
 
-  function placeholder(selector) {
+  function placeholderExtraService(selector) {
     const $select = $(selector).on('change', function () {
       $(this).css('color', this.value === '' ? 'grey' : 'black');
     });
-  
-    // Set initial color
+
     $select.css('color', $select.val() === '' ? 'grey' : 'black');
   }
 
