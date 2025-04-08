@@ -319,6 +319,13 @@ define([
         $(`.${selectedMessageType} > .screen-2`).toggle(isPdf);
         $(`.${selectedMessageType} > .screen-3`).toggle(isExtTemp);
 
+        const returnEnvelopeValue = $('.return-envelope-input.returnEnvelope').val()?.trim();
+        if (returnEnvelopeValue) {
+            postCardJson.returnEnvelope = returnEnvelopeValue;
+        } else {
+            delete postCardJson.returnEnvelope;
+        }
+
         createContact();
         connection.trigger('nextStep');
       } else {
