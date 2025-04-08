@@ -328,7 +328,6 @@ define([
 
     case 'step3':
       prepopulateToDeMapping();
-      placeholderExtraService('.extra-service');
       $('#dropdown-options').hide();
       validateStep3()
         .then((isValid) => {
@@ -343,6 +342,7 @@ define([
         .catch(() => {
           handleValidationFailure();
         });
+        placeholderExtraService('.extra-service');
       break;
 
     case 'step4':
