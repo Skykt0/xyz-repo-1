@@ -1570,11 +1570,17 @@ define([
   }
 
   function placeholderExtraService(selector) {
-    const $select = $(selector).on('change', function () {
-      $(this).css('color', this.value === '' ? 'grey' : 'black');
+    $(selector).each(function () {
+      const $select = $(this);
+  
+      // Set initial color
+      $select.css('color', $select.val() === '' ? 'grey' : 'black');
+  
+      // Change event
+      $select.on('change', function () {
+        $(this).css('color', this.value === '' ? 'grey' : 'black');
+      });
     });
-
-    $select.css('color', $select.val() === '' ? 'grey' : 'black');
   }
 
   function prepopulateToDeMapping(){
