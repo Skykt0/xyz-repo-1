@@ -1573,11 +1573,21 @@ define([
   function placeholderExtraService(selector) {
     $(selector).each(function () {
       const $select = $(this);
-  
-      $select.css('color', $select.val() === '' ? 'grey' : 'black');
-  
-      $select.on('change', function () {
-        $(this).css('color', this.value === '' ? 'grey' : 'black');
+
+      if ($select.val() === '') {
+        $select.addClass('placeholder-style');
+      }
+
+      $select.on('focus', function () {
+        $select.removeClass('placeholder-style');
+      });
+
+      $select.on('change blur', function () {
+        if ($select.val() === '') {
+          $select.addClass('placeholder-style');
+        } else {
+          $select.removeClass('placeholder-style');
+        }
       });
     });
   }
