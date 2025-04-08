@@ -1191,6 +1191,8 @@ define([
           data.append('outsideTemplate', previewPayload.backTemplateId);
           data.append('size', previewPayload.size);
         }
+        console.log("Size")
+        console.log(Object.fromEntries(data.entries()))
       } else if(selectedMessageType === 'Letters'){
         data.append('template', previewPayload.frontTemplateId);
         setLetterPreviewPayload(data, previewPayload);
