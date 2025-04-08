@@ -342,12 +342,6 @@ define([
         .catch(() => {
           handleValidationFailure();
         });
-        const returnEnvelopeValue = $('.return-envelope-input').val()?.trim();
-        if (returnEnvelopeValue) {
-            postCardJson.returnEnvelope = returnEnvelopeValue;
-        } else {
-            delete postCardJson.returnEnvelope;
-        }
       break;
 
     case 'step4':
