@@ -414,7 +414,7 @@ define([
         text: 'next',
         visible: true,
       });
-      placeholderExtraService('.extra-service');
+      placeholderExtraService('.extra-service, .envelope-type');
       break;
     case 'step4':
       $('#step4').show();
