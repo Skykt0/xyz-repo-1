@@ -1132,6 +1132,10 @@ define([
         'metadata[company]': 'PostGrid'
       });
 
+      if(selectedMessageType !== 'Letters') {
+        data.append('size',previewPayload.size);
+      }
+      
       if(messageType === 'Postcards'){
         data.append('frontHTML', previewPayload.frontHtmlContent);
         data.append('backHTML', previewPayload.backHtmlContent);
@@ -1150,9 +1154,11 @@ define([
           data.append('adhesiveInsert[size]', previewPayload.cardSize);
           data.append('adhesiveInsert[singleSided][html]', previewPayload.cardfrontHtmlContent);
         }
-      } else if(selectedMessageType !== 'Letters'){
-        data.append('size', previewPayload.size);
-      } else {
+      } 
+      // else if(selectedMessageType !== 'Letters'){
+      //   data.append('size', previewPayload.size);
+      // } 
+      else {
         data.append('html', previewPayload.frontHtmlContent);
         setLetterPreviewPayload(data, previewPayload);
       }
@@ -1167,6 +1173,9 @@ define([
         'description': previewPayload.description,
         'express': previewPayload.isExpressDelivery,
       });
+      if(selectedMessageType !== 'Letters') {
+        data.append('size',previewPayload.size);
+      }
       if(messageType === 'Postcards'){
         data.append('frontTemplate', previewPayload.frontTemplateId);
         data.append('backTemplate', previewPayload.backTemplateId);
@@ -1186,9 +1195,11 @@ define([
           data.append('insideTemplate', previewPayload.frontTemplateId);
           data.append('outsideTemplate', previewPayload.backTemplateId);
         }
-      } else if(selectedMessageType !== 'Letters'){
-        data.append('size', previewPayload.size);
-      } else {
+      } 
+      // else if(selectedMessageType !== 'Letters'){
+      //   data.append('size', previewPayload.size);
+      // } 
+      else {
         data.append('template', previewPayload.frontTemplateId);
         setLetterPreviewPayload(data, previewPayload);
       }
