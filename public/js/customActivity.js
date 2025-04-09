@@ -226,6 +226,9 @@ define([
   function onGetEndpoints (endpoints) {
     et_subdomain = endpoints.restHost;        
     authTSSD = (endpoints.authTSSD).split('//')[1].split('.')[0];
+    console.log(authTSSD, 'authTSSD');
+    );
+    
   }
 
   connection.on('requestedTokens', async (tokens) => {
@@ -234,10 +237,12 @@ define([
 
   async function onGetTokens (tokens) {
     authToken = tokens.fuel2token;
+    console.log(authToken, 'authToken');
+    
     await fetchExternalKey('PostGrid_API_Credentials');
     await fetchExternalKey('Postgrid_Logging_Data');
   }
-  
+
   var currentStep = steps[0].key;
   function onClickedNext() {
     switch (currentStep.key) {
