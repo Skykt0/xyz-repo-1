@@ -1574,11 +1574,19 @@ define([
     $(selector).each(function () {
       const $select = $(this);
   
-      $select.css('color', $select.val() === '' ? 'grey' : 'black');
+      function updateColor() {
+        const selectedValue = $select.val();
+        const isPlaceholder = selectedValue === '';
   
-      $select.on('change', function () {
-        $(this).css('color', this.value === '' ? 'grey' : 'black');
-      });
+        // Force style of the selected <option>
+        $select.css('color', isPlaceholder ? 'grey' : 'black');
+      }
+  
+      // Initial state
+      updateColor();
+  
+      // On change
+      $select.on('change', updateColor);
     });
   }
 
