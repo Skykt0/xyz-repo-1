@@ -1782,7 +1782,7 @@ define([
   });
 
   $('.extra-service-dropdown-wrap').click(function(){
-    $(this).closest('.extra-service-list').toggle();
+    $(this).siblings('.extra-service-list').toggle();
   });
 
   $('.extra-service-list .dropdown-item').click(function(){
