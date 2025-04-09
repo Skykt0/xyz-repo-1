@@ -1782,7 +1782,11 @@ define([
   });
 
   $('.extra-service-dropdown-wrap').click(function(){
-    $('.extra-service-list').toggle();
+    if($('.extra-service-list').css('display') === 'block') {
+      $('.extra-service-list').css('display','none');
+    } else {
+      $('.extra-service-list').css('display','block');
+    }
   });
 
   $('.extra-service-list .dropdown-item').click(function(){
