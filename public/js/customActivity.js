@@ -1573,20 +1573,24 @@ define([
     $(selector).each(function () {
       const $select = $(this);
 
-      if ($select.val() === '') {
-        $select.addClass('placeholder-style');
-      }
+      const updateColor = () => {
+        $select.toggleClass('placeholder-style', $select[0].selectedIndex === 0);
+      };
 
-      $select.on('focus', function () {
-        $select.removeClass('placeholder-style');
+      updateColor();
+
+      $select.on('change', function () {
+        updateColor();
       });
 
-      $select.on('change blur', function () {
-        if ($select.val() === '') {
-          $select.addClass('placeholder-style');
-        } else {
+      $select.on('focus', function () {
+        if ($select[0].selectedIndex === 0) {
           $select.removeClass('placeholder-style');
         }
+      });
+
+      $select.on('blur', function () {
+        updateColor();
       });
     });
   }
