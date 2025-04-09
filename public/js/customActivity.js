@@ -237,6 +237,7 @@ define([
     await fetchExternalKey('PostGrid_API_Credentials');
     await fetchExternalKey('Postgrid_Logging_Data');
   }
+console.log('hello');
 
   var currentStep = steps[0].key;
   function onClickedNext() {
