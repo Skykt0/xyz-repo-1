@@ -226,7 +226,6 @@ define([
   function onGetEndpoints (endpoints) {
     et_subdomain = endpoints.restHost;        
     authTSSD = (endpoints.authTSSD).split('//')[1].split('.')[0];
-    console.log(authTSSD, 'authTSSD at 229');
   }
 
   connection.on('requestedTokens', async (tokens) => {
@@ -235,7 +234,6 @@ define([
 
   async function onGetTokens (tokens) {
     authToken = tokens.fuel2token;
-    console.log(authToken, 'authToken at 238');
     await fetchExternalKey('PostGrid_API_Credentials');
     await fetchExternalKey('Postgrid_Logging_Data');
   }
@@ -1574,11 +1572,25 @@ define([
   function placeholderExtraService(selector) {
     $(selector).each(function () {
       const $select = $(this);
-  
-      $select.css('color', $select.val() === '' ? 'grey' : 'black');
-  
+
+      const updateColor = () => {
+        $select.toggleClass('placeholder-style', $select[0].selectedIndex === 0);
+      };
+
+      updateColor();
+
       $select.on('change', function () {
-        $(this).css('color', this.value === '' ? 'grey' : 'black');
+        updateColor();
+      });
+
+      $select.on('focus', function () {
+        if ($select[0].selectedIndex === 0) {
+          $select.removeClass('placeholder-style');
+        }
+      });
+
+      $select.on('blur', function () {
+        updateColor();
       });
     });
   }
@@ -1730,36 +1742,6 @@ define([
         throw error;
       });
   }
-  console.log(authTSSD, 'authTSSD');
-  console.log(authToken, 'authToken');
-  function fetchExternalKey(){
-    fetch('/data-extensions', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        authTSSD: authTSSD,
-        token: authToken
-      })
-    })
-      .then(response => response.text())
-      .then(xmlString => {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
-    
-        const properties = xmlDoc.getElementsByTagName('Property');
-    
-        for (let i = 0; i < properties.length; i++) {
-          const name = properties[i].getElementsByTagName('CustomerKey')[0].textContent;
-          const value = properties[i].getElementsByTagName('Value')[0].textContent;
-  
-          console.log("Externanl Key is : "+value);
-          
-        }
-      })
-      .catch((error) => {
-        throw error;
-      });
-  }
 
   $('.toggle-password').on('click', toggleApiKeyVisibility);
   $('input.api-key').on('input', hideError);
@@ -1865,6 +1847,9 @@ define([
   });
 
   $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input').on('input', debounce(function () {
+    if ($(this).val().trim() === '') {
+      $(this).attr('data-id', '');
+    }
     fetchReturnEnvelope($(this).val().trim());
   }, 300));
 
