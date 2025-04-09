@@ -1582,7 +1582,7 @@ define([
         }
       }
   
-      updateColor(); // On load
+      updateColor(); // Initial check
       $select.on('change', updateColor);
     });
   }

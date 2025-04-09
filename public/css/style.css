@@ -673,6 +673,7 @@ input:checked + .test-to-live-slider::before {
 .extra-service {
 	color: black;
 }
+  
   .extra-service.placeholder-selected {
 	color: grey;
 }
