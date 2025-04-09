@@ -226,8 +226,6 @@ define([
   function onGetEndpoints (endpoints) {
     et_subdomain = endpoints.restHost;        
     authTSSD = (endpoints.authTSSD).split('//')[1].split('.')[0];
-    );
-    
   }
 
   connection.on('requestedTokens', async (tokens) => {
