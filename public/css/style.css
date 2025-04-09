@@ -670,11 +670,7 @@ input:checked + .test-to-live-slider::before {
     width: 45%;
 }
 
-.extra-service {
-	color: black;
-}
-  
-  .extra-service.placeholder-selected {
+.placeholder-style {
 	color: grey;
 }
 

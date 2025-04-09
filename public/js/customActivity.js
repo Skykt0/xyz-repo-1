@@ -1574,16 +1574,11 @@ define([
     $(selector).each(function () {
       const $select = $(this);
   
-      function updateColor() {
-        if ($select.val() === '') {
-          $select.addClass('placeholder-selected');
-        } else {
-          $select.removeClass('placeholder-selected');
-        }
-      }
+      $select.css('color', $select.val() === '' ? 'grey' : 'black');
   
-      updateColor(); // Initial check
-      $select.on('change', updateColor);
+      $select.on('change', function () {
+        $(this).css('color', this.value === '' ? 'grey' : 'black');
+      });
     });
   }
   
