@@ -1747,10 +1747,10 @@ define([
   $('input.api-key').on('input', hideError);
 
   $('.step2radioBTN').change(function () {
-    var isSelfMailer = $('#self-mailer').is(':checked');
+    // var isSelfMailer = $('#self-mailer').is(':checked');
     var isLetters = $('#letters').is(':checked');
 
-    if(isSelfMailer || isLetters) {
+    if(isLetters) {
       if($('#card-insert').is(':checked')) {
         $('#extTempId').css('display','none');
         $('label[for="extTempId"]').css('display','none');
