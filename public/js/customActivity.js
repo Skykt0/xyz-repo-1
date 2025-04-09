@@ -672,7 +672,7 @@ define([
 
   function executeScreenTwoMethods() {
     $('input[name="msgType"]').change(function () {
-      if (this.id === 'letters' || this.id === 'self-mailer') {
+      if (this.id === 'letters') {
         $('#card-insert-container').addClass('visible');
         $('.card-insert-wrapper').addClass('visible');
       } else {
@@ -680,7 +680,7 @@ define([
         $('.card-insert-wrapper').removeClass('visible');
       }
 
-      if (this.id === 'letters' || this.id === 'self-mailer') {
+      if (this.id === 'letters') {
         $('#card-insert').prop('checked', false).trigger('change');
       }
     });
@@ -689,7 +689,7 @@ define([
       if (this.checked) {
         $('#card-insert-type').removeClass('hidden');
         let selectedMessageType = $('input[name="msgType"]:checked').val();
-        if(selectedMessageType === 'selfmailer') {
+        if(selectedMessageType === 'Letters') {
           $('#extTempId').css('display','none');
           $('label[for="extTempId"]').css('display','none');
           $('#extTempId').prop('checked', false);
