@@ -1576,29 +1576,14 @@ define([
   
       function updateColor() {
         if ($select.val() === '') {
-          $select.addClass('placeholder-active');
+          $select.addClass('placeholder-selected');
         } else {
-          $select.removeClass('placeholder-active');
+          $select.removeClass('placeholder-selected');
         }
       }
   
-      // On focus (when dropdown opens), show all text in black
-      $select.on('focus', function () {
-        $select.removeClass('placeholder-active');
-      });
-  
-      // On blur (after dropdown closes), reset based on value
-      $select.on('blur', function () {
-        updateColor();
-      });
-  
-      // On change, reset based on selected value
-      $select.on('change', function () {
-        updateColor();
-      });
-  
-      // Initial setup
-      updateColor();
+      updateColor(); // On load
+      $select.on('change', updateColor);
     });
   }
   

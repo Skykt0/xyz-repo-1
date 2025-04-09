@@ -670,9 +670,12 @@ input:checked + .test-to-live-slider::before {
     width: 45%;
 }
 
-select.placeholder-active {
+.extra-service {
+	color: black;
+}
+  .extra-service.placeholder-selected {
 	color: grey;
-  }
+}
 
 .pdf-container .input-fields .input-box {
 	display: flex;
