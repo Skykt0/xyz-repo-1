@@ -1189,7 +1189,6 @@ define([
         }else {
           data.append('insideTemplate', previewPayload.frontTemplateId);
           data.append('outsideTemplate', previewPayload.backTemplateId);
-          data.append('size', previewPayload.size);
         }
       } else if(selectedMessageType === 'Letters'){
         data.append('template', previewPayload.frontTemplateId);
@@ -1574,14 +1573,12 @@ define([
     $(selector).each(function () {
       const $select = $(this);
 
-      // Initial styling
       if ($select.val() === '') {
         $select.addClass('placeholder-style');
       }
 
-      // Change styling on open and change
       $select.on('focus', function () {
-        $select.removeClass('placeholder-style'); // make all options black
+        $select.removeClass('placeholder-style');
       });
 
       $select.on('change blur', function () {
@@ -1846,6 +1843,9 @@ define([
   });
 
   $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input').on('input', debounce(function () {
+    if ($(this).val().trim() === '') {
+      $(this).attr('data-id', '');
+    }
     fetchReturnEnvelope($(this).val().trim());
   }, 300));
 
