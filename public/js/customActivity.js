@@ -277,6 +277,7 @@ define([
           $('.trifold .doubleSide, .trifold .singleSide').hide();
           let selectedCardType = $('input[name="cardType"]:checked').val();
           $(`.trifold .${selectedCardType}`).show();
+          $('.LettersWithCard').show();
         }
 
         let isHtml = $('#htmlId').is(':checked');
@@ -285,12 +286,9 @@ define([
           $(`.${selectedMessageType} .error-msg`).removeClass('show');
         }
 
-        if(isCartInsertEnabled && selectedMessageType === 'Letters'){
-          $('.LettersWithCard').show();
-        }
-
         if(isCartInsertEnabled){
           let selectedCardInsertType = $('input[name="cardType"]:checked').val();
+          $('.LettersWithCard').show();
           if(selectedCardInsertType === 'singleSide'){
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).hide();
             $('.html-btn-card-front').text('Card Insert');
