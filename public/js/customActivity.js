@@ -12,7 +12,8 @@ define([
   var authorization = {};
   let previewPayload = {
     isValid: true,
-    templateEnvironment : '',
+    templateEnvironment: '',
+    envelopeEnvironment: '',
     contactEnvironment: '',
     liveApiKeyEnabled: false
   };
@@ -154,6 +155,7 @@ define([
         $('.test-to-live-switch input').prop('checked', value).trigger('change');
         const apiKeyEnabled = value ? 'Live' : 'Test';
         previewPayload.templateEnvironment = apiKeyEnabled;
+        previewPayload.envelopeEnvironment = apiKeyEnabled;
         previewPayload.contactEnvironment = apiKeyEnabled;
         break;
       case 'cardInsertType':
@@ -308,6 +310,9 @@ define([
             $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('');
           }
           fetchTemplates();
+        }
+        if(previewPayload.envelopeEnvironment !== currentEnabledEnvironmenet) {
+          $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val('');
         }
         fetchReturnEnvelope();
 
@@ -1529,7 +1534,7 @@ define([
       redirect: 'follow'
     };
 
-    previewPayload.templateEnvironment = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
+    previewPayload.envelopeEnvironment = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
 
     try {
       const response = await fetch(`${POSTGRID_API_BASE_URL}return_envelopes?limit=10&search=${encodeURIComponent(searchQuery)}`, requestOptions);
