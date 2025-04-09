@@ -1781,6 +1781,23 @@ define([
     }
   });
 
+  $('.extra-service-dropdown-wrap').click(function(){
+    $('.extra-service-list').toggle();
+  });
+
+  $('.extra-service-list .dropdown-item').click(function(){
+    const selectedText = $(this).text();
+    const selectedValue = $(this).attr('data-id');
+  
+    $('.input-field.extra-service')
+      .val(selectedText)
+      .attr('data-id', selectedValue)
+      .css('color', '#333');
+  
+    $('.extra-service-list').hide();
+  });
+  
+
   $('#search-contact').on('input', debounce(function () {
     const searchQuery = $(this).val();
     if (searchQuery.length > 1) {
@@ -1910,6 +1927,10 @@ define([
       }
       if(!isClickInsideBackSelfMailer){
         $('#selfMailer-outsideTemplateList').hide();
+      }
+
+      if($('.extra-service-list').css('display') === 'block') {
+        $('.extra-service-list').css('display','none');
       }
     });
   });
