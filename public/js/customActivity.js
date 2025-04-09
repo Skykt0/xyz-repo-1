@@ -192,9 +192,10 @@ define([
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .envelope-type';
         $(queryString).val(value);
         break;
-      case 'returnEnvelope':
+      case 'returnEnvelopeName':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .returnEnvelope';
         $(queryString).val(value);
+        $(queryString).attr('data-id', postcardArguments.returnEnvelope);
         break;
       case 'color':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .color-input';
@@ -672,7 +673,7 @@ define([
 
   function executeScreenTwoMethods() {
     $('input[name="msgType"]').change(function () {
-      if (this.id === 'letters' || this.id === 'self-mailer') {
+      if (this.id === 'letters') {
         $('#card-insert-container').addClass('visible');
         $('.card-insert-wrapper').addClass('visible');
       } else {
@@ -947,6 +948,7 @@ define([
     let extraService;
     let envelopeType;
     let returnEnvelope;
+    let returnEnvelopeName;
     let colorInput;
     let perforateFirstPageInput;
     let doubleSidedInput;
@@ -956,6 +958,7 @@ define([
       extraService = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).val();
       envelopeType = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).val();
       returnEnvelope = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).data('id');
+      returnEnvelopeName = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val();
       colorInput = $(`.${selectedMessageType} .${selectedCreationType} .color-input`).is(':checked');
       perforateFirstPageInput = $(`.${selectedMessageType} .${selectedCreationType} .preforate-first-page-input`).is(':checked');
       doubleSidedInput = $(`.${selectedMessageType} .${selectedCreationType} .double-sided-input`).is(':checked');
@@ -964,6 +967,7 @@ define([
       previewPayload.extraService = extraService;
       previewPayload.envelopeType = envelopeType;
       previewPayload.returnEnvelope = returnEnvelope;
+      previewPayload.returnEnvelopeName = returnEnvelopeName;
       previewPayload.colorInput = colorInput;
       previewPayload.perforateFirstPageInput = perforateFirstPageInput;
       previewPayload.doubleSidedInput = doubleSidedInput;
