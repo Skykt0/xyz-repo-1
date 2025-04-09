@@ -1189,7 +1189,6 @@ define([
         }else {
           data.append('insideTemplate', previewPayload.frontTemplateId);
           data.append('outsideTemplate', previewPayload.backTemplateId);
-          data.append('size', previewPayload.size);
         }
       } else if(selectedMessageType === 'Letters'){
         data.append('template', previewPayload.frontTemplateId);
@@ -1842,6 +1841,9 @@ define([
   });
 
   $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input').on('input', debounce(function () {
+    if ($(this).val().trim() === '') {
+      $(this).attr('data-id', '');
+    }
     fetchReturnEnvelope($(this).val().trim());
   }, 300));
 
