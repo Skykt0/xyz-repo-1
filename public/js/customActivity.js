@@ -1572,20 +1572,22 @@ define([
   function placeholderExtraService(selector) {
     $(selector).each(function () {
       const $select = $(this);
-  
-      function updateColor() {
-        const selectedValue = $select.val();
-        const isPlaceholder = selectedValue === '';
-  
-        // Force style of the selected <option>
-        $select.css('color', isPlaceholder ? 'grey' : 'black');
+
+      if ($select.val() === '') {
+        $select.addClass('placeholder-style');
       }
-  
-      // Initial state
-      updateColor();
-  
-      // On change
-      $select.on('change', updateColor);
+
+      $select.on('focus', function () {
+        $select.removeClass('placeholder-style');
+      });
+
+      $select.on('change blur', function () {
+        if ($select.val() === '') {
+          $select.addClass('placeholder-style');
+        } else {
+          $select.removeClass('placeholder-style');
+        }
+      });
     });
   }
 
