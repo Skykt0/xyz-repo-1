@@ -672,7 +672,7 @@ define([
 
   function executeScreenTwoMethods() {
     $('input[name="msgType"]').change(function () {
-      if (this.id === 'letters') {
+      if (this.id === 'letters' || this.id === 'self-mailer') {
         $('#card-insert-container').addClass('visible');
         $('.card-insert-wrapper').addClass('visible');
       } else {
@@ -680,7 +680,7 @@ define([
         $('.card-insert-wrapper').removeClass('visible');
       }
 
-      if (this.id === 'letters') {
+      if (this.id === 'letters' || this.id === 'self-mailer') {
         $('#card-insert').prop('checked', false).trigger('change');
       }
     });
@@ -689,7 +689,7 @@ define([
       if (this.checked) {
         $('#card-insert-type').removeClass('hidden');
         let selectedMessageType = $('input[name="msgType"]:checked').val();
-        if(selectedMessageType === 'Letters') {
+        if(selectedMessageType === 'selfmailer') {
           $('#extTempId').css('display','none');
           $('label[for="extTempId"]').css('display','none');
           $('#extTempId').prop('checked', false);
@@ -1747,10 +1747,8 @@ define([
   $('input.api-key').on('input', hideError);
 
   $('.step2radioBTN').change(function () {
-    // var isSelfMailer = $('#self-mailer').is(':checked');
-    var isLetters = $('#letters').is(':checked');
-
-    if(isLetters) {
+    var isSelfMailer = $('#self-mailer').is(':checked');
+    if(isSelfMailer) {
       if($('#card-insert').is(':checked')) {
         $('#extTempId').css('display','none');
         $('label[for="extTempId"]').css('display','none');
