@@ -1573,25 +1573,25 @@ define([
   function placeholderExtraService(selector) {
     $(selector).each(function () {
       const $select = $(this);
-
-      if ($select.val() === '') {
-        $select.addClass('placeholder-style');
+  
+      function updateColor() {
+        const selectedValue = $select.val();
+        // Only apply grey if the placeholder is selected
+        $select.css('color', selectedValue === '' ? 'grey' : 'black');
       }
-
-      $select.on('focus', function () {
-        $select.removeClass('placeholder-style');
-      });
-
-      $select.on('change blur', function () {
-        if ($select.val() === '') {
-          $select.addClass('placeholder-style');
-        } else {
-          $select.removeClass('placeholder-style');
-        }
-      });
+  
+      // Set initial color on load
+      updateColor();
+  
+      // Set color on change
+      $select.on('change', updateColor);
     });
   }
   
+  $(document).ready(function () {
+    placeholderExtraService('.extra-service');
+  });
+
 
   function prepopulateToDeMapping(){
     $.each(previewDEMapOptions, function(key, value) {
