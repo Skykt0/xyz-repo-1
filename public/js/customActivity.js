@@ -1575,24 +1575,33 @@ define([
       const $select = $(this);
   
       function updateColor() {
-        const selectedValue = $select.val();
-        // Only apply grey if the placeholder is selected
-        $select.css('color', selectedValue === '' ? 'grey' : 'black');
+        if ($select.val() === '') {
+          $select.addClass('placeholder-active');
+        } else {
+          $select.removeClass('placeholder-active');
+        }
       }
   
-      // Set initial color on load
-      updateColor();
+      // On focus (when dropdown opens), show all text in black
+      $select.on('focus', function () {
+        $select.removeClass('placeholder-active');
+      });
   
-      // Set color on change
-      $select.on('change', updateColor);
+      // On blur (after dropdown closes), reset based on value
+      $select.on('blur', function () {
+        updateColor();
+      });
+  
+      // On change, reset based on selected value
+      $select.on('change', function () {
+        updateColor();
+      });
+  
+      // Initial setup
+      updateColor();
     });
   }
   
-  $(document).ready(function () {
-    placeholderExtraService('.extra-service');
-  });
-
-
   function prepopulateToDeMapping(){
     $.each(previewDEMapOptions, function(key, value) {
       switch (key) {

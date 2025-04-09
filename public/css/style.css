@@ -670,6 +670,10 @@ input:checked + .test-to-live-slider::before {
     width: 45%;
 }
 
+select.placeholder-active {
+	color: grey;
+  }
+
 .pdf-container .input-fields .input-box {
 	display: flex;
 	flex-direction: column;
