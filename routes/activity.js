@@ -206,66 +206,6 @@ exports.fetchExternalKey = async function (req, res) {
   }
 };
 
-exports.fetchExternalKey = async function(req, res){
-  const { authTSSD, token } = req.body;
-  const dataExtensions = ["Postgrid_Logging_Data", "PostgridAPIDE"]; // List of Data Extensions
-
-  for (const dataExtension of dataExtensions) {
-      const soapEnvelope = `<?xml version="1.0" encoding="UTF-8"?>
-      <s:Envelope xmlns:s="http://www.w3.org/2003/05/soap-envelope" 
-      xmlns:a="http://schemas.xmlsoap.org/ws/2004/08/addressing" 
-      xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
-          <s:Header>
-              <a:Action s:mustUnderstand="1">Retrieve</a:Action>
-              <a:To s:mustUnderstand="1">https://${authTSSD}.soap.marketingcloudapis.com/Service.asmx</a:To>
-              <fueloauth xmlns="http://exacttarget.com">${token}</fueloauth>
-          </s:Header>
-          <s:Body xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-              <RetrieveRequestMsg 
-              xmlns="http://exacttarget.com/wsdl/partnerAPI">
-                  <RetrieveRequest>
-                      <ObjectType>DataExtension</ObjectType>
-                      <Properties>CustomerKey</Properties>
-                      <Filter xsi:type="SimpleFilterPart">
-                          <Property>Name</Property>
-                          <SimpleOperator>equals</SimpleOperator>
-                          <Value>Postgrid_Logging_Data</Value>
-                      </Filter>
-                  </RetrieveRequest>
-              </RetrieveRequestMsg>
-          </s:Body>
-      </s:Envelope>`;
-
-      try {
-          const response = await fetch(`https://${authTSSD}.soap.marketingcloudapis.com/Service.asmx`, {
-              method: "POST",
-              headers: {
-                  "Content-Type": "text/xml",
-                  "SOAPAction": "Retrieve"
-              },
-              body: soapEnvelope
-          });
-
-          const textResponse = await response.text();
-          console.log(`Response for Postgrid_Logging_Data: `, textResponse); // Log full response
-
-          // Parse XML response
-          const parser = new DOMParser();
-          const xmlDoc = parser.parseFromString(textResponse, "text/xml");
-
-          // Extract CustomerKey from response
-          const customerKeyNode = xmlDoc.getElementsByTagName("CustomerKey")[0];
-          const customerKey = customerKeyNode ? customerKeyNode.textContent : "Not found";
-
-          console.log(`CustomerKey for ${dataExtension}:`, customerKey);
-      } catch (error) {
-          console.error(`Error fetching Data Extension: ${dataExtension}`, error);
-      }
-  }
-};
-
-
 /**
  * Fetches the authentication token from Marketing Cloud.
  * 
