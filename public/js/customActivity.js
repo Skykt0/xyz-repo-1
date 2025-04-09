@@ -1797,8 +1797,7 @@ define([
 
     $('.input-field.extra-service')
       .val(selectedText)
-      .attr('data-id', selectedValue)
-      .css('color', '#333');
+      .attr('data-id', selectedValue);
   
     $('.extra-service-list').hide();
   });
