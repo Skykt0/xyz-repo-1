@@ -1833,6 +1833,9 @@ define([
   });
 
   $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input').on('input', debounce(function () {
+    if ($(this).val().trim() === '') {
+      $(this).attr('data-id', '');
+    }
     fetchReturnEnvelope($(this).val().trim());
   }, 300));
 
