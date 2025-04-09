@@ -226,7 +226,6 @@ define([
   function onGetEndpoints (endpoints) {
     et_subdomain = endpoints.restHost;        
     authTSSD = (endpoints.authTSSD).split('//')[1].split('.')[0];
-    console.log(authTSSD, 'authTSSD');
     );
     
   }
@@ -1733,7 +1732,8 @@ define([
         throw error;
       });
   }
-
+  console.log(authTSSD, 'authTSSD');
+  console.log(authToken, 'authToken');
   function fetchExternalKey(){
     fetch('/data-extensions', {
       method: 'GET',
