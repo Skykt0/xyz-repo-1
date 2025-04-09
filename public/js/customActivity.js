@@ -285,12 +285,15 @@ define([
           $(`.${selectedMessageType} .error-msg`).removeClass('show');
         }
 
+        if(isCartInsertEnabled && selectedMessageType === 'Letters'){
+          $('.LettersWithCard').show();
+        }
+
         if(isCartInsertEnabled){
           let selectedCardInsertType = $('input[name="cardType"]:checked').val();
           if(selectedCardInsertType === 'singleSide'){
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).hide();
             $('.html-btn-card-front').text('Card Insert');
-            $('.LettersWithCard').show();
           }
           else{
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).show();
