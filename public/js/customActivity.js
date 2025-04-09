@@ -242,11 +242,6 @@ define([
   function onClickedNext() {
     switch (currentStep.key) {
     case 'step1':
-<<<<<<< HEAD
-      fetchClientCredentials();
-      fetchExternalKey();
-=======
->>>>>>> 9ded89cbb05e8516866dcb21c49098c0d0af733b
       if (validateApiKeys()) {
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
