@@ -1782,11 +1782,7 @@ define([
   });
 
   $('.extra-service-dropdown-wrap').click(function(){
-    if($('.extra-service-list').css('display') === 'block') {
-      $('.extra-service-list').css('display','none');
-    } else {
-      $('.extra-service-list').css('display','block');
-    }
+    $(this).find('.extra-service-list').toggle();
   });
 
   $('.extra-service-list .dropdown-item').click(function(){
@@ -1933,8 +1929,10 @@ define([
         $('#selfMailer-outsideTemplateList').hide();
       }
 
-      if($('.extra-service-list').css('display') === 'block') {
-        $('.extra-service-list').css('display','none');
+      if (!$(event.target).closest('.extra-service-dropdown-wrap').length) {
+        if($('.extra-service-list').css('display') === 'block') {
+          $('.extra-service-list').css('display','none');
+        }
       }
     });
   });
