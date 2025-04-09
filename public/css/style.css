@@ -1166,8 +1166,3 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .asterisk {
   color: red;
 }
-
-.extra-service option[value=""],
-.envelope-type option[value=""] {
-  color: lightgray;
-}

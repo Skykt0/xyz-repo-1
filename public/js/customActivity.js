@@ -535,7 +535,7 @@ define([
         }
       }
     } else if(previewPayload.messageType === 'Letters'){
-      if(previewPayload.extraService !== '' && previewPayload.extraService !== undefined) {
+      if(previewPayload.extraService !== '' && previewPayload.extraService !== undefined && !previewPayload.isExpressDelivery) {
         postCardJson.extraService = previewPayload.extraService;
       }
       if(previewPayload.envelopeType !== '' && previewPayload.envelopeType !== undefined){
@@ -1239,13 +1239,13 @@ define([
   }
 
   function setLetterPreviewPayload(data, previewPayload) {
-    if(previewPayload.extraService !== '' && previewPayload.extraService !== undefined) {
+    if(previewPayload.extraService !== '' && previewPayload.extraService !== undefined && !previewPayload.isExpressDelivery) {
       data.append('extraService', previewPayload.extraService);
     }
-    if(previewPayload.envelopeType !== '' && previewPayload.extraService !== undefined) {
+    if(previewPayload.envelopeType !== '' && previewPayload.envelopeType !== undefined) {
       data.append('envelopeType', previewPayload.envelopeType);
     }
-    if(previewPayload.returnEnvelope !== '' && previewPayload.extraService !== undefined) {
+    if(previewPayload.returnEnvelope !== '' && previewPayload.returnEnvelope !== undefined) {
       data.append('returnEnvelope', previewPayload.returnEnvelope);
     }
     if (previewPayload.perforateFirstPageInput) {
@@ -1770,11 +1770,14 @@ define([
   $('.express-delivery-input').on('click', function() {
     var isChecked = $(this).prop('checked');
     var mailingClass = $(this).closest('.spacer').find('.mailing-class');
+    var extraService = $(this).closest('.spacer').find('.extra-service');
     
     if (isChecked) {
       mailingClass.prop('disabled', true);
+      extraService.prop('disabled', true);
     } else {
       mailingClass.prop('disabled', false);
+      extraService.prop('disabled', false);
     }
   });
 
