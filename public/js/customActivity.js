@@ -277,7 +277,6 @@ define([
           $('.trifold .doubleSide, .trifold .singleSide').hide();
           let selectedCardType = $('input[name="cardType"]:checked').val();
           $(`.trifold .${selectedCardType}`).show();
-          $(`.LettersWithCard .${selectedCardType}`).show();
         }
 
         let isHtml = $('#htmlId').is(':checked');
@@ -291,6 +290,7 @@ define([
           if(selectedCardInsertType === 'singleSide'){
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).hide();
             $('.html-btn-card-front').text('Card Insert');
+            $('.LettersWithCard').show();
           }
           else{
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).show();
