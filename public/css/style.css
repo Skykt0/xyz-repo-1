@@ -1170,3 +1170,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .extra-service {
   width: 100%;
 }
+
+.extra-service-list .dropdown-item:first-child {
+  color: grey;
+}

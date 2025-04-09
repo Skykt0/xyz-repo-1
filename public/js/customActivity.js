@@ -960,7 +960,7 @@ define([
     let insertBlankPageInput;
 
     if(selectedMessageType === 'Letters') {
-      extraService = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).val();
+      extraService = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).data('id');
       envelopeType = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).val();
       returnEnvelope = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).data('id');
       returnEnvelopeName = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val();
@@ -1789,6 +1789,12 @@ define([
     const selectedText = $(this).text();
     const selectedValue = $(this).attr('data-id');
   
+    if(selectedValue === '') {
+      $('.input-field.extra-service').css('color','grey');
+    } else {
+      $('.input-field.extra-service').css('color','black');
+    }
+
     $('.input-field.extra-service')
       .val(selectedText)
       .attr('data-id', selectedValue)
