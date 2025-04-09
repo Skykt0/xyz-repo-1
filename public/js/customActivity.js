@@ -277,6 +277,7 @@ define([
           $('.trifold .doubleSide, .trifold .singleSide').hide();
           let selectedCardType = $('input[name="cardType"]:checked').val();
           $(`.trifold .${selectedCardType}`).show();
+          $(`.LettersWithCard .${selectedCardType}`).show();
         }
 
         let isHtml = $('#htmlId').is(':checked');
