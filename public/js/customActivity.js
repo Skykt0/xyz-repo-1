@@ -279,6 +279,8 @@ define([
           $(`.trifold .${selectedCardType}`).show();
         }
 
+        console.log(selectedMessageType)
+
         if (isCartInsertEnabled && selectedMessageType === 'Letters') {
           $('.Letters').hide();
           $('.LettersWithCard').show();
