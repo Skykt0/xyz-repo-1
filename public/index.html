@@ -863,11 +863,17 @@
                         </div>
                         <div class="input-box">
                           <label for="letter-html-envelope-type" class="input-label">Envelope Type</label>
-                          <select class="input-field envelope-type" id="letter-html-envelope-type" name="envelopeType">
-                              <option value="" selected>Select Envelope Type</option>
-                              <option value="standard_double_window">Standard Double Window</option>
-                              <option value="flat">Flat Mailer</option>
-                          </select>
+                          <div class="mapping-dropdown">
+                            <div class="envelope-type-dropdown-wrap">
+                                <input type="text" id="letter-html-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type"/>
+                                <i class="fa fa-angle-right dropdown-icon"></i>
+                            </div>
+                            <div id="envelope-type-list" class="dropdown-options envelope-type-list">
+                              <li class="dropdown-item" data-id="">Select Envelope Type</li>
+                              <li class="dropdown-item" data-id="standard_double_window">Standard Double Window</li>
+                              <li class="dropdown-item" data-id="flat">Flat Mailer</li>
+                            </div>
+                          </div>
                         </div>
                     </div>
                 </div>

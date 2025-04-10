@@ -961,7 +961,7 @@ define([
 
     if(selectedMessageType === 'Letters') {
       extraService = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).data('id');
-      envelopeType = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).val();
+      envelopeType = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).data('id');
       returnEnvelope = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).data('id');
       returnEnvelopeName = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val();
       colorInput = $(`.${selectedMessageType} .${selectedCreationType} .color-input`).is(':checked');
@@ -1785,6 +1785,10 @@ define([
     $(this).siblings('.extra-service-list').toggle();
   });
 
+  $('.envelope-type-dropdown-wrap').click(function(){
+    $(this).siblings('.envelope-type-list').toggle();
+  });
+
   $('.extra-service-list .dropdown-item').click(function(){
     const selectedText = $(this).text();
     const selectedValue = $(this).attr('data-id');
@@ -1801,7 +1805,23 @@ define([
   
     $('.extra-service-list').hide();
   });
+
+  $('.envelope-type-list .dropdown-item').click(function(){
+    const selectedText = $(this).text();
+    const selectedValue = $(this).attr('data-id');
   
+    if(selectedValue === '') {
+      $('.input-field.envelope-type').css('color','grey');
+    } else {
+      $('.input-field.envelope-type').css('color','black');
+    }
+
+    $('.input-field.envelope-type')
+      .val(selectedText)
+      .attr('data-id', selectedValue);
+  
+    $('.envelope-type-list').hide();
+  });
 
   $('#search-contact').on('input', debounce(function () {
     const searchQuery = $(this).val();
@@ -1937,6 +1957,11 @@ define([
       if (!$(event.target).closest('.extra-service-dropdown-wrap').length) {
         if($('.extra-service-list').css('display') === 'block') {
           $('.extra-service-list').css('display','none');
+        }
+      }
+      if (!$(event.target).closest('.envelope-type-dropdown-wrap').length) {
+        if($('.envelope-type-list').css('display') === 'block') {
+          $('.envelope-type-list').css('display','none');
         }
       }
     });

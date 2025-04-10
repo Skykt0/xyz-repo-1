@@ -1167,10 +1167,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: red;
 }
 
-.extra-service {
+.extra-service, .envelope-type {
   width: 100%;
 }
 
-.extra-service-list .dropdown-item:first-child {
+.extra-service-list .dropdown-item:first-child,
+.envelope-type-list .dropdown-item:first-child  {
   color: grey;
 }
