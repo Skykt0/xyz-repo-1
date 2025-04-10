@@ -1791,8 +1791,12 @@ define([
     }
   });
 
-  $('.mapping-dropdown .dropdown-wrap').click(function () {
-    $(this).siblings('.dropdown-options').toggle();
+  $('.extra-service-dropdown-wrap').click(function(){
+    $(this).siblings('.extra-service-list').toggle();
+  });
+
+  $('.envelope-type-dropdown-wrap').click(function(){
+    $(this).siblings('.envelope-type-list').toggle();
   });
 
   $('.dropdown-options .dropdown-item').click(function () {
