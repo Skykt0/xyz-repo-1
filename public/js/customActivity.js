@@ -283,7 +283,7 @@ define([
           }
         }
 
-        if (isCartInsertEnabled && selectedMessageType === 'selfmailer') {
+        if (isCartInsertEnabled) {
           $('.trifold .doubleSide, .trifold .singleSide').hide();
           let selectedCardType = $('input[name="cardType"]:checked').val();
           $(`.trifold .${selectedCardType}`).show();
@@ -817,14 +817,12 @@ define([
       } else if(isCartInsertEnabled && selectedCardInsertType === 'singleSide') {
         cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
         cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front-card-insert`).data('btn-label');
-      
+
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '') {
           isValid = false;
           if (frontHtmlContent === '' && backHtmlContent === '' && cardfrontHtmlContent === '') {
             postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}.`).addClass('show');
-          } else if(frontHtmlContent === '' && backHtmlContent === ''){
-            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}.`).addClass('show');
-          }else {
+          } else {
             let missingFields = [];
             if (frontHtmlContent === '') {missingFields.push(frontHtmlBtnLabel);}
             if (backHtmlContent === '') {missingFields.push(backHtmlBtnLabel);}
@@ -838,12 +836,8 @@ define([
           postcardHtmlEditorErrorMsg.removeClass('show');
         }
       } else if(selectedMessageType === 'Letters') { 
-        console.log("Inaide Letters----------------");
-        
         if(frontHtmlContent === '') {
           isValid = false;
-          console.log("Showing the errors-----------");
-          
           postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}.`).addClass('show');
         } else { 
           postcardHtmlEditorErrorMsg.removeClass('show');
@@ -938,12 +932,18 @@ define([
       } else {
         let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .frontTemplate`));
         let backTemplateValid;
-        if(selectedMessageType !== 'Letters') {
+        if(selectedMessageType !== 'Letters' && selectedMessageType !== 'LettersCardInsert' ) {
           backTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .backTemplate`));
         } else {
           backTemplateValid = true;
         }
         if(!frontTemplateValid || !backTemplateValid){
+          isValid = false;
+        }
+      }
+      if(selectedMessageType === 'LettersCardInsert'){
+        let isHtmlInputValid = validateInputField($(`.${selectedMessageType} .screen-3 .html-editor-front`));
+        if (!isHtmlInputValid) {
           isValid = false;
         }
       }
@@ -1554,7 +1554,13 @@ define([
       if(isCartInsertEnabled){
         selectedCardInsertType = $('input[name="cardType"]:checked').val();
       }
-      if (selectedCardInsertType === 'singleSide') {
+      let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+      if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
+        selectedMessageType = 'trifold';
+      } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
+        selectedMessageType = 'LettersCardInsert';
+      }
+      if (selectedCardInsertType === 'singleSide' && !selectedMessageType.toLowerCase().includes('letter')) {
         populateDropdown('singleSideTemplate', sortedData);
       } else {
         populateDropdown('frontTemplate', sortedData);
@@ -1619,33 +1625,6 @@ define([
       $list.append($listItem);
     });
   }
-
-  function placeholderExtraService(selector) {
-    $(selector).each(function () {
-      const $select = $(this);
-
-      const updateColor = () => {
-        $select.toggleClass('placeholder-style', $select[0].selectedIndex === 0);
-      };
-
-      updateColor();
-
-      $select.on('change', function () {
-        updateColor();
-      });
-
-      $select.on('focus', function () {
-        if ($select[0].selectedIndex === 0) {
-          $select.removeClass('placeholder-style');
-        }
-      });
-
-      $select.on('blur', function () {
-        updateColor();
-      });
-    });
-  }
-  
 
   function prepopulateToDeMapping(){
     $.each(previewDEMapOptions, function(key, value) {
@@ -1938,6 +1917,14 @@ define([
     fetchTemplates($(this).val().trim());
   }, 300));
 
+  $(document).on('focus', '.template-input', function () {
+    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
+  });
+
+  $(document).on('input', '.template-input', debounce(function () {
+    fetchTemplates($(this).val().trim());
+  }, 300));
+
   $(document).on('focus', '.return-envelope-input', function () {
     $(this).closest('.return-envelope-dropdown-wrap').next('.dropdown-options').show();
   });
@@ -1990,7 +1977,7 @@ define([
       }
       let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
       const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact');
-      const isClickInsideFront = $(event.target).closest('#frontTemplateList, #front-template-input, #letter-template-input').length > 0;
+      const isClickInsideFront = $(event.target).closest('#frontTemplateList, #front-template-input, #letter-template-input, .template-input').length > 0;
       const isClickInsideBack = $(event.target).closest('#backTemplateList, #back-template-input').length > 0;
       const isClickInsideReturnEnvelope = $(event.target).closest('.returnEnvelopeList, .return-envelope-input.returnEnvelope').length > 0;
       const isClickInsideFrontSelfMailer = $(event.target).closest('#selfMailer-insideTemplateList, #selfMailer-insideTemplateInput').length > 0;
