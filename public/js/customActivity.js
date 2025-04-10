@@ -1786,56 +1786,45 @@ define([
       extraService.prop('disabled', true).css('color','gray');
     } else {
       mailingClass.prop('disabled', false);
-      let color = extraService.data('id') === '' ? 'gray' : 'black' ;
+      let color = extraService.val() === 'Select Extra Service' ? 'gray' : 'black' ;
       extraService.prop('disabled', false).css('color',color);
     }
   });
 
-  $('.extra-service-dropdown-wrap').click(function(){
-    $(this).siblings('.extra-service-list').toggle();
+  $('.mapping-dropdown .dropdown-wrap').click(function () {
+    $(this).siblings('.dropdown-options').toggle();
   });
 
-  $('.envelope-type-dropdown-wrap').click(function(){
-    $(this).siblings('.envelope-type-list').toggle();
-  });
-
-  $('.extra-service-list .dropdown-item').click(function(){
+  $('.dropdown-options .dropdown-item').click(function () {
     const selectedText = $(this).text();
     const selectedValue = $(this).attr('data-id');
+
+    const $dropdown = $(this).closest('.mapping-dropdown');
   
-    if(selectedValue === '') {
-      $('.input-field.extra-service').css('color','grey');
-      $('.express-delivery-input').prop('disabled',false);
-      $('.express-delivery-input').siblings('span').css('color','black');
+    const $input = $dropdown.find('.input-field');
+    const inputType = $input.hasClass('extra-service') ? 'extra-service' : 'envelope-type';
+  
+    $input.val(selectedText).attr('data-id', selectedValue);
+  
+    if (selectedValue === '') {
+      $input.css('color', 'grey');
     } else {
-      $('.input-field.extra-service').css('color','black');
-      $('.express-delivery-input').prop('disabled',true);
-      $('.express-delivery-input').siblings('span').css('color','gray');
+      $input.css('color', 'black');
     }
-
-    $('.input-field.extra-service')
-      .val(selectedText)
-      .attr('data-id', selectedValue);
   
-    $('.extra-service-list').hide();
-  });
-
-  $('.envelope-type-list .dropdown-item').click(function(){
-    const selectedText = $(this).text();
-    const selectedValue = $(this).attr('data-id');
-  
-    if(selectedValue === '') {
-      $('.input-field.envelope-type').css('color','grey');
-    } else {
-      $('.input-field.envelope-type').css('color','black');
+    if (inputType === 'extra-service') {
+      const $expressDelivery = $dropdown.find('.express-delivery-input');
+      if (selectedValue === '') {
+        $expressDelivery.prop('disabled', false);
+        $expressDelivery.siblings('span').css('color', 'black');
+      } else {
+        $expressDelivery.prop('disabled', true);
+        $expressDelivery.siblings('span').css('color', 'gray');
+      }
     }
-
-    $('.input-field.envelope-type')
-      .val(selectedText)
-      .attr('data-id', selectedValue);
   
-    $('.envelope-type-list').hide();
-  });
+    $dropdown.find('.dropdown-options').hide();
+  });  
 
   $('#search-contact').on('input', debounce(function () {
     const searchQuery = $(this).val();
