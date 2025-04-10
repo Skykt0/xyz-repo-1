@@ -941,6 +941,12 @@ define([
           isValid = false;
         }
       }
+      if(selectedMessageType === 'LettersCardInsert'){
+        let isHtmlInputValid = validateInputField($(`.${selectedMessageType} .screen-3 .html-editor-front`));
+        if (!isHtmlInputValid) {
+          isValid = false;
+        }
+      }
     }
     return isValid;
   }
