@@ -1791,6 +1791,7 @@ define([
     const selectedValue = $(this).attr('data-id');
 
     const $dropdown = $(this).closest('.mapping-dropdown');
+    const $spacer = $(this).closest('.spacer');
   
     const $input = $dropdown.find('.input-field');
     const inputType = $input.hasClass('extra-service') ? 'extra-service' : 'envelope-type';
@@ -1804,7 +1805,7 @@ define([
     }
   
     if (inputType === 'extra-service') {
-      const $expressDelivery = $dropdown.find('.express-delivery-input');
+      const $expressDelivery = $spacer.find('.express-delivery-input');
       if (selectedValue === '') {
         $expressDelivery.prop('disabled', false);
         $expressDelivery.siblings('span').css('color', 'black');
