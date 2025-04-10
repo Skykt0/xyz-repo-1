@@ -1548,7 +1548,13 @@ define([
       if(isCartInsertEnabled){
         selectedCardInsertType = $('input[name="cardType"]:checked').val();
       }
-      if (selectedCardInsertType === 'singleSide') {
+      let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+      if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
+        selectedMessageType = 'trifold';
+      } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
+        selectedMessageType = 'LettersCardInsert';
+      }
+      if (selectedCardInsertType === 'singleSide' && !selectedMessageType.toLowerCase().includes('letter')) {
         populateDropdown('singleSideTemplate', sortedData);
       } else {
         populateDropdown('frontTemplate', sortedData);
