@@ -273,10 +273,14 @@ define([
           selectedMessageType = isCartInsertEnabled && selectedRadioValue === 'selfmailer' ? 'trifold'  : selectedRadioValue;
         }
 
-        if (isCartInsertEnabled) {
+        if (isCartInsertEnabled && selectedMessageType === 'selfmailer') {
           $('.trifold .doubleSide, .trifold .singleSide').hide();
           let selectedCardType = $('input[name="cardType"]:checked').val();
           $(`.trifold .${selectedCardType}`).show();
+        }
+
+        if (isCartInsertEnabled && selectedMessageType === 'Letters') {
+          $('.Letters').hide();
           $('.LettersWithCard').show();
         }
 
@@ -288,7 +292,6 @@ define([
 
         if(isCartInsertEnabled){
           let selectedCardInsertType = $('input[name="cardType"]:checked').val();
-          $('.LettersWithCard').show();
           if(selectedCardInsertType === 'singleSide'){
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).hide();
             $('.html-btn-card-front').text('Card Insert');
