@@ -315,6 +315,7 @@ define([
         }
         if(previewPayload.envelopeEnvironment !== currentEnabledEnvironmenet) {
           $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val('');
+          $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).attr('data-id', '');
         }
         fetchReturnEnvelope();
 
@@ -1779,13 +1780,13 @@ define([
     var isChecked = $(this).prop('checked');
     var mailingClass = $(this).closest('.spacer').find('.mailing-class');
     var extraService = $(this).closest('.spacer').find('.extra-service');
-    
+    let extraServiceColor = extraService.css('color');
     if (isChecked) {
       mailingClass.prop('disabled', true);
-      extraService.prop('disabled', true);
+      extraService.prop('disabled', true).css('color','lightgray');
     } else {
       mailingClass.prop('disabled', false);
-      extraService.prop('disabled', false);
+      extraService.prop('disabled', false).css('color',extraServiceColor);
     }
   });
 
@@ -1803,8 +1804,12 @@ define([
   
     if(selectedValue === '') {
       $('.input-field.extra-service').css('color','grey');
+      $('.express-delivery-input').prop('disabled',false);
+      $('.express-delivery-input').siblings('span').css('color','black');
     } else {
       $('.input-field.extra-service').css('color','black');
+      $('.express-delivery-input').prop('disabled',true);
+      $('.express-delivery-input').siblings('span').css('color','gray');
     }
 
     $('.input-field.extra-service')
