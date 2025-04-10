@@ -1905,6 +1905,14 @@ define([
     fetchTemplates($(this).val().trim());
   }, 300));
 
+  $(document).on('focus', '.template-input', function () {
+    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
+  });
+
+  $(document).on('input', '.template-input', debounce(function () {
+    fetchTemplates($(this).val().trim());
+  }, 300));
+
   $(document).on('focus', '.return-envelope-input', function () {
     $(this).closest('.return-envelope-dropdown-wrap').next('.dropdown-options').show();
   });
