@@ -932,7 +932,7 @@ define([
       } else {
         let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .frontTemplate`));
         let backTemplateValid;
-        if(selectedMessageType !== 'Letters' || selectedMessageType !== 'LettersCardInsert' ) {
+        if(selectedMessageType !== 'Letters' && selectedMessageType !== 'LettersCardInsert' ) {
           backTemplateValid = validateInputField($(`.${selectedMessageType} .screen-3 .backTemplate`));
         } else {
           backTemplateValid = true;
