@@ -1163,7 +1163,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 0.5rem;
 }
 
-.letter-pdf-fields, .letter-template-fields {
+.letter-pdf-fields, .letter-template-fields, .letter-card-insert-template-fields {
   display: flex;
   flex-direction: column;
   gap: 4rem;
@@ -1184,4 +1184,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .placeholder-style {
 	color: grey;
+}
+
+.letters-card-insert .screen-3 .spacer {
+  flex-direction: row;
+}
+
+.letters-card-insert .screen-3 .template-container {
+  width: 54%;
+}
+
+.letters-card-insert .screen-3 .template-container .input-box{
+  width: 46%;
+}
+
+.letters-card-insert .screen-3 .template-container .checkboxes-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1.75rem;
+}
+
+.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields {
+  gap: 2.5rem;
+}
+
+.letters-card-insert .screen-3 .html-editor {
+  margin-top: 0;
 }
