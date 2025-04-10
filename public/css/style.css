@@ -1157,7 +1157,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 0.5rem;
 }
 
-.letter-pdf-fields, .letter-template-fields {
+.letter-pdf-fields, .letter-template-fields, .letter-card-insert-template-fields {
   display: flex;
   flex-direction: column;
   gap: 4rem;
