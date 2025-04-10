@@ -1180,28 +1180,34 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	color: grey;
 }
 
-.letters-card-insert .screen-3 .spacer {
+.letters-card-insert .screen-3 .spacer,
+.letters-card-insert .screen-1 .spacer {
   flex-direction: row;
 }
 
-.letters-card-insert .screen-3 .template-container {
+.letters-card-insert .screen-3 .template-container,
+.letters-card-insert .screen-1 .template-container {
   width: 54%;
 }
 
-.letters-card-insert .screen-3 .template-container .input-box{
+.letters-card-insert .screen-3 .template-container .input-box,
+.letters-card-insert .screen-1 .template-container .input-box{
   width: 46%;
 }
 
-.letters-card-insert .screen-3 .template-container .checkboxes-container {
+.letters-card-insert .screen-3 .template-container .checkboxes-container,
+.letters-card-insert .screen-1 .template-container .checkboxes-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 1.75rem;
 }
 
-.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields {
+.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields,
+.letters-card-insert .screen-1 .template-container .letter-card-insert-template-fields {
   gap: 2.5rem;
 }
 
-.letters-card-insert .screen-3 .html-editor {
+.letters-card-insert .screen-3 .html-editor,
+.letters-card-insert .screen-1 .html-editor {
   margin-top: 0;
 }
