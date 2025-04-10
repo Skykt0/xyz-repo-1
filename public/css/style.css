@@ -788,7 +788,6 @@ input:checked + .test-to-live-slider::before {
 
 .error-msg.show {
 	display: block;
-	gap: 0.5rem;
 }
 
 .dropdown-wrap .error-msg {
