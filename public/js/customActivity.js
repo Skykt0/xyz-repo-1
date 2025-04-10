@@ -276,6 +276,11 @@ define([
         if (selectedRadio.length > 0) {
           let selectedRadioValue = selectedRadio.val().replace(/\s+/g, '');
           selectedMessageType = isCartInsertEnabled && selectedRadioValue === 'selfmailer' ? 'trifold'  : selectedRadioValue;
+          if(isCartInsertEnabled && selectedRadioValue === 'selfmailer') {
+            selectedMessageType = 'trifold';
+          } else if(isCartInsertEnabled && selectedRadioValue === 'Letters' ) {
+            selectedMessageType = 'LettersCardInsert';
+          }
         }
 
         if (isCartInsertEnabled) {
@@ -295,8 +300,7 @@ define([
           if(selectedCardInsertType === 'singleSide'){
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).hide();
             $('.html-btn-card-front').text('Card Insert');
-          }
-          else{
+          }else{
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).show();
             $('.html-btn-card-front').text('Card Inside');
           }
