@@ -186,6 +186,7 @@ body {
 	display: flex;
 	flex-direction: column;
   position: relative;
+  gap:0.5rem;
 }
 
 .screen-3 .mapping-dropdown {
