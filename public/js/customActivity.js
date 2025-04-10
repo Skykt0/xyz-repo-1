@@ -186,13 +186,15 @@ define([
         $(queryString).val(value);
         $(queryString).attr('data-id', postcardArguments.singleSideTemplateId);
         break;
-      case 'extraService':
+      case 'extraServiceName':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .extra-service';
         $(queryString).val(value);
+        $(queryString).attr('data-id', postcardArguments.extraService);
         break;
-      case 'envelopeType':
+      case 'envelopeTypeName':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .envelope-type';
         $(queryString).val(value);
+        $(queryString).attr('data-id', postcardArguments.envelopeType);
         break;
       case 'returnEnvelopeName':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .returnEnvelope';
@@ -951,7 +953,9 @@ define([
     }
 
     let extraService;
+    let extraServiceName;
     let envelopeType;
+    let envelopeTypeName;
     let returnEnvelope;
     let returnEnvelopeName;
     let colorInput;
@@ -961,7 +965,9 @@ define([
 
     if(selectedMessageType === 'Letters') {
       extraService = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).data('id');
+      extraServiceName = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).val();
       envelopeType = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).data('id');
+      envelopeTypeName = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).val();
       returnEnvelope = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).data('id');
       returnEnvelopeName = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val();
       colorInput = $(`.${selectedMessageType} .${selectedCreationType} .color-input`).is(':checked');
@@ -970,7 +976,9 @@ define([
       insertBlankPageInput = $(`.${selectedMessageType} .${selectedCreationType} .insert-blank-page-input`).is(':checked');
       
       previewPayload.extraService = extraService;
+      previewPayload.extraServiceName = extraServiceName;
       previewPayload.envelopeType = envelopeType;
+      previewPayload.envelopeTypeName = envelopeTypeName;
       previewPayload.returnEnvelope = returnEnvelope;
       previewPayload.returnEnvelopeName = returnEnvelopeName;
       previewPayload.colorInput = colorInput;
