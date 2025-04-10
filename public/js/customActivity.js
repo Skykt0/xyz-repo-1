@@ -1908,11 +1908,11 @@ define([
     fetchTemplates($(this).val().trim());
   }, 300));
 
-  $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input').on('focus', function () {
+  $(document).on('focus', '.return-envelope-input', function () {
     $(this).closest('.return-envelope-dropdown-wrap').next('.dropdown-options').show();
   });
 
-  $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input').on('input', debounce(function () {
+  $(document).on('input', '.return-envelope-input', debounce(function () {
     if ($(this).val().trim() === '') {
       $(this).attr('data-id', '');
     }
