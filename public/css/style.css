@@ -255,7 +255,7 @@ body {
 	transform: translateY(-50%) rotate(45deg);
 }
 
-.screen-3 .dropdown-options, #letterScreen .dropdown-options, #letterCardInsert .dropdown-options{
+.screen-3 .dropdown-options, #letterScreen .dropdown-options{
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -278,9 +278,7 @@ body {
 .screen-3 .dropdown-options div,
 .screen-3 .dropdown-options li,
 #letterScreen .dropdown-options div,
-#letterScreen .dropdown-options li,
-#letterCardInsert .dropdown-options div,
-#letterCardInsert .dropdown-options li {
+#letterScreen .dropdown-options li {
 	padding: 8px;
 	cursor: pointer;
 	list-style: none;
@@ -293,9 +291,7 @@ body {
 .screen-3 .dropdown-options div:hover,
 .screen-3 .dropdown-options li:hover,
 #letterScreen .dropdown-options div:hover,
-#letterScreen .dropdown-options li:hover,
-#letterCardInsert .dropdown-options div:hover,
-#letterCardInsert .dropdown-options li:hover  {
+#letterScreen .dropdown-options li:hover {
 	background: #f0f0f0;
 }
 
@@ -670,9 +666,7 @@ input:checked + .test-to-live-slider::before {
 }
 
 #letterScreen .pdf-container .input-fields .input-box,
-#letterScreen .template-container .existing-template-details .input-box,
-#letterCardInsert .pdf-container .input-fields .input-box,
-#letterCardInsert .template-container .existing-template-details .input-box {
+#letterScreen .template-container .existing-template-details .input-box {
   width: 31%;
 }
 
@@ -1142,8 +1136,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: block;
 }
 
-#letterScreen .html-creation-type .input-fields .input-box,
-#letterCardInsert .html-creation-type .input-fields .input-box {
+#letterScreen .html-creation-type .input-fields .input-box {
   width: 45%;
 }
 
@@ -1164,7 +1157,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 0.5rem;
 }
 
-.letter-pdf-fields, .letter-template-fields {
+.letter-pdf-fields, .letter-template-fields, .letter-card-insert-template-fields {
   display: flex;
   flex-direction: column;
   gap: 4rem;
@@ -1185,4 +1178,36 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .placeholder-style {
 	color: grey;
+}
+
+.letters-card-insert .screen-3 .spacer, 
+.letters-card-insert .screen-1 .spacer {
+  flex-direction: row;
+}
+
+.letters-card-insert .screen-3 .template-container, 
+.letters-card-insert .screen-1 .template-container {
+  width: 54%;
+}
+
+.letters-card-insert .screen-3 .template-container .input-box, 
+.letters-card-insert .screen-1 .template-container .input-box{
+  width: 46%;
+}
+
+.letters-card-insert .screen-3 .template-container .checkboxes-container, 
+.letters-card-insert .screen-1 .template-container .checkboxes-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1.75rem;
+}
+
+.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields, 
+.letters-card-insert .screen-1 .template-container .letter-card-insert-template-fields {
+  gap: 2.5rem;
+}
+
+.letters-card-insert .screen-3 .html-editor, 
+.letters-card-insert .screen-1 .html-editor {
+  margin-top: 0;
 }
