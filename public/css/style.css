@@ -186,7 +186,6 @@ body {
 	display: flex;
 	flex-direction: column;
   position: relative;
-  gap:0.5rem;
 }
 
 .screen-3 .mapping-dropdown {
@@ -789,6 +788,7 @@ input:checked + .test-to-live-slider::before {
 
 .error-msg.show {
 	display: block;
+	gap: 0.5rem;
 }
 
 .dropdown-wrap .error-msg {
