@@ -777,8 +777,12 @@ define([
     }
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-1 .description`));
+      let isMailingClassValid = validateInputField($(`.${selectedMessageType} .screen-1 .mailing-class`));
       
       if (!isDescriptionValid) {
+        isValid = false;
+      }
+      if (!isMailingClassValid) {
         isValid = false;
       }
       let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .html-editor .error-msg`);
