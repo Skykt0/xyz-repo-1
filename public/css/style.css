@@ -1007,7 +1007,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     position: relative;
 }
 
-.template-dropdown-wrap .dropdown-icon, .return-envelope-dropdown-wrap .dropdown-icon {
+.dropdown-icon {
   position: absolute;
   right: 4%;
   top: 9px;
