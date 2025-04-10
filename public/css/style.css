@@ -255,7 +255,7 @@ body {
 	transform: translateY(-50%) rotate(45deg);
 }
 
-.screen-3 .dropdown-options, #letterScreen .dropdown-options{
+.screen-3 .dropdown-options, #letterScreen .dropdown-options {
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -291,7 +291,7 @@ body {
 .screen-3 .dropdown-options div:hover,
 .screen-3 .dropdown-options li:hover,
 #letterScreen .dropdown-options div:hover,
-#letterScreen .dropdown-options li:hover {
+#letterScreen .dropdown-options li:hover  {
 	background: #f0f0f0;
 }
 
@@ -1180,34 +1180,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	color: grey;
 }
 
-.letters-card-insert .screen-3 .spacer, 
-.letters-card-insert .screen-1 .spacer {
+.letters-card-insert .screen-3 .spacer {
   flex-direction: row;
 }
 
-.letters-card-insert .screen-3 .template-container, 
-.letters-card-insert .screen-1 .template-container {
+.letters-card-insert .screen-3 .template-container {
   width: 54%;
 }
 
-.letters-card-insert .screen-3 .template-container .input-box, 
-.letters-card-insert .screen-1 .template-container .input-box{
+.letters-card-insert .screen-3 .template-container .input-box{
   width: 46%;
 }
 
-.letters-card-insert .screen-3 .template-container .checkboxes-container, 
-.letters-card-insert .screen-1 .template-container .checkboxes-container {
+.letters-card-insert .screen-3 .template-container .checkboxes-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 1.75rem;
 }
 
-.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields, 
-.letters-card-insert .screen-1 .template-container .letter-card-insert-template-fields {
+.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields {
   gap: 2.5rem;
 }
 
-.letters-card-insert .screen-3 .html-editor, 
-.letters-card-insert .screen-1 .html-editor {
+.letters-card-insert .screen-3 .html-editor {
   margin-top: 0;
 }
