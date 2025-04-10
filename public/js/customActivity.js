@@ -817,12 +817,14 @@ define([
       } else if(isCartInsertEnabled && selectedCardInsertType === 'singleSide') {
         cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
         cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .html-editor-front-card-insert`).data('btn-label');
-
+      
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '') {
           isValid = false;
           if (frontHtmlContent === '' && backHtmlContent === '' && cardfrontHtmlContent === '') {
             postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}.`).addClass('show');
-          } else {
+          } else if(frontHtmlContent === '' && backHtmlContent === ''){
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}.`).addClass('show');
+          }else {
             let missingFields = [];
             if (frontHtmlContent === '') {missingFields.push(frontHtmlBtnLabel);}
             if (backHtmlContent === '') {missingFields.push(backHtmlBtnLabel);}
