@@ -222,6 +222,7 @@ body {
 
 .screen-3 #search-contact,
 .screen-3 #front-template-input,
+.screen-3 #template-input,
 .screen-3 #back-template-input,
 .return-envelope-input {
     width: 100%;
