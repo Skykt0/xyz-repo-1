@@ -256,7 +256,7 @@ body {
 	transform: translateY(-50%) rotate(45deg);
 }
 
-.screen-3 .dropdown-options, #letterScreen .dropdown-options {
+.screen-3 .dropdown-options, #letterScreen, #letterCardInsertScreen .dropdown-options {
 	position: absolute;
 	top: 100%;
 	left: 0;
