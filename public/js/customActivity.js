@@ -1780,13 +1780,14 @@ define([
     var isChecked = $(this).prop('checked');
     var mailingClass = $(this).closest('.spacer').find('.mailing-class');
     var extraService = $(this).closest('.spacer').find('.extra-service');
-    let extraServiceColor = extraService.css('color');
+
     if (isChecked) {
       mailingClass.prop('disabled', true);
-      extraService.prop('disabled', true).css('color','lightgray');
+      extraService.prop('disabled', true).css('color','gray');
     } else {
       mailingClass.prop('disabled', false);
-      extraService.prop('disabled', false).css('color',extraServiceColor);
+      let color = extraService.data('id') === '' ? 'gray' : 'black' ;
+      extraService.prop('disabled', false).css('color',color);
     }
   });
 
