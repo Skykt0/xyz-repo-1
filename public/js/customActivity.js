@@ -315,8 +315,8 @@ define([
             $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('');
             $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('');
           }
-          fetchTemplates();
         }
+        fetchTemplates();
         if(previewPayload.envelopeEnvironment !== currentEnabledEnvironmenet) {
           $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val('');
           $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).attr('data-id', '');
