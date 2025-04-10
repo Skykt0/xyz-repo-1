@@ -1179,3 +1179,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .placeholder-style {
 	color: grey;
 }
+
+.letters-card-insert .screen-3 .spacer {
+  flex-direction: row;
+}
+
+.letters-card-insert .screen-3 .template-container {
+  width: 54%;
+}
+
+.letters-card-insert .screen-3 .template-container .checkboxes-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1.75rem;
+}
+
+.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields {
+  gap: 2.5rem;
+}
+
+.letters-card-insert .screen-3 .html-editior {
+  margin-top: 0;
+}
