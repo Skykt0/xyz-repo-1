@@ -1590,11 +1590,25 @@ define([
   function placeholderExtraService(selector) {
     $(selector).each(function () {
       const $select = $(this);
-  
-      $select.css('color', $select.val() === '' ? 'grey' : 'black');
-  
+
+      const updateColor = () => {
+        $select.toggleClass('placeholder-style', $select[0].selectedIndex === 0);
+      };
+
+      updateColor();
+
       $select.on('change', function () {
-        $(this).css('color', this.value === '' ? 'grey' : 'black');
+        updateColor();
+      });
+
+      $select.on('focus', function () {
+        if ($select[0].selectedIndex === 0) {
+          $select.removeClass('placeholder-style');
+        }
+      });
+
+      $select.on('blur', function () {
+        updateColor();
       });
     });
   }

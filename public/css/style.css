@@ -1175,3 +1175,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .envelope-type-list .dropdown-item:first-child  {
   color: grey;
 }
+
+.placeholder-style {
+	color: grey;
+}
