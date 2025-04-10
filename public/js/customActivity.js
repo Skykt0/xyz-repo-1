@@ -476,7 +476,11 @@ define([
     });
 
     let selectedMessageType = $('input[name="msgType"]:checked').val();
-    previewPayload.messageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
+    if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
+      selectedMessageType = 'trifold';
+    } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
+      selectedMessageType = 'LettersCardInsert';
+    }
     previewPayload.creationType = $('input[name=\'createType\']:checked').val();
     payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
     payload['arguments'].execute.inArguments[0]['MapDESchema']=MapDESchema;
@@ -718,7 +722,11 @@ define([
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
-    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
+    if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
+      selectedMessageType = 'trifold';
+    } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
+      selectedMessageType = 'LettersCardInsert';
+    }
     $(`.${selectedMessageType} .html-editor .html-btn-front`).click(function () {
       $(`.${selectedMessageType} .html-editor .btn-light`).removeClass('show');
       $(`.${selectedMessageType} .html-editor .html-area`).removeClass('show');
@@ -762,7 +770,11 @@ define([
       selectedCardInsertType = $('input[name="cardType"]:checked').val();
     }
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'Trifold'  : selectedMessageType;
+    if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
+      selectedMessageType = 'trifold';
+    } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
+      selectedMessageType = 'LettersCardInsert';
+    }
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-1 .description`));
       
@@ -948,7 +960,11 @@ define([
   function setPreviewPayload() {
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     let isCartInsertEnabled = $('#card-insert').prop('checked');
-    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
+    if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
+      selectedMessageType = 'trifold';
+    } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
+      selectedMessageType = 'LettersCardInsert';
+    }
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
     let selectedCardInsertType;
     let isTrifoldEnabled = selectedMessageType === 'trifold';
@@ -1106,7 +1122,11 @@ define([
     const baseUrl = POSTGRID_API_BASE_URL;
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
+    if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
+      selectedMessageType = 'trifold';
+    } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
+      selectedMessageType = 'LettersCardInsert';
+    }
     let isTrifoldEnabled = selectedMessageType === 'trifold';
     const selectedCardInsertType = $('input[name="cardType"]:checked').val();
     const url = selectedMessageType === 'selfmailer' || selectedMessageType === 'trifold' ? baseUrl + 'self_mailers' : baseUrl + selectedMessageType.toLowerCase();
@@ -1570,7 +1590,11 @@ define([
   function populateDropdown(templateName, templates) {
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-    selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
+    if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
+      selectedMessageType = 'trifold';
+    } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
+      selectedMessageType = 'LettersCardInsert';
+    }
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
     const $templateInput = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}`);
     const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}List`);
@@ -1953,7 +1977,11 @@ define([
     $(document).on('click', function (event) {
       let isCartInsertEnabled = $('#card-insert').prop('checked');
       let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-      selectedMessageType = isCartInsertEnabled && selectedMessageType === 'selfmailer' ? 'trifold'  : selectedMessageType;
+      if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
+        selectedMessageType = 'trifold';
+      } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
+        selectedMessageType = 'LettersCardInsert';
+      }
       let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
       const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact');
       const isClickInsideFront = $(event.target).closest('#frontTemplateList, #front-template-input, #letter-template-input').length > 0;
