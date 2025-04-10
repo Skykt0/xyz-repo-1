@@ -289,13 +289,6 @@ define([
           $(`.trifold .${selectedCardType}`).show();
         }
 
-        console.log(selectedMessageType)
-
-        if (isCartInsertEnabled && selectedMessageType === 'Letters') {
-          $('.Letters').hide();
-          $('.LettersWithCard').show();
-        }
-
         let isHtml = $('#htmlId').is(':checked');
 
         if(isHtml){
@@ -1597,7 +1590,6 @@ define([
     });
   }
 
-<<<<<<< HEAD
   function placeholderExtraService(selector) {
     $(selector).each(function () {
       const $select = $(this);
@@ -1624,8 +1616,7 @@ define([
     });
   }
   
-=======
->>>>>>> d69b96539a21a5276fb1dcaa4abe4f95e1cbdbb6
+
   function prepopulateToDeMapping(){
     $.each(previewDEMapOptions, function(key, value) {
       switch (key) {
@@ -1917,11 +1908,11 @@ define([
     fetchTemplates($(this).val().trim());
   }, 300));
 
-  $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input, .return-envelope-input').on('focus', function () {
+  $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input').on('focus', function () {
     $(this).closest('.return-envelope-dropdown-wrap').next('.dropdown-options').show();
   });
 
-  $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input, .return-envelope-input').on('input', debounce(function () {
+  $('#letter-template-return-envelope-input, #letter-pdf-return-envelope-input, #letter-html-return-envelope-input').on('input', debounce(function () {
     if ($(this).val().trim() === '') {
       $(this).attr('data-id', '');
     }
