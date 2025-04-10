@@ -955,12 +955,18 @@
                       </div>
                       <div class="input-box">
                         <label for="letter-pdf-extra-service" class="input-label">Extra Service</label>
-                        <select class="input-field extra-service" id="letter-pdf-extra-service" name="extraService">
-                            <option value="" selected>Select Extra Service</option>
-                            <option value="registered">Registered Mail</option>
-                            <option value="certified">Certified</option>
-                            <option value="certified_return_receipt">Certified With Return Reciept</option>
-                        </select>
+                        <div class="mapping-dropdown">
+                          <div class="extra-service-dropdown-wrap">
+                              <input type="text" id="letter-pdf-extra-service" class="input-field extra-service" placeholder="Select Extra Service"/>
+                              <i class="fa fa-angle-right dropdown-icon"></i>
+                          </div>
+                          <div id="extra-service-list" class="dropdown-options extra-service-list">
+                            <li class="dropdown-item" data-id="">Select Extra Service</li>
+                            <li class="dropdown-item" data-id="registered">Registered Mail</li>
+                            <li class="dropdown-item" data-id="certified">Certified</li>
+                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Reciept</li>
+                          </div>
+                        </div>
                       </div>
                       <div class="input-box">
                         <label for="letter-pdf-return-envelope-input" class="input-label">Return Envelope</label>
@@ -979,11 +985,17 @@
                       </div>
                       <div class="input-box">
                         <label for="letter-pdf-envelope-type" class="input-label">Envelope Type</label>
-                        <select class="input-field envelope-type" id="letter-pdf-envelope-type" name="envelopeType">
-                            <option value="" selected>Select Envelope Type</option>
-                            <option value="standard_double_window">Standard Double Window</option>
-                            <option value="flat">Flat Mailer</option>
-                        </select>
+                        <div class="mapping-dropdown">
+                          <div class="envelope-type-dropdown-wrap">
+                              <input type="text" id="letter-pdf-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type"/>
+                              <i class="fa fa-angle-right dropdown-icon"></i>
+                          </div>
+                          <div id="envelope-type-list" class="dropdown-options envelope-type-list">
+                            <li class="dropdown-item" data-id="">Select Envelope Type</li>
+                            <li class="dropdown-item" data-id="standard_double_window">Standard Double Window</li>
+                            <li class="dropdown-item" data-id="flat">Flat Mailer</li>
+                          </div>
+                        </div>
                       </div>
                       <div class="input-box">
                           <label for="letter-pdf-pdfLink" class="input-label">PDF URL <span class="asterisk">*</span></label>
@@ -1061,12 +1073,18 @@
                       </div>
                       <div class="input-box">
                         <label for="letter-template-extra-service" class="input-label">Extra Service</label>
-                        <select class="input-field extra-service" id="letter-template-extra-service" name="extraService">
-                            <option value="" selected>Select Extra Service</option>
-                            <option value="registered">Registered Mail</option>
-                            <option value="certified">Certified</option>
-                            <option value="certified_return_receipt">Certified With Return Reciept</option>
-                        </select>
+                        <div class="mapping-dropdown">
+                          <div class="extra-service-dropdown-wrap">
+                              <input type="text" id="letter-template-extra-service" class="input-field extra-service" placeholder="Select Extra Service"/>
+                              <i class="fa fa-angle-right dropdown-icon"></i>
+                          </div>
+                          <div id="extra-service-list" class="dropdown-options extra-service-list">
+                            <li class="dropdown-item" data-id="">Select Extra Service</li>
+                            <li class="dropdown-item" data-id="registered">Registered Mail</li>
+                            <li class="dropdown-item" data-id="certified">Certified</li>
+                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Reciept</li>
+                          </div>
+                        </div>
                       </div>
                       <div class="input-box">
                         <label for="letter-template-return-envelope-input" class="input-label">Return Envelope</label>
@@ -1085,11 +1103,17 @@
                       </div>
                       <div class="input-box">
                         <label for="letter-template-envelope-type" class="input-label">Envelope Type</label>
-                        <select class="input-field envelope-type" id="letter-template-envelope-type" name="envelopeType">
-                            <option value="" selected>Select Envelope Type</option>
-                            <option value="standard_double_window">Standard Double Window</option>
-                            <option value="flat">Flat Mailer</option>
-                        </select>
+                        <div class="mapping-dropdown">
+                          <div class="envelope-type-dropdown-wrap">
+                              <input type="text" id="letter-template-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type"/>
+                              <i class="fa fa-angle-right dropdown-icon"></i>
+                          </div>
+                          <div id="envelope-type-list" class="dropdown-options envelope-type-list">
+                            <li class="dropdown-item" data-id="">Select Envelope Type</li>
+                            <li class="dropdown-item" data-id="standard_double_window">Standard Double Window</li>
+                            <li class="dropdown-item" data-id="flat">Flat Mailer</li>
+                          </div>
+                        </div>
                       </div>
                       <div class="input-box">
                         <label for="letter-template-input" class="input-label">Template <span class="asterisk">*</span></label>
