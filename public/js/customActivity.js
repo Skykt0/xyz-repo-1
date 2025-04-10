@@ -1963,13 +1963,13 @@ define([
       }
 
       if (!$(event.target).closest('.extra-service-dropdown-wrap').length) {
-        if($(event.target).closest('.extra-service-list').css('display') === 'block') {
-          $(event.target).closest('.extra-service-list').css('display','none');
+        if($(`.${selectedMessageType} .${selectedCreationType} .extra-service-list`).css('display') === 'block') {
+          $(`.${selectedMessageType} .${selectedCreationType} .extra-service-list`).css('display','none');
         }
       }
       if (!$(event.target).closest('.envelope-type-dropdown-wrap').length) {
-        if($(event.target).closest('.envelope-type-list').css('display') === 'block') {
-          $(event.target).closest('.envelope-type-list').css('display','none');
+        if($(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list`).css('display') === 'block') {
+          $(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list`).css('display','none');
         }
       }
     });
