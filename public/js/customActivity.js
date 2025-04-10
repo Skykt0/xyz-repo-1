@@ -838,8 +838,12 @@ define([
           postcardHtmlEditorErrorMsg.removeClass('show');
         }
       } else if(selectedMessageType === 'Letters') { 
+        console.log("Inaide Letters----------------");
+        
         if(frontHtmlContent === '') {
           isValid = false;
+          console.log("Showing the errors-----------");
+          
           postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}.`).addClass('show');
         } else { 
           postcardHtmlEditorErrorMsg.removeClass('show');
