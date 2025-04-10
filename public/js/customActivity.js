@@ -423,7 +423,6 @@ define([
         text: 'next',
         visible: true,
       });
-      placeholderExtraService('.extra-service, .envelope-type');
       break;
     case 'step4':
       $('#step4').show();
@@ -1584,32 +1583,6 @@ define([
           $list.hide();
         });
       $list.append($listItem);
-    });
-  }
-
-  function placeholderExtraService(selector) {
-    $(selector).each(function () {
-      const $select = $(this);
-
-      const updateColor = () => {
-        $select.toggleClass('placeholder-style', $select[0].selectedIndex === 0);
-      };
-
-      updateColor();
-
-      $select.on('change', function () {
-        updateColor();
-      });
-
-      $select.on('focus', function () {
-        if ($select[0].selectedIndex === 0) {
-          $select.removeClass('placeholder-style');
-        }
-      });
-
-      $select.on('blur', function () {
-        updateColor();
-      });
     });
   }
 
