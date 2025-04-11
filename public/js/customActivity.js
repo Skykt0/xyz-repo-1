@@ -798,18 +798,14 @@ define([
           isValid = false;
          
           if (cardfrontHtmlContent === '' && cardbackHtmlContent === '' && frontHtmlContent === '' && backHtmlContent === '') {
-            console.log(frontHtmlBtnLabel);
-          console.log(backHtmlBtnLabel);
-          console.log(cardfrontHtmlBtnLabel);
-          console.log(cardbackHtmlBtnLabel);
             postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}, ${cardbackHtmlBtnLabel}.`).addClass('show');
           } else {
             let missingFields = [];
-            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
-            if (cardbackHtmlContent === '') {missingFields.push(cardbackHtmlBtnLabel);}
             if (frontHtmlContent === '') {missingFields.push(frontHtmlBtnLabel);}
             if (backHtmlContent === '') {missingFields.push(backHtmlBtnLabel);}
-
+            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
+            if (cardbackHtmlContent === '') {missingFields.push(cardbackHtmlBtnLabel);}
+    
             if (missingFields.length > 0) {
               postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${missingFields.join(', ')}.`).addClass('show');
             }
