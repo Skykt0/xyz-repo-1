@@ -676,7 +676,9 @@ input:checked + .test-to-live-slider::before {
 }
 
 #letterScreen .pdf-container .input-fields .input-box,
-#letterScreen .template-container .existing-template-details .input-box {
+#letterScreen .template-container .existing-template-details .input-box,
+#letterCardInsertScreen .screen-1 .pdf-container .input-fields .input-box,
+#letterCardInsertScreen .screen-1 .template-container .existing-template-details .input-box {
   width: 31%;
 }
 
@@ -1146,7 +1148,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: block;
 }
 
-#letterScreen .html-creation-type .input-fields .input-box {
+#letterScreen .html-creation-type .input-fields .input-box,
+#letterCardInsertScreen .screen-1 .html-creation-type .input-fields .input-box {
   width: 45%;
 }
 
@@ -1198,7 +1201,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 54%;
 }
 
-.letters-card-insert .screen-3 .template-container .input-box{
+.letters-card-insert .screen-3 .template-container .input-box {
   width: 46%;
 }
 
@@ -1208,10 +1211,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   row-gap: 1.75rem;
 }
 
-.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields {
+.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields{
   gap: 2.5rem;
 }
 
-.letters-card-insert .screen-3 .html-editor {
+.letters-card-insert .html-editor {
   margin-top: 0;
 }
