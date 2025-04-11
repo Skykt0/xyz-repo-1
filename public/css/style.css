@@ -261,9 +261,7 @@ body {
 	transform: translateY(-50%) rotate(45deg);
 }
 
-.screen-3 .dropdown-options, 
-#letterScreen .dropdown-options,
-.screen-1 .dropdown-options {
+.screen-3 .dropdown-options, #letterScreen .dropdown-options, #letterCardInsert .dropdown-options, .screen-1 .dropdown-options {
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -286,9 +284,11 @@ body {
 .screen-3 .dropdown-options div,
 .screen-3 .dropdown-options li,
 #letterScreen .dropdown-options div,
-.screen-1 .dropdown-options li,
+#letterScreen .dropdown-options li,
+#letterCardInsert .dropdown-options div,
+#letterCardInsert .dropdown-options li,
 .screen-1 .dropdown-options div,
-#letterScreen .dropdown-options li {
+.screen-1 .dropdown-options li {
 	padding: 8px;
 	cursor: pointer;
 	list-style: none;
@@ -300,10 +300,12 @@ body {
 
 .screen-3 .dropdown-options div:hover,
 .screen-3 .dropdown-options li:hover,
-#letterScreen .dropdown-options div:hover,
-.screen-1 .dropdown-options li:hover,
 .screen-1 .dropdown-options div:hover,
-#letterScreen .dropdown-options li:hover  {
+.screen-1 .dropdown-options li:hover,
+#letterScreen .dropdown-options div:hover,
+#letterScreen .dropdown-options li:hover,
+#letterCardInsert .dropdown-options div:hover,
+#letterCardInsert .dropdown-options li:hover  {
 	background: #f0f0f0;
 }
 
@@ -679,8 +681,10 @@ input:checked + .test-to-live-slider::before {
 
 #letterScreen .pdf-container .input-fields .input-box,
 #letterScreen .template-container .existing-template-details .input-box,
-#letterCardInsertScreen .screen-1 .pdf-container .input-fields .input-box,
-#letterCardInsertScreen .screen-1 .template-container .existing-template-details .input-box {
+#letterCardInsert .pdf-container .input-fields .input-box,
+#letterCardInsert .template-container .existing-template-details .input-box,
+.screen-1 .pdf-container .input-fields .input-box,
+.screen-1 .template-container .existing-template-details .input-box {
   width: 31%;
 }
 
@@ -1156,7 +1160,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 #letterScreen .html-creation-type .input-fields .input-box,
-#letterCardInsertScreen .screen-1 .html-creation-type .input-fields .input-box {
+#letterCardInsert .html-creation-type .input-fields .input-box,
+.screen-1 .html-creation-type .input-fields .input-box {
   width: 45%;
 }
 
