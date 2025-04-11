@@ -751,8 +751,8 @@ input:checked + .test-to-live-slider::before {
 }
 
 .html-btn-card-front{
-	left: 11rem;
-	top: 1.5rem;
+	left: 16rem;
+	top: 1.25rem;
 }
 
 .btn.btn-light.html-btn-front:hover,
