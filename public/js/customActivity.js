@@ -796,7 +796,11 @@ define([
         cardbackHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-back-card-insert`).data('btn-label');  
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '' || cardbackHtmlContent === '') {
           isValid = false;
-
+          console.log(frontHtmlBtnLabel);
+          console.log(backHtmlBtnLabel);
+          console.log(cardfrontHtmlBtnLabel);
+          console.log(cardbackHtmlBtnLabel);
+         
           if (cardfrontHtmlContent === '' && cardbackHtmlContent === '' && frontHtmlContent === '' && backHtmlContent === '') {
             postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}, ${cardbackHtmlBtnLabel}.`).addClass('show');
           } else {
