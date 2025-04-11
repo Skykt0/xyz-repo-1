@@ -788,7 +788,8 @@ define([
       let backHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-back`).val() === undefined ? undefined : $(`.${selectedMessageType} .screen-1 .html-editor-back`).val().trim();
       let backHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-back`).val() === undefined ? undefined : $(`.${selectedMessageType} .screen-1 .html-editor-back`).data('btn-label');
       let cardfrontHtmlContent, cardfrontHtmlBtnLabel, cardbackHtmlContent, cardbackHtmlBtnLabel;
-
+      console.log(isCartInsertEnabled);
+      console.log(selectedCardInsertType);
       if(isCartInsertEnabled && selectedCardInsertType === 'doubleSide') {
         cardfrontHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val().trim();
         cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).data('btn-label');
@@ -817,7 +818,7 @@ define([
       } else if(isCartInsertEnabled && selectedCardInsertType === 'singleSide') {
         cardfrontHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val().trim();
         cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).data('btn-label');
-        console.log("Singleside");
+      
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '') {
           isValid = false;
           if (frontHtmlContent === '' && backHtmlContent === '') {
