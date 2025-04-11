@@ -175,7 +175,7 @@ body {
 	display: inline-block;
 }
 
-.screen-3 .error-message {
+.screen-3 .screen-2 .error-message {
 	color: red;
 	font-size: 16px;
 	display: block;
