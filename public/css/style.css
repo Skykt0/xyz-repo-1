@@ -751,7 +751,7 @@ input:checked + .test-to-live-slider::before {
 }
 
 .html-btn-card-front{
-	left: 16rem;
+	left: 14rem;
 	top: 1.25rem;
 }
 
@@ -1213,8 +1213,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields{
   gap: 2.5rem;
-}
-
-.letters-card-insert .html-editor {
-  margin-top: 0;
 }
