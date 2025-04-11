@@ -302,9 +302,7 @@ define([
             $('.html-btn-card-front').text('Card Insert');
           }else{
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).show();
-            let label = $(`.${selectedMessageType} .html-btn-card-front`).data('btn-label');
-            $('.html-btn-card-front').text(label);
-
+            $('.html-btn-card-front').text('Card Inside');
           }
         }
 
@@ -824,7 +822,6 @@ define([
           isValid = false;
           if (frontHtmlContent === '' && backHtmlContent === '' && cardfrontHtmlContent === '') {
             postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}.`).addClass('show');
-            $('#letterCardInsertScreen .html-editor-front-card-insert').text('');
           } else {
             let missingFields = [];
             if (frontHtmlContent === '') {missingFields.push(frontHtmlBtnLabel);}
