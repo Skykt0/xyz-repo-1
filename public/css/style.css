@@ -261,7 +261,9 @@ body {
 	transform: translateY(-50%) rotate(45deg);
 }
 
-.screen-3 .dropdown-options, #letterScreen .dropdown-options, #letterCardInsertScreen .dropdown-options {
+.screen-3 .dropdown-options, 
+#letterScreen .dropdown-options,
+.screen-1 .dropdown-options {
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -284,8 +286,8 @@ body {
 .screen-3 .dropdown-options div,
 .screen-3 .dropdown-options li,
 #letterScreen .dropdown-options div,
-#letterCardInsertScreen .dropdown-options div,
-#letterCardInsertScreen .dropdown-options li,
+.screen-1 .dropdown-options li,
+.screen-1 .dropdown-options div,
 #letterScreen .dropdown-options li {
 	padding: 8px;
 	cursor: pointer;
@@ -299,8 +301,8 @@ body {
 .screen-3 .dropdown-options div:hover,
 .screen-3 .dropdown-options li:hover,
 #letterScreen .dropdown-options div:hover,
-#letterCardInsertScreen .dropdown-options div:hover,
-#letterCardInsertScreen .dropdown-options li:hover ,
+.screen-1 .dropdown-options li:hover,
+.screen-1 .dropdown-options div:hover,
 #letterScreen .dropdown-options li:hover  {
 	background: #f0f0f0;
 }
@@ -753,6 +755,11 @@ input:checked + .test-to-live-slider::before {
 .html-btn-back {
 	left: 6rem;
 	top: 1.25rem;
+}
+
+.html-btn-card-front{
+	left: 11rem;
+	top: 1.5rem;
 }
 
 .btn.btn-light.html-btn-front:hover,
