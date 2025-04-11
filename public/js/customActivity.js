@@ -302,7 +302,9 @@ define([
             $('.html-btn-card-front').text('Card Insert');
           }else{
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).show();
-            $('.html-btn-card-front').text('Card Inside');
+            let label = $(`.${selectedMessageType} .html-btn-card-front`).data('btn-label');
+            $('.html-btn-card-front').text(label);
+
           }
         }
 
