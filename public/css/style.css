@@ -63,6 +63,10 @@ body {
 	font-size: 16px;
 }
 
+.screen-2 .input-label-radio {
+	font-size: 16px;
+	margin-bottom: 10px;
+  }
 .screen-3 .input-label-radio {
   font-size: 16px;
   margin-bottom: 10px;
