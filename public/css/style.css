@@ -750,11 +750,6 @@ input:checked + .test-to-live-slider::before {
 	top: 1.25rem;
 }
 
-.html-btn-card-front{
-	left: 15.25rem;
-	top: 1.25rem;
-}
-
 .btn.btn-light.html-btn-front:hover,
 .btn.btn-light.html-btn-back:hover, .btn.btn-light.html-btn-card-front:hover, .btn.btn-light.html-btn-card-back:hover {
 	background: #bfbfbf;
