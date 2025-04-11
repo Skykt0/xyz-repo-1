@@ -299,10 +299,10 @@ define([
           let selectedCardInsertType = $('input[name="cardType"]:checked').val();
           if(selectedCardInsertType === 'singleSide'){
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).hide();
-            $('.html-btn-card-front').text('Card Insert');
+            $('.trifold .html-btn-card-front').text('Card Insert');
           }else{
             $(`.${selectedMessageType} .html-editor .singleSided-hide`).show();
-            $('.html-btn-card-front').text('Card Inside');
+            $('.trifold .html-btn-card-front').text('Card Inside');            
           }
         }
 
@@ -794,19 +794,18 @@ define([
         cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).data('btn-label');
         cardbackHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-back-card-insert`).val().trim();
         cardbackHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-back-card-insert`).data('btn-label');  
-
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '' || cardbackHtmlContent === '') {
           isValid = false;
-
+         
           if (cardfrontHtmlContent === '' && cardbackHtmlContent === '' && frontHtmlContent === '' && backHtmlContent === '') {
             postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}, ${cardbackHtmlBtnLabel}.`).addClass('show');
           } else {
             let missingFields = [];
-            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
-            if (cardbackHtmlContent === '') {missingFields.push(cardbackHtmlBtnLabel);}
             if (frontHtmlContent === '') {missingFields.push(frontHtmlBtnLabel);}
             if (backHtmlContent === '') {missingFields.push(backHtmlBtnLabel);}
-
+            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
+            if (cardbackHtmlContent === '') {missingFields.push(cardbackHtmlBtnLabel);}
+    
             if (missingFields.length > 0) {
               postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${missingFields.join(', ')}.`).addClass('show');
             }
@@ -817,7 +816,7 @@ define([
       } else if(isCartInsertEnabled && selectedCardInsertType === 'singleSide') {
         cardfrontHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val().trim();
         cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).data('btn-label');
-
+      
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '') {
           isValid = false;
           if (frontHtmlContent === '' && backHtmlContent === '' && cardfrontHtmlContent === '') {
