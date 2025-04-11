@@ -788,14 +788,12 @@ define([
       let backHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-back`).val() === undefined ? undefined : $(`.${selectedMessageType} .screen-1 .html-editor-back`).val().trim();
       let backHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-back`).val() === undefined ? undefined : $(`.${selectedMessageType} .screen-1 .html-editor-back`).data('btn-label');
       let cardfrontHtmlContent, cardfrontHtmlBtnLabel, cardbackHtmlContent, cardbackHtmlBtnLabel;
-      console.log(isCartInsertEnabled);
-      console.log(selectedCardInsertType);
+
       if(isCartInsertEnabled && selectedCardInsertType === 'doubleSide') {
         cardfrontHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val().trim();
         cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).data('btn-label');
         cardbackHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-back-card-insert`).val().trim();
         cardbackHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-back-card-insert`).data('btn-label');  
-        console.log("Doubleside");
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '' || cardbackHtmlContent === '') {
           isValid = false;
 
