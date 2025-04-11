@@ -801,8 +801,8 @@ define([
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '' || cardbackHtmlContent === '') {
           isValid = false;
 
-          if (cardfrontHtmlContent === '' && cardbackHtmlContent === '') {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}.`).addClass('show');
+          if (cardfrontHtmlContent === '' && cardbackHtmlContent === '' && frontHtmlContent === '' && backHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}, ${cardbackHtmlBtnLabel}.`).addClass('show');
           } else {
             let missingFields = [];
             if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
@@ -823,8 +823,8 @@ define([
       
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '') {
           isValid = false;
-          if (frontHtmlContent === '' && backHtmlContent === '') {
-            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}.`).addClass('show');
+          if (frontHtmlContent === '' && backHtmlContent === '' && cardfrontHtmlContent === '') {
+            postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}.`).addClass('show');
           } else {
             let missingFields = [];
             if (frontHtmlContent === '') {missingFields.push(frontHtmlBtnLabel);}
