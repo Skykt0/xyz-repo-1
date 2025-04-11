@@ -315,8 +315,8 @@ define([
             $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('');
             $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('');
           }
-          fetchTemplates();
         }
+        fetchTemplates();
         if(previewPayload.envelopeEnvironment !== currentEnabledEnvironmenet) {
           $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val('');
           $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).attr('data-id', '');
@@ -870,10 +870,11 @@ define([
     if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       const pdfLinkElement = $(`.${selectedMessageType} .screen-2 .pdfLink`);
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
+      let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-2 .frontTemplate`));
       pdfLinkElement.siblings('.error-msg').text('Please enter required field');
       let isPdfLinkValid = validateInputField(pdfLinkElement);
       
-      if (!isDescriptionValid || !isPdfLinkValid) {
+      if (!isDescriptionValid || !isPdfLinkValid || !frontTemplateValid) {
         isValid = false;
       }
   

@@ -35,6 +35,7 @@ body {
 	border: 3px solid lightgray;
 	border-radius: 4px;
 	height: 32px;
+	width: 100%;
 	font-size: 16px;
 	box-sizing: border-box;
 }
@@ -62,6 +63,10 @@ body {
 	font-size: 16px;
 }
 
+.screen-2 .input-label-radio {
+	font-size: 16px;
+	margin-bottom: 10px;
+  }
 .screen-3 .input-label-radio {
   font-size: 16px;
   margin-bottom: 10px;
@@ -170,7 +175,7 @@ body {
 	display: inline-block;
 }
 
-.screen-3 .error-message {
+.screen-3 .screen-2 .error-message {
 	color: red;
 	font-size: 16px;
 	display: block;
@@ -222,6 +227,7 @@ body {
 
 .screen-3 #search-contact,
 .screen-3 #front-template-input,
+.screen-3 #template-input,
 .screen-3 #back-template-input,
 .return-envelope-input {
     width: 100%;
@@ -255,8 +261,9 @@ body {
 	transform: translateY(-50%) rotate(45deg);
 }
 
-.screen-3 .dropdown-options, #letterScreen .dropdown-options, 
-#letterCardInsertScreen .screen-1 .dropdown-options {
+.screen-3 .dropdown-options, 
+#letterScreen .dropdown-options,
+.screen-1 .dropdown-options {
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -279,9 +286,9 @@ body {
 .screen-3 .dropdown-options div,
 .screen-3 .dropdown-options li,
 #letterScreen .dropdown-options div,
-#letterScreen .dropdown-options li,
-#letterCardInsertScreen .screen-1 .dropdown-options div,
-#letterCardInsertScreen .screen-1 .dropdown-options li {
+.screen-1 .dropdown-options li,
+.screen-1 .dropdown-options div,
+#letterScreen .dropdown-options li {
 	padding: 8px;
 	cursor: pointer;
 	list-style: none;
@@ -294,9 +301,9 @@ body {
 .screen-3 .dropdown-options div:hover,
 .screen-3 .dropdown-options li:hover,
 #letterScreen .dropdown-options div:hover,
-#letterScreen .dropdown-options li:hover,
-#letterCardInsertScreen .screen-1 .dropdown-options div:hover,
-#letterCardInsertScreen .screen-1 .dropdown-options li:hover  {
+.screen-1 .dropdown-options li:hover,
+.screen-1 .dropdown-options div:hover,
+#letterScreen .dropdown-options li:hover  {
 	background: #f0f0f0;
 }
 
@@ -748,6 +755,11 @@ input:checked + .test-to-live-slider::before {
 .html-btn-back {
 	left: 6rem;
 	top: 1.25rem;
+}
+
+.html-btn-card-front{
+	left: 11rem;
+	top: 1.5rem;
 }
 
 .btn.btn-light.html-btn-front:hover,
