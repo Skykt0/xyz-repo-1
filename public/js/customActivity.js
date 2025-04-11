@@ -824,6 +824,7 @@ define([
           isValid = false;
           if (frontHtmlContent === '' && backHtmlContent === '' && cardfrontHtmlContent === '') {
             postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}.`).addClass('show');
+            $('#letterCardInsertScreen .html-editor-front-card-insert').text('');
           } else {
             let missingFields = [];
             if (frontHtmlContent === '') {missingFields.push(frontHtmlBtnLabel);}
