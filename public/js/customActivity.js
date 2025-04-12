@@ -1185,11 +1185,11 @@ define([
         'metadata[company]': 'PostGrid'
       });
 
-      if(messageType === 'Postcards'){
+      if(selectedMessageType === 'Postcards'){
         data.append('frontHTML', previewPayload.frontHtmlContent);
         data.append('backHTML', previewPayload.backHtmlContent);
         data.append('size', previewPayload.size);
-      } else if(messageType === 'selfmailer'){
+      } else if(selectedMessageType === 'selfmailer'){
         data.append('insideHTML', previewPayload.frontHtmlContent);
         data.append('outsideHTML', previewPayload.backHtmlContent);
         data.append('size', previewPayload.size);
@@ -1206,7 +1206,7 @@ define([
           data.append('adhesiveInsert[size]', previewPayload.cardSize);
           data.append('adhesiveInsert[singleSided][html]', previewPayload.cardfrontHtmlContent);
         }
-      } else if(selectedMessageType === 'Letters'){
+      } else if(selectedMessageType === 'Letters' || selectedMessageType === 'LettersCardInsert'){
         data.append('html', previewPayload.frontHtmlContent);
         setLetterPreviewPayload(data, previewPayload);
       }
