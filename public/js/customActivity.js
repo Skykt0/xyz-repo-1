@@ -814,7 +814,7 @@ define([
           postcardHtmlEditorErrorMsg.removeClass('show');
         }        
       } else if(isCartInsertEnabled && selectedCardInsertType === 'singleSide') {
-        let cardfrontHtmlElement = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val();
+        let cardfrontHtmlElement = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`);
         cardfrontHtmlContent = cardfrontHtmlElement.val() === undefined ? undefined :cardfrontHtmlElement.val().trim();
         cardfrontHtmlBtnLabel = cardfrontHtmlElement.val() === undefined ? undefined :cardfrontHtmlElement.data('btn-label');
 
