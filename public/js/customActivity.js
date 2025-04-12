@@ -726,29 +726,29 @@ define([
     } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
       selectedMessageType = 'LettersCardInsert';
     }
-    $(`.${selectedMessageType} .html-editor .html-btn-front`).click(function () {
-      $(`.${selectedMessageType} .html-editor .btn-light`).removeClass('show');
-      $(`.${selectedMessageType} .html-editor .html-area`).removeClass('show');
+    $(`.${selectedMessageType} .${selectedCreationType} .html-editor .html-btn-front`).click(function () {
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor .btn-light`).removeClass('show');
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor .html-area`).removeClass('show');
       $(this).addClass('show');
-      $(`.${selectedMessageType} .html-editor-front`).addClass('show');
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front`).addClass('show');
     });
-    $(`.${selectedMessageType} .html-editor .html-btn-back`).click(function () {  
-      $(`.${selectedMessageType} .html-editor .btn-light`).removeClass('show');
-      $(`.${selectedMessageType} .html-editor .html-area`).removeClass('show');
+    $(`.${selectedMessageType} .${selectedCreationType} .html-editor .html-btn-back`).click(function () {  
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor .btn-light`).removeClass('show');
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor .html-area`).removeClass('show');
       $(this).addClass('show');
-      $(`.${selectedMessageType} .html-editor-back`).addClass('show');
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back`).addClass('show');
     });
-    $(`.${selectedMessageType} .html-editor .html-btn-card-front`).click(function () {  
-      $(`.${selectedMessageType} .html-editor .btn-light`).removeClass('show');
-      $(`.${selectedMessageType} .html-editor .html-area`).removeClass('show');
+    $(`.${selectedMessageType} .${selectedCreationType} .html-editor .html-btn-card-front`).click(function () {  
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor .btn-light`).removeClass('show');
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor .html-area`).removeClass('show');
       $(this).addClass('show');
-      $(`.${selectedMessageType} .html-editor-front-card-insert`).addClass('show');
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).addClass('show');
     });
-    $(`.${selectedMessageType} .html-editor .html-btn-card-back`).click(function () {  
-      $(`.${selectedMessageType} .html-editor .btn-light`).removeClass('show');
-      $(`.${selectedMessageType} .html-editor .html-area`).removeClass('show');
+    $(`.${selectedMessageType} .${selectedCreationType} .html-editor .html-btn-card-back`).click(function () {  
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor .btn-light`).removeClass('show');
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor .html-area`).removeClass('show');
       $(this).addClass('show');
-      $(`.${selectedMessageType} .html-editor-back-card-insert`).addClass('show');
+      $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).addClass('show');
     });
 
     $('input[name="cardType"]').change(function() {
