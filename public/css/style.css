@@ -1224,8 +1224,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .dropdown-icon-angle-wrap {
   position: absolute;
-  width: 8.25%;
-  height: 66%;
+  width: 16px;
+  height: 22px;
   right: 5px;
   top: 5px;
   background: white;
