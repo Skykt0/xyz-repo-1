@@ -1027,8 +1027,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .dropdown-icon {
   position: absolute;
-  right: 4%;
-  top: 9px;
+  right: 4px;
+  top: 3px;
   transform: rotate(90deg);
   pointer-events: none;
   font-weight: bold;
@@ -1222,6 +1222,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 2.5rem;
 }
 
-.letters-card-insert .html-editor {
-  margin-top: 0;
+.dropdown-icon-angle-wrap {
+  position: absolute;
+  width: 8%;
+  height: 66%;
+  right: 6px;
+  top: 5px;
+  background: white;
 }
+
+
