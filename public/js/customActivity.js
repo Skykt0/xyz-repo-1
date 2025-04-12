@@ -41,6 +41,7 @@ define([
     connection.trigger('requestEndpoints');
     connection.trigger('ready');
     $('#card-insert-type').addClass('hidden');
+    $('.card-insert-creation-type-wrapper').addClass('hidden');
   }
   
   connection.on('initActivity', initialize);
@@ -162,6 +163,7 @@ define([
         if(value){
           $('#card-insert').prop('checked', true);
           $('#card-insert-type').removeClass('hidden');
+          $('.card-insert-creation-type-wrapper').removeClass('hidden');
           $('input[name="cardType"][value=\'' + value + '\']').prop('checked', true);
         }
         break;
@@ -703,6 +705,7 @@ define([
     $('#card-insert').change(function () {
       if (this.checked) {
         $('#card-insert-type').removeClass('hidden');
+        $('.card-insert-creation-type-wrapper').removeClass('hidden');
         let selectedMessageType = $('input[name="msgType"]:checked').val();
         if(selectedMessageType === 'selfmailer') {
           $('#extTempId').css('display','none');
@@ -711,6 +714,7 @@ define([
         }
       } else {
         $('#card-insert-type').addClass('hidden');
+        $('.card-insert-creation-type-wrapper').addClass('hidden');
         $('#extTempId').css('display','block');
         $('label[for="extTempId"]').css('display','block');
       }
