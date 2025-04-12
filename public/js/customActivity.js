@@ -814,8 +814,9 @@ define([
           postcardHtmlEditorErrorMsg.removeClass('show');
         }        
       } else if(isCartInsertEnabled && selectedCardInsertType === 'singleSide') {
-        cardfrontHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val().trim();
-        cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).data('btn-label');
+        let cardfrontHtmlElement = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val();
+        cardfrontHtmlContent = cardfrontHtmlElement.val() === undefined ? undefined :cardfrontHtmlElement.val().trim();
+        cardfrontHtmlBtnLabel = cardfrontHtmlElement.val() === undefined ? undefined :cardfrontHtmlElement.data('btn-label');
 
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '') {
           isValid = false;
