@@ -994,7 +994,7 @@ define([
     let doubleSidedInput;
     let insertBlankPageInput;
 
-    if(selectedMessageType === 'Letters') {
+    if(selectedMessageType === 'Letters' || selectedMessageType === 'LettersCardInsert') {
       extraService = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).attr('data-id');
       extraServiceName = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).val();
       envelopeType = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).attr('data-id');
@@ -1026,17 +1026,17 @@ define([
       let backHtmlContent;
       let size;
 
+      previewPayload.screen = 'html';
+      previewPayload.description = description;
+      previewPayload.mailingClass = mailingClass;
+      previewPayload.frontHtmlContent = frontHtmlContent;
+
       if(selectedMessageType !== 'Letters') {
         backHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-back`).val();
         size = $(`.${selectedMessageType} .html-size .radio-input:checked`).val();
         previewPayload.backHtmlContent = backHtmlContent;
         previewPayload.size = size;
       }
-
-      previewPayload.screen = 'html';
-      previewPayload.description = description;
-      previewPayload.mailingClass = mailingClass;
-      previewPayload.frontHtmlContent = frontHtmlContent;
 
       if(isCartInsertEnabled && selectedCardInsertType === 'doubleSide'){
         const cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
