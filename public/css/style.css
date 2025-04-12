@@ -784,6 +784,10 @@ input:checked + .test-to-live-slider::before {
   color: white;
 }
 
+.letters-card-insert .html-btn-card-front, .letters-card-insert .html-btn-card-back {
+  position: unset;
+}
+
 .trifold .screen-1 .btn{
 	position: static;
 }
