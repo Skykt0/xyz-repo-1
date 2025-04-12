@@ -292,7 +292,7 @@ define([
         let isHtml = $('#htmlId').is(':checked');
 
         $(`.${selectedMessageType} .error-msg`).removeClass('show');
-        $('input.error').removeClass('eror');
+        $(`.${selectedMessageType} input.error`).removeClass('error');
 
         if(isCartInsertEnabled){
           let selectedCardInsertType = $('input[name="cardType"]:checked').val();
