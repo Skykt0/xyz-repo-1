@@ -784,7 +784,8 @@ input:checked + .test-to-live-slider::before {
   color: white;
 }
 
-.letters-card-insert .html-btn-card-front, .letters-card-insert .html-btn-card-back {
+.letters-card-insert .html-btn-front,
+.letters-card-insert .html-btn-back, .letters-card-insert .html-btn-card-front, .letters-card-insert .html-btn-card-back {
   position: unset;
 }
 
