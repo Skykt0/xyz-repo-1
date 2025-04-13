@@ -291,8 +291,8 @@ define([
           let selectedCardType = $('input[name="cardType"]:checked').val();
           $(`.trifold .${selectedCardType}`).show();
           if(selectedMessageType === 'LettersCardInsert') {
-            $('.card-insert-input').removeClass('show');
-            $(`.card-insert-input-${selectedCardInsertDesignFormat}`).addClass('show');
+            $('.card-insert-input').addClass('hidden');
+            $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
           }
         }
 

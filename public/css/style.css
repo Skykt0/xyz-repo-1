@@ -1218,14 +1218,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background: white;
 }
 
-.card-insert-input {
+.card-insert-input.hidden {
   display: none !important;
-}
-
-.card-insert-input.show {
-  display: block !important;
-}
-
-.input-box.card-insert-input.show {
-  display: flex !important;
 }
