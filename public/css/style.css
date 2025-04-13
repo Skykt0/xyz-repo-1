@@ -984,7 +984,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .container.spacer.html-creation-type .html-btn-wrap,
 .container.spacer.pdf-creation-type .html-btn-wrap,
-.container.spacer.template-creation-type .html-btn-wrap {
+.spacer .template-creation-type .html-btn-wrap {
   position: absolute;
   width: 94%;
   height: 7%;
@@ -1196,7 +1196,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   row-gap: 1.75rem;
 }
 
-.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields{
+.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields,
+.letters-card-insert .screen-2 .pdf-container .letter-pdf-fields  {
   gap: 2.5rem;
 }
 
