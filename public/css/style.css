@@ -1236,7 +1236,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 54%;
 }
 
-.pdf-container.html .checkboxes-container.grid {
+.pdf-container.html .checkboxes-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 1.75rem;
