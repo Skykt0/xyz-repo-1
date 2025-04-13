@@ -1162,14 +1162,16 @@ define([
 
     if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
       selectedMessageType = 'trifold';
-    } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
-      selectedMessageType = 'LettersCardInsert';
     }
 
     let isTrifoldEnabled = selectedMessageType === 'trifold';
     const selectedCardInsertType = $('input[name="cardType"]:checked').val();
     const url = selectedMessageType === 'selfmailer' || selectedMessageType === 'trifold' ? baseUrl + 'self_mailers' : baseUrl + selectedMessageType.toLowerCase();
     let apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
+
+    if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
+      selectedMessageType = 'LettersCardInsert';
+    }
 
     let data;
     let headers = {
