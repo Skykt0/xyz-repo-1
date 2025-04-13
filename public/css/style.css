@@ -1240,4 +1240,5 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 1.75rem;
+  column-gap: unset;
 }
