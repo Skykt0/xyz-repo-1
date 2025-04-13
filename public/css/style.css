@@ -261,9 +261,10 @@ body {
 	transform: translateY(-50%) rotate(45deg);
 }
 
+.screen-1 .dropdown-options,
+.screen-2 .dropdown-options,
 .screen-3 .dropdown-options, 
-#letterScreen .dropdown-options,
-.screen-1 .dropdown-options {
+#letterScreen .dropdown-options {
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -993,7 +994,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .container.spacer.html-creation-type .html-btn-wrap,
-.container.spacer.pdf-creation-type .html-btn-wrap {
+.container.spacer.pdf-creation-type .html-btn-wrap,
+.container.spacer.template-creation-type .html-btn-wrap {
   position: absolute;
   width: 94%;
   height: 7%;
