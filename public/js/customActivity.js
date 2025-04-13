@@ -834,7 +834,7 @@ define([
         cardfrontHtmlBtnLabel = cardfrontHtmlElement.val() === undefined || cardfrontHtmlElement.hasClass('hidden') ? undefined : cardfrontHtmlElement.data('btn-label');
 
         if(selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat !== 'html') {
-          let isValidInput = validateInputField($(`.${selectedMessageType} .screen-1 .card-insert-input-${selectedCardInsertDesignFormat}`));
+          let isValidInput = validateInputField($(`.${selectedMessageType} .screen-1 .card-insert-input-${selectedCardInsertDesignFormat} input`));
           if(!isValidInput) {
             isValid = false;
           }
