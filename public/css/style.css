@@ -261,10 +261,7 @@ body {
 	transform: translateY(-50%) rotate(45deg);
 }
 
-.screen-1 .dropdown-options,
-.screen-2 .dropdown-options,
-.screen-3 .dropdown-options, 
-#letterScreen .dropdown-options {
+.screen .dropdown-options {
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -279,17 +276,13 @@ body {
 	box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
 }
 
-.dropdown-options div {
+.screen .dropdown-options div {
 	padding: 8px;
 	cursor: pointer;
 }
 
-.screen-3 .dropdown-options div,
-.screen-3 .dropdown-options li,
-#letterScreen .dropdown-options div,
-.screen-1 .dropdown-options li,
-.screen-1 .dropdown-options div,
-#letterScreen .dropdown-options li {
+.screen .dropdown-options div,
+.screen .dropdown-options li{
 	padding: 8px;
 	cursor: pointer;
 	list-style: none;
@@ -299,12 +292,8 @@ body {
 	background: rgb(37 150 190);
 }
 
-.screen-3 .dropdown-options div:hover,
-.screen-3 .dropdown-options li:hover,
-#letterScreen .dropdown-options div:hover,
-.screen-1 .dropdown-options li:hover,
-.screen-1 .dropdown-options div:hover,
-#letterScreen .dropdown-options li:hover  {
+.screen .dropdown-options div:hover,
+.screen .dropdown-options li:hover {
 	background: #f0f0f0;
 }
 
