@@ -1205,6 +1205,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 2.5rem;
 }
 
+.letters-card-insert .screen-2 .pdf-container .pdf-screen-wrapper.html .letter-pdf-fields .input-box {
+  width: 46%;
+}
+
 .dropdown-icon-angle-wrap {
   position: absolute;
   width: 16px;
@@ -1216,4 +1220,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .card-insert-input.hidden {
   display: none !important;
+}
+
+.pdf-screen-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.pdf-screen-wrapper.html {
+  width: 50%;
 }
