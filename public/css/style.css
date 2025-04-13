@@ -1190,6 +1190,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 46%;
 }
 
+.letters-card-insert .screen-2 .pdf-container .input-box {
+  width: 30%;
+}
+
 .letters-card-insert .screen-3 .template-container .checkboxes-container {
   display: grid;
   grid-template-columns: 1fr 1fr;

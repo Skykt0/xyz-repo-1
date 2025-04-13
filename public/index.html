@@ -1356,12 +1356,13 @@
                   <textarea class="html-editor-front html-area show" data-btn-label="HTML"></textarea>
                   <textarea class="html-editor-front-card-insert html-area card-insert-input card-insert-input-html hidden" data-btn-label="Card Front HTML"></textarea>
                   <span class="error-msg">Please enter content in the following fields:</span>
-              </div>
+                </div>
               </div>
           </div>
           <div class="screen-2 screen">
             <div class="spacer">
               <div class="pdf-container letter-pdf-container pdf-creation-type">
+                <div class="html-screen-wrapper">
                   <h3 class="section-label">Letters with Card Insert - PDF</h3>
                   <div class="letter-pdf-fields">
                     <div class="input-fields">
@@ -1426,11 +1427,11 @@
                             </div>
                       </div>
                       <div class="input-box">
-                          <label for="letter-pdf-pdfLink" class="input-label">PDF URL <span class="asterisk">*</span></label>
-                          <input type="text" class="input-field pdfLink" id="letter-pdf-pdfLink" name="pdfLink" />
+                          <label for="letter-card-insert-pdf-pdfLink" class="input-label">PDF URL <span class="asterisk">*</span></label>
+                          <input type="text" class="input-field pdfLink" id="letter-card-insert-pdf-pdfLink" name="pdfLink" />
                           <span class="error-msg">Please enter required field</span>
                       </div>
-                      <div class="input-box">
+                      <div class="input-box card-insert-input card-insert-input-template hidden">
                             <label for="letter-card-insert-pdf-template-input" class="input-label">Template <span class="asterisk">*</span></label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
@@ -1443,6 +1444,11 @@
                                     aria-labelledby="template-input"></div>
                                 <span class="error-message"></span>
                             </div>
+                      </div>
+                      <div class="input-box card-insert-input card-insert-input-pdf hidden">
+                        <label for="letter-card-insert-input-pdf-pdfLink" class="input-label">PDF URL <span class="asterisk">*</span></label>
+                        <input type="text" class="input-field pdfLink" id="letter-card-insert-input-pdf-pdfLink" name="pdfLink" />
+                        <span class="error-msg">Please enter required field</span>
                       </div>
                     </div>
                     <div class="card-size">
@@ -1501,6 +1507,16 @@
                       </div>
                     </div>
                   </div>
+                </div>
+                <div class="html-editor card-insert-input card-insert-input-html hidden">
+                  <div class="html-btn-wrap">
+                      <button type="button" class="btn btn-light html-btn-front show">
+                          HTML
+                      </button>
+                  </div>
+                  <textarea class="html-editor-front html-area show" data-btn-label="HTML"></textarea>
+                  <span class="error-msg">Please enter content in the following fields:</span>
+                </div>
               </div>
             </div>
           </div>
