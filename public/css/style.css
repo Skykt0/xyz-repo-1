@@ -1209,7 +1209,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 2.5rem;
 }
 
-.letters-card-insert .screen-2 .pdf-container .pdf-screen-wrapper.html .letter-pdf-fields .input-box {
+.letters-card-insert .screen-2 .pdf-container.html .pdf-screen-wrapper .letter-pdf-fields .input-box {
   width: 46%;
 }
 
