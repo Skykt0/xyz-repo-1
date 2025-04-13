@@ -879,7 +879,7 @@ define([
         }
       }
 
-      if(selectedMessageType !== 'Letters'){
+      if(selectedMessageType !== 'Letters' && selectedMessageType !== 'LettersCardInsert'){
         if (!(isPostcardSizeSelected > 0)) {
           $(`.${selectedMessageType} .html-size .error-msg`).addClass('show');
           isValid = false;
@@ -988,42 +988,35 @@ define([
 
   function setPreviewPayload() {
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let selectedCardInsertDesignFormat = $('input[name=\'cardInsertType\']:checked').val().replace(/\s+/g, '');
+    let selectedPlasticCardSize = $(`input[name=\'${selectedCardInsertDesignFormat}-plastic-card-size\']:checked`).val().replace(/\s+/g, '');
     let isCartInsertEnabled = $('#card-insert').prop('checked');
+
     if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
       selectedMessageType = 'trifold';
     } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
       selectedMessageType = 'LettersCardInsert';
     }
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
-    let selectedCardInsertType;
     let isTrifoldEnabled = selectedMessageType === 'trifold';
+
+    let selectedCardInsertType;
     if(isCartInsertEnabled){
       selectedCardInsertType = $('input[name="cardType"]:checked').val();
     }
 
-    let extraService;
-    let extraServiceName;
-    let envelopeType;
-    let envelopeTypeName;
-    let returnEnvelope;
-    let returnEnvelopeName;
-    let colorInput;
-    let perforateFirstPageInput;
-    let doubleSidedInput;
-    let insertBlankPageInput;
-
     if(selectedMessageType === 'Letters' || selectedMessageType === 'LettersCardInsert') {
-      extraService = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).attr('data-id');
-      extraServiceName = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).val();
-      envelopeType = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).attr('data-id');
-      envelopeTypeName = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).val();
-      returnEnvelope = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).attr('data-id');
-      returnEnvelopeName = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val();
-      colorInput = $(`.${selectedMessageType} .${selectedCreationType} .color-input`).is(':checked');
-      perforateFirstPageInput = $(`.${selectedMessageType} .${selectedCreationType} .preforate-first-page-input`).is(':checked');
-      doubleSidedInput = $(`.${selectedMessageType} .${selectedCreationType} .double-sided-input`).is(':checked');
-      insertBlankPageInput = $(`.${selectedMessageType} .${selectedCreationType} .insert-blank-page-input`).is(':checked');
-      
+      let extraService = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).attr('data-id');
+      let extraServiceName = $(`.${selectedMessageType} .${selectedCreationType} .extra-service`).val();
+      let envelopeType = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).attr('data-id');
+      let envelopeTypeName = $(`.${selectedMessageType} .${selectedCreationType} .envelope-type`).val();
+      let returnEnvelope = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).attr('data-id');
+      let returnEnvelopeName = $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val();
+      let colorInput = $(`.${selectedMessageType} .${selectedCreationType} .color-input`).is(':checked');
+      let perforateFirstPageInput = $(`.${selectedMessageType} .${selectedCreationType} .preforate-first-page-input`).is(':checked');
+      let doubleSidedInput = $(`.${selectedMessageType} .${selectedCreationType} .double-sided-input`).is(':checked');
+      let insertBlankPageInput = $(`.${selectedMessageType} .${selectedCreationType} .insert-blank-page-input`).is(':checked');
+
       previewPayload.extraService = extraService;
       previewPayload.extraServiceName = extraServiceName;
       previewPayload.envelopeType = envelopeType;
@@ -1039,7 +1032,7 @@ define([
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
-      const frontHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-front`).val();
+      const frontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front`).val();
       const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
       let backHtmlContent;
       let size;
@@ -1049,27 +1042,41 @@ define([
       previewPayload.mailingClass = mailingClass;
       previewPayload.frontHtmlContent = frontHtmlContent;
 
-      if(selectedMessageType !== 'Letters') {
-        backHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-back`).val();
-        size = $(`.${selectedMessageType} .html-size .radio-input:checked`).val();
+      if(selectedMessageType !== 'Letters' && selectedMessageType !== 'LettersCardInsert') {
+        backHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back`).val();
+        size = $(`.${selectedMessageType} .${selectedCreationType} .html-size .radio-input:checked`).val();
         previewPayload.backHtmlContent = backHtmlContent;
         previewPayload.size = size;
       }
 
       if(isCartInsertEnabled && selectedCardInsertType === 'doubleSide'){
-        const cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
-        const cardbackHtmlContent = $(`.${selectedMessageType} .html-editor-back-card-insert`).val().trim();
-        const cardInsertSize = $(`.${selectedMessageType} .html-card-size .radio-input:checked`).val();
+        const cardfrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
+        const cardbackHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val().trim();
+        const cardInsertSize = $(`.${selectedMessageType} .${selectedCreationType} .html-card-size .radio-input:checked`).val();
         
         previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
         previewPayload.cardbackHtmlContent = cardbackHtmlContent;
         previewPayload.cardSize = cardInsertSize;
-        
       }else if(isCartInsertEnabled && selectedCardInsertType === 'singleSide'){
-        const cardfrontHtmlContent = $(`.${selectedMessageType} .html-editor-front-card-insert`).val().trim();
-        const cardInsertSize = $(`.${selectedMessageType} .html-card-size .radio-input:checked`).val();
-        previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
-        previewPayload.cardSize = cardInsertSize;
+        if(selectedCardInsertDesignFormat !== 'pdf' && selectedCardInsertDesignFormat !== 'template') {
+          const cardfrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
+          previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
+        }
+        if(selectedMessageType === 'LettersCardInsert') {
+          previewPayload.plasticCardSize = selectedPlasticCardSize;
+          if(selectedCardInsertDesignFormat === 'pdf') {
+            const pdfLink = $(`.${selectedMessageType} .${selectedCreationType} .pdfLink`).val().trim();
+            previewPayload.pdf = pdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template') {
+            const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
+            const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
+            previewPayload.frontTemplateId = frontTemplateId;
+            previewPayload.frontTemplateName = frontTemplateName;
+          }
+        } else {
+          const cardInsertSize = $(`.${selectedMessageType} .html-card-size .radio-input:checked`).val();
+          previewPayload.cardSize = cardInsertSize;
+        }
       }else{
         previewPayload.isExpressDelivery = isExpressDelivery;
       }
@@ -1088,9 +1095,9 @@ define([
 
       if(isTrifoldEnabled) {
         const pdfLink = $(`.${selectedMessageType} .${selectedCreationType} .pdfLink`).val();
-        const pdfCardSize = $(`.${selectedMessageType} .pdf-card-size .radio-input:checked`).val();
-        const frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val();
-        const backHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-back`).val();
+        const pdfCardSize = $(`.${selectedMessageType} .${selectedCreationType} .pdf-card-size .radio-input:checked`).val();
+        const frontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front`).val();
+        const backHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back`).val();
 
         previewPayload.pdfLinkInput = pdfLink;
         previewPayload.cardSize = pdfCardSize;
@@ -1098,7 +1105,7 @@ define([
         previewPayload.backHtmlContent = backHtmlContent;
       } else {
         const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
-        const pdfLink = $(`.${selectedMessageType} .screen-2 .pdfLink`).val().trim();
+        const pdfLink = $(`.${selectedMessageType} .${selectedCreationType} .pdfLink`).val().trim();
         previewPayload.isExpressDelivery = isExpressDelivery;
         previewPayload.pdf = pdfLink;
       }
@@ -1126,9 +1133,9 @@ define([
       }
 
       if(isTrifoldEnabled) {
-        const frontHtmlContent = $(`.${selectedMessageType} .screen-3 .html-editor-front`).val();
-        const backHtmlContent = $(`.${selectedMessageType} .screen-3 .html-editor-back`).val();
-        const templateCardSize = $(`.${selectedMessageType} .Template-card-size .radio-input:checked`).val();
+        const frontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front`).val();
+        const backHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back`).val();
+        const templateCardSize = $(`.${selectedMessageType} .${selectedCreationType} .Template-card-size .radio-input:checked`).val();
         previewPayload.frontHtmlContent = frontHtmlContent;
         previewPayload.backHtmlContent = backHtmlContent;
         previewPayload.cardSize = templateCardSize;
@@ -1147,19 +1154,21 @@ define([
   }
 
   async function createMessage() {
-    let messageType = $('input[name=\'msgType\']:checked').val();
     const baseUrl = POSTGRID_API_BASE_URL;
+    let messageType = $('input[name=\'msgType\']:checked').val();
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let selectedCardInsertDesignFormat = $('input[name=\'cardInsertType\']:checked').val().replace(/\s+/g, '');
+
     if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
       selectedMessageType = 'trifold';
     } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
       selectedMessageType = 'LettersCardInsert';
     }
+
     let isTrifoldEnabled = selectedMessageType === 'trifold';
     const selectedCardInsertType = $('input[name="cardType"]:checked').val();
     const url = selectedMessageType === 'selfmailer' || selectedMessageType === 'trifold' ? baseUrl + 'self_mailers' : baseUrl + selectedMessageType.toLowerCase();
-    
     let apiKey = previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key;
 
     let data;
@@ -1226,7 +1235,15 @@ define([
         }
       } else if(selectedMessageType === 'Letters' || selectedMessageType === 'LettersCardInsert'){
         data.append('html', previewPayload.frontHtmlContent);
+        data.append('plasticCard[size]', previewPayload.plasticCardSize);
         setLetterPreviewPayload(data, previewPayload);
+        if(selectedCardInsertDesignFormat === 'html') {
+          data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
+        } else if(selectedCardInsertDesignFormat === 'pdf') {
+          data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
+        } else if(selectedCardInsertDesignFormat === 'template') {
+          data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
+        }
       }
       if (!previewPayload.isExpressDelivery) {
         data.append('mailingClass', previewPayload.mailingClass);
@@ -1268,6 +1285,7 @@ define([
         data.append('mailingClass', previewPayload.mailingClass);
       }
     }
+
     try {
       const response = await fetch(url, {
         method: 'POST',
