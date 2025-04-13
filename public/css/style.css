@@ -1233,5 +1233,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .pdf-container.html .pdf-screen-wrapper {
-  width: 50%;
+  width: 54%;
+}
+
+.checkboxes-container.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1.75rem;
 }
