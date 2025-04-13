@@ -299,6 +299,7 @@ define([
             $('.html-btn-front').addClass('show');
             $('.html-editor-front').addClass('show');
             if(selectedCreationType === 'pdf-creation-type' || selectedCreationType === 'template-creation-type') {
+              $(`.${selectedMessageType} .${selectedCreationType}`).removeClass('html');
               if(selectedCardInsertDesignFormat === 'html') {
                 $(`.${selectedMessageType} .${selectedCreationType}`).addClass('html');
               }
