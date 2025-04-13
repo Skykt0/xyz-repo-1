@@ -274,6 +274,7 @@ define([
         let selectedRadio = $('input[name="msgType"]:checked');
         let isCartInsertEnabled = $('#card-insert').prop('checked');
         let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
+        let selectedCardInsertDesignFormat = $('input[name=\'cardInsertType\']:checked').val().replace(/\s+/g, '');
 
         if (selectedRadio.length > 0) {
           let selectedRadioValue = selectedRadio.val().replace(/\s+/g, '');
@@ -289,6 +290,10 @@ define([
           $('.trifold .doubleSide, .trifold .singleSide').hide();
           let selectedCardType = $('input[name="cardType"]:checked').val();
           $(`.trifold .${selectedCardType}`).show();
+          if(selectedMessageType === 'LettersCardInsert') {
+            $('.card-insert-input').removeClass('show');
+            $(`.card-insert-input-${selectedCardInsertDesignFormat}`).addClass('show');
+          }
         }
 
         let isHtml = $('#htmlId').is(':checked');
