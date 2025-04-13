@@ -275,6 +275,9 @@ define([
         let isCartInsertEnabled = $('#card-insert').prop('checked');
         let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
         let selectedCardInsertDesignFormat = $('input[name=\'cardInsertType\']:checked').val().replace(/\s+/g, '');
+        let isHtml = $('#htmlId').is(':checked');
+        let isPdf = $('#pdfId').is(':checked');
+        let isExtTemp = $('#extTempId').is(':checked');
 
         if (selectedRadio.length > 0) {
           let selectedRadioValue = selectedRadio.val().replace(/\s+/g, '');
@@ -295,10 +298,13 @@ define([
             $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
             $('.html-btn-front').addClass('show');
             $('.html-editor-front').addClass('show');
+            if(selectedCreationType === 'pdf-creation-type' || selectedCreationType === 'template-creation-type') {
+              if(selectedCardInsertDesignFormat === 'html') {
+                $(`.${selectedMessageType} .${selectedCreationType}`).addClass('html');
+              }
+            }
           }
         }
-
-        let isHtml = $('#htmlId').is(':checked');
 
         $(`.${selectedMessageType} .error-msg`).removeClass('show');
         $(`.${selectedMessageType} input.error`).removeClass('error');
@@ -313,9 +319,6 @@ define([
             $('.trifold .html-btn-card-front').text('Card Inside');
           }
         }
-
-        let isPdf = $('#pdfId').is(':checked');
-        let isExtTemp = $('#extTempId').is(':checked');
 
         currentEnabledEnvironmenet = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
         if (isExtTemp) {

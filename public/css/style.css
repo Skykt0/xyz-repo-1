@@ -818,6 +818,10 @@ input:checked + .test-to-live-slider::before {
 	gap: 2rem;
 }
 
+.pdf-container.html {
+  flex-direction: row;
+}
+
 .pdf-size, .pdf-card-size {
 	display: flex;
 	flex-direction: column;
@@ -1228,6 +1232,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 2rem;
 }
 
-.pdf-screen-wrapper.html {
+.pdf-container.html .pdf-screen-wrapper {
   width: 50%;
 }
