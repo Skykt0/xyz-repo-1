@@ -1223,9 +1223,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .card-insert-input.show {
-  display: block;
+  display: block !important;
 }
 
 .input-box.card-insert-input.show {
-  display: flex;
+  display: flex !important;
 }
