@@ -1657,7 +1657,6 @@ define([
       selectedMessageType = 'LettersCardInsert';
     }
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
-    const $templateInput = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}`);
     const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}List`);
     $list.empty();
 
@@ -1667,8 +1666,8 @@ define([
         .attr('data-id', template.id)
         .addClass('dropdown-item')
         .on('click', function () {
-          $templateInput.val(template.description || 'No description');
-          $templateInput.attr('data-id', template.id);
+          const $dropdownTemplateInput= $(this).parent(`.${templateName}List`).siblings('.template-dropdown-wrap').find(`.${templateName}`);
+          $dropdownTemplateInput.val(template.description || 'No description').attr('data-id', template.id);
           $list.hide();
         });
       $list.append($listItem);
