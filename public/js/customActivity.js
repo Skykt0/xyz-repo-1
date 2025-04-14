@@ -904,11 +904,6 @@ define([
       }
 
       if(selectedMessageType === 'LettersCardInsert') {
-        let isValidInput = validateInputField($(`.${selectedMessageType} .screen-2 .card-insert-input-${selectedCardInsertDesignFormat} input`));
-        if(!isValidInput) {
-          isValid = false;
-        }
-
         if(selectedCardInsertDesignFormat === 'html') {
           let cardfrontHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val().trim();
           let cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).data('btn-label');
@@ -928,6 +923,11 @@ define([
             }
           } else { 
             htmlEditorErrorMsg.removeClass('show');
+          }
+        } else {
+          let isValidInput = validateInputField($(`.${selectedMessageType} .screen-2 .card-insert-input-${selectedCardInsertDesignFormat} input`));
+          if(!isValidInput) {
+            isValid = false;
           }
         }
       }
