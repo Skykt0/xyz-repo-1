@@ -261,9 +261,7 @@ body {
 	transform: translateY(-50%) rotate(45deg);
 }
 
-.screen-3 .dropdown-options, 
-#letterScreen .dropdown-options,
-.screen-1 .dropdown-options {
+.screen .dropdown-options {
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -278,17 +276,13 @@ body {
 	box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
 }
 
-.dropdown-options div {
+.screen .dropdown-options div {
 	padding: 8px;
 	cursor: pointer;
 }
 
-.screen-3 .dropdown-options div,
-.screen-3 .dropdown-options li,
-#letterScreen .dropdown-options div,
-.screen-1 .dropdown-options li,
-.screen-1 .dropdown-options div,
-#letterScreen .dropdown-options li {
+.screen .dropdown-options div,
+.screen .dropdown-options li{
 	padding: 8px;
 	cursor: pointer;
 	list-style: none;
@@ -298,12 +292,8 @@ body {
 	background: rgb(37 150 190);
 }
 
-.screen-3 .dropdown-options div:hover,
-.screen-3 .dropdown-options li:hover,
-#letterScreen .dropdown-options div:hover,
-.screen-1 .dropdown-options li:hover,
-.screen-1 .dropdown-options div:hover,
-#letterScreen .dropdown-options li:hover  {
+.screen .dropdown-options div:hover,
+.screen .dropdown-options li:hover {
 	background: #f0f0f0;
 }
 
@@ -764,7 +754,7 @@ input:checked + .test-to-live-slider::before {
 
 .btn.btn-light.html-btn-front:hover,
 .btn.btn-light.html-btn-back:hover, .btn.btn-light.html-btn-card-front:hover, .btn.btn-light.html-btn-card-back:hover {
-	background: #bfbfbf;
+	background: #3B79F0;
 }
 
 .btn.btn-light.html-btn-front.show,
@@ -780,8 +770,13 @@ input:checked + .test-to-live-slider::before {
 	border: none;
 	font-weight: 500;
 	cursor: pointer;
-	background: #2569E6;
+	background: #4D8CFF;
   color: white;
+}
+
+.letters-card-insert .html-btn-front,
+.letters-card-insert .html-btn-back, .letters-card-insert .html-btn-card-front, .letters-card-insert .html-btn-card-back {
+  position: unset;
 }
 
 .trifold .screen-1 .btn{
@@ -821,6 +816,10 @@ input:checked + .test-to-live-slider::before {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
+}
+
+.pdf-container.html {
+  flex-direction: row;
 }
 
 .pdf-size, .pdf-card-size {
@@ -988,7 +987,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .container.spacer.html-creation-type .html-btn-wrap,
-.container.spacer.pdf-creation-type .html-btn-wrap {
+.container.spacer.pdf-creation-type .html-btn-wrap,
+.screen .spacer .html-btn-wrap {
   position: absolute;
   width: 94%;
   height: 7%;
@@ -1027,8 +1027,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .dropdown-icon {
   position: absolute;
-  right: 4%;
-  top: 9px;
+  right: 4px;
+  top: 3px;
   transform: rotate(90deg);
   pointer-events: none;
   font-weight: bold;
@@ -1077,24 +1077,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-.next-btn {
-  background: #2569E6 !important;
-  color: #fff !important;
-}
-
-.fuelux .modal-footer a.back, .fuelux .modal-footer .cancel {
-  color: #2569E6 !important;
-  border: 0;
-  padding: 5px 10px;
-  font-size: 11px;
-  border-radius: 3px;
-}
-
-.fuelux .modal-footer a.back:hover, .fuelux .modal-footer .cancel:hover {
-  background-color: #f1f1f1;
-  border-color: #bbb;
 }
 
 .error-toast-wrap {
@@ -1212,16 +1194,51 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 46%;
 }
 
+.letters-card-insert .screen-2 .pdf-container .input-box {
+  width: 30%;
+}
+
 .letters-card-insert .screen-3 .template-container .checkboxes-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 1.75rem;
 }
 
-.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields{
+.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields,
+.letters-card-insert .screen-2 .pdf-container .letter-pdf-fields  {
   gap: 2.5rem;
 }
 
-.letters-card-insert .html-editor {
-  margin-top: 0;
+.letters-card-insert .screen-2 .pdf-container.html .pdf-screen-wrapper .letter-pdf-fields .input-box {
+  width: 46%;
+}
+
+.dropdown-icon-angle-wrap {
+  position: absolute;
+  width: 16px;
+  height: 22px;
+  right: 5px;
+  top: 5px;
+  background: white;
+}
+
+.card-insert-input.hidden {
+  display: none !important;
+}
+
+.pdf-screen-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.pdf-container.html .pdf-screen-wrapper {
+  width: 54%;
+}
+
+.pdf-container.html .checkboxes-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1.75rem;
+  column-gap: unset;
 }
