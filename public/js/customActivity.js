@@ -904,8 +904,8 @@ define([
       }
 
       if(selectedMessageType === 'LettersCardInsert') {
-        let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-2 .frontTemplate`));
-        if(!frontTemplateValid) {
+        let isValidInput = validateInputField($(`.${selectedMessageType} .screen-2 .card-insert-input-${selectedCardInsertDesignFormat} input`));
+        if(!isValidInput) {
           isValid = false;
         }
       }
