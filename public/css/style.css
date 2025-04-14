@@ -1213,6 +1213,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 46%;
 }
 
+.letters-card-insert .screen .template-container.template {
+  width: 100%;
+}
+
+.letters-card-insert .screen .template-container.template .input-box {
+  width: 30%;
+}
+
 .dropdown-icon-angle-wrap {
   position: absolute;
   width: 16px;
