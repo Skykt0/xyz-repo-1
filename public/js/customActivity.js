@@ -907,7 +907,7 @@ define([
         if(selectedCardInsertDesignFormat === 'html') {
           let cardfrontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front-card-insert`).val().trim();
           let cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-front-card-insert`).data('btn-label');
-          let cardBackHtmlElement = $(`.${selectedMessageType} .screen-2 .html-editor-front-card-insert`);
+          let cardBackHtmlElement = $(`.${selectedMessageType} .screen-2 .html-editor-back-card-insert`);
           let cardBackHtmlContent = cardBackHtmlElement.val() === undefined || cardBackHtmlElement.hasClass('hidden') ? undefined : cardBackHtmlElement.val().trim();
           let cardBackHtmlBtnLabel = cardBackHtmlElement.val() === undefined || cardBackHtmlElement.hasClass('hidden') ? undefined : cardBackHtmlElement.data('btn-label');
           let htmlEditorErrorMsg = $(`.${selectedMessageType} .screen-2 .html-editor .error-msg`);
