@@ -862,7 +862,7 @@
                                 <li class="dropdown-item" data-id="">Select Extra Service</li>
                                 <li class="dropdown-item" data-id="registered">Registered Mail</li>
                                 <li class="dropdown-item" data-id="certified">Certified</li>
-                                <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Reciept</li>
+                                <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
                               </div>
                             </div>
                         </div>
@@ -984,7 +984,7 @@
                             <li class="dropdown-item" data-id="">Select Extra Service</li>
                             <li class="dropdown-item" data-id="registered">Registered Mail</li>
                             <li class="dropdown-item" data-id="certified">Certified</li>
-                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Reciept</li>
+                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
                           </div>
                         </div>
                       </div>
@@ -1102,7 +1102,7 @@
                             <li class="dropdown-item" data-id="">Select Extra Service</li>
                             <li class="dropdown-item" data-id="registered">Registered Mail</li>
                             <li class="dropdown-item" data-id="certified">Certified</li>
-                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Reciept</li>
+                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
                           </div>
                         </div>
                       </div>
@@ -1234,7 +1234,7 @@
                                   <li class="dropdown-item" data-id="">Select Extra Service</li>
                                   <li class="dropdown-item" data-id="registered">Registered Mail</li>
                                   <li class="dropdown-item" data-id="certified">Certified</li>
-                                  <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Reciept</li>
+                                  <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
                                 </div>
                               </div>
                           </div>
@@ -1352,9 +1352,13 @@
                       <button type="button" class="btn btn-light html-btn-card-front card-insert-input card-insert-input-html hidden">
                           Card Front HTML
                       </button>
+                      <button type="button" class="btn btn-light html-btn-card-back card-insert-input card-insert-input-html-doubleSide hidden">
+                          Card Back HTML
+                      </button>
                   </div>
                   <textarea class="html-editor-front html-area show" data-btn-label="HTML"></textarea>
                   <textarea class="html-editor-front-card-insert html-area card-insert-input card-insert-input-html hidden" data-btn-label="Card Front HTML"></textarea>
+                  <textarea class="html-editor-back-card-insert html-area card-insert-input card-insert-input-html-doubleSide hidden" data-btn-label="Card Back HTML"></textarea>
                   <span class="error-msg">Please enter content in the following fields:</span>
                 </div>
               </div>
@@ -1393,7 +1397,7 @@
                             <li class="dropdown-item" data-id="">Select Extra Service</li>
                             <li class="dropdown-item" data-id="registered">Registered Mail</li>
                             <li class="dropdown-item" data-id="certified">Certified</li>
-                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Reciept</li>
+                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
                           </div>
                         </div>
                       </div>
@@ -1432,13 +1436,14 @@
                           <span class="error-msg">Please enter required field</span>
                       </div>
                       <div class="input-box card-insert-input card-insert-input-template hidden">
-                            <label for="letter-card-insert-pdf-template-input" class="input-label">Template <span class="asterisk">*</span></label>
+                            <label for="letter-card-insert-pdf-template-input" class="input-label">Card Template <span class="asterisk">*</span></label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
                                     <input type="text" id="letter-card-insert-pdf-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
                                         autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter template</span>
+                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
                                 </div>
                                 <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
                                     aria-labelledby="template-input"></div>
@@ -1553,7 +1558,7 @@
                           <li class="dropdown-item" data-id="">Select Extra Service</li>
                           <li class="dropdown-item" data-id="registered">Registered Mail</li>
                           <li class="dropdown-item" data-id="certified">Certified</li>
-                          <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Reciept</li>
+                          <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
                         </div>
                       </div>
                     </div>
@@ -1609,6 +1614,7 @@
                                   autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                   aria-expanded="false" />
                               <span class="error-msg">Please enter template</span>
+                              <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
                           </div>
                           <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
                               aria-labelledby="template-input"></div>
