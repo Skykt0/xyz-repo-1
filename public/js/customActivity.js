@@ -1358,16 +1358,16 @@ define([
     if(previewPayload.returnEnvelope !== '' && previewPayload.returnEnvelope !== undefined) {
       data.append('returnEnvelope', previewPayload.returnEnvelope);
     }
-    if (previewPayload.perforateFirstPageInput) {
+    if (previewPayload.insertBlankPageInput !== true && previewPayload.perforateFirstPageInput) {
       data.append('perforatedPage', 1);
     }
-    data.append('color', previewPayload.colorInput);
-    data.append('doubleSided', previewPayload.doubleSidedInput);
-    if(previewPayload.insertBlankPageInput === true) {
+    if(previewPayload.perforateFirstPageInput !== true && previewPayload.insertBlankPageInput === true) {
       data.append('addressPlacement', 'insert_blank_page');
     } else {
       data.append('addressPlacement', 'top_first_page');
     }
+    data.append('color', previewPayload.colorInput);
+    data.append('doubleSided', previewPayload.doubleSidedInput);
   }
 
   async function fetchMessageDetails(messageId) {
