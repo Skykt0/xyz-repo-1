@@ -1261,7 +1261,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .checkbox-input:disabled + span,
-.input-field:disabled + .dropdown-icon-angle-wrap {
+.input-field:disabled + .dropdown-icon-angle-wrap,
+.input-field:disabled {
   color: gray;
   opacity: 0.6;
 }
