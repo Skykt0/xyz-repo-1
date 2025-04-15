@@ -1845,6 +1845,18 @@ define([
       });
   }
 
+  $('.preforate-first-page-input, .insert-blank-page-input').on('change', function () {
+    const $checkboxContainer = $(this).closest('.checkboxes-container');
+    const $perforate = $checkboxContainer.find('.preforate-first-page-input');
+    const $insertBlank = $checkboxContainer.find('.insert-blank-page-input');
+  
+    const isPerforateChecked = $perforate.is(':checked');
+    const isInsertBlankChecked = $insertBlank.is(':checked');
+  
+    $insertBlank.prop('disabled', isPerforateChecked);
+    $perforate.prop('disabled', isInsertBlankChecked);
+  });
+
   $('.toggle-password').on('click', toggleApiKeyVisibility);
   $('input.api-key').on('input', hideError);
 
