@@ -300,8 +300,10 @@ define([
             $('.html-editor-front').addClass('show');
             if(selectedCreationType === 'pdf-creation-type' || selectedCreationType === 'template-creation-type') {
               $(`.${selectedMessageType} .${selectedCreationType}`).removeClass('html');
+              $(`.${selectedMessageType} .${selectedCreationType}`).addClass('template');
               if(selectedCardInsertDesignFormat === 'html') {
                 $(`.${selectedMessageType} .${selectedCreationType}`).addClass('html');
+                $(`.${selectedMessageType} .${selectedCreationType}`).removeClass('template');
               }
             }
           }
@@ -896,40 +898,12 @@ define([
     if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       const pdfLinkElement = $(`.${selectedMessageType} .screen-2 .pdfLink`);
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
+      let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-2 .frontTemplate`));
       pdfLinkElement.siblings('.error-msg').text('Please enter required field');
       let isPdfLinkValid = validateInputField(pdfLinkElement);
       
-      if (!isDescriptionValid || !isPdfLinkValid) {
+      if (!isDescriptionValid || !isPdfLinkValid || !frontTemplateValid) {
         isValid = false;
-      }
-
-      if(selectedMessageType === 'LettersCardInsert') {
-        if(selectedCardInsertDesignFormat === 'html') {
-          let cardfrontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front-card-insert`).val().trim();
-          let cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-front-card-insert`).data('btn-label');
-          let cardBackHtmlElement = $(`.${selectedMessageType} .screen-2 .html-editor-back-card-insert`);
-          let cardBackHtmlContent = cardBackHtmlElement.val() === undefined || cardBackHtmlElement.hasClass('hidden') ? undefined : cardBackHtmlElement.val().trim();
-          let cardBackHtmlBtnLabel = cardBackHtmlElement.val() === undefined || cardBackHtmlElement.hasClass('hidden') ? undefined : cardBackHtmlElement.data('btn-label');
-          let htmlEditorErrorMsg = $(`.${selectedMessageType} .screen-2 .html-editor .error-msg`);
-
-          if (cardfrontHtmlContent === '' || cardBackHtmlContent === '') {
-            isValid = false;
-            let missingFields = [];
-            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
-            if (cardBackHtmlContent === '') {missingFields.push(cardBackHtmlBtnLabel);}
-
-            if (missingFields.length > 0) {
-              htmlEditorErrorMsg.text(`Please enter content in the following fields: ${missingFields.join(', ')}.`).addClass('show');
-            }
-          } else { 
-            htmlEditorErrorMsg.removeClass('show');
-          }
-        } else {
-          let isValidInput = validateInputField($(`.${selectedMessageType} .screen-2 .card-insert-input-${selectedCardInsertDesignFormat} input`));
-          if(!isValidInput) {
-            isValid = false;
-          }
-        }
       }
   
       if (selectedMessageType === 'trifold') {
@@ -997,12 +971,35 @@ define([
         }
       }
       if(selectedMessageType === 'LettersCardInsert'){
-        let isHtmlInputValid = validateInputField($(`.${selectedMessageType} .screen-3 .html-editor-front`));
-        if (!isHtmlInputValid) {
-          isValid = false;
+        let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .screen-3 .html-editor .error-msg`);
+        if(selectedCardInsertDesignFormat === 'html') {
+          const cardfrontHtmlContent = $(`.${selectedMessageType} .screen-3 .html-editor-front-card-insert`).val().trim();
+          const cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-3 .html-editor-front-card-insert`).data('btn-label');
+          const cardbackHtmlContent = true ? undefined : $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`).val().trim();
+          const cardbackHtmlBtnLabel = true ? undefined : $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`).data('btn-label');  
+
+          if (cardfrontHtmlContent === '' || cardbackHtmlContent === '') {
+            isValid = false;
+            let missingFields = [];
+            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
+            if (cardbackHtmlContent === '') {missingFields.push(cardbackHtmlBtnLabel);}
+            if (missingFields.length > 0) {
+              postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${missingFields.join(', ')}.`).addClass('show');
+            }
+          } else { 
+            postcardHtmlEditorErrorMsg.removeClass('show');
+          }
+        }
+
+        if(selectedCardInsertDesignFormat !== 'html') {
+          let isValidInput = validateInputField($(`.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat} input`));
+          if(!isValidInput) {
+            isValid = false;
+          }
         }
       }
     }
+
     return isValid;
   }
 
@@ -1269,14 +1266,16 @@ define([
         }
       } else if(selectedMessageType === 'Letters' || selectedMessageType === 'LettersCardInsert'){
         data.append('html', previewPayload.frontHtmlContent);
-        data.append('plasticCard[size]', previewPayload.plasticCardSize);
         setLetterPreviewPayload(data, previewPayload);
-        if(selectedCardInsertDesignFormat === 'html') {
-          data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
-        } else if(selectedCardInsertDesignFormat === 'pdf') {
-          data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
-        } else if(selectedCardInsertDesignFormat === 'template') {
-          data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
+        if(selectedCardInsertType !== 'doubleSide') {
+          data.append('plasticCard[size]', previewPayload.plasticCardSize);
+          if(selectedCardInsertDesignFormat === 'html') {
+            data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
+          } else if(selectedCardInsertDesignFormat === 'pdf') {
+            data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
+          } else if(selectedCardInsertDesignFormat === 'template') {
+            data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
+          }
         }
       }
       if (!previewPayload.isExpressDelivery) {
@@ -1361,16 +1360,16 @@ define([
     if(previewPayload.returnEnvelope !== '' && previewPayload.returnEnvelope !== undefined) {
       data.append('returnEnvelope', previewPayload.returnEnvelope);
     }
-    if (previewPayload.perforateFirstPageInput) {
+    if (previewPayload.insertBlankPageInput !== true && previewPayload.perforateFirstPageInput) {
       data.append('perforatedPage', 1);
     }
-    data.append('color', previewPayload.colorInput);
-    data.append('doubleSided', previewPayload.doubleSidedInput);
-    if(previewPayload.insertBlankPageInput === true) {
+    if(previewPayload.perforateFirstPageInput !== true && previewPayload.insertBlankPageInput === true) {
       data.append('addressPlacement', 'insert_blank_page');
     } else {
       data.append('addressPlacement', 'top_first_page');
     }
+    data.append('color', previewPayload.colorInput);
+    data.append('doubleSided', previewPayload.doubleSidedInput);
   }
 
   async function fetchMessageDetails(messageId) {
@@ -1683,7 +1682,6 @@ define([
       selectedMessageType = 'LettersCardInsert';
     }
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
-    const $templateInput = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}`);
     const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}List`);
     $list.empty();
 
@@ -1693,8 +1691,8 @@ define([
         .attr('data-id', template.id)
         .addClass('dropdown-item')
         .on('click', function () {
-          $templateInput.val(template.description || 'No description');
-          $templateInput.attr('data-id', template.id);
+          const $dropdownTemplateInput = $(this).parent(`.${templateName}List`).siblings('.template-dropdown-wrap').find(`.${templateName}`);
+          $dropdownTemplateInput.val(template.description || 'No description').attr('data-id', template.id);
           $list.hide();
         });
       $list.append($listItem);
@@ -1848,6 +1846,18 @@ define([
         throw error;
       });
   }
+
+  $('.preforate-first-page-input, .insert-blank-page-input').on('change', function () {
+    const $checkboxContainer = $(this).closest('.checkboxes-container');
+    const $perforate = $checkboxContainer.find('.preforate-first-page-input');
+    const $insertBlank = $checkboxContainer.find('.insert-blank-page-input');
+  
+    const isPerforateChecked = $perforate.is(':checked');
+    const isInsertBlankChecked = $insertBlank.is(':checked');
+  
+    $insertBlank.prop('disabled', isPerforateChecked);
+    $perforate.prop('disabled', isInsertBlankChecked);
+  });
 
   $('.toggle-password').on('click', toggleApiKeyVisibility);
   $('input.api-key').on('input', hideError);
