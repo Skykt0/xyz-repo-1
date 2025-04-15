@@ -976,8 +976,9 @@ define([
         if(selectedCardInsertDesignFormat === 'html') {
           const cardfrontHtmlContent = $(`.${selectedMessageType} .screen-3 .html-editor-front-card-insert`).val().trim();
           const cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-3 .html-editor-front-card-insert`).data('btn-label');
-          const cardbackHtmlContent = true ? undefined : $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`).val().trim();
-          const cardbackHtmlBtnLabel = true ? undefined : $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`).data('btn-label');  
+          const cardBackHtmlElement = $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`);
+          const cardbackHtmlContent = cardBackHtmlElement.hasClass('hidden') ? undefined : cardBackHtmlElement.val().trim();
+          const cardbackHtmlBtnLabel = cardBackHtmlElement.hasClass('hidden') ? undefined : cardBackHtmlElement.data('btn-label');  
 
           if (cardfrontHtmlContent === '' || cardbackHtmlContent === '') {
             isValid = false;
