@@ -296,6 +296,7 @@ define([
           if(selectedMessageType === 'LettersCardInsert') {
             $('.card-insert-input').addClass('hidden');
             $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
+            $(`.card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardType}`).removeClass('hidden');
             $('.html-btn-front').addClass('show');
             $('.html-editor-front').addClass('show');
             if(selectedCreationType === 'pdf-creation-type' || selectedCreationType === 'template-creation-type') {
