@@ -977,7 +977,7 @@ define([
           const cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-3 .html-editor-front-card-insert`).data('btn-label');
           const cardbackHtmlContent = true ? undefined : $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`).val().trim();
           const cardbackHtmlBtnLabel = true ? undefined : $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`).data('btn-label');  
-  
+
           if (cardfrontHtmlContent === '' || cardbackHtmlContent === '') {
             isValid = false;
             let missingFields = [];
@@ -988,6 +988,13 @@ define([
             }
           } else { 
             postcardHtmlEditorErrorMsg.removeClass('show');
+          }
+        }
+
+        if(selectedCardInsertDesignFormat !== 'html') {
+          let isValidInput = validateInputField($(`.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat} input`));
+          if(!isValidInput) {
+            isValid = false;
           }
         }
       }
