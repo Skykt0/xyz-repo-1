@@ -295,10 +295,9 @@ define([
           $(`.trifold .${selectedCardType}`).show();
           if(selectedMessageType === 'LettersCardInsert') {
             $('.card-insert-input').addClass('hidden');
+            $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
             if(selectedCardType === 'doubleSide'){
               $(`.card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardType}`).removeClass('hidden');
-            } else {
-              $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
             }
             $('.html-btn-front').addClass('show');
             $('.html-editor-front').addClass('show');
