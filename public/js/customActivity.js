@@ -1267,7 +1267,7 @@ define([
       } else if(selectedMessageType === 'Letters' || selectedMessageType === 'LettersCardInsert'){
         data.append('html', previewPayload.frontHtmlContent);
         setLetterPreviewPayload(data, previewPayload);
-        if(selectedCardInsertType !== 'doubleSide') {
+        if(selectedMessageType !== 'Letters' && selectedCardInsertType !== 'doubleSide') {
           data.append('plasticCard[size]', previewPayload.plasticCardSize);
           if(selectedCardInsertDesignFormat === 'html') {
             data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
