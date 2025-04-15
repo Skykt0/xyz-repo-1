@@ -1691,7 +1691,8 @@ define([
         .attr('data-id', template.id)
         .addClass('dropdown-item')
         .on('click', function () {
-          const $dropdownTemplateInput = $(this).parent(`.${templateName}List`).siblings('.template-dropdown-wrap').find(`.${templateName}`);
+          const dropdownTypeLabel = templateName.includes('returnEnvelope') ? 'return-envelope' : 'template';
+          const $dropdownTemplateInput = $(this).parent(`.${templateName}List`).siblings(`.${dropdownTypeLabel}-dropdown-wrap`).find(`.${templateName}`);
           $dropdownTemplateInput.val(template.description || 'No description').attr('data-id', template.id);
           $list.hide();
         });
