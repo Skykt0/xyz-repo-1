@@ -1266,14 +1266,16 @@ define([
         }
       } else if(selectedMessageType === 'Letters' || selectedMessageType === 'LettersCardInsert'){
         data.append('html', previewPayload.frontHtmlContent);
-        data.append('plasticCard[size]', previewPayload.plasticCardSize);
         setLetterPreviewPayload(data, previewPayload);
-        if(selectedCardInsertDesignFormat === 'html') {
-          data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
-        } else if(selectedCardInsertDesignFormat === 'pdf') {
-          data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
-        } else if(selectedCardInsertDesignFormat === 'template') {
-          data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
+        if(selectedCardInsertType !== 'doubleSide') {
+          data.append('plasticCard[size]', previewPayload.plasticCardSize);
+          if(selectedCardInsertDesignFormat === 'html') {
+            data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
+          } else if(selectedCardInsertDesignFormat === 'pdf') {
+            data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
+          } else if(selectedCardInsertDesignFormat === 'template') {
+            data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
+          }
         }
       }
       if (!previewPayload.isExpressDelivery) {
