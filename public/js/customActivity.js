@@ -971,9 +971,24 @@ define([
         }
       }
       if(selectedMessageType === 'LettersCardInsert'){
-        let isHtmlInputValid = validateInputField($(`.${selectedMessageType} .screen-3 .html-editor-front`));
-        if (!isHtmlInputValid) {
-          isValid = false;
+        let postcardHtmlEditorErrorMsg = $(`.${selectedMessageType} .screen-3 .html-editor .error-msg`);
+        if(selectedCardInsertDesignFormat === 'html') {
+          const cardfrontHtmlContent = $(`.${selectedMessageType} .screen-3 .html-editor-front-card-insert`).val().trim();
+          const cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-3 .html-editor-front-card-insert`).data('btn-label');
+          const cardbackHtmlContent = true ? undefined : $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`).val().trim();
+          const cardbackHtmlBtnLabel = true ? undefined : $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`).data('btn-label');  
+  
+          if (cardfrontHtmlContent === '' || cardbackHtmlContent === '') {
+            isValid = false;
+            let missingFields = [];
+            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
+            if (cardbackHtmlContent === '') {missingFields.push(cardbackHtmlBtnLabel);}
+            if (missingFields.length > 0) {
+              postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${missingFields.join(', ')}.`).addClass('show');
+            }
+          } else { 
+            postcardHtmlEditorErrorMsg.removeClass('show');
+          }
         }
       }
     }
