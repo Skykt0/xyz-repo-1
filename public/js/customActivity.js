@@ -928,10 +928,6 @@ define([
       }
 
       if(selectedMessageType === 'LettersCardInsert') {
-        let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-2 .frontTemplate`));
-        if(!frontTemplateValid) {
-          isValid = false;
-        }
         if(selectedCardInsertDesignFormat === 'html') {
           let cardfrontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front-card-insert`).val().trim();
           let cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-front-card-insert`).data('btn-label');
