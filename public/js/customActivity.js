@@ -905,13 +905,6 @@ define([
       if (!isDescriptionValid || !isPdfLinkValid) {
         isValid = false;
       }
-
-      if(selectedMessageType === 'LettersCardInsert') {
-        let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-2 .frontTemplate`));
-        if(!frontTemplateValid) {
-          isValid = false;
-        }
-      }
   
       if (selectedMessageType === 'trifold') {
         let frontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front`).val().trim();
@@ -931,6 +924,39 @@ define([
           }
         } else { 
           postcardHtmlEditorErrorMsg.removeClass('show');
+        }
+      }
+
+      if(selectedMessageType === 'LettersCardInsert') {
+        let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-2 .frontTemplate`));
+        if(!frontTemplateValid) {
+          isValid = false;
+        }
+        if(selectedCardInsertDesignFormat === 'html') {
+          let cardfrontHtmlContent = $(`.${selectedMessageType} .screen-2 .html-editor-front-card-insert`).val().trim();
+          let cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-2 .html-editor-front-card-insert`).data('btn-label');
+          let cardBackHtmlElement = $(`.${selectedMessageType} .screen-2 .html-editor-back-card-insert`);
+          let cardBackHtmlContent = cardBackHtmlElement.val() === undefined || cardBackHtmlElement.hasClass('hidden') ? undefined : cardBackHtmlElement.val().trim();
+          let cardBackHtmlBtnLabel = cardBackHtmlElement.val() === undefined || cardBackHtmlElement.hasClass('hidden') ? undefined : cardBackHtmlElement.data('btn-label');
+          let htmlEditorErrorMsg = $(`.${selectedMessageType} .screen-2 .html-editor .error-msg`);
+
+          if (cardfrontHtmlContent === '' || cardBackHtmlContent === '') {
+            isValid = false;
+            let missingFields = [];
+            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
+            if (cardBackHtmlContent === '') {missingFields.push(cardBackHtmlBtnLabel);}
+
+            if (missingFields.length > 0) {
+              htmlEditorErrorMsg.text(`Please enter content in the following fields: ${missingFields.join(', ')}.`).addClass('show');
+            }
+          } else { 
+            htmlEditorErrorMsg.removeClass('show');
+          }
+        } else {
+          let isValidInput = validateInputField($(`.${selectedMessageType} .screen-2 .card-insert-input-${selectedCardInsertDesignFormat} input`));
+          if(!isValidInput) {
+            isValid = false;
+          }
         }
       }
     }
