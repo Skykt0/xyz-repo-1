@@ -1714,6 +1714,14 @@ define([
     const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}List`);
     $list.empty();
 
+    if (templates.length === 0) {
+      const $emptyItem = $('<li>')
+        .text('No options available')
+        .attr('data-id', '')
+        .addClass('dropdown-item disabled');
+      $list.append($emptyItem);
+    }
+    
     templates.forEach(template => {
       const $listItem = $('<li>')
         .text(template.description || 'No description')
