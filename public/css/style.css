@@ -1188,7 +1188,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .letters-card-insert .screen-3 .template-container {
+  flex-direction: row;
+}
+
+.letters-card-insert .screen-3 .template-container.html .template-screen-wrapper {
   width: 54%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .letters-card-insert .screen-3 .template-container .input-box {
