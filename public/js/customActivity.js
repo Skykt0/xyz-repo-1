@@ -36,6 +36,10 @@ define([
 
   function onRender() {
     $('.activity-loader').addClass('show');
+    connection.trigger('updateButton', {
+      button: 'next',
+      enabled: false,
+    });
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
     connection.trigger('requestEndpoints');
