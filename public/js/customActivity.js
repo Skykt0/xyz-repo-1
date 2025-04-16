@@ -314,8 +314,8 @@ define([
                   $(`.${selectedMessageType} .screen-2 .html-editor-back-card-insert`).removeClass('show').addClass('hidden');
                   $(`.${selectedMessageType} .screen-2 .html-btn-card-back`).removeClass('show').addClass('hidden');
                 } else if (selectedCardType === 'doubleSide' && selectedCreationType === 'pdf-creation-type') {
-                  $(`.${selectedMessageType} .screen-2 .html-editor-back-card-insert`).removeClass('hidden').addClass('show');
-                  $(`.${selectedMessageType} .screen-2 .html-btn-card-back`).removeClass('hidden').addClass('show');
+                  $(`.${selectedMessageType} .screen-2 .html-editor-back-card-insert`).removeClass('hidden');
+                  $(`.${selectedMessageType} .screen-2 .html-btn-card-back`).removeClass('hidden');
                 }
               }
             }
