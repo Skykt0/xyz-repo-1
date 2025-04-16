@@ -311,8 +311,8 @@ define([
         
                 // 🔽 Hide back editor + button if single side & PDF creation
                 if (selectedCardType === 'singleSide' && selectedCreationType === 'pdf-creation-type') {
-                  $(`.${selectedMessageType} .screen-2 .html-editor-back-card-insert`).removeClass('show').addClass('hidden');
-                  $(`.${selectedMessageType} .screen-2 .html-btn-card-back`).removeClass('show').addClass('hidden');
+                  $(`.${selectedMessageType} .screen-2 .html-editor-back-card-insert`).removeClass('show');
+                  $(`.${selectedMessageType} .screen-2 .html-btn-card-back`).removeClass('show');
                 } else if (selectedCardType === 'doubleSide' && selectedCreationType === 'pdf-creation-type') {
                   $(`.${selectedMessageType} .screen-2 .html-editor-back-card-insert`).removeClass('hidden').addClass('show');
                   $(`.${selectedMessageType} .screen-2 .html-btn-card-back`).removeClass('hidden').addClass('show');
