@@ -36,6 +36,10 @@ define([
 
   function onRender() {
     $('.activity-loader').addClass('show');
+    connection.trigger('updateButton', {
+      button: 'next',
+      enabled: false,
+    });
     connection.trigger('requestSchema');
     connection.trigger('requestTokens');
     connection.trigger('requestEndpoints');
@@ -249,7 +253,8 @@ define([
   function onClickedNext() {
     switch (currentStep.key) {
     case 'step1':
-      if (validateApiKeys()) {
+      const isClientCredentialsFetched = previewPayload.clientId !== undefined && previewPayload.clientId !== '' ? true : false;
+      if (isClientCredentialsFetched && validateApiKeys()) {
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
             handleApiKeyToggle();
@@ -297,8 +302,7 @@ define([
           if(selectedMessageType === 'LettersCardInsert') {
             $('.card-insert-input').addClass('hidden');
             $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
-            $('.html-btn-front').addClass('show');
-            $('.html-editor-front').addClass('show');
+            $('.html-btn-front').click();
             if(selectedCardType === 'doubleSide'){
               $(`.card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardType}`).removeClass('hidden');
             }
@@ -415,11 +419,6 @@ define([
       connection.trigger('updateButton', {
         button: 'back',
         visible: false,
-      });
-      connection.trigger('updateButton', {
-        button: 'next',
-        text: 'next',
-        visible: true
       });
       break;
     case 'step2':
@@ -729,6 +728,8 @@ define([
           $('label[for="extTempId"]').css('display','none');
           $('#extTempId').prop('checked', false);
         }
+        $('#single-sided').prop('checked', true);
+        $('#card-insert-html').prop('checked', true);
       } else {
         $('#card-insert-type').addClass('hidden');
         $('.card-insert-creation-type-wrapper').addClass('hidden');
@@ -1854,6 +1855,10 @@ define([
               $('#live-api-key').val(value);
             }
           }
+          connection.trigger('updateButton', {
+            button: 'next',
+            enabled: true,
+          });
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
           $('body').css('overflow', '');

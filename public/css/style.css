@@ -1175,27 +1175,35 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .extra-service-list .dropdown-item:first-child,
-.envelope-type-list .dropdown-item:first-child  {
+.envelope-type-list .dropdown-item:first-child,
+.placeholder-style  {
   color: grey;
 }
 
-.placeholder-style {
-	color: grey;
-}
-
-.letters-card-insert .screen-3 .spacer {
+.letters-card-insert .screen-3 .spacer,
+.letters-card-insert .screen-3 .template-container {
   flex-direction: row;
 }
 
-.letters-card-insert .screen-3 .template-container {
+.letters-card-insert .screen-3 .template-container.html .template-screen-wrapper,
+.letters-card-insert .screen-3 .template-container.template .template-screen-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.letters-card-insert .screen-3 .template-container.html .template-screen-wrapper {
   width: 54%;
 }
 
-.letters-card-insert .screen-3 .template-container .input-box {
+.letters-card-insert .screen-3 .template-container .input-box,
+.letters-card-insert .screen-2 .pdf-container.html .pdf-screen-wrapper .letter-pdf-fields .input-box {
   width: 46%;
 }
 
-.letters-card-insert .screen-2 .pdf-container .input-box {
+.letters-card-insert .screen-2 .pdf-container .input-box,
+.letters-card-insert .screen .template-container.template .input-box,
+.letters-card-insert .screen .pdf-container.template .input-box {
   width: 30%;
 }
 
@@ -1210,18 +1218,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 2.5rem;
 }
 
-.letters-card-insert .screen-2 .pdf-container.html .pdf-screen-wrapper .letter-pdf-fields .input-box {
-  width: 46%;
-}
-
 .letters-card-insert .screen .template-container.template,
 .letters-card-insert .screen .pdf-container.template {
   width: 100%;
-}
-
-.letters-card-insert .screen .template-container.template .input-box,
-.letters-card-insert .screen .pdf-container.template .input-box {
-  width: 30%;
 }
 
 .letters-card-insert .screen .template-container.template .checkboxes-container,
@@ -1265,4 +1264,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .input-field:disabled {
   color: gray;
   opacity: 0.6;
+}
+
+.extra-service-dropdown-wrap,
+.envelope-type-dropdown-wrap {
+  cursor: default;
 }
