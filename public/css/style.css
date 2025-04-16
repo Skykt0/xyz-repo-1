@@ -1185,7 +1185,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   flex-direction: row;
 }
 
-.letters-card-insert .screen-3 .template-container.html .template-screen-wrapper {
+.letters-card-insert .screen-3 .template-container.html .template-screen-wrapper,
+.letters-card-insert .screen-3 .template-container.template .template-screen-wrapper {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
