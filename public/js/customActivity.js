@@ -291,24 +291,34 @@ define([
 
         if (isCartInsertEnabled) {
           $('.trifold .doubleSide, .trifold .singleSide').hide();
-          let selectedCardType = $('input[name="cardType"]:checked').val();
+        
+          let selectedCardType = $('input[name="cardType"]:checked').val(); // 'singleSide' or 'doubleSide'
           $(`.trifold .${selectedCardType}`).show();
-          if(selectedMessageType === 'LettersCardInsert') {
+        
+          if (selectedMessageType === 'LettersCardInsert') {
             $('.card-insert-input').addClass('hidden');
             $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
             $(`.card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardType}`).removeClass('hidden');
+        
             $('.html-btn-front').addClass('show');
             $('.html-editor-front').addClass('show');
-            if(selectedCreationType === 'pdf-creation-type' || selectedCreationType === 'template-creation-type') {
-              $(`.${selectedMessageType} .${selectedCreationType}`).removeClass('html');
-              $(`.${selectedMessageType} .${selectedCreationType}`).addClass('template');
-              if(selectedCardInsertDesignFormat === 'html') {
-                $(`.${selectedMessageType} .${selectedCreationType}`).addClass('html');
-                $(`.${selectedMessageType} .${selectedCreationType}`).removeClass('template');
+        
+            if (selectedCreationType === 'pdf-creation-type' || selectedCreationType === 'template-creation-type') {
+              $(`.${selectedMessageType} .${selectedCreationType}`).removeClass('html').addClass('template');
+        
+              if (selectedCardInsertDesignFormat === 'html') {
+                $(`.${selectedMessageType} .${selectedCreationType}`).addClass('html').removeClass('template');
+        
+                // 🔽 Hide back editor + button if single side & PDF creation
+                if (selectedCardType === 'singleSide' && selectedCreationType === 'pdf-creation-type') {
+                  $(`.${selectedMessageType} .screen-2 .html-editor-back-card-insert`).removeClass('show').addClass('hidden');
+                  $(`.${selectedMessageType} .screen-2 .html-btn-back`).removeClass('show').addClass('hidden');
+                }
               }
             }
           }
         }
+        
 
         $(`.${selectedMessageType} .error-msg`).removeClass('show');
         $(`.${selectedMessageType} input.error`).removeClass('error');
