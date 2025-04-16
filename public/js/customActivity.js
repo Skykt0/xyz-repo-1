@@ -249,7 +249,8 @@ define([
   function onClickedNext() {
     switch (currentStep.key) {
     case 'step1':
-      if (validateApiKeys()) {
+      const isClientCredentialsFetched = previewPayload.clientId !== undefined && previewPayload.clientId !== '' ? true : false;
+      if (isClientCredentialsFetched && validateApiKeys()) {
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
             handleApiKeyToggle();
