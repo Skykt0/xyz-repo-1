@@ -1141,6 +1141,7 @@ define([
     } else if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
       const mailingClass = $(`.${selectedMessageType} .${selectedCreationType} .mailing-class`).val();
+      let doubleSidedInput = $(`.${selectedMessageType} .${selectedCreationType} .double-sided-input`).is(':checked');
 
       previewPayload.screen = 'pdf';
       previewPayload.description = description;
@@ -1160,7 +1161,11 @@ define([
         previewPayload.pdfLinkInput = pdfLink;
         previewPayload.cardSize = pdfCardSize;
         previewPayload.frontHtmlContent = frontHtmlContent;
-        previewPayload.backHtmlContent = backHtmlContent;
+        if(doubleSidedInput){
+          previewPayload.backHtmlContent = backHtmlContent;
+        } else {
+          previewPayload.backHtmlContent = '';
+        }
       } else {
         const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
         const pdfLink = $(`.${selectedMessageType} .${selectedCreationType} .pdfLink`).val().trim();
