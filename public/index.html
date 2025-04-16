@@ -1203,15 +1203,15 @@
           <div class="screen-1 screen">
               <div class="container spacer html-creation-type">
                 <div class="html-screen-wrapper">
-                  <h3 class="section-label">Letters with Card Insert -  HTML</h3>
-                  <div class="outer-input-fields">
-                      <div class="input-fields">
-                          <div class="input-box">
+                    <h3 class="section-label">Letters with Card Insert -  HTML</h3>
+                    <div class="outer-input-fields">
+                        <div class="input-fields">
+                            <div class="input-box">
                               <label for="letter-html-description" class="input-label">Description <span class="asterisk">*</span></label>
                               <input type="text" class="input-field description" id="letter-html-description" name="description" />
                               <span class="error-msg">The input value is missing</span>
-                          </div>
-                          <div class="input-box">
+                            </div>
+                            <div class="input-box">
                               <label for="letter-html-mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
                               <span class="error-msg">The input value is missing</span>
                               <select class="input-field mailing-class" id="letter-html-mailingClass" name="mailingClass">
@@ -1222,71 +1222,101 @@
                                       Standard Class (10 - 14 business days)
                                   </option>
                               </select>
-                          </div>
-                          <div class="input-box">
-                              <label for="letter-html-extra-service" class="input-label">Extra Service</label>
-                              <div class="mapping-dropdown">
-                                <div class="extra-service-dropdown-wrap">
-                                    <input type="text" id="letter-html-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
-                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div class="input-box">
+                                <label for="letter-html-extra-service" class="input-label">Extra Service</label>
+                                <div class="mapping-dropdown">
+                                    <div class="extra-service-dropdown-wrap">
+                                        <input type="text" id="letter-html-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
+                                        <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                    </div>
+                                    <div id="extra-service-list" class="dropdown-options extra-service-list">
+                                        <li class="dropdown-item" data-id="">Select Extra Service</li>
+                                        <li class="dropdown-item" data-id="registered">Registered Mail</li>
+                                        <li class="dropdown-item" data-id="certified">Certified</li>
+                                        <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
+                                    </div>
                                 </div>
-                                <div id="extra-service-list" class="dropdown-options extra-service-list">
-                                  <li class="dropdown-item" data-id="">Select Extra Service</li>
-                                  <li class="dropdown-item" data-id="registered">Registered Mail</li>
-                                  <li class="dropdown-item" data-id="certified">Certified</li>
-                                  <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
-                                </div>
-                              </div>
-                          </div>
-                          <div class="input-box">
-                            <label for="letter-html-return-envelope-input" class="input-label">Return Envelope</label>
-                            <div class="mapping-dropdown">
-                                <div class="return-envelope-dropdown-wrap">
-                                    <input type="text" id="letter-html-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
+                            </div>
+                            <div class="input-box">
+                                <label for="letter-html-return-envelope-input" class="input-label">Return Envelope</label>
+                                <div class="mapping-dropdown">
+                                    <div class="return-envelope-dropdown-wrap">
+                                        <input type="text" id="letter-html-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
                                         autocomplete="off" aria-describedby="returnEnvelopeList" aria-haspopup="listbox" data-id=""
                                         aria-expanded="false" />
-                                    <span class="error-msg">Please enter return envelope</span>
-                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
-                                </div>
-                                <div id="returnEnvelopeList" class="dropdown-options returnEnvelopeList" role="listbox"
+                                        <span class="error-msg">Please enter return envelope</span>
+                                        <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                    </div>
+                                    <div id="returnEnvelopeList" class="dropdown-options returnEnvelopeList" role="listbox"
                                     aria-labelledby="return-envelope-input"></div>
-                                <span class="error-message"></span>
-                            </div>
-                          </div>
-                          <div class="input-box">
-                            <label for="letter-html-envelope-type" class="input-label">Envelope Type</label>
-                            <div class="mapping-dropdown">
-                              <div class="envelope-type-dropdown-wrap">
-                                  <input type="text" id="letter-html-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window"/>
-                                  <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
-                              </div>
-                              <div id="envelope-type-list" class="dropdown-options envelope-type-list">
-                                <li class="dropdown-item" data-id="">Select Envelope Type</li>
-                                <li class="dropdown-item" data-id="standard_double_window">Standard Double Window</li>
-                                <li class="dropdown-item" data-id="flat">Flat Mailer</li>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="input-box card-insert-input card-insert-input-pdf hidden">
-                            <label for="letter-card-insert-input-html-pdfLink" class="input-label">Card PDF URL <span class="asterisk">*</span></label>
-                            <input type="text" class="input-field pdfLink" id="letter-card-insert-input-html-pdfLink" name="pdfLink" />
-                            <span class="error-msg">Please enter required field</span>
-                          </div>
-                          <div class="input-box card-insert-input card-insert-input-template hidden">
-                            <label for="letter-card-insert-html-template-input" class="input-label">Card Template <span class="asterisk">*</span></label>
-                            <div class="mapping-dropdown">
-                                <div class="template-dropdown-wrap">
-                                    <input type="text" id="letter-card-insert-html-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
-                                        autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
-                                        aria-expanded="false" />
-                                    <span class="error-msg">Please enter template</span>
+                                    <span class="error-message"></span>
                                 </div>
-                                <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
-                                    aria-labelledby="template-input"></div>
-                                <span class="error-message"></span>
                             </div>
-                          </div>
-                      </div>
+                            <div class="input-box">
+                                <label for="letter-html-envelope-type" class="input-label">Envelope Type</label>
+                                <div class="mapping-dropdown">
+                                    <div class="envelope-type-dropdown-wrap">
+                                        <input type="text" id="letter-html-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window"/>
+                                        <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                    </div>
+                                    <div id="envelope-type-list" class="dropdown-options envelope-type-list">
+                                        <li class="dropdown-item" data-id="">Select Envelope Type</li>
+                                        <li class="dropdown-item" data-id="standard_double_window">Standard Double Window</li>
+                                        <li class="dropdown-item" data-id="flat">Flat Mailer</li>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-box card-insert-input card-insert-input-pdf hidden">
+                                <label for="letter-card-insert-input-html-pdfLink" class="input-label">Card PDF URL <span class="asterisk">*</span></label>
+                                <input type="text" class="input-field pdfLink" id="letter-card-insert-input-html-pdfLink" name="pdfLink" />
+                                <span class="error-msg">Please enter required field</span>
+                            </div>
+                            <div class="input-box card-insert-input card-insert-input-template-doubleSide hidden">
+                                <label for="letter-card-insert-front-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
+                                <div class="mapping-dropdown">
+                                    <div class="template-dropdown-wrap">
+                                        <input type="text" id="letter-card-insert-front-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
+                                            autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
+                                            aria-expanded="false" />
+                                        <span class="error-msg">Please enter template</span>
+                                        <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                    </div>
+                                    <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                        aria-labelledby="template-input"></div>
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                            <div class="input-box card-insert-input card-insert-input-template-doubleSide hidden">
+                                <label for="letter-card-insert-back-template-input" class="input-label">Card Back Template <span class="asterisk">*</span></label>
+                                <div class="mapping-dropdown">
+                                    <div class="template-dropdown-wrap">
+                                        <input type="text" id="letter-card-insert-back-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
+                                            autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
+                                            aria-expanded="false" />
+                                        <span class="error-msg">Please enter template</span>
+                                        <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                    </div>
+                                    <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                        aria-labelledby="template-input"></div>
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                            <div class="input-box card-insert-input card-insert-input-template singleSide-field-hide hidden">
+                                <label for="letter-card-insert-html-template-input" class="input-label">Card Template <span class="asterisk">*</span></label>
+                                <div class="mapping-dropdown">
+                                    <div class="template-dropdown-wrap">
+                                        <input type="text" id="letter-card-insert-html-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
+                                            autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
+                                            aria-expanded="false" />
+                                        <span class="error-msg">Please enter template</span>
+                                    </div>
+                                    <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                        aria-labelledby="template-input"></div>
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                        </div>
                   </div>
                   <div class="html-size">
                       <div class="input-label-radio"><b>Card Size</b> <span class="asterisk">*</span></div>
