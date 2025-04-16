@@ -410,7 +410,7 @@ body {
 .left-box {
 	display: flex;
 	flex-direction: column;
-	gap: 2rem;
+	gap: 1.75rem;
 }
 
 .section-label {
@@ -443,7 +443,7 @@ body {
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	color: #6b6b6b;
+	color: #000;
 }
 
 #card-insert-container {
@@ -570,7 +570,7 @@ input:checked + .test-to-live-slider::before {
 .card-insert-wrapper {
 	display: none;
 	flex-direction: column;
-	gap: 1rem;
+	gap: 1.75rem;
 }
 
 .card-insert-wrapper.visible {
@@ -1157,6 +1157,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .checkbox-wrap .checkbox-label {
   display: flex;
   gap: 0.5rem;
+  width: fit-content;
 }
 
 .letter-pdf-fields, .letter-template-fields, .letter-card-insert-template-fields {
@@ -1257,4 +1258,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   grid-template-columns: 1fr 1fr;
   row-gap: 1.75rem;
   column-gap: unset;
+}
+
+.checkbox-input:disabled + span,
+.input-field:disabled + .dropdown-icon-angle-wrap,
+.input-field:disabled {
+  color: gray;
+  opacity: 0.6;
 }
