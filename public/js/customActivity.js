@@ -293,7 +293,7 @@ define([
         if (isCartInsertEnabled) {
           $('.trifold .doubleSide, .trifold .singleSide').hide();
         
-          let selectedCardType = $('input[name="cardType"]:checked').val(); // 'singleSide' or 'doubleSide'
+          let selectedCardType = $('input[name="cardType"]:checked').val();
           $(`.trifold .${selectedCardType}`).show();
         
           if (selectedMessageType === 'LettersCardInsert') {
@@ -310,7 +310,6 @@ define([
               if (selectedCardInsertDesignFormat === 'html') {
                 $(`.${selectedMessageType} .${selectedCreationType}`).addClass('html').removeClass('template');
         
-                // 🔽 Hide back editor + button if single side & PDF creation
                 if (selectedCardType === 'singleSide' && selectedCreationType === 'pdf-creation-type') {
                   $(`.${selectedMessageType} .screen-2 .html-editor-back-card-insert`).addClass('hidden');
                   $(`.${selectedMessageType} .screen-2 .html-btn-card-back`).addClass('hidden');
