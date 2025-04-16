@@ -728,6 +728,9 @@ define([
           $('label[for="extTempId"]').css('display','none');
           $('#extTempId').prop('checked', false);
         }
+        $('#single-sided').prop('checked', true);
+        $('#card-insert-html').prop('checked', true);
+        $('.step2radioBTN#htmlId').prop('checked', true);
       } else {
         $('#card-insert-type').addClass('hidden');
         $('.card-insert-creation-type-wrapper').addClass('hidden');
