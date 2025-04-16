@@ -296,9 +296,11 @@ define([
           if(selectedMessageType === 'LettersCardInsert') {
             $('.card-insert-input').addClass('hidden');
             $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
-            $(`.card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardType}`).removeClass('hidden');
             $('.html-btn-front').addClass('show');
             $('.html-editor-front').addClass('show');
+            if(selectedCardType === 'doubleSide'){
+              $(`.card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardType}`).removeClass('hidden');
+            }
             if(selectedCreationType === 'pdf-creation-type' || selectedCreationType === 'template-creation-type') {
               $(`.${selectedMessageType} .${selectedCreationType}`).removeClass('html');
               $(`.${selectedMessageType} .${selectedCreationType}`).addClass('template');
@@ -1004,8 +1006,9 @@ define([
         if(selectedCardInsertDesignFormat === 'html') {
           const cardfrontHtmlContent = $(`.${selectedMessageType} .screen-3 .html-editor-front-card-insert`).val().trim();
           const cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-3 .html-editor-front-card-insert`).data('btn-label');
-          const cardbackHtmlContent = true ? undefined : $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`).val().trim();
-          const cardbackHtmlBtnLabel = true ? undefined : $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`).data('btn-label');  
+          const cardBackHtmlElement = $(`.${selectedMessageType} .screen-3 .html-editor-back-card-insert`);
+          const cardbackHtmlContent = cardBackHtmlElement.hasClass('hidden') ? undefined : cardBackHtmlElement.val().trim();
+          const cardbackHtmlBtnLabel = cardBackHtmlElement.hasClass('hidden') ? undefined : cardBackHtmlElement.data('btn-label'); 
 
           if (cardfrontHtmlContent === '' || cardbackHtmlContent === '') {
             isValid = false;
@@ -1013,7 +1016,11 @@ define([
             if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
             if (cardbackHtmlContent === '') {missingFields.push(cardbackHtmlBtnLabel);}
             if (missingFields.length > 0) {
-              postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${missingFields.join(', ')}.`).addClass('show');
+              if(selectedCardInsertType === 'singleSide'){
+                postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${cardfrontHtmlBtnLabel}.`).addClass('show');
+              } else{
+                postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${missingFields.join(', ')}.`).addClass('show');
+              }
             }
           } else { 
             postcardHtmlEditorErrorMsg.removeClass('show');
@@ -1721,7 +1728,7 @@ define([
         .addClass('dropdown-item disabled');
       $list.append($emptyItem);
     }
-    
+
     templates.forEach(template => {
       const $listItem = $('<li>')
         .text(template.description || 'No description')
