@@ -241,7 +241,7 @@ define([
 
   async function onGetTokens (tokens) {
     authToken = tokens.fuel2token;
-    await fetchExternalKey('PostGrid_API_Credentials');
+    await fetchExternalKey('PostGrid_Credentials_Data');
     await fetchExternalKey('Postgrid_Logging_Data');
   }
 
