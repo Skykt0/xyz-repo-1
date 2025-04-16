@@ -253,6 +253,7 @@ define([
         authenticateApiKeys().then((isAuthenticated) => {
           if (isAuthenticated) {
             handleApiKeyToggle();
+            executeScreenTwoMethods();
             connection.trigger('nextStep');
           } else {
             handleValidationFailure();
