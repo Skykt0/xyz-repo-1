@@ -410,7 +410,7 @@ body {
 .left-box {
 	display: flex;
 	flex-direction: column;
-	gap: 2rem;
+	gap: 1.75rem;
 }
 
 .section-label {
@@ -570,7 +570,7 @@ input:checked + .test-to-live-slider::before {
 .card-insert-wrapper {
 	display: none;
 	flex-direction: column;
-	gap: 1rem;
+	gap: 1.75rem;
 }
 
 .card-insert-wrapper.visible {
