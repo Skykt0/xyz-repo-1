@@ -418,7 +418,7 @@ define([
       });
       connection.trigger('updateButton', {
         button: 'next',
-        visible: false,
+        enabled: false,
       });
       break;
     case 'step2':
@@ -1855,7 +1855,7 @@ define([
           }
           connection.trigger('updateButton', {
             button: 'next',
-            visible: true,
+            enabled: true,
           });
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
