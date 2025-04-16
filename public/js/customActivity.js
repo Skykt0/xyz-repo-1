@@ -42,7 +42,6 @@ define([
     connection.trigger('ready');
     $('#card-insert-type').addClass('hidden');
     $('.card-insert-creation-type-wrapper').addClass('hidden');
-    $('.card-insert-creation-type-wrapper').addClass('hidden');
   }
   
   connection.on('initActivity', initialize);
@@ -902,11 +901,10 @@ define([
     if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       const pdfLinkElement = $(`.${selectedMessageType} .screen-2 .pdfLink`);
       let isDescriptionValid = validateInputField($(`.${selectedMessageType} .screen-2 .description`));
-      let frontTemplateValid = validateInputField($(`.${selectedMessageType} .screen-2 .frontTemplate`));
       pdfLinkElement.siblings('.error-msg').text('Please enter required field');
       let isPdfLinkValid = validateInputField(pdfLinkElement);
       
-      if (!isDescriptionValid || !isPdfLinkValid || !frontTemplateValid) {
+      if (!isDescriptionValid || !isPdfLinkValid) {
         isValid = false;
       }
   
