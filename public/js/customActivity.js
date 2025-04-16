@@ -419,14 +419,14 @@ define([
       connection.trigger('updateButton', {
         button: 'next',
         text: 'next',
-        visible: true
+        visible: false
       });
       break;
     case 'step2':
       $('#step2').show();
       connection.trigger('updateButton', {
         button: 'back',
-        visible: false,
+        visible: true,
       });
       connection.trigger('updateButton', {
         button: 'next',
@@ -1854,6 +1854,11 @@ define([
               $('#live-api-key').val(value);
             }
           }
+          connection.trigger('updateButton', {
+            button: 'next',
+            text: 'next',
+            visible: false
+          });
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
           $('body').css('overflow', '');
