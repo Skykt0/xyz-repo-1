@@ -1857,7 +1857,7 @@ define([
           connection.trigger('updateButton', {
             button: 'next',
             text: 'next',
-            visible: false
+            visible: true
           });
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
