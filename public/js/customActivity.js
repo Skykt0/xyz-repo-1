@@ -420,10 +420,6 @@ define([
         button: 'back',
         visible: false,
       });
-      connection.trigger('updateButton', {
-        button: 'next',
-        enabled: false,
-      });
       break;
     case 'step2':
       $('#step2').show();
