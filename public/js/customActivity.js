@@ -301,6 +301,7 @@ define([
             $('.html-editor-front').addClass('show');
             if(selectedCardType === 'doubleSide'){
               $(`.card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardType}`).removeClass('hidden');
+              $('.singleSide-field-hide').addClass('hidden');
             }
             if(selectedCreationType === 'pdf-creation-type' || selectedCreationType === 'template-creation-type') {
               $(`.${selectedMessageType} .${selectedCreationType}`).removeClass('html');
@@ -814,10 +815,14 @@ define([
       let cardfrontHtmlContent, cardfrontHtmlBtnLabel, cardbackHtmlContent, cardbackHtmlBtnLabel;
 
       if(isCartInsertEnabled && selectedCardInsertType === 'doubleSide') {
-        cardfrontHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val().trim();
-        cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).data('btn-label');
+        let cardfrontHtmlElement = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`);
+        let cardbackHtmlElement = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`);
         cardbackHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-back-card-insert`).val().trim();
-        cardbackHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-back-card-insert`).data('btn-label');  
+        cardbackHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-back-card-insert`).data('btn-label'); 
+        cardfrontHtmlContent = cardfrontHtmlElement === undefined || cardfrontHtmlElement.hasClass('hidden') ? undefined : cardfrontHtmlElement.val().trim();
+        cardfrontHtmlBtnLabel = cardfrontHtmlElement === undefined || cardfrontHtmlElement.hasClass('hidden') ? undefined : cardfrontHtmlElement.data('btn-label'); 
+        cardbackHtmlContent = cardbackHtmlElement === undefined || cardbackHtmlElement.hasClass('hidden') ? undefined : cardbackHtmlElement.val().trim();
+        cardbackHtmlBtnLabel = cardbackHtmlElement === undefined || cardbackHtmlElement.hasClass('hidden') ? undefined : cardbackHtmlElement.data('btn-label');
 
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '' || cardbackHtmlContent === '') {
           isValid = false;
@@ -826,11 +831,11 @@ define([
             postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}, ${cardbackHtmlBtnLabel}.`).addClass('show');
           } else {
             let missingFields = [];
-            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
-            if (cardbackHtmlContent === '') {missingFields.push(cardbackHtmlBtnLabel);}
             if (frontHtmlContent === '') {missingFields.push(frontHtmlBtnLabel);}
             if (backHtmlContent === '') {missingFields.push(backHtmlBtnLabel);}
-
+            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
+            if (cardbackHtmlContent === '') {missingFields.push(cardbackHtmlBtnLabel);}
+            
             if (missingFields.length > 0) {
               postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${missingFields.join(', ')}.`).addClass('show');
             }
