@@ -426,7 +426,7 @@ define([
       $('#step2').show();
       connection.trigger('updateButton', {
         button: 'back',
-        visible: true,
+        visible: false,
       });
       connection.trigger('updateButton', {
         button: 'next',
