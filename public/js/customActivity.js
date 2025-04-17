@@ -1035,10 +1035,12 @@ define([
             isValid = false;
           }
 
-          const doubleSideInputElement = $(`.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardInsertType} input`);
-          if(!doubleSideInputElement.hasClass('hidden')) {
-            if(!validateInputField(doubleSideInputElement)) {
-              isValid = false;
+          if(selectedCardInsertDesignFormat === 'doubleSide') {
+            const doubleSideInputElement = $(`.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardInsertType} input`);
+            if(!doubleSideInputElement.hasClass('hidden')) {
+              if(!validateInputField(doubleSideInputElement)) {
+                isValid = false;
+              }
             }
           }
           
