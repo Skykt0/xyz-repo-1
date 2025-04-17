@@ -1252,6 +1252,8 @@ define([
         previewPayload.size = size;
       }
     }
+    console.log("THis is template payload" + previewPayload);
+    console.log(JSON.stringify(previewPayload));
   }
 
   async function createMessage() {
@@ -1401,6 +1403,7 @@ define([
       }
     }
 
+    console.log(data.toString);
     try {
       const response = await fetch(url, {
         method: 'POST',
