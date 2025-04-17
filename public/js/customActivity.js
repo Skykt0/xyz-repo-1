@@ -305,6 +305,7 @@ define([
             $('.html-btn-front').click();
             if(selectedCardType === 'doubleSide'){
               $(`.card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardType}`).removeClass('hidden');
+              $(`.card-insert-input-${selectedCardInsertDesignFormat}`).addClass('hidden');
             }
             if(selectedCreationType === 'pdf-creation-type' || selectedCreationType === 'template-creation-type') {
               $(`.${selectedMessageType} .${selectedCreationType}`).removeClass('html');
