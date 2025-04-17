@@ -1279,6 +1279,9 @@ define([
         data.append('outsideHTML', previewPayload.backHtmlContent);
       }  else if(selectedMessageType !== 'Letters' && selectedCardInsertType !== 'doubleSide') {
         data.append('plasticCard[size]', previewPayload.plasticCardSize);
+        data.append('express', previewPayload.isExpressDelivery);
+        data.append('pdf', previewPayload.pdf);
+          setLetterPreviewPayload(data, previewPayload);
         if(selectedCardInsertDesignFormat === 'html') {
           data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
         } else if(selectedCardInsertDesignFormat === 'pdf') {
@@ -1286,6 +1289,10 @@ define([
         } else if(selectedCardInsertDesignFormat === 'template') {
           data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
         }
+      } else {
+        data.append('express', previewPayload.isExpressDelivery);
+        data.append('pdf', previewPayload.pdf);
+        setLetterPreviewPayload(data, previewPayload);
       }
     } else if (previewPayload.screen === 'html') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
