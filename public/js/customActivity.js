@@ -1267,11 +1267,16 @@ define([
         data.append(pdfLinkKey,previewPayload.pdfLinkInput);
         data.append('insideHTML', previewPayload.frontHtmlContent);
         data.append('outsideHTML', previewPayload.backHtmlContent);
-      } else {
-        data.append('express', previewPayload.isExpressDelivery);
-        data.append('pdf', previewPayload.pdf);
-        setLetterPreviewPayload(data, previewPayload);
-      } 
+      }  else if(selectedMessageType !== 'Letters' && selectedCardInsertType !== 'doubleSide') {
+        data.append('plasticCard[size]', previewPayload.plasticCardSize);
+        if(selectedCardInsertDesignFormat === 'html') {
+          data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
+        } else if(selectedCardInsertDesignFormat === 'pdf') {
+          data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
+        } else if(selectedCardInsertDesignFormat === 'template') {
+          data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
+        }
+      }
     } else if (previewPayload.screen === 'html') {
       headers['Content-Type'] = 'application/x-www-form-urlencoded';
       data = new URLSearchParams({
