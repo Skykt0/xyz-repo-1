@@ -1156,6 +1156,7 @@ define([
       previewPayload.screen = 'pdf';
       previewPayload.description = description;
       previewPayload.mailingClass = mailingClass;
+      previewPayload.plasticCardSize = selectedPlasticCardSize;
 
       if(selectedMessageType !== 'Letters') {
         const size = $(`.${selectedMessageType} .pdf-size .radio-input:checked`).val();
@@ -1262,7 +1263,7 @@ define([
       data.append('from', fromContact.id || '');
       data.append('description', previewPayload.description);
 
-      if(selectedMessageType !== 'Letters') {
+      if(selectedMessageType !== 'Letters' && selectedMessageType !== 'LettersCardInsert') {
         data.append('size',previewPayload.size);
       }
       
