@@ -1180,6 +1180,12 @@ define([
         previewPayload.pdf = pdfLink;
       }
       if (selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat === 'pdf') {
+        let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .letter-card-insert-pdf-pdfLink`).val().trim();
+        previewPayload.cardPdfLink = cardPdfLink;
+        const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
+        const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
+        previewPayload.frontTemplateId = frontTemplateId;
+        previewPayload.frontTemplateName = frontTemplateName;
         let cardFrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
         previewPayload.cardFrontHtmlContent = cardFrontHtmlContent;
         if ( selectedCardInsertType === 'doubleSide') {
