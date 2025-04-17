@@ -301,11 +301,11 @@ define([
           $(`.trifold .${selectedCardType}`).show();
           if(selectedMessageType === 'LettersCardInsert') {
             $('.card-insert-input').addClass('hidden');
-            $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
             $('.html-btn-front').click();
             if(selectedCardType === 'doubleSide'){
               $(`.card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardType}`).removeClass('hidden');
-              // $(`.card-insert-input-${selectedCardInsertDesignFormat}`).addClass('hidden');
+            } else {
+              $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
             }
             if(selectedCreationType === 'pdf-creation-type' || selectedCreationType === 'template-creation-type') {
               $(`.${selectedMessageType} .${selectedCreationType}`).removeClass('html');
