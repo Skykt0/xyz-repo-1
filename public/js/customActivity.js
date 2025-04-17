@@ -493,7 +493,7 @@ define([
       }
       previewDEMapOptions[eleID]=optionSelect;
     });
-
+ 
     let selectedMessageType = $('input[name="msgType"]:checked').val();
     if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
       selectedMessageType = 'trifold';
