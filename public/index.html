@@ -68,6 +68,26 @@
                     </div>
                     <span id="msgType-error" class="error-message"></span>
                 </div>
+                <div class="creation-type-wrapper">
+                  <div class="creation-label-input-wrap">
+                      <div class="section-label">Choose your message design format <span class="asterisk">*</span></div>
+                      <div class="input-container">
+                          <div class="html-radio-wrap radio-label-wrap">
+                              <input type="radio" class="radio-input step2radioBTN" id="htmlId" name="createType" value="html-creation-type"/>
+                              <label for="htmlId" class="radio-label">HTML</label>
+                          </div>
+                          <div class="pdf-radio-wrap radio-label-wrap">
+                              <input type="radio" class="radio-input step2radioBTN" id="pdfId" name="createType" value="pdf-creation-type"/>
+                              <label for="pdfId" class="radio-label">PDF</label>
+                          </div>
+                          <div class="existing-template-radio-wrap radio-label-wrap">
+                              <input type="radio" class="radio-input step2radioBTN" id="extTempId" name="createType" value="template-creation-type" />
+                              <label for="extTempId" class="radio-label">Existing Template</label>
+                          </div>
+                      </div>
+                  </div>
+                  <span id="createType-error" class="error-message"></span>
+                </div>
                 <div class="card-insert-wrapper hidden">
                     <div id="card-insert-container" class="hidden">
                         <input type="checkbox" id="card-insert" />
@@ -106,26 +126,6 @@
                       </div>
                       <span id="cardInsertType-error" class="error-message"></span>
                     </div>
-                </div>
-                <div class="creation-type-wrapper">
-                    <div class="creation-label-input-wrap">
-                        <div class="section-label">Choose your message design format <span class="asterisk">*</span></div>
-                        <div class="input-container">
-                            <div class="html-radio-wrap radio-label-wrap">
-                                <input type="radio" class="radio-input step2radioBTN" id="htmlId" name="createType" value="html-creation-type"/>
-                                <label for="htmlId" class="radio-label">HTML</label>
-                            </div>
-                            <div class="pdf-radio-wrap radio-label-wrap">
-                                <input type="radio" class="radio-input step2radioBTN" id="pdfId" name="createType" value="pdf-creation-type"/>
-                                <label for="pdfId" class="radio-label">PDF</label>
-                            </div>
-                            <div class="existing-template-radio-wrap radio-label-wrap">
-                                <input type="radio" class="radio-input step2radioBTN" id="extTempId" name="createType" value="template-creation-type" />
-                                <label for="extTempId" class="radio-label">Existing Template</label>
-                            </div>
-                        </div>
-                    </div>
-                    <span id="createType-error" class="error-message"></span>
                 </div>
             </div>
             <div class="right-box">
@@ -1273,7 +1273,7 @@
                             <span class="error-msg">Please enter required field</span>
                           </div>
                           <div class="input-box card-insert-input card-insert-input-template hidden">
-                            <label for="letter-card-insert-html-template-input" class="input-label">Card Template <span class="asterisk">*</span></label>
+                            <label for="letter-card-insert-html-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
                                     <input type="text" id="letter-card-insert-html-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
@@ -1282,6 +1282,20 @@
                                     <span class="error-msg">Please enter template</span>
                                 </div>
                                 <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                    aria-labelledby="template-input"></div>
+                                <span class="error-message"></span>
+                            </div>
+                          </div>
+                          <div class="input-box card-insert-input card-insert-input-template-doubleSide hidden">
+                            <label for="letter-card-insert-html-back-template-input" class="input-label">Card Back Template <span class="asterisk">*</span></label>
+                            <div class="mapping-dropdown">
+                                <div class="template-dropdown-wrap">
+                                    <input type="text" id="letter-card-insert-html-back-template-input" class="input-field backTemplate template-input" placeholder="Search or Enter Template"
+                                        autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
+                                        aria-expanded="false" />
+                                    <span class="error-msg">Please enter template</span>
+                                </div>
+                                <div id="backTemplateList" class="dropdown-options backTemplateList" role="listbox"
                                     aria-labelledby="template-input"></div>
                                 <span class="error-message"></span>
                             </div>
@@ -1436,7 +1450,7 @@
                           <span class="error-msg">Please enter required field</span>
                       </div>
                       <div class="input-box card-insert-input card-insert-input-template hidden">
-                            <label for="letter-card-insert-pdf-template-input" class="input-label">Card Template <span class="asterisk">*</span></label>
+                            <label for="letter-card-insert-pdf-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
                                     <input type="text" id="letter-card-insert-pdf-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
@@ -1446,6 +1460,21 @@
                                     <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
                                 </div>
                                 <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                    aria-labelledby="template-input"></div>
+                                <span class="error-message"></span>
+                            </div>
+                      </div>
+                      <div class="input-box card-insert-input card-insert-input-template-doubleSide hidden">
+                            <label for="letter-card-insert-pdf-back-template-input" class="input-label">Card Back Template <span class="asterisk">*</span></label>
+                            <div class="mapping-dropdown">
+                                <div class="template-dropdown-wrap">
+                                    <input type="text" id="letter-card-insert-pdf-back-template-input" class="input-field backTemplate template-input" placeholder="Search or Enter Template"
+                                        autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
+                                        aria-expanded="false" />
+                                    <span class="error-msg">Please enter template</span>
+                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                </div>
+                                <div id="backTemplateList" class="dropdown-options backTemplateList" role="listbox"
                                     aria-labelledby="template-input"></div>
                                 <span class="error-message"></span>
                             </div>
@@ -1516,10 +1545,14 @@
                 <div class="html-editor card-insert-input card-insert-input-html hidden">
                   <div class="html-btn-wrap">
                       <button type="button" class="btn btn-light html-btn-card-front show">
-                          Card Front HTML
+                        Card Front HTML
+                      </button>
+                      <button type="button" class="btn btn-light html-btn-card-back card-insert-input card-insert-input-html-doubleSide hidden">
+                        Card Back HTML
                       </button>
                   </div>
                   <textarea class="html-editor-front-card-insert html-area show" data-btn-label="Card Front HTML"></textarea>
+                  <textarea class="html-editor-back-card-insert html-area card-insert-input card-insert-input-html-doubleSide hidden" data-btn-label="Card Back HTML"></textarea>
                   <span class="error-msg">Please enter content in the following fields:</span>
                 </div>
               </div>
@@ -1608,10 +1641,10 @@
                         </div>
                       </div>
                       <div class="input-box card-insert-input card-insert-input-template hidden">
-                        <label for="letter-card-insert-pdf-template-input" class="input-label">Card Template <span class="asterisk">*</span></label>
+                        <label for="letter-card-insert-pdf-front-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
                         <div class="mapping-dropdown">
                             <div class="template-dropdown-wrap">
-                                <input type="text" id="letter-card-insert-pdf-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
+                                <input type="text" id="letter-card-insert-pdf-front-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
                                     autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                     aria-expanded="false" />
                                 <span class="error-msg">Please enter template</span>
@@ -1623,31 +1656,16 @@
                         </div>
                       </div>
                       <div class="input-box card-insert-input card-insert-input-template-doubleSide hidden">
-                          <label for="letter-card-insert-front-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
-                          <div class="mapping-dropdown">
-                              <div class="template-dropdown-wrap">
-                                  <input type="text" id="letter-card-insert-front-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
-                                      autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
-                                      aria-expanded="false" />
-                                  <span class="error-msg">Please enter template</span>
-                                  <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
-                              </div>
-                              <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
-                                  aria-labelledby="template-input"></div>
-                              <span class="error-message"></span>
-                          </div>
-                      </div>
-                      <div class="input-box card-insert-input card-insert-input-template-doubleSide hidden">
                           <label for="letter-card-insert-back-template-input" class="input-label">Card Back Template <span class="asterisk">*</span></label>
                           <div class="mapping-dropdown">
                               <div class="template-dropdown-wrap">
-                                  <input type="text" id="letter-card-insert-back-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
+                                  <input type="text" id="letter-card-insert-back-template-input" class="input-field backTemplate template-input" placeholder="Search or Enter Template"
                                       autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                       aria-expanded="false" />
                                   <span class="error-msg">Please enter template</span>
                                   <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
                               </div>
-                              <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                              <div id="backTemplateList" class="dropdown-options backTemplateList" role="listbox"
                                   aria-labelledby="template-input"></div>
                               <span class="error-message"></span>
                           </div>
