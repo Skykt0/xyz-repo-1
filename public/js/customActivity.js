@@ -815,10 +815,12 @@ define([
       let cardfrontHtmlContent, cardfrontHtmlBtnLabel, cardbackHtmlContent, cardbackHtmlBtnLabel;
 
       if(isCartInsertEnabled && selectedCardInsertType === 'doubleSide') {
-        cardfrontHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).val().trim();
-        cardfrontHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`).data('btn-label');
-        cardbackHtmlContent = $(`.${selectedMessageType} .screen-1 .html-editor-back-card-insert`).val().trim();
-        cardbackHtmlBtnLabel = $(`.${selectedMessageType} .screen-1 .html-editor-back-card-insert`).data('btn-label');  
+        let cardfrontHtmlElement = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`);
+        let cardbackHtmlElement = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`);
+        cardfrontHtmlContent = cardfrontHtmlElement === undefined || cardfrontHtmlElement.hasClass('hidden') ? undefined : cardfrontHtmlElement.val().trim();
+        cardfrontHtmlBtnLabel = cardfrontHtmlElement === undefined || cardfrontHtmlElement.hasClass('hidden') ? undefined : cardfrontHtmlElement.data('btn-label');
+        cardbackHtmlContent = cardbackHtmlElement === undefined || cardbackHtmlElement.hasClass('hidden') ? undefined : cardbackHtmlElement.val().trim();
+        cardbackHtmlBtnLabel = cardbackHtmlElement === undefined || cardbackHtmlElement.hasClass('hidden') ? undefined : cardbackHtmlElement.data('btn-label');  
 
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '' || cardbackHtmlContent === '') {
           isValid = false;
