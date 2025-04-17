@@ -1030,13 +1030,18 @@ define([
         }
 
         if(selectedCardInsertDesignFormat !== 'html') {
-          const inputSelector = selectedCardInsertType === 'doubleSide'
-            ? `.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardInsertType} input`
-            : `.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat} input`;
-
-          if (!validateInputField($(inputSelector))) {
+          const isValidInput = validateInputField($(`.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat} input`));
+          if (!isValidInput) {
             isValid = false;
           }
+
+          const doubleSideInputElement = $(`.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardInsertType} input`);
+          if(!doubleSideInputElement.hasClass('hidden')) {
+            if(!validateInputField(doubleSideInputElement)) {
+              isValid = false;
+            }
+          }
+          
         }
       }
     }
