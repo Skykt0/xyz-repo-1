@@ -816,7 +816,7 @@ define([
 
       if(isCartInsertEnabled && selectedCardInsertType === 'doubleSide') {
         let cardfrontHtmlElement = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`);
-        let cardbackHtmlElement = $(`.${selectedMessageType} .screen-1 .html-editor-front-card-insert`);
+        let cardbackHtmlElement = $(`.${selectedMessageType} .screen-1 .html-editor-back-card-insert`);
         cardfrontHtmlContent = cardfrontHtmlElement === undefined || cardfrontHtmlElement.hasClass('hidden') ? undefined : cardfrontHtmlElement.val().trim();
         cardfrontHtmlBtnLabel = cardfrontHtmlElement === undefined || cardfrontHtmlElement.hasClass('hidden') ? undefined : cardfrontHtmlElement.data('btn-label');
         cardbackHtmlContent = cardbackHtmlElement === undefined || cardbackHtmlElement.hasClass('hidden') ? undefined : cardbackHtmlElement.val().trim();
@@ -829,10 +829,10 @@ define([
             postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${frontHtmlBtnLabel}, ${backHtmlBtnLabel}, ${cardfrontHtmlBtnLabel}, ${cardbackHtmlBtnLabel}.`).addClass('show');
           } else {
             let missingFields = [];
-            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
-            if (cardbackHtmlContent === '') {missingFields.push(cardbackHtmlBtnLabel);}
             if (frontHtmlContent === '') {missingFields.push(frontHtmlBtnLabel);}
             if (backHtmlContent === '') {missingFields.push(backHtmlBtnLabel);}
+            if (cardfrontHtmlContent === '') {missingFields.push(cardfrontHtmlBtnLabel);}
+            if (cardbackHtmlContent === '') {missingFields.push(cardbackHtmlBtnLabel);}
 
             if (missingFields.length > 0) {
               postcardHtmlEditorErrorMsg.text(`Please enter content in the following fields: ${missingFields.join(', ')}.`).addClass('show');
