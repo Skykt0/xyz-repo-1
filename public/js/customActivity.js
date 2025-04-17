@@ -1178,6 +1178,15 @@ define([
         previewPayload.isExpressDelivery = isExpressDelivery;
         previewPayload.pdf = pdfLink;
       }
+      if (selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat === 'pdf') {
+        let cardFrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
+        previewPayload.cardFrontHtmlContent = cardFrontHtmlContent;
+        if ( selectedCardInsertType === 'doubleSide') {
+          let cardBackHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val().trim();
+          previewPayload.cardBackHtmlContent = cardBackHtmlContent;
+        }
+
+      }
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
       const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
