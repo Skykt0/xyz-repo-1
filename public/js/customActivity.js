@@ -1031,8 +1031,11 @@ define([
         }
 
         if(selectedCardInsertDesignFormat !== 'html') {
-          let isValidInput = validateInputField($(`.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat} input`));
-          if(!isValidInput) {
+          const inputSelector = selectedCardInsertType === 'doubleSide'
+            ? `.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardInsertType} input`
+            : `.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat} input`;
+
+          if (!validateInputField($(inputSelector))) {
             isValid = false;
           }
         }
