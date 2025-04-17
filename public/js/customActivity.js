@@ -1035,7 +1035,7 @@ define([
             isValid = false;
           }
 
-          if(selectedCardInsertDesignFormat === 'doubleSide') {
+          if(selectedCardInsertType === 'doubleSide') {
             const doubleSideInputElement = $(`.${selectedMessageType} .screen-3 .card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardInsertType} input`);
             if(!doubleSideInputElement.hasClass('hidden')) {
               if(!validateInputField(doubleSideInputElement)) {
