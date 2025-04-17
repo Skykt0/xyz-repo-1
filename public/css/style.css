@@ -643,6 +643,10 @@ input:checked + .test-to-live-slider::before {
   gap: 2rem;
 }
 
+.letters-card-insert .pdf-container .input-fields {
+	justify-content: flex-start;
+}
+
 .html-screen-wrapper .outer-input-fields .input-fields {
 	display: flex;
 	flex-wrap: wrap;
