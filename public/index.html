@@ -68,6 +68,26 @@
                     </div>
                     <span id="msgType-error" class="error-message"></span>
                 </div>
+                <div class="creation-type-wrapper">
+                  <div class="creation-label-input-wrap">
+                      <div class="section-label">Choose your message design format <span class="asterisk">*</span></div>
+                      <div class="input-container">
+                          <div class="html-radio-wrap radio-label-wrap">
+                              <input type="radio" class="radio-input step2radioBTN" id="htmlId" name="createType" value="html-creation-type"/>
+                              <label for="htmlId" class="radio-label">HTML</label>
+                          </div>
+                          <div class="pdf-radio-wrap radio-label-wrap">
+                              <input type="radio" class="radio-input step2radioBTN" id="pdfId" name="createType" value="pdf-creation-type"/>
+                              <label for="pdfId" class="radio-label">PDF</label>
+                          </div>
+                          <div class="existing-template-radio-wrap radio-label-wrap">
+                              <input type="radio" class="radio-input step2radioBTN" id="extTempId" name="createType" value="template-creation-type" />
+                              <label for="extTempId" class="radio-label">Existing Template</label>
+                          </div>
+                      </div>
+                  </div>
+                  <span id="createType-error" class="error-message"></span>
+                </div>
                 <div class="card-insert-wrapper hidden">
                     <div id="card-insert-container" class="hidden">
                         <input type="checkbox" id="card-insert" />
@@ -106,26 +126,6 @@
                       </div>
                       <span id="cardInsertType-error" class="error-message"></span>
                     </div>
-                </div>
-                <div class="creation-type-wrapper">
-                    <div class="creation-label-input-wrap">
-                        <div class="section-label">Choose your message design format <span class="asterisk">*</span></div>
-                        <div class="input-container">
-                            <div class="html-radio-wrap radio-label-wrap">
-                                <input type="radio" class="radio-input step2radioBTN" id="htmlId" name="createType" value="html-creation-type"/>
-                                <label for="htmlId" class="radio-label">HTML</label>
-                            </div>
-                            <div class="pdf-radio-wrap radio-label-wrap">
-                                <input type="radio" class="radio-input step2radioBTN" id="pdfId" name="createType" value="pdf-creation-type"/>
-                                <label for="pdfId" class="radio-label">PDF</label>
-                            </div>
-                            <div class="existing-template-radio-wrap radio-label-wrap">
-                                <input type="radio" class="radio-input step2radioBTN" id="extTempId" name="createType" value="template-creation-type" />
-                                <label for="extTempId" class="radio-label">Existing Template</label>
-                            </div>
-                        </div>
-                    </div>
-                    <span id="createType-error" class="error-message"></span>
                 </div>
             </div>
             <div class="right-box">
