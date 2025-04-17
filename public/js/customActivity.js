@@ -846,13 +846,6 @@ define([
         cardfrontHtmlContent = cardfrontHtmlElement.val() === undefined || cardfrontHtmlElement.hasClass('hidden') ? undefined : cardfrontHtmlElement.val().trim();
         cardfrontHtmlBtnLabel = cardfrontHtmlElement.val() === undefined || cardfrontHtmlElement.hasClass('hidden') ? undefined : cardfrontHtmlElement.data('btn-label');
 
-        if(selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat !== 'html') {
-          let isValidInput = validateInputField($(`.${selectedMessageType} .screen-1 .card-insert-input-${selectedCardInsertDesignFormat} input`));
-          if(!isValidInput) {
-            isValid = false;
-          }
-        }
-
         if (frontHtmlContent === '' || backHtmlContent === '' || cardfrontHtmlContent === '') {
           isValid = false;
           if (frontHtmlContent === '' && backHtmlContent === '' && cardfrontHtmlContent === '') {
@@ -898,6 +891,22 @@ define([
           isValid = false;
         } else {
           $(`.${selectedMessageType} .html-size .error-msg`).removeClass('show');
+        }
+      }
+
+      if(selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat !== 'html') {
+        let isValidInput = validateInputField($(`.${selectedMessageType} .screen-1 .card-insert-input-${selectedCardInsertDesignFormat} input`));
+        if(!isValidInput) {
+          isValid = false;
+        }
+
+        if(selectedCardInsertType === 'doubleSide') {
+          const doubleSideInputElement = $(`.${selectedMessageType} .screen-1 .card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardInsertType} input`);
+          if(doubleSideInputElement.length > 0 && !doubleSideInputElement.hasClass('hidden')) {
+            if(!validateInputField(doubleSideInputElement)) {
+              isValid = false;
+            }
+          }
         }
       }
     };
