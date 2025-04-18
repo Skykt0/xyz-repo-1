@@ -726,7 +726,7 @@ input:checked + .test-to-live-slider::before {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
-	width: 50%;
+	width: 60%;
 }
 
 .html-editor {
@@ -1196,7 +1196,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .letters-card-insert .screen-3 .template-container.html .template-screen-wrapper {
-  width: 54%;
+  width: 61%;
 }
 
 .letters-card-insert .screen-3 .template-container .input-box,
@@ -1252,7 +1252,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .pdf-container.html .pdf-screen-wrapper {
-  width: 54%;
+  width: 60%;
 }
 
 .pdf-container.html .checkboxes-container {
