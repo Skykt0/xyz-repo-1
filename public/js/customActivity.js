@@ -1197,6 +1197,7 @@ define([
       previewPayload.screen = 'pdf';
       previewPayload.description = description;
       previewPayload.mailingClass = mailingClass;
+      previewPayload.plasticCardSize = selectedPlasticCardSize;
 
       if(selectedMessageType !== 'Letters') {
         const size = $(`.${selectedMessageType} .pdf-size .radio-input:checked`).val();
@@ -1219,6 +1220,27 @@ define([
         previewPayload.isExpressDelivery = isExpressDelivery;
         previewPayload.pdf = pdfLink;
       }
+
+      if (selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat === 'pdf') {
+        let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
+        previewPayload.cardPdfLink = cardPdfLink;
+        const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
+        const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
+        previewPayload.frontTemplateId = frontTemplateId;
+        previewPayload.frontTemplateName = frontTemplateName;
+        let cardFrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
+        previewPayload.cardFrontHtmlContent = cardFrontHtmlContent;
+        if ( selectedCardInsertType === 'doubleSide') {
+          let cardBackHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val().trim();
+          previewPayload.cardBackHtmlContent = cardBackHtmlContent;
+        }
+      } else if (selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat === 'template') {
+        const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
+        const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
+        previewPayload.frontTemplateId = frontTemplateId;
+        previewPayload.frontTemplateName = frontTemplateName;
+      }
+
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();
       const isExpressDelivery = $(`.${selectedMessageType} .${selectedCreationType} .express-delivery-input`).is(':checked');
@@ -1344,7 +1366,7 @@ define([
       data.append('from', fromContact.id || '');
       data.append('description', previewPayload.description);
 
-      if(selectedMessageType !== 'Letters') {
+      if(selectedMessageType !== 'Letters' || selectedMessageType !== 'LettersCardInsert') {
         data.append('size',previewPayload.size);
       }
       
@@ -1358,6 +1380,19 @@ define([
         data.append(pdfLinkKey,previewPayload.pdfLinkInput);
         data.append('insideHTML', previewPayload.frontHtmlContent);
         data.append('outsideHTML', previewPayload.backHtmlContent);
+      } else if(selectedMessageType === 'LettersCardInsert' && selectedCardInsertType === 'singleSide') {
+        data.append('plasticCard[size]', previewPayload.plasticCardSize);
+        data.append('express', previewPayload.isExpressDelivery);
+        data.append('pdf', previewPayload.pdf);
+        setLetterPreviewPayload(data, previewPayload);
+
+        if(selectedCardInsertDesignFormat === 'html') {
+          data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
+        } else if(selectedCardInsertDesignFormat === 'pdf') {
+          data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
+        } else if(selectedCardInsertDesignFormat === 'template') {
+          data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
+        }
       } else {
         data.append('express', previewPayload.isExpressDelivery);
         data.append('pdf', previewPayload.pdf);
