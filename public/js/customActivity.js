@@ -1997,6 +1997,12 @@ define([
     }
   });
 
+  $('.return-envelope-input').on('blur', function() {
+    if ($(this).attr('data-id') === '') {
+      $(this).val('');
+    }
+  });
+
   $('.extra-service-dropdown-wrap').click(function(){
     $(this).siblings('.extra-service-list').toggle();
   });
