@@ -300,6 +300,19 @@ define([
           let selectedCardType = $('input[name="cardType"]:checked').val();
           $(`.trifold .${selectedCardType}`).show();
           if(selectedMessageType === 'LettersCardInsert') {
+            if(previewPayload.cardInsertDesignFormat !== selectedCardInsertDesignFormat || previewPayload.cardInsertLayout !== selectedCardType) {
+              previewPayload.cardInsertDesignFormat = selectedCardInsertDesignFormat;
+              previewPayload.cardInsertLayout = selectedCardType;
+              $(`.${selectedMessageType} .${selectedCreationType} .description`).val('');
+              $(`.${selectedMessageType} .${selectedCreationType} .pdfLink`).val('');
+              $(`.${selectedMessageType} .${selectedCreationType} .html-editor .html-area`).val('');
+              $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val('').attr('data-id','');
+              $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('').attr('data-id','');
+              $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('').attr('data-id','');
+              $(`.${selectedMessageType} .${selectedCreationType} .extra-service-list .dropdown-item[data-id=""]`).click();
+              $(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list .dropdown-item[data-id=""]`).click();
+              $(`.${selectedMessageType} .${selectedCreationType} .checkboxes-container .checkbox-input`).prop('checked', false).trigger('change');
+            }
             $('.card-insert-input').addClass('hidden');
             $('.html-btn-front').click();
             $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
@@ -1969,7 +1982,7 @@ define([
     await showPdfPreview(previewPayload.messageId, true, true);
   });
 
-  $('.express-delivery-input').on('click', function() {
+  $('.express-delivery-input').on('change', function() {
     var isChecked = $(this).prop('checked');
     var mailingClass = $(this).closest('.spacer').find('.mailing-class');
     var extraService = $(this).closest('.spacer').find('.extra-service');
@@ -1981,6 +1994,15 @@ define([
       mailingClass.prop('disabled', false);
       let color = extraService.val() === 'Select Extra Service' ? 'gray' : 'black' ;
       extraService.prop('disabled', false).css('color',color);
+    }
+  });
+
+  $('.return-envelope-input').on('blur', function() {
+    const $wrapper = $(this).closest('.mapping-dropdown');
+    const $noOptionsItem = $wrapper.find('.returnEnvelopeList .dropdown-item.disabled');
+    
+    if ($noOptionsItem.length && $noOptionsItem.text().trim() === 'No options available') {
+      $(this).val('').trigger('input');
     }
   });
 
@@ -2092,6 +2114,7 @@ define([
   }, 300));
 
   $(document).on('focus', '.return-envelope-input', function () {
+    fetchReturnEnvelope($(this).val().trim());
     $(this).closest('.return-envelope-dropdown-wrap').next('.dropdown-options').show();
   });
 
@@ -2135,13 +2158,13 @@ define([
     
     $(document).on('click', function (event) {
       let isCartInsertEnabled = $('#card-insert').prop('checked');
-      let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+      let selectedMessageType = $('input[name="msgType"]:checked').val() !== undefined ? $('input[name="msgType"]:checked').val().replace(/\s+/g, '') : undefined;
       if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
         selectedMessageType = 'trifold';
       } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
         selectedMessageType = 'LettersCardInsert';
       }
-      let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
+      let selectedCreationType = $('input[name=\'createType\']:checked').val() !== undefined ? $('input[name=\'createType\']:checked').val().replace(/\s+/g, '') : undefined;
       const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact');
       const isClickInsideFront = $(event.target).closest('#frontTemplateList, #front-template-input, #letter-template-input, .template-input').length > 0;
       const isClickInsideBack = $(event.target).closest('#backTemplateList, #back-template-input, .template-input').length > 0;
