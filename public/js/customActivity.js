@@ -1180,7 +1180,7 @@ define([
         previewPayload.pdf = pdfLink;
       }
       if (selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat === 'pdf') {
-        let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .letter-card-insert-pdf-pdfLink`).val().trim();
+        let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
         previewPayload.cardPdfLink = cardPdfLink;
         const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
         const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
