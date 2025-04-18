@@ -1224,7 +1224,7 @@ define([
       previewPayload.mailingClass = mailingClass;
       previewPayload.plasticCardSize = selectedPlasticCardSize;
 
-      if(selectedMessageType !== 'Letters') {
+      if(selectedMessageType !== 'Letters' && selectedMessageType !== 'LettersCardInsert') {
         const size = $(`.${selectedMessageType} .pdf-size .radio-input:checked`).val();
         previewPayload.size = size;
       }
@@ -1246,24 +1246,38 @@ define([
         previewPayload.pdf = pdfLink;
       }
 
-      if (selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat === 'pdf') {
-        let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
-        previewPayload.cardPdfLink = cardPdfLink;
-        const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
-        const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
-        previewPayload.frontTemplateId = frontTemplateId;
-        previewPayload.frontTemplateName = frontTemplateName;
-        let cardFrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
-        previewPayload.cardFrontHtmlContent = cardFrontHtmlContent;
-        if ( selectedCardInsertType === 'doubleSide') {
-          let cardBackHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val().trim();
-          previewPayload.cardBackHtmlContent = cardBackHtmlContent;
+      if (isCartInsertEnabled && selectedMessageType === 'LettersCardInsert' && selectedCardInsertType === 'singleSide') {
+        if(selectedCardInsertDesignFormat === 'pdf') {
+          let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
+          previewPayload.cardPdfLink = cardPdfLink;
+        } else if(selectedCardInsertDesignFormat === 'template') {
+          const cardFrontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`) ?.attr('data-id');
+          const cardFrontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`).val();
+          previewPayload.cardFrontTemplateId = cardFrontTemplateId;
+          previewPayload.cardFrontTemplateName = cardFrontTemplateName;
+        } else {
+          const cardfrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
+          previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
         }
-      } else if (selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat === 'template') {
-        const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
-        const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
-        previewPayload.frontTemplateId = frontTemplateId;
-        previewPayload.frontTemplateName = frontTemplateName;
+      } else if (isCartInsertEnabled && selectedMessageType === 'LettersCardInsert' && selectedCardInsertType === 'doubleSide') {
+        if(selectedCardInsertDesignFormat === 'pdf') {
+          let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
+          previewPayload.cardPdfLink = cardPdfLink;
+        } else if(selectedCardInsertDesignFormat === 'template') {
+          const cardFrontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`) ?.attr('data-id');
+          const cardFrontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`).val();
+          const cardBackTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-back-template`) ?.attr('data-id');
+          const cardBackTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .card-back-template`).val();
+          previewPayload.cardFrontTemplateId = cardFrontTemplateId;
+          previewPayload.cardFrontTemplateName = cardFrontTemplateName;
+          previewPayload.cardBackTemplateId = cardBackTemplateId;
+          previewPayload.cardBackTemplateName = cardBackTemplateName;
+        } else {
+          const cardfrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
+          const cardbackHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val().trim();
+          previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
+          previewPayload.cardbackHtmlContent = cardbackHtmlContent;
+        }
       }
 
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
@@ -1295,12 +1309,7 @@ define([
         }
       }
 
-      if(selectedMessageType === 'LettersCardInsert' && isCartInsertEnabled && selectedCardInsertType === 'doubleSide'){
-        const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .creation-template`).val().trim();
-        const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .creation-template`) ?.attr('data-id');
-
-        previewPayload.frontTemplateId = frontTemplateId;
-        previewPayload.frontTemplateName = frontTemplateName;
+      if(selectedMessageType === 'LettersCardInsert' && isCartInsertEnabled && selectedCardInsertType === 'doubleSide') {
         previewPayload.plasticCardSize = selectedPlasticCardSize;
 
         if(selectedCardInsertDesignFormat === 'pdf') {
@@ -1391,7 +1400,7 @@ define([
       data.append('from', fromContact.id || '');
       data.append('description', previewPayload.description);
 
-      if(selectedMessageType !== 'Letters' || selectedMessageType !== 'LettersCardInsert') {
+      if(selectedMessageType !== 'Letters' && selectedMessageType !== 'LettersCardInsert') {
         data.append('size',previewPayload.size);
       }
       
@@ -1409,15 +1418,31 @@ define([
         data.append('plasticCard[size]', previewPayload.plasticCardSize);
         data.append('express', previewPayload.isExpressDelivery);
         data.append('pdf', previewPayload.pdf);
-        setLetterPreviewPayload(data, previewPayload);
-
+        
         if(selectedCardInsertDesignFormat === 'html') {
           data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
         } else if(selectedCardInsertDesignFormat === 'pdf') {
-          data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
+          data.append('plasticCard[singleSided][pdf]', previewPayload.cardPdfLink);
         } else if(selectedCardInsertDesignFormat === 'template') {
-          data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
+          data.append('plasticCard[singleSided][template]', previewPayload.cardFrontTemplateId);
         }
+        setLetterPreviewPayload(data, previewPayload);
+
+      } else if(selectedMessageType === 'LettersCardInsert' && selectedCardInsertType === 'doubleSide') {
+        data.append('plasticCard[size]', previewPayload.plasticCardSize);
+        data.append('express', previewPayload.isExpressDelivery);
+        data.append('pdf', previewPayload.pdf);
+
+        if(selectedCardInsertDesignFormat === 'html') {
+          data.append('plasticCard[doubleSided][frontHTML]',previewPayload.cardfrontHtmlContent);
+          data.append('plasticCard[doubleSided][backHTML]',previewPayload.cardbackHtmlContent);
+        } else if(selectedCardInsertDesignFormat === 'pdf') {
+          data.append('plasticCard[doubleSided][pdf]', previewPayload.cardPdfLink);
+        } else if(selectedCardInsertDesignFormat === 'template') {
+          data.append('plasticCard[doubleSided][frontTemplate]', previewPayload.cardFrontTemplateId);
+          data.append('plasticCard[doubleSided][backTemplate]', previewPayload.cardBackTemplateId);
+        }
+        setLetterPreviewPayload(data, previewPayload);
       } else {
         data.append('express', previewPayload.isExpressDelivery);
         data.append('pdf', previewPayload.pdf);
