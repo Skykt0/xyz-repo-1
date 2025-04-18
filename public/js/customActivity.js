@@ -1167,7 +1167,7 @@ define([
           const frontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front`).val();
           previewPayload.frontHtmlContent = frontHtmlContent;
           previewPayload.plasticCardSize = selectedPlasticCardSize;
-          if(selectedCardInsertDesignFormat === 'pdf') {card-front-template
+          if(selectedCardInsertDesignFormat === 'pdf') {
             const cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
             previewPayload.cardPdf = cardPdfLink;
           } else if(selectedCardInsertDesignFormat === 'template') {
@@ -1355,7 +1355,6 @@ define([
         previewPayload.size = size;
       }
     }
-    console.log(JSON.stringify(previewPayload));
   }
 
   async function createMessage() {
@@ -1539,7 +1538,7 @@ define([
         data.append('mailingClass', previewPayload.mailingClass);
       }
     }
-    console.log(data.toString);
+    
     try {
       const response = await fetch(url, {
         method: 'POST',
