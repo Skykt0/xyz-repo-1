@@ -1162,11 +1162,33 @@ define([
       if(isCartInsertEnabled && selectedCardInsertType === 'doubleSide'){
         const cardfrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
         const cardbackHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val().trim();
-        const cardInsertSize = $(`.${selectedMessageType} .${selectedCreationType} .html-card-size .radio-input:checked`).val();
         
-        previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
-        previewPayload.cardbackHtmlContent = cardbackHtmlContent;
-        previewPayload.cardSize = cardInsertSize;
+        if(selectedMessageType === 'LettersCardInsert') {
+          const frontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front`).val();
+          previewPayload.frontHtmlContent = frontHtmlContent;
+          previewPayload.plasticCardSize = selectedPlasticCardSize;
+          if(selectedCardInsertDesignFormat === 'pdf') {card-front-template
+            const cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
+            previewPayload.cardPdf = cardPdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template') {
+            const cardFrontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`) ?.attr('data-id');
+            const cardFrontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`).val();
+            const cardBackTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-back-template`) ?.attr('data-id');
+            const cardBackTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .card-back-template`).val();
+            previewPayload.cardFrontTemplateId = cardFrontTemplateId;
+            previewPayload.cardFrontTemplateName = cardFrontTemplateName;
+            previewPayload.cardBackTemplateId = cardBackTemplateId;
+            previewPayload.cardBackTemplateName = cardBackTemplateName;
+          } else {
+            previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
+            previewPayload.cardbackHtmlContent = cardbackHtmlContent;
+          }
+        } else{
+          const cardInsertSize = $(`.${selectedMessageType} .${selectedCreationType} .html-card-size .radio-input:checked`).val();
+          previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
+          previewPayload.cardbackHtmlContent = cardbackHtmlContent;
+          previewPayload.cardSize = cardInsertSize;
+        }
       }else if(isCartInsertEnabled && selectedCardInsertType === 'singleSide'){
         if(selectedCardInsertDesignFormat !== 'pdf' && selectedCardInsertDesignFormat !== 'template') {
           const cardfrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
@@ -1333,6 +1355,7 @@ define([
         previewPayload.size = size;
       }
     }
+    console.log(JSON.stringify(previewPayload));
   }
 
   async function createMessage() {
@@ -1442,6 +1465,17 @@ define([
           } else if(selectedCardInsertDesignFormat === 'template') {
             data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
           }
+        } else if(selectedMessageType === 'LettersCardInsert' && selectedCardInsertType === 'doubleSide') {
+          data.append('plasticCard[size]', previewPayload.plasticCardSize);
+          if(selectedCardInsertDesignFormat === 'html') {
+            data.append('plasticCard[doubleSided][frontHTML]',previewPayload.cardfrontHtmlContent);
+            data.append('plasticCard[doubleSided][backHTML]',previewPayload.cardbackHtmlContent);
+          } else if(selectedCardInsertDesignFormat === 'pdf') {
+            data.append('plasticCard[doubleSided][pdf]',previewPayload.cardPdf);
+          } else if(selectedCardInsertDesignFormat === 'template') {
+            data.append('plasticCard[doubleSided][frontTemplate]',previewPayload.cardFrontTemplateId);
+            data.append('plasticCard[doubleSided][backTemplate]',previewPayload.cardBackTemplateId);
+          }
         }
       }
       if (!previewPayload.isExpressDelivery) {
@@ -1505,7 +1539,7 @@ define([
         data.append('mailingClass', previewPayload.mailingClass);
       }
     }
-
+    console.log(data.toString);
     try {
       const response = await fetch(url, {
         method: 'POST',
