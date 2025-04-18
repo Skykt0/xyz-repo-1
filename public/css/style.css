@@ -643,6 +643,10 @@ input:checked + .test-to-live-slider::before {
   gap: 2rem;
 }
 
+.letters-card-insert .pdf-container .input-fields {
+	justify-content: flex-start;
+}
+
 .html-screen-wrapper .outer-input-fields .input-fields {
 	display: flex;
 	flex-wrap: wrap;
@@ -764,7 +768,6 @@ input:checked + .test-to-live-slider::before {
 
 .html-btn-front,
 .html-btn-back, .html-btn-card-front, .html-btn-card-back {
-	position: absolute;
 	padding: 0.3rem 1rem;
 	border-radius: 4px;
 	border: none;
@@ -991,7 +994,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .screen .spacer .html-btn-wrap {
   position: absolute;
   width: 94%;
-  height: 7%;
   background: white;
   padding: 1.5rem 0.75rem 0.2rem;
   top: 2px;
