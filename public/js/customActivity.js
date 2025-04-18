@@ -310,11 +310,14 @@ define([
               $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('').attr('data-id','');
               $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('').attr('data-id','');
               $(`.${selectedMessageType} .${selectedCreationType} .extra-service-list .dropdown-item[data-id=""]`).click();
-              $(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list .dropdown-item[data-id=""]`).click();
+              $(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list .dropdown-item[data-id="standard_double_window"]`).click();
               $(`.${selectedMessageType} .${selectedCreationType} .checkboxes-container .checkbox-input`).prop('checked', false).trigger('change');
             }
             $('.card-insert-input').addClass('hidden');
             $('.html-btn-front').click();
+            if(selectedCreationType === 'template-creation-type') {
+              $('.html-btn-card-front').click();
+            }
             $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
             if(selectedCardType === 'doubleSide'){
               $(`.card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardType}`).removeClass('hidden');
@@ -1614,7 +1617,7 @@ define([
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
         $('#pdf-preview-container').hide();
-        $('.preview-message').text('If you want to view the template preview, click the \'Show Preview\' button.').show();
+        $('.preview-message').text('Review your mail piece before sending! Click the button below to check the preview.').show();
       }
   
       $('.retry-btn-wrap .loader').addClass('show');
@@ -1624,7 +1627,7 @@ define([
   
       if (pdfUrl) {
         previewPayload.previewURL = pdfUrl;
-        $('.preview-message').text('If you want to view the template preview, click the \'Show Preview\' button.');
+        $('.preview-message').text('Review your mail piece before sending! Click the button below to check the preview.');
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
         $('.retry-preview-btn').text('Show Preview');
         $('.retry-btn-wrap .loader').removeClass('show');

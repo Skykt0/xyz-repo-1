@@ -41,7 +41,7 @@ body {
 }
 
 .screen-3 .input-field {
-	padding: 5px 10px;
+	padding: 2px;
 	border-radius: 3px;
 	border: 3px solid lightgray;
 	box-shadow: 0 0 1px 1px lightgray;
@@ -199,7 +199,7 @@ body {
 
 .screen-3 input[type="text"] {
   width: 100%;
-  padding: 5px 10px;
+  padding: 4px 5px;
   border-radius: 3px;
   outline: none;
   box-sizing: border-box;
@@ -231,7 +231,7 @@ body {
 .screen-3 #back-template-input,
 .return-envelope-input {
     width: 100%;
-    padding: 8px 30px 8px 12px; 
+    padding: 5px; 
     box-sizing: border-box;
     border: 3px solid #ccc;
     border-radius: 4px;
@@ -1056,11 +1056,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: auto;
   border-radius: 30px;
   margin-top: 10px;
-  font-size: 16px;
+  font-size: 22px;
 }
 
 .preview-message {
-    font-size: 16px;
+    font-size: 26px;
+    width: 51%;
     color: #666;
     font-weight: 600;
     margin-bottom: 10px;
@@ -1271,4 +1272,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .extra-service-dropdown-wrap,
 .envelope-type-dropdown-wrap {
   cursor: default;
+}
+
+.letter-card-insert-template-container .checkboxes-container .checkbox-wrap .checkbox-label {
+  width: max-content;
 }
