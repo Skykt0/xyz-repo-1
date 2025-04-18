@@ -300,6 +300,16 @@ define([
           let selectedCardType = $('input[name="cardType"]:checked').val();
           $(`.trifold .${selectedCardType}`).show();
           if(selectedMessageType === 'LettersCardInsert') {
+            if(previewPayload.cardInsertDesignFormat !== selectedCardInsertDesignFormat || previewPayload.cardInsertLayout !== selectedCardType) {
+              previewPayload.cardInsertDesignFormat = selectedCardInsertDesignFormat;
+              previewPayload.cardInsertLayout = selectedCardType;
+              $(`.${selectedMessageType} .${selectedCreationType} .description`).val('');
+              $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val('').attr('data-id','');
+              $(`.${selectedMessageType} .${selectedCreationType} .extra-service-list .dropdown-item[data-id=""]`).click();
+              $(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list .dropdown-item[data-id=""]`).click();
+              $(`.${selectedMessageType} .${selectedCreationType} .checkboxes-container .checkbox-input`).prop('checked', false).trigger('change');
+
+            }
             $('.card-insert-input').addClass('hidden');
             $('.html-btn-front').click();
             $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
@@ -1969,7 +1979,7 @@ define([
     await showPdfPreview(previewPayload.messageId, true, true);
   });
 
-  $('.express-delivery-input').on('click', function() {
+  $('.express-delivery-input').on('change', function() {
     var isChecked = $(this).prop('checked');
     var mailingClass = $(this).closest('.spacer').find('.mailing-class');
     var extraService = $(this).closest('.spacer').find('.extra-service');
