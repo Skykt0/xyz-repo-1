@@ -1126,6 +1126,7 @@ define([
       let perforateFirstPageInput = $(`.${selectedMessageType} .${selectedCreationType} .preforate-first-page-input`).is(':checked');
       let doubleSidedInput = $(`.${selectedMessageType} .${selectedCreationType} .double-sided-input`).is(':checked');
       let insertBlankPageInput = $(`.${selectedMessageType} .${selectedCreationType} .insert-blank-page-input`).is(':checked');
+      let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
 
       previewPayload.extraService = extraService;
       previewPayload.extraServiceName = extraServiceName;
@@ -1223,7 +1224,6 @@ define([
 
       if (isCartInsertEnabled && selectedMessageType === 'LettersCardInsert' && selectedCardInsertType === 'singleSide') {
         if(selectedCardInsertDesignFormat === 'pdf') {
-          let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
           previewPayload.cardPdfLink = cardPdfLink;
 
         } else if(selectedCardInsertDesignFormat === 'template') {
@@ -1240,7 +1240,6 @@ define([
 
       } else if (isCartInsertEnabled && selectedMessageType === 'LettersCardInsert' && selectedCardInsertType === 'doubleSide') {
         if(selectedCardInsertDesignFormat === 'pdf') {
-          let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
           previewPayload.cardPdfLink = cardPdfLink;
         } else if(selectedCardInsertDesignFormat === 'template') {
           const cardFrontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`) ?.attr('data-id');
@@ -1402,26 +1401,29 @@ define([
         data.append('plasticCard[size]', previewPayload.plasticCardSize);
         data.append('express', previewPayload.isExpressDelivery);
         data.append('pdf', previewPayload.pdf);
-        setLetterPreviewPayload(data, previewPayload);
-
+        
         if(selectedCardInsertDesignFormat === 'html') {
           data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
         } else if(selectedCardInsertDesignFormat === 'pdf') {
-          data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
+          data.append('plasticCard[doubleSided][pdf]', previewPayload.cardPdfLink);
         } else if(selectedCardInsertDesignFormat === 'template') {
-          data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
+          data.append('plasticCard[doubleSided][frontTemplate]', previewPayload.cardFrontTemplateId);
         }
+        setLetterPreviewPayload(data, previewPayload);
+
       } else if(selectedMessageType === 'LettersCardInsert' && selectedCardInsertType === 'doubleSide') {
         data.append('plasticCard[size]', previewPayload.plasticCardSize);
-        data.append('plasticCard[doubleSided][frontHTML]',previewPayload.frontHtmlContent);
-        data.append('plasticCard[doubleSided][backHTML]',previewPayload.backHtmlContent);
+        data.append('express', previewPayload.isExpressDelivery);
+        data.append('pdf', previewPayload.pdf);
+
         if(selectedCardInsertDesignFormat === 'html') {
-          data.append('plasticCard[doubleSided][insideHTML]',previewPayload.cardfrontHtmlContent);
-          data.append('plasticCard[doubleSided][outsideHTML]',previewPayload.cardbackHtmlContent);
+          data.append('plasticCard[doubleSided][frontHTML]',previewPayload.cardfrontHtmlContent);
+          data.append('plasticCard[doubleSided][backHTML]',previewPayload.cardbackHtmlContent);
         } else if(selectedCardInsertDesignFormat === 'pdf') {
-          data.append('plasticCard[doubleSided][pdf]',previewPayload.pdf);
+          data.append('plasticCard[doubleSided][pdf]', previewPayload.cardPdfLink);
         } else if(selectedCardInsertDesignFormat === 'template') {
-          data.append('plasticCard[doubleSided][template]',previewPayload.frontTemplateId);
+          data.append('plasticCard[doubleSided][frontTemplate]', previewPayload.cardFrontTemplateId);
+          data.append('plasticCard[doubleSided][backTemplate]', previewPayload.cardBackTemplateId);
         }
         setLetterPreviewPayload(data, previewPayload);
       } else {
