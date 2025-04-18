@@ -1276,7 +1276,7 @@
                             <label for="letter-card-insert-html-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="letter-card-insert-html-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
+                                    <input type="text" id="letter-card-insert-html-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
                                         autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter template</span>
@@ -1290,7 +1290,7 @@
                             <label for="letter-card-insert-html-back-template-input" class="input-label">Card Back Template <span class="asterisk">*</span></label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="letter-card-insert-html-back-template-input" class="input-field backTemplate template-input" placeholder="Search or Enter Template"
+                                    <input type="text" id="letter-card-insert-html-back-template-input" class="input-field backTemplate template-input card-back-template" placeholder="Search or Enter Template"
                                         autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter template</span>
@@ -1453,7 +1453,7 @@
                             <label for="letter-card-insert-pdf-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="letter-card-insert-pdf-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
+                                    <input type="text" id="letter-card-insert-pdf-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
                                         autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter template</span>
@@ -1468,7 +1468,7 @@
                             <label for="letter-card-insert-pdf-back-template-input" class="input-label">Card Back Template <span class="asterisk">*</span></label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="letter-card-insert-pdf-back-template-input" class="input-field backTemplate template-input" placeholder="Search or Enter Template"
+                                    <input type="text" id="letter-card-insert-pdf-back-template-input" class="input-field backTemplate template-input card-back-template" placeholder="Search or Enter Template"
                                         autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter template</span>
@@ -1629,10 +1629,10 @@
                         <label for="letter-card-insert-template-input" class="input-label">Template <span class="asterisk">*</span></label>
                         <div class="mapping-dropdown">
                             <div class="template-dropdown-wrap">
-                                <input type="text" id="letter-card-insert-template-input" class="frontTemplate template-input" placeholder="Search or Enter Template"
+                                <input type="text" id="letter-card-insert-template-input" class="frontTemplate template-input creation-template" placeholder="Search or Enter Template"
                                     autocomplete="off" aria-describedby="frontTemplateList" aria-haspopup="listbox"
                                     aria-expanded="false" />
-                                <span class="error-msg">Please enter Card Template</span>
+                                <span class="error-msg">Please enter template</span>
                                 <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
                             </div>
                             <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
@@ -1644,7 +1644,7 @@
                         <label for="letter-card-insert-pdf-front-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
                         <div class="mapping-dropdown">
                             <div class="template-dropdown-wrap">
-                                <input type="text" id="letter-card-insert-pdf-front-template-input" class="input-field frontTemplate template-input" placeholder="Search or Enter Template"
+                                <input type="text" id="letter-card-insert-pdf-front-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
                                     autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                     aria-expanded="false" />
                                 <span class="error-msg">Please enter template</span>
@@ -1659,7 +1659,7 @@
                           <label for="letter-card-insert-back-template-input" class="input-label">Card Back Template <span class="asterisk">*</span></label>
                           <div class="mapping-dropdown">
                               <div class="template-dropdown-wrap">
-                                  <input type="text" id="letter-card-insert-back-template-input" class="input-field backTemplate template-input" placeholder="Search or Enter Template"
+                                  <input type="text" id="letter-card-insert-back-template-input" class="input-field backTemplate template-input card-back-template" placeholder="Search or Enter Template"
                                       autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                       aria-expanded="false" />
                                   <span class="error-msg">Please enter template</span>
@@ -1852,8 +1852,7 @@
                     </div>
                     <div class="retry-btn-wrap">
                         <span class="preview-message">
-                            Review your mail piece before sending!
-                        Click the button below to check the preview.
+                            Review your mail piece before sending! Click the button below to check the preview.
                         </span>
                         <button class="retry-preview-btn">Show Preview</button>
                         <div class="loader"></div>

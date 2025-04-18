@@ -1399,7 +1399,7 @@ define([
         } else if(selectedCardInsertDesignFormat === 'pdf') {
           data.append('plasticCard[singleSided][pdf]', previewPayload.cardPdfLink);
         } else if(selectedCardInsertDesignFormat === 'template') {
-          data.append('plasticCard[singleSided][frontTemplate]', previewPayload.cardFrontTemplateId);
+          data.append('plasticCard[singleSided][template]', previewPayload.cardFrontTemplateId);
         }
         setLetterPreviewPayload(data, previewPayload);
 
