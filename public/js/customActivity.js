@@ -2135,13 +2135,13 @@ define([
     
     $(document).on('click', function (event) {
       let isCartInsertEnabled = $('#card-insert').prop('checked');
-      let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+      let selectedMessageType = $('input[name="msgType"]:checked').val() !== undefined ? $('input[name="msgType"]:checked').val().replace(/\s+/g, '') : undefined;
       if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
         selectedMessageType = 'trifold';
       } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
         selectedMessageType = 'LettersCardInsert';
       }
-      let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
+      let selectedCreationType = $('input[name=\'createType\']:checked').val() !== undefined ? $('input[name=\'createType\']:checked').val().replace(/\s+/g, '') : undefined;
       const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact');
       const isClickInsideFront = $(event.target).closest('#frontTemplateList, #front-template-input, #letter-template-input, .template-input').length > 0;
       const isClickInsideBack = $(event.target).closest('#backTemplateList, #back-template-input, .template-input').length > 0;
