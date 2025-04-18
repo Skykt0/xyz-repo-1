@@ -315,6 +315,9 @@ define([
             }
             $('.card-insert-input').addClass('hidden');
             $('.html-btn-front').click();
+            if(selectedCreationType === 'template-creation-type') {
+              $('.html-btn-card-front').click();
+            }
             $(`.card-insert-input-${selectedCardInsertDesignFormat}`).removeClass('hidden');
             if(selectedCardType === 'doubleSide'){
               $(`.card-insert-input-${selectedCardInsertDesignFormat}-${selectedCardType}`).removeClass('hidden');
