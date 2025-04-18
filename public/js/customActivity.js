@@ -1998,7 +1998,10 @@ define([
   });
 
   $('.return-envelope-input').on('blur', function() {
-    if ($(this).attr('data-id') === '') {
+    const $wrapper = $(this).closest('.mapping-dropdown');
+    const $noOptionsItem = $wrapper.find('.returnEnvelopeList .dropdown-item.disabled');
+    
+    if ($noOptionsItem.length && $noOptionsItem.text().trim() === 'No options available') {
       $(this).val('').trigger('input');
     }
   });
@@ -2111,6 +2114,7 @@ define([
   }, 300));
 
   $(document).on('focus', '.return-envelope-input', function () {
+    fetchReturnEnvelope($(this).val().trim());
     $(this).closest('.return-envelope-dropdown-wrap').next('.dropdown-options').show();
   });
 
