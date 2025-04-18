@@ -304,11 +304,14 @@ define([
               previewPayload.cardInsertDesignFormat = selectedCardInsertDesignFormat;
               previewPayload.cardInsertLayout = selectedCardType;
               $(`.${selectedMessageType} .${selectedCreationType} .description`).val('');
+              $(`.${selectedMessageType} .${selectedCreationType} .pdfLink`).val('');
+              $(`.${selectedMessageType} .${selectedCreationType} .html-editor .html-area`).val('');
               $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val('').attr('data-id','');
+              $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('').attr('data-id','');
+              $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('').attr('data-id','');
               $(`.${selectedMessageType} .${selectedCreationType} .extra-service-list .dropdown-item[data-id=""]`).click();
               $(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list .dropdown-item[data-id=""]`).click();
               $(`.${selectedMessageType} .${selectedCreationType} .checkboxes-container .checkbox-input`).prop('checked', false).trigger('change');
-
             }
             $('.card-insert-input').addClass('hidden');
             $('.html-btn-front').click();
