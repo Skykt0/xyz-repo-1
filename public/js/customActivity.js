@@ -2273,12 +2273,12 @@ define([
     fetchTemplates($(this).val().trim());
   }, 300));
 
-  $(document).on('focus', '.template-input', function () {
+  $(document).on('focus', '.card-back-template, .card-front-template, .creation-template', function () {
     fetchTemplates($(this).val().trim());
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
-  $(document).on('input', '.template-input', debounce(function () {
+  $(document).on('input', '.card-back-template, .card-front-template, .creation-template', debounce(function () {
     fetchTemplates($(this).val().trim());
   }, 300));
 
@@ -2335,8 +2335,8 @@ define([
       }
       let selectedCreationType = $('input[name=\'createType\']:checked').val() !== undefined ? $('input[name=\'createType\']:checked').val().replace(/\s+/g, '') : undefined;
       const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact');
-      const isClickInsideFront = $(event.target).closest('#frontTemplateList, #front-template-input, #letter-template-input, .template-input').length > 0;
-      const isClickInsideBack = $(event.target).closest('#backTemplateList, #back-template-input, .template-input').length > 0;
+      const isClickInsideFront = $(event.target).closest('#frontTemplateList, #front-template-input, #letter-template-input, .card-back-template, .card-front-template, .creation-template').length > 0;
+      const isClickInsideBack = $(event.target).closest('#backTemplateList, #back-template-input, .card-back-template, .card-front-template, .creation-template').length > 0;
       const isClickInsideReturnEnvelope = $(event.target).closest('.returnEnvelopeList, .return-envelope-input.returnEnvelope').length > 0;
       const isClickInsideFrontSelfMailer = $(event.target).closest('#selfMailer-insideTemplateList, #selfMailer-insideTemplateInput').length > 0;
       const isClickInsideBackSelfMailer = $(event.target).closest('#selfMailer-outsideTemplateList, #selfMailer-outsideTemplateInput').length > 0;
