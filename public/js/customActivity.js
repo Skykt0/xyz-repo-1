@@ -2111,6 +2111,7 @@ define([
   }, 300));
 
   $(document).on('focus', '.return-envelope-input', function () {
+    fetchReturnEnvelope($(this).val().trim());
     $(this).closest('.return-envelope-dropdown-wrap').next('.dropdown-options').show();
   });
 
