@@ -1199,7 +1199,7 @@ define([
       previewPayload.mailingClass = mailingClass;
       previewPayload.plasticCardSize = selectedPlasticCardSize;
 
-      if(selectedMessageType !== 'Letters') {
+      if(selectedMessageType !== 'Letters' && selectedMessageType !== 'LettersCardInsert') {
         const size = $(`.${selectedMessageType} .pdf-size .radio-input:checked`).val();
         previewPayload.size = size;
       }
