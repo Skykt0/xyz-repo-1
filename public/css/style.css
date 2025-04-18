@@ -1272,3 +1272,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .envelope-type-dropdown-wrap {
   cursor: default;
 }
+
+.letter-card-insert-template-container .checkboxes-container .checkbox-wrap .checkbox-label {
+  width: max-content;
+}
