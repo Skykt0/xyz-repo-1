@@ -1589,7 +1589,7 @@ define([
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
         $('#pdf-preview-container').hide();
-        $('.preview-message').text('If you want to view the template preview, click the \'Show Preview\' button.').show();
+        $('.preview-message').text('Review your mail piece before sending! Click the button below to check the preview.').show();
       }
   
       $('.retry-btn-wrap .loader').addClass('show');
@@ -1599,7 +1599,7 @@ define([
   
       if (pdfUrl) {
         previewPayload.previewURL = pdfUrl;
-        $('.preview-message').text('If you want to view the template preview, click the \'Show Preview\' button.');
+        $('.preview-message').text('Review your mail piece before sending! Click the button below to check the preview.');
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
         $('.retry-preview-btn').text('Show Preview');
         $('.retry-btn-wrap .loader').removeClass('show');
