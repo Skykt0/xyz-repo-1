@@ -2240,6 +2240,7 @@ define([
   });
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('focus', function () {
+    fetchTemplates($(this).val().trim());
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
@@ -2248,6 +2249,7 @@ define([
   }, 300));
 
   $(document).on('focus', '.template-input', function () {
+    fetchTemplates($(this).val().trim());
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
