@@ -310,7 +310,7 @@ define([
               $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('').attr('data-id','');
               $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('').attr('data-id','');
               $(`.${selectedMessageType} .${selectedCreationType} .extra-service-list .dropdown-item[data-id=""]`).click();
-              $(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list .dropdown-item[data-id=""]`).click();
+              $(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list .dropdown-item[data-id="standard_double_window"]`).click();
               $(`.${selectedMessageType} .${selectedCreationType} .checkboxes-container .checkbox-input`).prop('checked', false).trigger('change');
             }
             $('.card-insert-input').addClass('hidden');
