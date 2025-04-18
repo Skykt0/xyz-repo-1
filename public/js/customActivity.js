@@ -1221,24 +1221,42 @@ define([
         previewPayload.pdf = pdfLink;
       }
 
-      if (selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat === 'pdf') {
-        let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
-        previewPayload.cardPdfLink = cardPdfLink;
-        const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
-        const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
-        previewPayload.frontTemplateId = frontTemplateId;
-        previewPayload.frontTemplateName = frontTemplateName;
-        let cardFrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
-        previewPayload.cardFrontHtmlContent = cardFrontHtmlContent;
-        if ( selectedCardInsertType === 'doubleSide') {
-          let cardBackHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val() === undefined ? undefined : $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val().trim();
-          previewPayload.cardBackHtmlContent = cardBackHtmlContent;
+      if (isCartInsertEnabled && selectedMessageType === 'LettersCardInsert' && selectedCardInsertType === 'singleSide') {
+        if(selectedCardInsertDesignFormat === 'pdf') {
+          let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
+          previewPayload.cardPdfLink = cardPdfLink;
+
+        } else if(selectedCardInsertDesignFormat === 'template') {
+          const cardFrontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`) ?.attr('data-id');
+          const cardFrontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`).val();
+          previewPayload.cardFrontTemplateId = cardFrontTemplateId;
+          previewPayload.cardFrontTemplateName = cardFrontTemplateName;
+
+        } else {
+          const cardfrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
+          previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
+
         }
-      } else if (selectedMessageType === 'LettersCardInsert' && selectedCardInsertDesignFormat === 'template') {
-        const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
-        const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
-        previewPayload.frontTemplateId = frontTemplateId;
-        previewPayload.frontTemplateName = frontTemplateName;
+
+      } else if (isCartInsertEnabled && selectedMessageType === 'LettersCardInsert' && selectedCardInsertType === 'doubleSide') {
+        if(selectedCardInsertDesignFormat === 'pdf') {
+          let cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
+          previewPayload.cardPdfLink = cardPdfLink;
+        } else if(selectedCardInsertDesignFormat === 'template') {
+          const cardFrontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`) ?.attr('data-id');
+          const cardFrontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`).val();
+          const cardBackTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-back-template`) ?.attr('data-id');
+          const cardBackTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .card-back-template`).val();
+          previewPayload.cardFrontTemplateId = cardFrontTemplateId;
+          previewPayload.cardFrontTemplateName = cardFrontTemplateName;
+          previewPayload.cardBackTemplateId = cardBackTemplateId;
+          previewPayload.cardBackTemplateName = cardBackTemplateName;
+        } else {
+          const cardfrontHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-front-card-insert`).val().trim();
+          const cardbackHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back-card-insert`).val().trim();
+          previewPayload.cardfrontHtmlContent = cardfrontHtmlContent;
+          previewPayload.cardbackHtmlContent = cardbackHtmlContent;
+        }
       }
 
     } else if ($(`.${selectedMessageType} .screen-3`).css('display') === 'block') {
