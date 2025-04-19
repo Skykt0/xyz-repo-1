@@ -276,7 +276,7 @@ body {
 	box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
 }
 
-.screen .dropdown-options div {
+.dropdown-options div {
 	padding: 8px;
 	cursor: pointer;
 }
