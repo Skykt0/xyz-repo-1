@@ -1789,6 +1789,8 @@ define([
     let fromContactElement = $('.contact-dropdown-container #search-contact');
     let newContactFieldWrap = $('.sender-contact-container .create-contact .mapping-fields');
     const messageTypesToCheck = ['selfmailer', 'Letters', 'LettersCardInsert'];
+    const requiredFields = ['#addressLine1', '#firstName', '#companyName', '#city', '#provinceOrState', '#countryCode'];
+    let isAnyFieldEmpty = false;
 
     if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
       selectedMessageType = 'trifold';
@@ -1818,10 +1820,9 @@ define([
       fromContactElement.removeClass('error');
       fromContactElement.siblings('.error-msg').removeClass('show');
     }
+
     previewPayload.fromContact = fromContact;
     resetToContactMappingErrors();
-    let requiredFields = ['#addressLine1', '#firstName', '#companyName', '#city', '#provinceOrState', '#countryCode'];
-    let isAnyFieldEmpty = false;
 
     requiredFields.forEach(selector => {
       let value = $(selector).val();
