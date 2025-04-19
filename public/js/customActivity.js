@@ -1849,6 +1849,9 @@ define([
   function resetToContactMappingErrors() {
     $('.mapping-fields-group select').css('border', '');
     $('.error-message-contact-mapping').text('').hide();
+    const newContactFieldWrap = $('.sender-contact-container .create-contact .mapping-fields');
+    newContactFieldWrap.find('input').removeClass('error');
+    newContactFieldWrap.siblings('.error-msg').removeClass('show');
   }
 
   async function fetchTemplates(searchQuery = '') {
@@ -2260,10 +2263,6 @@ define([
         targetLabel.text(targetLabel.text() + ' *');
       }
     }  
-  });
-
-  $('.mapping-fields-group select').on('click', function () {
-    resetToContactMappingErrors();
   });
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('focus', function () {
