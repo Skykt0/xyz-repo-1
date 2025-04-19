@@ -885,7 +885,6 @@ label[for="self-mailer-pdf-upload"] {
 
 #step4-heading {
 	margin: 0;
-	margin-bottom: 20px;
 }
 
 .mapping-container {
@@ -1253,7 +1252,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   position: absolute;
   width: 16px;
   height: 22px;
-  right: 5px;
+  right: 7rem;
   top: 5px;
   background: white;
   pointer-events: none;
