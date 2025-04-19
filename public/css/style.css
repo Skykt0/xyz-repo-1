@@ -1252,10 +1252,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   position: absolute;
   width: 16px;
   height: 22px;
-  right: 7rem;
+  right: 5px;
   top: 5px;
   background: white;
   pointer-events: none;
+}
+
+.contact-dropdown-container .dropdown-icon-angle-wrap {
+  right: 7rem;
 }
 
 .card-insert-input.hidden {
