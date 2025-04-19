@@ -946,7 +946,7 @@ label[for="self-mailer-pdf-upload"] {
 	margin-bottom: 12px;
 }
 
-.mapping-fields, .create-contact .error-msg
+.mapping-fields, .create-contact .error-msg,
 .error-message-contact-mapping {
 	width: 80%;
 	margin: auto;
