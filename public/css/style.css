@@ -584,6 +584,11 @@ input:checked + .test-to-live-slider::before {
 	gap: 1rem;
 }
 
+#step4 .message-label-input-wrap {
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .single-sided-radio-wrap,
 .double-sided-radio-wrap {
 	display: flex;
@@ -885,6 +890,9 @@ label[for="self-mailer-pdf-upload"] {
 .mapping-right {
 	flex: 1;
 	background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .mapping-radio-group {
@@ -1276,4 +1284,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .letter-card-insert-template-container .checkboxes-container .checkbox-wrap .checkbox-label {
   width: max-content;
+}
+
+.contact-option-wrapper .hidden {
+  display: none;
 }

@@ -2300,6 +2300,12 @@ define([
     const today = new Date().toISOString().split('T')[0];
     $('#sendDate3').val(today).attr('min', today);
     
+    $('input[name="senderContactType"]').on('change', function () {
+      const selectedValue = $(this).val(); 
+      $('.contact-option').addClass('hidden');
+      $('.contact-option.' + selectedValue).removeClass('hidden');
+    });
+
     $(document).on('click', function (event) {
       let isCartInsertEnabled = $('#card-insert').prop('checked');
       let selectedMessageType = $('input[name="msgType"]:checked').val() !== undefined ? $('input[name="msgType"]:checked').val().replace(/\s+/g, '') : undefined;
