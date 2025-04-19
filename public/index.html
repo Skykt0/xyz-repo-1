@@ -1759,18 +1759,30 @@
       </div>
         <div class="mapping-container">
             <div class="mapping-left">
-                <h2 class="step4-heading" id="step4-heading">From Contact</h2>
-                <div class="mapping-dropdown contact-dropdown-wrap">
-                    <div class="dropdown-wrap">
-                      <div class="contact-dropdown-container">
-                        <input type="text" id="search-contact" placeholder="Search and select a contact..." autocomplete="off">
-                        <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
-                        <span class="error-msg">Please select a contact.</span>
-                      </div>
+              <div class="message-label-input-wrap">
+                <div class="section-label">Select Sender Contact</div>
+                <div class="input-container">
+                    <div class="existing-contact-radio radio-label-wrap">
+                        <input type="radio" class="radio-input step2radioBTN" id="existing-contact" name="senderContactType" value="existing-contact" selected/>
+                        <label for="existing-contact" class="radio-label">Select Existing</label>
                     </div>
-                    <div id="dropdown-options" class="dropdown-options">
+                    <div class="postcard-radio radio-label-wrap">
+                        <input type="radio" class="radio-input step2radioBTN" id="create-contact" name="senderContactType" value="create-contacts"/>
+                        <label for="create-contact" class="radio-label">Create New</label>
                     </div>
                 </div>
+              </div>
+              <div class="mapping-dropdown contact-dropdown-wrap">
+                  <div class="dropdown-wrap">
+                    <div class="contact-dropdown-container">
+                      <input type="text" id="search-contact" placeholder="Search and select a contact..." autocomplete="off">
+                      <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                      <span class="error-msg">Please select a contact.</span>
+                    </div>
+                  </div>
+                  <div id="dropdown-options" class="dropdown-options">
+                  </div>
+              </div>
             </div>
             <div class="mapping-divider"></div>
             <div class="mapping-right">
