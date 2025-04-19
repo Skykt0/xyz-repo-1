@@ -1740,7 +1740,11 @@ define([
         }
       })
       .catch(error => {
-        throw error;
+        if(isFromContact){
+          $('.error-toast-message').text(`Error: ${JSON.stringify(error.message)}`);
+          $('.error-toast-wrap').addClass('show');
+          handleValidationFailure();
+        }
       });
   }
 
