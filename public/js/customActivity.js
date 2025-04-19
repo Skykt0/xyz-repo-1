@@ -1798,6 +1798,7 @@ define([
       selectedMessageType = 'LettersCardInsert';
     }
 
+    resetToContactMappingErrors();
     if(messageTypesToCheck.includes(selectedMessageType)) {
       if(selectedSenderContactType === 'existing-contact'){
         isValid = validateInputField(fromContactElement) ? isValid : false ;
@@ -1822,7 +1823,6 @@ define([
     }
 
     previewPayload.fromContact = fromContact;
-    resetToContactMappingErrors();
 
     requiredFields.forEach(selector => {
       let value = $(selector).val();
