@@ -1823,7 +1823,6 @@ define([
     }
 
     previewPayload.fromContact = fromContact;
-
     requiredFields.forEach(selector => {
       let value = $(selector).val();
       if (selector === '#firstName' || selector === '#companyName') {
