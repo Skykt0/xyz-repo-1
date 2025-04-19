@@ -1273,10 +1273,10 @@
                             <span class="error-msg">Please enter required field</span>
                           </div>
                           <div class="input-box card-insert-input card-insert-input-template hidden">
-                            <label for="letter-card-insert-html-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
+                            <label for="letter-card-insert-html-front-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="letter-card-insert-html-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
+                                    <input type="text" id="letter-card-insert-html-front-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
                                         autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter template</span>
@@ -1450,10 +1450,10 @@
                           <span class="error-msg">Please enter required field</span>
                       </div>
                       <div class="input-box card-insert-input card-insert-input-template hidden">
-                            <label for="letter-card-insert-pdf-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
+                            <label for="letter-card-insert-pdf-front-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
                             <div class="mapping-dropdown">
                                 <div class="template-dropdown-wrap">
-                                    <input type="text" id="letter-card-insert-pdf-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
+                                    <input type="text" id="letter-card-insert-pdf-front-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
                                         autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter template</span>
@@ -1626,10 +1626,10 @@
                         </div>
                       </div>
                       <div class="input-box">
-                        <label for="letter-card-insert-template-input" class="input-label">Template <span class="asterisk">*</span></label>
+                        <label for="letter-card-insert-creation-template-input" class="input-label">Template <span class="asterisk">*</span></label>
                         <div class="mapping-dropdown">
                             <div class="template-dropdown-wrap">
-                                <input type="text" id="letter-card-insert-template-input" class="frontTemplate template-input creation-template" placeholder="Search or Enter Template"
+                                <input type="text" id="letter-card-insert-creation-template-input" class="frontTemplate template-input creation-template" placeholder="Search or Enter Template"
                                     autocomplete="off" aria-describedby="frontTemplateList" aria-haspopup="listbox"
                                     aria-expanded="false" />
                                 <span class="error-msg">Please enter template</span>
@@ -1641,10 +1641,10 @@
                         </div>
                       </div>
                       <div class="input-box card-insert-input card-insert-input-template hidden">
-                        <label for="letter-card-insert-pdf-front-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
+                        <label for="letter-card-insert-front-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
                         <div class="mapping-dropdown">
                             <div class="template-dropdown-wrap">
-                                <input type="text" id="letter-card-insert-pdf-front-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
+                                <input type="text" id="letter-card-insert-front-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
                                     autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
                                     aria-expanded="false" />
                                 <span class="error-msg">Please enter template</span>
@@ -1758,9 +1758,22 @@
         <div class="remove-error-toast">✖</div>
       </div>
         <div class="mapping-container">
-            <div class="mapping-left">
-                <h2 class="step4-heading" id="step4-heading">From Contact</h2>
-                <div class="mapping-dropdown contact-dropdown-wrap">
+            <div class="sender-contact-container">
+              <div class="message-label-input-wrap">
+                <div class="section-label">Select Sender Contact</div>
+                <div class="input-container">
+                    <div class="existing-contact-radio radio-label-wrap">
+                        <input type="radio" class="radio-input step2radioBTN" id="existing-contact" name="senderContactType" value="existing-contact" checked/>
+                        <label for="existing-contact" class="radio-label">Select Existing</label>
+                    </div>
+                    <div class="postcard-radio radio-label-wrap">
+                        <input type="radio" class="radio-input step2radioBTN" id="create-contact" name="senderContactType" value="create-contact"/>
+                        <label for="create-contact" class="radio-label">Create New</label>
+                    </div>
+                </div>
+              </div>
+              <div class="contact-option-wrapper">
+                <div class="mapping-dropdown contact-dropdown-wrap contact-option existing-contact">
                     <div class="dropdown-wrap">
                       <div class="contact-dropdown-container">
                         <input type="text" id="search-contact" placeholder="Search and select a contact..." autocomplete="off">
@@ -1771,13 +1784,59 @@
                     <div id="dropdown-options" class="dropdown-options">
                     </div>
                 </div>
+                <div class="contact-option create-contact hidden">
+                  <div class="mapping-fields">
+                    <div class="mapping-fields-group">
+                        <label for="newContactFirstName">First Name <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactFirstName" class="contact-first-name">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactLastName">Last Name</label>
+                        <input type="text" id="newContactLastName" class="contact-last-name">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactCompanyName">Company <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactCompanyName" class="contact-company-name">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactEmail">Email Address</label>
+                        <input type="text" id="newContactEmail" class="contact-email">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactAddressLine1">Address Line 1 <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactAddressLine1" class="contact-address-line1">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactAddressLine2">Address Line 2</label>
+                        <input type="text" id="newContactAddressLine2" class="contact-address-line2">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactCity">City <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactCity" class="contact-city">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactState">State <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactState" class="contact-state">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactCountryCode">Country Code <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactCountryCode" class="contact-country-code">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactPostal">ZipCode/ Postal</label>
+                        <input type="text" id="newContactPostal" class="contact-postal">
+                    </div>
+                  </div>
+                  <span class="error-msg">Please fill all required fields.</span>
+                </div>
+              </div>
             </div>
             <div class="mapping-divider"></div>
-            <div class="mapping-right">
-                <h2 class="step4-heading" id="step4-heading">To Mapping Field</h2>
+            <div class="receiver-contact-contact">
+                <h2 class="step4-heading" id="step4-heading">Map Recipient Contact Fields</h2>
                 <div class="mapping-fields">
                     <div class="mapping-fields-group">
-                        <label for="firstName">First Name *</label>
+                        <label for="firstName">First Name <span class="asterisk">*</span></label>
                         <select id="firstName">
                             <option>Select</option>
                         </select>
@@ -1789,7 +1848,7 @@
                         </select>
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="companyName">Company *</label>
+                        <label for="companyName">Company <span class="asterisk">*</span></label>
                         <select id="companyName">
                             <option>Select</option>
                         </select>
@@ -1801,7 +1860,7 @@
                         </select>
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="addressLine1">Address Line 1 *</label>
+                        <label for="addressLine1">Address Line 1 <span class="asterisk">*</span></label>
                         <select id="addressLine1">
                             <option>Select</option>
                         </select>
@@ -1813,19 +1872,19 @@
                         </select>
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="city">City *</label>
+                        <label for="city">City <span class="asterisk">*</span></label>
                         <select id="city">
                             <option>Select</option>
                         </select>
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="provinceOrState">State *</label>
+                        <label for="provinceOrState">State <span class="asterisk">*</span></label>
                         <select id="provinceOrState">
                             <option>Select</option>
                         </select>
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="countryCode">Country Code *</label>
+                        <label for="countryCode">Country Code <span class="asterisk">*</span></label>
                         <select id="countryCode">
                             <option>Select</option>
                         </select>

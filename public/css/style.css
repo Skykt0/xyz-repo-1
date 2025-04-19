@@ -217,6 +217,16 @@ body {
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	cursor: pointer;
+  outline: none;
+}
+
+.mapping-fields-group input {
+  width: 196px;
+  padding: 8px;
+  font-size: 14px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
 }
 
 #dropdown-options,
@@ -276,7 +286,7 @@ body {
 	box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
 }
 
-.screen .dropdown-options div {
+.dropdown-options div {
 	padding: 8px;
 	cursor: pointer;
 }
@@ -584,6 +594,11 @@ input:checked + .test-to-live-slider::before {
 	gap: 1rem;
 }
 
+#step4 .message-label-input-wrap {
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .single-sided-radio-wrap,
 .double-sided-radio-wrap {
 	display: flex;
@@ -726,7 +741,7 @@ input:checked + .test-to-live-slider::before {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
-	width: 50%;
+	width: 60%;
 }
 
 .html-editor {
@@ -870,7 +885,6 @@ label[for="self-mailer-pdf-upload"] {
 
 #step4-heading {
 	margin: 0;
-	margin-bottom: 20px;
 }
 
 .mapping-container {
@@ -881,10 +895,13 @@ label[for="self-mailer-pdf-upload"] {
 	gap: 20px;
 }
 
-.mapping-left,
-.mapping-right {
+.sender-contact-container,
+.receiver-contact-contact {
 	flex: 1;
 	background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .mapping-radio-group {
@@ -929,7 +946,7 @@ label[for="self-mailer-pdf-upload"] {
 	margin-bottom: 12px;
 }
 
-.mapping-fields,
+.mapping-fields, .create-contact .error-msg,
 .error-message-contact-mapping {
 	width: 80%;
 	margin: auto;
@@ -941,7 +958,7 @@ label[for="self-mailer-pdf-upload"] {
 }
 
 .mapping-fields-group select {
-	border-color: #a0a0a0;
+	border: 2px solid #ccc;
 	outline: none;
 }
 
@@ -1196,7 +1213,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .letters-card-insert .screen-3 .template-container.html .template-screen-wrapper {
-  width: 54%;
+  width: 61%;
 }
 
 .letters-card-insert .screen-3 .template-container .input-box,
@@ -1241,6 +1258,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   pointer-events: none;
 }
 
+.contact-dropdown-container .dropdown-icon-angle-wrap {
+  right: 7rem;
+}
+
 .card-insert-input.hidden {
   display: none !important;
 }
@@ -1252,7 +1273,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .pdf-container.html .pdf-screen-wrapper {
-  width: 54%;
+  width: 60%;
 }
 
 .pdf-container.html .checkboxes-container {
@@ -1276,4 +1297,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .letter-card-insert-template-container .checkboxes-container .checkbox-wrap .checkbox-label {
   width: max-content;
+}
+
+.contact-option-wrapper .hidden {
+  display: none;
 }
