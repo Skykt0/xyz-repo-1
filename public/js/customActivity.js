@@ -383,12 +383,7 @@ define([
       validateStep3()
         .then((isValid) => {
           isValid ? proceedToNext() : handleValidationFailure();
-          $('.mapping-fields select').css('border', '');
-          $('.error-message-contact-mapping').hide();
-          $('.contact-dropdown-container input').removeClass('error');
-          $('.contact-dropdown-container .error-msg').removeClass('show');
-          $('.error-toast-wrap').removeClass('show');
-          $('.error-toast-message').text('');
+          resetToContactMappingErrors();
         })
         .catch(() => {
           handleValidationFailure();
@@ -1846,6 +1841,10 @@ define([
   }
 
   function resetToContactMappingErrors() {
+    $('.contact-dropdown-container input').removeClass('error');
+    $('.contact-dropdown-container .error-msg').removeClass('show');
+    $('.error-toast-wrap').removeClass('show');
+    $('.error-toast-message').text('');
     $('.mapping-fields-group select').css('border', '');
     $('.error-message-contact-mapping').text('').hide();
     const newContactFieldWrap = $('.sender-contact-container .create-contact .mapping-fields');
