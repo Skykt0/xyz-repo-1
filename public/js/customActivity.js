@@ -392,6 +392,10 @@ define([
 
     case 'step4':
       if (validateToContact()) {
+        let selectedSenderContactType = $('input[name="senderContactType"]:checked').val().replace(/\s+/g, '');
+        if(selectedSenderContactType === 'create-contact') {
+          createContact(true);
+        }
         getPreviewURL();
       } else {
         handleValidationFailure();
@@ -1663,7 +1667,7 @@ define([
     }
   }  
 
-  async function getPreviewURL () {
+  async function getPreviewURL() {
     try {
       const messageResponse =  await createMessage();
       const messageId = messageResponse.id;
@@ -1682,39 +1686,58 @@ define([
     }
   }
 
-  function createContact () {
+  function createContact(isFromContact = false) {
     const url = `${POSTGRID_API_BASE_URL}contacts`;
 
+    const defaults = {
+      firstName: 'Kevin',
+      lastName: 'Smith',
+      companyName: 'PostGrid',
+      email: 'kevinsmith@postgrid.com',
+      addressLine1: '20-20 Bay St',
+      addressLine2: 'Floor 11',
+      city: 'Toronto',
+      provinceOrState: 'ON',
+      countryCode: 'US',
+      postalOrZip: 'M5J 2N8'
+    };
+  
+    const contact = isFromContact ? {
+      firstName: $('#newContactFirstName').val().trim(),
+      lastName: $('#newContactLastName').val().trim(),
+      companyName: $('#newContactCompanyName').val().trim(),
+      email: $('#newContactEmail').val().trim(),
+      addressLine1: $('#newContactAddressLine1').val().trim(),
+      addressLine2: $('#newContactAddressLine2').val().trim(),
+      city: $('#newContactCity').val().trim(),
+      provinceOrState: $('#newContactState').val().trim(),
+      countryCode: $('#newContactCountryCode').val().trim(),
+      postalOrZip: $('#newContactPostal').val().trim()
+    } : defaults;
+
     const formData = new URLSearchParams();
-    formData.append('firstName', 'Kevin');
-    formData.append('lastName', 'Smith');
-    formData.append('companyName', 'PostGrid');
-    formData.append('addressLine1', '20-20 bay st');
-    formData.append('addressLine2', 'floor 11');
-    formData.append('city', 'toronto');
-    formData.append('provinceOrState', 'ON');
-    formData.append('email', 'kevinsmith@postgrid.com');
-    formData.append('phoneNumber', '9059059059');
-    formData.append('jobTitle', 'Manager');
-    formData.append('postalOrZip', 'M5J 2N8');
-    formData.append('country', 'US');
-    formData.append('countryCode', 'US');
-    formData.append('description', 'Kevin Smith\'s contact information');
-    formData.append('metadata[friend]', 'no');
-    formData.append('skipVerification', 'false');
-    formData.append('forceVerifiedStatus', 'false');
+    Object.entries(contact).forEach(([key, value]) => {
+      formData.append(key, value || '');
+    });
 
     fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key
+        'x-api-key': previewPayload.liveApiKeyEnabled
+          ? previewPayload.live_api_key
+          : previewPayload.test_api_key
       },
       body: formData
     })
       .then(response => response.json())
       .then(data => {
-        toContact = data.id;
+        if (isFromContact) {
+          fromContact.id = data.id;
+          fromContact.name = data.firstName;
+        } else {
+          toContact = data.id;
+        }
       })
       .catch(error => {
         throw error;
