@@ -1784,11 +1784,37 @@ define([
   function validateToContact() {
     let isValid = true;
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+    let selectedSenderContactType = $('input[name="senderContactType"]:checked').val().replace(/\s+/g, '');
+    let isCartInsertEnabled = $('#card-insert').prop('checked');
     let fromContactElement = $('.contact-dropdown-container #search-contact');
+    let newContactFieldWrap = $('.sender-contact-container .create-contact .mapping-fields');
+    const messageTypesToCheck = ['selfmailer', 'Letters', 'LettersCardInsert'];
 
-    if(selectedMessageType === 'selfmailer' && !validateInputField(fromContactElement)) {
-      isValid = false;
+    if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
+      selectedMessageType = 'trifold';
+    } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
+      selectedMessageType = 'LettersCardInsert';
+    }
+
+    if(messageTypesToCheck.includes(selectedMessageType)) {
+      if(selectedSenderContactType === 'existing-contact'){
+        isValid = validateInputField(fromContactElement) ? isValid : false ;
+      } else {
+        let requiredFields = ['#newContactFirstName', '#newContactCompanyName', '#newContactAddressLine1', '#newContactCity', '#newContactState', '#newContactCountryCode'];
+        requiredFields.forEach(selector => {
+          const $field = $(selector);
+          const value = $field.val().trim();
+        
+          if (value === '') {
+            $field.addClass('error');
+            newContactFieldWrap.siblings('.error-msg').addClass('show');
+            isValid = false;
+          }
+        });
+      }
     } else {
+      newContactFieldWrap.find('input').removeClass('error');
+      newContactFieldWrap.siblings('.error-msg').removeClass('show');
       fromContactElement.removeClass('error');
       fromContactElement.siblings('.error-msg').removeClass('show');
     }
@@ -1801,12 +1827,12 @@ define([
       let value = $(selector).val();
       if (selector === '#firstName' || selector === '#companyName') {
         if ($('#firstName').val() === 'Select' && $('#companyName').val() === 'Select') {
-          $('#firstName, #companyName').css('border', '2px solid red');
+          $('#firstName, #companyName').css('border', '1px solid red');
           isAnyFieldEmpty = true;
         }
       } else {
         if (value === 'Select') {
-          $(selector).css('border', '2px solid red');
+          $(selector).css('border', '1px solid red');
           isAnyFieldEmpty = true;
         }
       }

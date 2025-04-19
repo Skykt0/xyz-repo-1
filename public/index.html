@@ -1758,7 +1758,7 @@
         <div class="remove-error-toast">✖</div>
       </div>
         <div class="mapping-container">
-            <div class="mapping-left">
+            <div class="sender-contact-container">
               <div class="message-label-input-wrap">
                 <div class="section-label">Select Sender Contact</div>
                 <div class="input-container">
@@ -1787,51 +1787,52 @@
                 <div class="contact-option create-contact hidden">
                   <div class="mapping-fields">
                     <div class="mapping-fields-group">
-                        <label for="contactFirstName">First Name *</label>
-                        <input type="text" id="contactFirstName" class="contact-first-name">
+                        <label for="newContactFirstName">First Name <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactFirstName" class="contact-first-name">
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="contactLastName">Last Name</label>
-                        <input type="text" id="contactLastName" class="contact-last-name">
+                        <label for="newContactLastName">Last Name</label>
+                        <input type="text" id="newContactLastName" class="contact-last-name">
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="contactCompanyName">Company *</label>
-                        <input type="text" id="contactCompanyName" class="contact-company-name">
+                        <label for="newContactCompanyName">Company <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactCompanyName" class="contact-company-name">
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="contactEmail">Email Address</label>
-                        <input type="text" id="contactEmail" class="contact-email">
+                        <label for="newContactEmail">Email Address</label>
+                        <input type="text" id="newContactEmail" class="contact-email">
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="contactAddressLine1">Address Line 1 *</label>
-                        <input type="text" id="contactAddressLine1" class="contact-address-line1">
+                        <label for="newContactAddressLine1">Address Line 1 <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactAddressLine1" class="contact-address-line1">
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="contactAddressLine1">Address Line 2</label>
-                        <input type="text" id="contactAddressLine1" class="contact-address-line2">
+                        <label for="newContactAddressLine1">Address Line 2</label>
+                        <input type="text" id="newContactAddressLine1" class="contact-address-line2">
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="contactCity">City *</label>
-                        <input type="text" id="contactCity" class="contact-city">
+                        <label for="newContactCity">City <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactCity" class="contact-city">
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="contactState">State *</label>
-                        <input type="text" id="contactState" class="contact-state">
+                        <label for="newContactState">State <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactState" class="contact-state">
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="contactCountryCode">Country Code *</label>
-                        <input type="text" id="contactCountryCode" class="contact-country-code">
+                        <label for="newContactCountryCode">Country Code <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactCountryCode" class="contact-country-code">
                     </div>
                     <div class="mapping-fields-group">
-                        <label for="contactPostal">ZipCode/ Postal</label>
-                        <input type="text" id="contactPostal" class="contact-postal">
+                        <label for="newContactPostal">ZipCode/ Postal</label>
+                        <input type="text" id="newContactPostal" class="contact-postal">
                     </div>
                   </div>
+                  <span class="error-msg">Please fill all required fields.</span>
                 </div>
               </div>
             </div>
             <div class="mapping-divider"></div>
-            <div class="mapping-right">
+            <div class="receiver-contact-contact">
                 <h2 class="step4-heading" id="step4-heading">Map Recipient Contact Fields</h2>
                 <div class="mapping-fields">
                     <div class="mapping-fields-group">

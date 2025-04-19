@@ -895,8 +895,8 @@ label[for="self-mailer-pdf-upload"] {
 	gap: 20px;
 }
 
-.mapping-left,
-.mapping-right {
+.sender-contact-container,
+.receiver-contact-contact {
 	flex: 1;
 	background: white;
   display: flex;
