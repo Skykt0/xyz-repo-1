@@ -217,13 +217,14 @@ body {
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	cursor: pointer;
+  outline: none;
 }
 
 .mapping-fields-group input {
   width: 60%;
   padding: 8px;
   font-size: 14px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 5px;
   outline: none;
 }
@@ -958,7 +959,7 @@ label[for="self-mailer-pdf-upload"] {
 }
 
 .mapping-fields-group select {
-	border-color: #a0a0a0;
+	border: 2px solid #ccc;
 	outline: none;
 }
 
