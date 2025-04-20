@@ -102,8 +102,10 @@ define([
       case 'messageType':
         if(value === 'trifold'){
           value = 'selfmailer';
+        } else if(value === 'LettersCardInsert') {
+          value = 'Letters';
         }
-        if (value === 'selfmailer') {
+        if (value === 'selfmailer' || value === 'Letters') {
           $('#card-insert-container').addClass('visible');
           $('.card-insert-wrapper').addClass('visible');
         }
@@ -520,6 +522,7 @@ define([
     } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
       selectedMessageType = 'LettersCardInsert';
     }
+    previewPayload.messageType = selectedMessageType;
     previewPayload.creationType = $('input[name=\'createType\']:checked').val();
     payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
     payload['arguments'].execute.inArguments[0]['MapDESchema']=MapDESchema;
