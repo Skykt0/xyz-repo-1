@@ -1726,43 +1726,47 @@ define([
     Object.entries(contact).forEach(([key, value]) => {
       formData.append(key, value || '');
     });
-
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'x-api-key': previewPayload.liveApiKeyEnabled
-          ? previewPayload.live_api_key
-          : previewPayload.test_api_key
-      },
-      body: formData
-    })
-      .then(async response => {
-        if (!response.ok) {
-          const errorResponse = await response.json();
-          throw new Error(`HTTP error! Status: ${response.status}, Type: ${errorResponse.error.type} Message: ${errorResponse.error.message}`);
-        } else {
-          $('.error-toast-wrap').removeClass('show');
-          $('.error-toast-message').text('');
-          return response.json();
-        }
-      })
-      .then(data => {
-        if (isFromContact) {
-          fromContact.id = data.id;
-          fromContact.name = data.firstName;
-        } else {
-          toContact = data.id;
-        }
-      })
-      .catch(error => {
-        if(isFromContact){
-          $('.error-toast-message').text(`Error: ${JSON.stringify(error.message)}`);
-          $('.error-toast-wrap').addClass('show');
-          handleValidationFailure();
-        }
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-api-key': previewPayload.liveApiKeyEnabled
+            ? previewPayload.live_api_key
+            : previewPayload.test_api_key
+        },
+        body: formData
       });
+  
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        throw new Error(`HTTP error! Status: ${response.status}, Type: ${errorResponse.error.type} Message: ${errorResponse.error.message}`);
+      }
+  
+      $('.error-toast-wrap').removeClass('show');
+      $('.error-toast-message').text('');
+  
+      const data = await response.json();
+  
+      if (isFromContact) {
+        fromContact.id = data.id;
+        fromContact.name = data.firstName;
+      } else {
+        toContact = data.id;
+      }
+  
+      return data;
+    } catch (error) {
+      if (isFromContact) {
+        $('.error-toast-message').text(`Error: ${error.message}`);
+        $('.error-toast-wrap').addClass('show');
+        handleValidationFailure();
+      }
+      throw error;
+    }
   }
+  
 
   function fetchContacts(searchQuery) {
     previewPayload.contactEnvironment = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
