@@ -142,12 +142,6 @@ define([
       case 'isExpressDelivery':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .express-delivery-input';
         $(queryString).prop('checked', value).trigger('change');
-        // if(value) {
-        //   var queryStringMailingClass = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .mailing-class';
-        //   var queryStringExtraService = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .extra-service';
-        //   $(queryStringMailingClass).prop('disabled', true);
-        //   $(queryStringExtraService).prop('disabled', true);
-        // }
         break;
       case 'frontHtmlContent':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .html-editor-front';
@@ -215,7 +209,7 @@ define([
         break;
       case 'extraServiceName':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .extra-service';
-        $(queryString).val(value);
+        $(queryString).val(value).trigger('click');
         $(queryString).attr('data-id', postcardArguments.extraService);
         break;
       case 'envelopeTypeName':
