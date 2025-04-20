@@ -209,8 +209,9 @@ define([
         break;
       case 'extraServiceName':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .extra-service';
-        $(queryString).val(value).trigger('click');
+        $(queryString).val(value);
         $(queryString).attr('data-id', postcardArguments.extraService);
+        $(`.${postcardArguments.messageType.replace(/\s+/g, '')} .${postcardArguments.creationType.replace(/\s+/g, '')} .extra-service-list .dropdown-item[data-id="${postcardArguments.extraService}"]`).trigger('click');
         break;
       case 'envelopeTypeName':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .envelope-type';
