@@ -153,7 +153,7 @@
                             <div class="input-fields">
                                 <div class="input-box">
                                     <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
-                                    <input type="text" class="input-field description" id="description" name="description" />
+                                    <input type="text" class="input-field description" id="postcardDescription" name="description" />
                                     <span class="error-msg">The input value is missing</span>
                                 </div>
                                 <div class="input-box">
@@ -222,7 +222,7 @@
                         <div class="input-fields">
                             <div class="input-box">
                                 <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
-                                <input type="text" class="input-field description" id="description" name="description" />
+                                <input type="text" class="input-field description" id="postcardPdfDescription" name="description" />
                                 <span class="error-msg">Please enter required field</span>
                             </div>
                             <div class="input-box">
@@ -238,7 +238,7 @@
                             </div>
                             <div class="input-box">
                                 <label for="pdfLink" class="input-label">PDF URL <span class="asterisk">*</span></label>
-                                <input type="text" class="input-field pdfLink" id="pdfLink" name="pdfLink" />
+                                <input type="text" class="input-field pdfLink" id="postcardPdfLink" name="pdfLink" />
                                 <span class="error-msg">Please enter required field</span>
                             </div>
                         </div>
@@ -362,7 +362,7 @@
                         <div class="input-fields">
                             <div class="input-box">
                                 <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
-                                <input type="text" class="input-field description" id="description" name="description" />
+                                <input type="text" class="input-field description" id="selfMailerHtmlDescription" name="description" />
                                 <span class="error-msg">The input value is missing</span>
                             </div>
                             <div class="input-box">
@@ -447,7 +447,7 @@
                       </div>
                       <div class="input-box">
                         <label for="pdfLink" class="input-label">PDF URL <span class="asterisk">*</span></label>
-                        <input type="text" class="input-field pdfLink" id="pdfLink" name="pdfLink" />
+                        <input type="text" class="input-field pdfLink" id="selfMailerPdfLink" name="pdfLink" />
                         <span class="error-msg">Please enter required field</span>
                     </div>
                   </div>
@@ -650,7 +650,7 @@
                       <div class="input-fields">
                           <div class="input-box">
                               <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
-                              <input type="text" class="input-field description" id="description" name="description" />
+                              <input type="text" class="input-field description" id="trifoldPdfDescription" name="description" />
                               <span class="error-msg">The input value is missing</span>
                           </div>
                           <div class="input-box">
@@ -666,7 +666,7 @@
                           </div>
                           <div class="input-box">
                             <label for="pdfLink" class="input-label">PDF Link <span class="asterisk">*</span></label>
-                            <input type="text" class="input-field pdfLink" id="pdfLink" name="pdfLink" />
+                            <input type="text" class="input-field pdfLink" id="trifoldPdfLink" name="pdfLink" />
                             <span class="error-msg">The input value is missing</span>
                         </div>
                       </div>
@@ -723,8 +723,8 @@
                 <div class="outer-input-fields">
                   <div class="input-fields">
                   <div class="input-box">
-                      <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
-                      <input type="text" class="input-field description" id="self-mailer-existing-description" name="self-mailer-existing-description" />
+                      <label for="trifold-existing-description" class="input-label">Description <span class="asterisk">*</span></label>
+                      <input type="text" class="input-field description" id="trifold-existing-description" name="trifold-existing-description" />
                       <span class="error-msg">Please enter required field</span>
                   </div>
                   <div class="input-box">
@@ -769,17 +769,17 @@
                         </div>
                     </div>
                     <div class="input-box doubleSide">
-                        <label for="selfMailer-outsideTemplateInput" class="input-label">Outside Template <span class="asterisk">*</span></label>
+                        <label for="trifold-outsideTemplateInput" class="input-label">Outside Template <span class="asterisk">*</span></label>
                         <div class="mapping-dropdown">
                             <div class="template-dropdown-wrap">
-                                <input type="text" id="selfMailer-outsideTemplateInput" class="backTemplate"  placeholder="Search or Enter Template"
+                                <input type="text" id="trifold-outsideTemplateInput" class="backTemplate"  placeholder="Search or Enter Template"
                                     autocomplete="off" aria-describedby="selfMailer-outsideTemplateList" aria-haspopup="listbox"
                                     aria-expanded="false" />
                                 <span class="error-msg">Please enter outside template</span>
                                 <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
                             </div>
-                            <div id="selfMailer-outsideTemplateList" class="dropdown-options backTemplateList" role="listbox"
-                                aria-labelledby="selfMailer-outsideTemplateInput"></div>
+                            <div id="trifold-outsideTemplateList" class="dropdown-options backTemplateList" role="listbox"
+                                aria-labelledby="trifold-outsideTemplateInput"></div>
                             <span class="error-message"></span>
                         </div>
                     </div>
@@ -1207,8 +1207,8 @@
                   <div class="outer-input-fields">
                       <div class="input-fields">
                           <div class="input-box">
-                              <label for="letter-html-description" class="input-label">Description <span class="asterisk">*</span></label>
-                              <input type="text" class="input-field description" id="letter-html-description" name="description" />
+                              <label for="letter-card-insert-html-description" class="input-label">Description <span class="asterisk">*</span></label>
+                              <input type="text" class="input-field description" id="letter-card-insert-html-description" name="description" />
                               <span class="error-msg">The input value is missing</span>
                           </div>
                           <div class="input-box">
@@ -1224,10 +1224,10 @@
                               </select>
                           </div>
                           <div class="input-box">
-                              <label for="letter-html-extra-service" class="input-label">Extra Service</label>
+                              <label for="letter-card-insert-html-extra-service" class="input-label">Extra Service</label>
                               <div class="mapping-dropdown">
                                 <div class="extra-service-dropdown-wrap">
-                                    <input type="text" id="letter-html-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
+                                    <input type="text" id="letter-card-insert-html-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
                                     <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
                                 </div>
                                 <div id="extra-service-list" class="dropdown-options extra-service-list">
@@ -1239,10 +1239,10 @@
                               </div>
                           </div>
                           <div class="input-box">
-                            <label for="letter-html-return-envelope-input" class="input-label">Return Envelope</label>
+                            <label for="letter-card-insert-html-return-envelope-input" class="input-label">Return Envelope</label>
                             <div class="mapping-dropdown">
                                 <div class="return-envelope-dropdown-wrap">
-                                    <input type="text" id="letter-html-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
+                                    <input type="text" id="letter-card-insert-html-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
                                         autocomplete="off" aria-describedby="returnEnvelopeList" aria-haspopup="listbox" data-id=""
                                         aria-expanded="false" />
                                     <span class="error-msg">Please enter return envelope</span>
@@ -1254,10 +1254,10 @@
                             </div>
                           </div>
                           <div class="input-box">
-                            <label for="letter-html-envelope-type" class="input-label">Envelope Type</label>
+                            <label for="letter-card-insert-html-envelope-type" class="input-label">Envelope Type</label>
                             <div class="mapping-dropdown">
                               <div class="envelope-type-dropdown-wrap">
-                                  <input type="text" id="letter-html-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window" readonly/>
+                                  <input type="text" id="letter-card-insert-html-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window" readonly/>
                                   <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
                               </div>
                               <div id="envelope-type-list" class="dropdown-options envelope-type-list">
@@ -1385,8 +1385,8 @@
                   <div class="letter-pdf-fields">
                     <div class="input-fields">
                       <div class="input-box">
-                          <label for="letter-pdf-description" class="input-label">Description <span class="asterisk">*</span></label>
-                          <input type="text" class="input-field description" id="letter-pdf-description" name="description" />
+                          <label for="letter-card-insert-pdf-description" class="input-label">Description <span class="asterisk">*</span></label>
+                          <input type="text" class="input-field description" id="letter-card-insert-pdf-description" name="description" />
                           <span class="error-msg">Please enter required field</span>
                       </div>
                       <div class="input-box">
@@ -1401,10 +1401,10 @@
                           </select>
                       </div>
                       <div class="input-box">
-                        <label for="letter-pdf-extra-service" class="input-label">Extra Service</label>
+                        <label for="letter-card-insert-pdf-extra-service" class="input-label">Extra Service</label>
                         <div class="mapping-dropdown">
                           <div class="extra-service-dropdown-wrap">
-                              <input type="text" id="letter-pdf-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
+                              <input type="text" id="letter-card-insert-pdf-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
                               <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
                           </div>
                           <div id="extra-service-list" class="dropdown-options extra-service-list">
@@ -1416,10 +1416,10 @@
                         </div>
                       </div>
                       <div class="input-box">
-                        <label for="letter-pdf-return-envelope-input" class="input-label">Return Envelope</label>
+                        <label for="letter-card-insert-pdf-return-envelope-input" class="input-label">Return Envelope</label>
                         <div class="mapping-dropdown">
                             <div class="return-envelope-dropdown-wrap">
-                                <input type="text" id="letter-pdf-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
+                                <input type="text" id="letter-card-insert-pdf-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
                                     autocomplete="off" aria-describedby="returnEnvelopeList" aria-haspopup="listbox" data-id=""
                                     aria-expanded="false" />
                                 <span class="error-msg">Please enter return envelope</span>
@@ -1431,10 +1431,10 @@
                         </div>
                       </div>
                       <div class="input-box">
-                            <label for="letter-pdf-envelope-type" class="input-label">Envelope Type</label>
+                            <label for="letter-card-insert-pdf-envelope-type" class="input-label">Envelope Type</label>
                             <div class="mapping-dropdown">
                             <div class="envelope-type-dropdown-wrap">
-                                <input type="text" id="letter-pdf-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window" readonly/>
+                                <input type="text" id="letter-card-insert-pdf-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window" readonly/>
                                 <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
                             </div>
                             <div id="envelope-type-list" class="dropdown-options envelope-type-list">
@@ -1671,8 +1671,8 @@
                           </div>
                       </div>
                       <div class="input-box card-insert-input card-insert-input-pdf hidden">
-                        <label for="letter-card-insert-input-pdf-pdfLink" class="input-label">Card PDF URL <span class="asterisk">*</span></label>
-                        <input type="text" class="input-field pdfLink cardPdfLink" id="letter-card-insert-input-pdf-pdfLink" name="pdfLink" />
+                        <label for="letter-card-insert-input-template-pdfLink" class="input-label">Card PDF URL <span class="asterisk">*</span></label>
+                        <input type="text" class="input-field pdfLink cardPdfLink" id="letter-card-insert-input-template-pdfLink" name="pdfLink" />
                         <span class="error-msg">Please enter required field</span>
                       </div>
                     </div>
