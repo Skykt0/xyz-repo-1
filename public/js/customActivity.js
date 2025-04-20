@@ -171,6 +171,13 @@ define([
           $('#card-insert-type').removeClass('hidden');
           $('.card-insert-creation-type-wrapper').removeClass('hidden');
           $('input[name="cardType"][value=\'' + value + '\']').prop('checked', true);
+          previewPayload.cardInsertLayout = value;
+        }
+        break;
+      case 'cardInsertDesignFormat':
+        if(value) {
+          $('input[name="cardInsertType"][value=\'' + value + '\']').prop('checked', true);
+          previewPayload.cardInsertDesignFormat = value;
         }
         break;
       case 'cardfrontHtmlContent':
