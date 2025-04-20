@@ -125,6 +125,16 @@ define([
         $(queryString).val(value);
         $(queryString).attr('data-id', postcardArguments.backTemplateId);
         break;
+      case 'cardBackTemplateName':
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .card-back-template';
+        $(queryString).val(value);
+        $(queryString).attr('data-id', postcardArguments.cardBackTemplateId);
+        break;
+      case 'cardFrontTemplateName':
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .card-front-template';
+        $(queryString).val(value);
+        $(queryString).attr('data-id', postcardArguments.cardFrontTemplateId);
+        break;
       case 'size':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' input[value="' + value + '"]';
         $(queryString).prop('checked', true);
