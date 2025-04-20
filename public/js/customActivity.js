@@ -1730,7 +1730,16 @@ define([
       },
       body: formData
     })
-      .then(response => response.json())
+      .then(async response => {
+        if (!response.ok) {
+          const errorResponse = await response.json();
+          throw new Error(`HTTP error! Status: ${response.status}, Type: ${errorResponse.error.type} Message: ${errorResponse.error.message}`);
+        } else {
+          $('.error-toast-wrap').removeClass('show');
+          $('.error-toast-message').text('');
+          return response.json();
+        }
+      })
       .then(data => {
         if (isFromContact) {
           fromContact.id = data.id;
