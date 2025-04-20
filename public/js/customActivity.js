@@ -144,7 +144,9 @@ define([
         $(queryString).prop('checked', value);
         if(value) {
           var queryStringMailingClass = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .mailing-class';
+          var queryStringExtraService = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .extra-service';
           $(queryStringMailingClass).prop('disabled', true);
+          $(queryStringExtraService).prop('disabled', true);
         }
         break;
       case 'frontHtmlContent':
@@ -232,7 +234,7 @@ define([
         break;
       case 'perforatedPage':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .preforate-first-page-input';
-        $(queryString).prop('checked',value === 1);
+        $(queryString).prop('checked',value);
         break;
       case 'doubleSided':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .double-sided-input';
@@ -240,7 +242,7 @@ define([
         break;
       case 'addressPlacement':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .insert-blank-page-input';
-        $(queryString).prop('checked',value === 'insert_blank_page');
+        $(queryString).prop('checked',value);
         break;
       default:
         break;
