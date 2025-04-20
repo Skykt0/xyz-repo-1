@@ -141,13 +141,13 @@ define([
         break;
       case 'isExpressDelivery':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .express-delivery-input';
-        $(queryString).prop('checked', value);
-        if(value) {
-          var queryStringMailingClass = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .mailing-class';
-          var queryStringExtraService = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .extra-service';
-          $(queryStringMailingClass).prop('disabled', true);
-          $(queryStringExtraService).prop('disabled', true);
-        }
+        $(queryString).prop('checked', value).trigger('change');
+        // if(value) {
+        //   var queryStringMailingClass = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .mailing-class';
+        //   var queryStringExtraService = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .extra-service';
+        //   $(queryStringMailingClass).prop('disabled', true);
+        //   $(queryStringExtraService).prop('disabled', true);
+        // }
         break;
       case 'frontHtmlContent':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .html-editor-front';
@@ -234,7 +234,7 @@ define([
         break;
       case 'perforatedPage':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .preforate-first-page-input';
-        $(queryString).prop('checked',value);
+        $(queryString).prop('checked',value).trigger('change');
         break;
       case 'doubleSided':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .double-sided-input';
@@ -242,7 +242,7 @@ define([
         break;
       case 'addressPlacement':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .insert-blank-page-input';
-        $(queryString).prop('checked',value);
+        $(queryString).prop('checked',value).trigger('change');
         break;
       default:
         break;
