@@ -1459,14 +1459,11 @@ define([
         data.append('pdf', previewPayload.pdf);
 
         if(selectedCardInsertDesignFormat === 'html') {
-          data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
           data.append('plasticCard[doubleSided][frontHTML]',previewPayload.cardfrontHtmlContent);
           data.append('plasticCard[doubleSided][backHTML]',previewPayload.cardbackHtmlContent);
         } else if(selectedCardInsertDesignFormat === 'pdf') {
-          data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
           data.append('plasticCard[doubleSided][pdf]', previewPayload.cardPdfLink);
         } else if(selectedCardInsertDesignFormat === 'template') {
-          data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
           data.append('plasticCard[doubleSided][frontTemplate]', previewPayload.cardFrontTemplateId);
           data.append('plasticCard[doubleSided][backTemplate]', previewPayload.cardBackTemplateId);
         }
