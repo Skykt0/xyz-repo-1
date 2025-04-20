@@ -613,12 +613,12 @@ define([
       if(previewPayload.returnEnvelope !== '' && previewPayload.returnEnvelope !== undefined){
         postCardJson.returnEnvelope = previewPayload.returnEnvelope;
       }
-      postCardJson.color = previewPayload.colorInput;
-      postCardJson.doubleSided = previewPayload.doubleSidedInput;
-      if (previewPayload.perforateFirstPageInput) {
+      postCardJson.color = previewPayload.color;
+      postCardJson.doubleSided = previewPayload.doubleSided;
+      if (previewPayload.perforatedPage) {
         postCardJson.perforatedPage = 1;
       }
-      if(previewPayload.insertBlankPageInput === true) {
+      if(previewPayload.addressPlacement === true) {
         postCardJson.addressPlacement = 'insert_blank_page';
       } else {
         postCardJson.addressPlacement = 'top_first_page';
@@ -1162,10 +1162,10 @@ define([
       previewPayload.envelopeTypeName = envelopeTypeName;
       previewPayload.returnEnvelope = returnEnvelope;
       previewPayload.returnEnvelopeName = returnEnvelopeName;
-      previewPayload.colorInput = colorInput;
-      previewPayload.perforateFirstPageInput = perforateFirstPageInput;
-      previewPayload.doubleSidedInput = doubleSidedInput;
-      previewPayload.insertBlankPageInput = insertBlankPageInput;
+      previewPayload.color = colorInput;
+      previewPayload.perforatedPage = perforateFirstPageInput;
+      previewPayload.doubleSided = doubleSidedInput;
+      previewPayload.addressPlacement = insertBlankPageInput;
     }
 
     if ($(`.${selectedMessageType} .screen-1`).css('display') === 'block') {
@@ -1609,16 +1609,16 @@ define([
     if(previewPayload.returnEnvelope !== '' && previewPayload.returnEnvelope !== undefined) {
       data.append('returnEnvelope', previewPayload.returnEnvelope);
     }
-    if (previewPayload.insertBlankPageInput !== true && previewPayload.perforateFirstPageInput) {
+    if (previewPayload.addressPlacement !== true && previewPayload.perforatedPage) {
       data.append('perforatedPage', 1);
     }
-    if(previewPayload.perforateFirstPageInput !== true && previewPayload.insertBlankPageInput === true) {
+    if(previewPayload.perforatedPage !== true && previewPayload.addressPlacement === true) {
       data.append('addressPlacement', 'insert_blank_page');
     } else {
       data.append('addressPlacement', 'top_first_page');
     }
-    data.append('color', previewPayload.colorInput);
-    data.append('doubleSided', previewPayload.doubleSidedInput);
+    data.append('color', previewPayload.color);
+    data.append('doubleSided', previewPayload.doubleSided);
   }
 
   async function fetchMessageDetails(messageId) {
