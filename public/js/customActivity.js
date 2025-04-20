@@ -394,9 +394,16 @@ define([
       if (validateToContact()) {
         let selectedSenderContactType = $('input[name="senderContactType"]:checked').val().replace(/\s+/g, '');
         if(selectedSenderContactType === 'create-contact') {
-          createContact(true);
+          createContact(true).then(()=>{
+            getPreviewURL();
+          })
+            .catch(error => {
+              $('.error-toast-message').text(error.message);
+              $('.error-toast-wrap').addClass('show');
+            });
+        } else {
+          getPreviewURL();
         }
-        getPreviewURL();
       } else {
         handleValidationFailure();
       }
@@ -1686,7 +1693,7 @@ define([
     }
   }
 
-  function createContact(isFromContact = false) {
+  async function createContact(isFromContact = false) {
     const url = `${POSTGRID_API_BASE_URL}contacts`;
 
     const defaults = {
