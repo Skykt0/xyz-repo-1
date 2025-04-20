@@ -232,8 +232,7 @@ define([
         break;
       case 'perforatedPage':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .preforate-first-page-input';
-        value = value === 1 ? true : false;
-        $(queryString).prop('checked',value);
+        $(queryString).prop('checked',value === 1);
         break;
       case 'doubleSided':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .double-sided-input';
@@ -241,8 +240,7 @@ define([
         break;
       case 'addressPlacement':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .insert-blank-page-input';
-        value = value === 'insert_blank_page' ? true : false;
-        $(queryString).prop('checked',value);
+        $(queryString).prop('checked',value === 'insert_blank_page');
         break;
       default:
         break;
