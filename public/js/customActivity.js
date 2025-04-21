@@ -2048,6 +2048,9 @@ define([
         .on('click', function () {
           const dropdownTypeLabel = templateName.includes('returnEnvelope') ? 'return-envelope' : 'template';
           const $dropdownTemplateInput = $(this).parent(`.${templateName}`).siblings(`.${dropdownTypeLabel}-dropdown-wrap`).find(`.${templateName.replace('List', '')}`);
+          console.log('dropdown element: ');
+          console.log($dropdownTemplateInput);
+          
           $dropdownTemplateInput.val(template.description || 'No description').attr('data-id', template.id);
           $list.hide();
         });
