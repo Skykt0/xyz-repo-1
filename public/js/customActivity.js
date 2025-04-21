@@ -2045,17 +2045,23 @@ define([
       const $listItem = $('<li>')
         .text(template.description || 'No description')
         .attr('data-id', template.id)
-        .addClass('dropdown-item')
-        .on('click', function () {
-          const dropdownTypeLabel = templateName.includes('returnEnvelope') ? 'return-envelope' : 'template';
-          const $dropdownTemplateInput = $(this).parent(`.${templateName}`).siblings(`.${dropdownTypeLabel}-dropdown-wrap`).find(`.${templateName.replace('List', '')}`);
-          console.log('dropdown element: ');
-          console.log($dropdownTemplateInput);
-          
-          $dropdownTemplateInput.val(template.description || 'No description').attr('data-id', template.id);
-          $list.hide();
-        });
+        .addClass('dropdown-item');
       $list.append($listItem);
+    });
+
+    $list.off('click', '.dropdown-item').on('click', '.dropdown-item', function () {
+      const $clickedItem = $(this);
+      const templateId = $clickedItem.attr('data-id');
+      const templateDesc = $clickedItem.text();
+    
+      const dropdownTypeLabel = templateName.includes('returnEnvelope') ? 'return-envelope' : 'template';
+      const $dropdownTemplateInput = $clickedItem
+        .parent(`.${templateName}`)
+        .siblings(`.${dropdownTypeLabel}-dropdown-wrap`)
+        .find(`.${templateName.replace('List', '')}`);
+    
+      $dropdownTemplateInput.val(templateDesc || 'No description').attr('data-id', templateId);
+      $list.hide();
     });
   }
 
