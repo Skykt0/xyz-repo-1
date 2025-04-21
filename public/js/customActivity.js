@@ -1675,7 +1675,7 @@ define([
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
         $('#pdf-preview-container').hide();
-        $('.preview-message').text('Review your mail piece before sending! Click the button below to check the preview.').show();
+        $('.preview-message').html('<span>Review your mail piece before sending!</span><span>Click the button below to check the preview.</span>').show();
       }
   
       $('.retry-btn-wrap .loader').addClass('show');
@@ -1685,7 +1685,7 @@ define([
   
       if (pdfUrl) {
         previewPayload.previewURL = pdfUrl;
-        $('.preview-message').text('Review your mail piece before sending! Click the button below to check the preview.');
+        $('.preview-message').html('<span>Review your mail piece before sending!</span><span>Click the button below to check the preview.</span>');
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
         $('.retry-preview-btn').text('Show Preview');
         $('.retry-btn-wrap .loader').removeClass('show');
@@ -1874,7 +1874,6 @@ define([
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let fromContactElement = $('.contact-dropdown-container #search-contact');
     let newContactFieldWrap = $('.sender-contact-container .create-contact .mapping-fields');
-    const messageTypesToCheck = ['selfmailer', 'Letters', 'LettersCardInsert'];
     const requiredFields = ['#addressLine1', '#firstName', '#companyName', '#city', '#provinceOrState', '#countryCode'];
     let isAnyFieldEmpty = false;
 
@@ -1885,27 +1884,31 @@ define([
     }
 
     resetToContactMappingErrors();
-    if(messageTypesToCheck.includes(selectedMessageType)) {
-      if(selectedSenderContactType === 'existing-contact'){
-        isValid = validateInputField(fromContactElement) ? isValid : false ;
-      } else {
-        let requiredFields = ['#newContactFirstName', '#newContactCompanyName', '#newContactAddressLine1', '#newContactCity', '#newContactState', '#newContactCountryCode'];
-        requiredFields.forEach(selector => {
-          const $field = $(selector);
-          const value = $field.val().trim();
-        
-          if (value === '') {
-            $field.addClass('error');
-            newContactFieldWrap.siblings('.error-msg').addClass('show');
-            isValid = false;
-          }
-        });
-      }
+    if(selectedSenderContactType === 'existing-contact'){
+      isValid = validateInputField(fromContactElement) ? isValid : false ;
     } else {
-      newContactFieldWrap.find('input').removeClass('error');
-      newContactFieldWrap.siblings('.error-msg').removeClass('show');
-      fromContactElement.removeClass('error');
-      fromContactElement.siblings('.error-msg').removeClass('show');
+      const firstName = $('#newContactFirstName').val().trim();
+      const companyName = $('#newContactCompanyName').val().trim();
+
+      if (firstName === '' && companyName === '') {
+        $('#newContactFirstName, #newContactCompanyName').addClass('error');
+        newContactFieldWrap.siblings('.error-msg').addClass('show');
+        isValid = false;
+      } else {
+        $('#newContactFirstName, #newContactCompanyName').removeClass('error');
+      }
+
+      let requiredFields = ['#newContactAddressLine1', '#newContactCity', '#newContactState', '#newContactCountryCode'];
+      requiredFields.forEach(selector => {
+        const $field = $(selector);
+        const value = $field.val().trim();
+      
+        if (value === '') {
+          $field.addClass('error');
+          newContactFieldWrap.siblings('.error-msg').addClass('show');
+          isValid = false;
+        }
+      });
     }
 
     previewPayload.fromContact = fromContact;
@@ -2452,6 +2455,25 @@ define([
       $('.contact-option').addClass('hidden');
       $('.contact-option.' + selectedValue).removeClass('hidden');
     });
+
+    function toggleAsterisk() {
+      const firstName = $('#newContactFirstName').val().trim();
+      const companyName = $('#newContactCompanyName').val().trim();
+
+      if (firstName !== '') {
+        $('label[for="newContactCompanyName"] .asterisk').hide();
+      } else {
+        $('label[for="newContactCompanyName"] .asterisk').show();
+      }
+
+      if (companyName !== '') {
+        $('label[for="newContactFirstName"] .asterisk').hide();
+      } else {
+        $('label[for="newContactFirstName"] .asterisk').show();
+      }
+    }
+
+    $('#newContactFirstName, #newContactCompanyName').on('input', toggleAsterisk);
 
     $(document).on('click', function (event) {
       let isCartInsertEnabled = $('#card-insert').prop('checked');
