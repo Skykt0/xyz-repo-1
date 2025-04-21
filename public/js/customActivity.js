@@ -1943,7 +1943,7 @@ define([
     newContactFieldWrap.siblings('.error-msg').removeClass('show');
   }
 
-  async function fetchTemplates(searchQuery = '', dropdownName = '') {
+  async function fetchTemplates(searchQuery = '', dropdownName = '', $inputElement = '') {
     const requestOptions = {
       method: 'GET',
       headers: { 'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key },
@@ -1980,7 +1980,8 @@ define([
         populateDropdown('singleSideTemplateList', sortedData);
       } else {
         if(dropdownName !== '') {
-          populateDropdown(dropdownName, sortedData);
+          const  $list = $inputElement.parent('.template-dropdown-wrap').siblings('.dropdown-options');
+          populateDropdown(dropdownName, sortedData, $list);
         } else {
           populateDropdown('frontTemplateList', sortedData);
           populateDropdown('backTemplateList', sortedData);
@@ -2019,7 +2020,7 @@ define([
     }
   }
 
-  function populateDropdown(templateName, templates) {
+  function populateDropdown(templateName, templates, templateList = '') {
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
@@ -2028,7 +2029,7 @@ define([
       selectedMessageType = 'LettersCardInsert';
     }
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
-    const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}`);
+    const $list = templateList === '' ? $(`.${selectedMessageType} .${selectedCreationType} .${templateName}`) : templateList;
     $list.empty();
 
     if (templates.length === 0) {
@@ -2364,7 +2365,7 @@ define([
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('input', debounce(function () {
     const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
-    fetchTemplates($(this).val().trim(), dropdownName);
+    fetchTemplates($(this).val().trim(), dropdownName, $(this));
   }, 300));
 
   $(document).on('focus', '.template-input', function () {
@@ -2373,7 +2374,7 @@ define([
 
   $(document).on('input', '.template-input', debounce(function () {
     const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
-    fetchTemplates($(this).val().trim(), dropdownName);
+    fetchTemplates($(this).val().trim(), dropdownName, $(this));
   }, 300));
 
   $(document).on('focus', '.return-envelope-input', function () {
