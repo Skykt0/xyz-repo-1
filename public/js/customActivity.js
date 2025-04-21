@@ -1943,7 +1943,7 @@ define([
     newContactFieldWrap.siblings('.error-msg').removeClass('show');
   }
 
-  async function fetchTemplates(searchQuery = '') {
+  async function fetchTemplates(searchQuery = '', dropdownName = '') {
     const requestOptions = {
       method: 'GET',
       headers: { 'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key },
@@ -1977,10 +1977,14 @@ define([
         selectedMessageType = 'LettersCardInsert';
       }
       if (selectedCardInsertType === 'singleSide' && !selectedMessageType.toLowerCase().includes('letter')) {
-        populateDropdown('singleSideTemplate', sortedData);
+        populateDropdown('singleSideTemplateList', sortedData);
       } else {
-        populateDropdown('frontTemplate', sortedData);
-        populateDropdown('backTemplate', sortedData);
+        if(dropdownName !== '') {
+          populateDropdown(dropdownName, sortedData);
+        } else {
+          populateDropdown('frontTemplateList', sortedData);
+          populateDropdown('backTemplateList', sortedData);
+        }
       }
     } catch (error) {
       throw error;
@@ -2009,7 +2013,7 @@ define([
         const descriptionB = b.description ? b.description.toString().toLowerCase() : '';
         return descriptionA.localeCompare(descriptionB);
       });
-      populateDropdown('returnEnvelope', sortedData);
+      populateDropdown('returnEnvelopeList', sortedData);
     } catch (error) {
       throw error;
     }
@@ -2024,7 +2028,7 @@ define([
       selectedMessageType = 'LettersCardInsert';
     }
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
-    const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}List`);
+    const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}`);
     $list.empty();
 
     if (templates.length === 0) {
@@ -2042,7 +2046,7 @@ define([
         .addClass('dropdown-item')
         .on('click', function () {
           const dropdownTypeLabel = templateName.includes('returnEnvelope') ? 'return-envelope' : 'template';
-          const $dropdownTemplateInput = $(this).parent(`.${templateName}List`).siblings(`.${dropdownTypeLabel}-dropdown-wrap`).find(`.${templateName}`);
+          const $dropdownTemplateInput = $(this).parent(`.${templateName}`).siblings(`.${dropdownTypeLabel}-dropdown-wrap`).find(`.${templateName.replace('List', '')}`);
           $dropdownTemplateInput.val(template.description || 'No description').attr('data-id', template.id);
           $list.hide();
         });
@@ -2355,21 +2359,25 @@ define([
   });
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('focus', function () {
-    fetchTemplates($(this).val().trim());
+    const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
+    fetchTemplates($(this).val().trim(), dropdownName);
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('input', debounce(function () {
-    fetchTemplates($(this).val().trim());
+    const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
+    fetchTemplates($(this).val().trim(), dropdownName);
   }, 300));
 
   $(document).on('focus', '.template-input', function () {
-    fetchTemplates($(this).val().trim());
+    const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
+    fetchTemplates($(this).val().trim(), dropdownName);
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
   $(document).on('input', '.template-input', debounce(function () {
-    fetchTemplates($(this).val().trim());
+    const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
+    fetchTemplates($(this).val().trim(), dropdownName);
   }, 300));
 
   $(document).on('focus', '.return-envelope-input', function () {
