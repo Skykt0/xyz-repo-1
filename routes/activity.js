@@ -71,7 +71,8 @@ exports.execute = async function (req, res) {
       },
       data: postcardJson
     };
-
+    console.log(postcardJson);
+    console.log(JSON.stringify(postcardJson));
     const postcardCreateCall = await axios.request(postcardConfigOptions);
     if (postcardCreateCall.status === 200 || postcardCreateCall.status === 201) {
       const postcardId = postcardCreateCall.data.id;
