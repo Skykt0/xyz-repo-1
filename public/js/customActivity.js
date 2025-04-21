@@ -2368,9 +2368,9 @@ define([
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
-  $(document).on('blur', '.template-input', function () {
-    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').hide();
-  });
+  // $(document).on('blur', '.template-input', function () {
+  //   $(this).closest('.template-dropdown-wrap').next('.dropdown-options').hide();
+  // });
   
   $(document).on('input', '.template-input', debounce(function () {
     const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
