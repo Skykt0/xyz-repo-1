@@ -2049,6 +2049,8 @@ define([
       $list.append($listItem);
     });
 
+    console.log($list.find('.dropdown-item'));
+    
     $list.off('click', '.dropdown-item').on('click', '.dropdown-item', function () {
       const $clickedItem = $(this);
       const templateId = $clickedItem.attr('data-id');
