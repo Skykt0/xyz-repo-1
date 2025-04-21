@@ -1823,17 +1823,21 @@ define([
       },
       success: function (response) {
         $('#dropdown-options').empty();
-        response.data.forEach(function (contact) {
-          $('#dropdown-options').append(
-            $('<div>').text(contact.firstName ? contact.firstName : contact.companyName).data('contact', contact)
-          );
-        });
-
-        if (response.data.length > 0) {
-          $('#dropdown-options').show();
+        if (response.data.length === 0) {
+          const $emptyItem = $('<div>')
+            .text('No options available')
+            .addClass('disabled');
+          $('#dropdown-options').append($emptyItem);
         } else {
-          $('#dropdown-options').hide();
+          response.data.forEach(function (contact) {
+            const $item = $('<div>')
+              .text(contact.firstName ? contact.firstName : contact.companyName)
+              .data('contact', contact);
+            $('#dropdown-options').append($item);
+          });
         }
+
+        $('#dropdown-options').show();
       },
       error: function (error) {
         throw error;
@@ -2287,6 +2291,15 @@ define([
   $('.return-envelope-input').on('blur', function() {
     const $wrapper = $(this).closest('.mapping-dropdown');
     const $noOptionsItem = $wrapper.find('.returnEnvelopeList .dropdown-item.disabled');
+    
+    if ($noOptionsItem.length && $noOptionsItem.text().trim() === 'No options available') {
+      $(this).val('').trigger('input');
+    }
+  });
+
+  $('#search-contact').on('blur', function() {
+    const $wrapper = $(this).closest('.mapping-dropdown');
+    const $noOptionsItem = $wrapper.find('#dropdown-options div.disabled');
     
     if ($noOptionsItem.length && $noOptionsItem.text().trim() === 'No options available') {
       $(this).val('').trigger('input');
