@@ -1943,7 +1943,7 @@ define([
     newContactFieldWrap.siblings('.error-msg').removeClass('show');
   }
 
-  async function fetchTemplates(searchQuery = '', dropdownName = '', $inputElement = '') {
+  async function fetchTemplates(searchQuery = '') {
     const requestOptions = {
       method: 'GET',
       headers: { 'x-api-key': previewPayload.liveApiKeyEnabled ? previewPayload.live_api_key : previewPayload.test_api_key },
@@ -1971,22 +1971,17 @@ define([
         selectedCardInsertType = $('input[name="cardType"]:checked').val();
       }
       let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-      let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
+
       if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
         selectedMessageType = 'trifold';
       } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
         selectedMessageType = 'LettersCardInsert';
       }
       if (selectedCardInsertType === 'singleSide' && !selectedMessageType.toLowerCase().includes('letter')) {
-        populateDropdown('singleSideTemplateList', sortedData);
+        populateDropdown('singleSideTemplate', sortedData);
       } else {
-        if(dropdownName !== '') {
-          const  $list = $inputElement.parent('.template-dropdown-wrap').siblings('.dropdown-options');
-          populateDropdown(dropdownName, sortedData, $list);
-        } else {
-          populateDropdown('frontTemplateList', sortedData, $(`.${selectedMessageType} .${selectedCreationType} .frontTemplateList`));
-          populateDropdown('backTemplateList', sortedData, $(`.${selectedMessageType} .${selectedCreationType} .backTemplateList`));
-        }
+        populateDropdown('frontTemplate', sortedData);
+        populateDropdown('backTemplate', sortedData);
       }
     } catch (error) {
       throw error;
@@ -2015,13 +2010,13 @@ define([
         const descriptionB = b.description ? b.description.toString().toLowerCase() : '';
         return descriptionA.localeCompare(descriptionB);
       });
-      populateDropdown('returnEnvelopeList', sortedData);
+      populateDropdown('returnEnvelope', sortedData);
     } catch (error) {
       throw error;
     }
   }
 
-  function populateDropdown(templateName, templates, templateList = '') {
+  function populateDropdown(templateName, templates) {
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
     if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
@@ -2030,7 +2025,7 @@ define([
       selectedMessageType = 'LettersCardInsert';
     }
     let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
-    const $list = templateList === '' ? $(`.${selectedMessageType} .${selectedCreationType} .${templateName}`) : templateList;
+    const $list = $(`.${selectedMessageType} .${selectedCreationType} .${templateName}List`);
     $list.empty();
 
     if (templates.length === 0) {
@@ -2045,24 +2040,14 @@ define([
       const $listItem = $('<li>')
         .text(template.description || 'No description')
         .attr('data-id', template.id)
-        .addClass('dropdown-item');
+        .addClass('dropdown-item')
+        .on('click', function () {
+          const dropdownTypeLabel = templateName.includes('returnEnvelope') ? 'return-envelope' : 'template';
+          const $dropdownTemplateInput = $(this).parent(`.${templateName}List`).siblings(`.${dropdownTypeLabel}-dropdown-wrap`).find(`.${templateName}`);
+          $dropdownTemplateInput.val(template.description || 'No description').attr('data-id', template.id);
+          $list.hide();
+        });
       $list.append($listItem);
-    });
-
-    console.log($list.find('.dropdown-item'));
-    
-    $list.off('click', '.dropdown-item').on('click', '.dropdown-item', function () {
-      const $clickedItem = $(this);
-      const templateId = $clickedItem.attr('data-id');
-      const templateDesc = $clickedItem.text();
-    
-      const dropdownTypeLabel = templateName.includes('returnEnvelope') ? 'return-envelope' : 'template';
-      const $dropdownTemplateInput = $list
-        .siblings(`.${dropdownTypeLabel}-dropdown-wrap`)
-        .find('input');
-    
-      $dropdownTemplateInput.val(templateDesc || 'No description').attr('data-id', templateId);
-      $list.hide();
     });
   }
 
@@ -2376,7 +2361,7 @@ define([
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('input', debounce(function () {
     const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
-    fetchTemplates($(this).val().trim(), dropdownName, $(this));
+    fetchTemplates($(this).val().trim());
   }, 300));
 
   $(document).on('focus', '.template-input', function () {
@@ -2389,7 +2374,7 @@ define([
   
   $(document).on('input', '.template-input', debounce(function () {
     const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
-    fetchTemplates($(this).val().trim(), dropdownName, $(this));
+    fetchTemplates($(this).val().trim());
   }, 300));
 
   $(document).on('focus', '.return-envelope-input', function () {
@@ -2479,12 +2464,12 @@ define([
       if (!isClickInsideDropdown) {
         $('#dropdown-options').hide();
       }
-      if (!isClickInsideFront) {
-        $(`.${selectedMessageType} .${selectedCreationType} #frontTemplateList`).hide();
-      }
-      if (!isClickInsideBack) {
-        $(`.${selectedMessageType} .${selectedCreationType} #backTemplateList`).hide();
-      }
+      // if (!isClickInsideFront) {
+      //   $(`.${selectedMessageType} .${selectedCreationType} #frontTemplateList`).hide();
+      // }
+      // if (!isClickInsideBack) {
+      //   $(`.${selectedMessageType} .${selectedCreationType} #backTemplateList`).hide();
+      // }
       if (!isClickInsideReturnEnvelope) {
         $(`.${selectedMessageType} .${selectedCreationType} #returnEnvelopeList`).hide();
       }
