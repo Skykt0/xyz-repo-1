@@ -2390,13 +2390,14 @@ define([
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
-  $(document).on('blur', '.template-input', function (event) {
-    console.log('Event target:');
-    console.log(event.target);
-    
-    console.log('Related target:'); 
-    console.log(event.relatedTarget);
-    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').hide();
+  $(document).on('blur', '.template-input', function () {
+    const $input = $(this);
+    setTimeout(function () {
+      if (!$input.closest('.template-dropdown-wrap').next('.dropdown-options').find(document.activeElement).length &&
+          !$(document.activeElement).hasClass('dropdown-item')) {
+        $input.closest('.template-dropdown-wrap').next('.dropdown-options').hide();
+      }
+    }, 150);
   });
   
   $(document).on('input', '.template-input', debounce(function () {
