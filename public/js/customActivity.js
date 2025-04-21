@@ -2468,12 +2468,12 @@ define([
       if (!isClickInsideDropdown) {
         $('#dropdown-options').hide();
       }
-      if (!isClickInsideFront) {
-        $(`.${selectedMessageType} .${selectedCreationType} #frontTemplateList`).hide();
-      }
-      if (!isClickInsideBack) {
-        $(`.${selectedMessageType} .${selectedCreationType} #backTemplateList`).hide();
-      }
+      // if (!isClickInsideFront) {
+      //   $(`.${selectedMessageType} .${selectedCreationType} #frontTemplateList`).hide();
+      // }
+      // if (!isClickInsideBack) {
+      //   $(`.${selectedMessageType} .${selectedCreationType} #backTemplateList`).hide();
+      // }
       if (!isClickInsideReturnEnvelope) {
         $(`.${selectedMessageType} .${selectedCreationType} #returnEnvelopeList`).hide();
       }
