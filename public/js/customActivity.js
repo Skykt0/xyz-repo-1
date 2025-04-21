@@ -2462,15 +2462,6 @@ define([
         selectedMessageType = 'LettersCardInsert';
       }
       let selectedCreationType = $('input[name=\'createType\']:checked').val() !== undefined ? $('input[name=\'createType\']:checked').val().replace(/\s+/g, '') : undefined;
-      // const sharedSelectors = [
-      //   '#letter-card-insert-front-template-input',
-      //   '#letter-card-insert-back-template-input',
-      //   '#letter-card-insert-html-front-template-input',
-      //   '#letter-card-insert-html-back-template-input',
-      //   '#letter-card-insert-pdf-front-template-input',
-      //   '#letter-card-insert-pdf-back-template-input',
-      //   '#letter-card-insert-creation-template-input'
-      // ];
       
       const frontSelectors = [
         '#frontTemplateList',
@@ -2492,12 +2483,16 @@ define([
       if (!isClickInsideDropdown) {
         $('#dropdown-options').hide();
       }
-      // if (!isClickInsideFront) {
-      //   $(`.${selectedMessageType} .${selectedCreationType} #frontTemplateList`).hide();
-      // }
-      // if (!isClickInsideBack) {
-      //   $(`.${selectedMessageType} .${selectedCreationType} #backTemplateList`).hide();
-      // }
+      if (!isClickInsideFront) {
+        if(selectedMessageType !== 'LettersCardInsert'){
+          $(`.${selectedMessageType} .${selectedCreationType} #frontTemplateList`).hide();
+        }
+      }
+      if (!isClickInsideBack) {
+        if(selectedMessageType !== 'LettersCardInsert'){
+          $(`.${selectedMessageType} .${selectedCreationType} #backTemplateList`).hide();
+        }
+      }
       if (!isClickInsideReturnEnvelope) {
         $(`.${selectedMessageType} .${selectedCreationType} #returnEnvelopeList`).hide();
       }
