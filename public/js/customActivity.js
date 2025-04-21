@@ -669,7 +669,7 @@ define([
     authorization['authToken'] = authToken;
     authorization['et_subdomain'] = et_subdomain;
     authorization['authTSSD'] = authTSSD;
-    
+    console.log(JSON.stringify(postcardJson));
     payload['arguments'].execute.inArguments[0]['authorization'] = authorization;
     connection.trigger('updateActivity', payload);
   }
