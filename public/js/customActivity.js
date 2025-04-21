@@ -1874,7 +1874,6 @@ define([
     let isCartInsertEnabled = $('#card-insert').prop('checked');
     let fromContactElement = $('.contact-dropdown-container #search-contact');
     let newContactFieldWrap = $('.sender-contact-container .create-contact .mapping-fields');
-    const messageTypesToCheck = ['selfmailer', 'Letters', 'LettersCardInsert'];
     const requiredFields = ['#addressLine1', '#firstName', '#companyName', '#city', '#provinceOrState', '#countryCode'];
     let isAnyFieldEmpty = false;
 
@@ -1885,27 +1884,31 @@ define([
     }
 
     resetToContactMappingErrors();
-    if(messageTypesToCheck.includes(selectedMessageType)) {
-      if(selectedSenderContactType === 'existing-contact'){
-        isValid = validateInputField(fromContactElement) ? isValid : false ;
-      } else {
-        let requiredFields = ['#newContactFirstName', '#newContactCompanyName', '#newContactAddressLine1', '#newContactCity', '#newContactState', '#newContactCountryCode'];
-        requiredFields.forEach(selector => {
-          const $field = $(selector);
-          const value = $field.val().trim();
-        
-          if (value === '') {
-            $field.addClass('error');
-            newContactFieldWrap.siblings('.error-msg').addClass('show');
-            isValid = false;
-          }
-        });
-      }
+    if(selectedSenderContactType === 'existing-contact'){
+      isValid = validateInputField(fromContactElement) ? isValid : false ;
     } else {
-      newContactFieldWrap.find('input').removeClass('error');
-      newContactFieldWrap.siblings('.error-msg').removeClass('show');
-      fromContactElement.removeClass('error');
-      fromContactElement.siblings('.error-msg').removeClass('show');
+      const firstName = $('#newContactFirstName').val().trim();
+      const companyName = $('#newContactCompanyName').val().trim();
+
+      if (firstName === '' && companyName === '') {
+        $('#newContactFirstName, #newContactCompanyName').addClass('error');
+        newContactFieldWrap.siblings('.error-msg').addClass('show');
+        isValid = false;
+      } else {
+        $('#newContactFirstName, #newContactCompanyName').removeClass('error');
+      }
+
+      let requiredFields = ['#newContactAddressLine1', '#newContactCity', '#newContactState', '#newContactCountryCode'];
+      requiredFields.forEach(selector => {
+        const $field = $(selector);
+        const value = $field.val().trim();
+      
+        if (value === '') {
+          $field.addClass('error');
+          newContactFieldWrap.siblings('.error-msg').addClass('show');
+          isValid = false;
+        }
+      });
     }
 
     previewPayload.fromContact = fromContact;
