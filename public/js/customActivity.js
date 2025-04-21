@@ -2359,8 +2359,6 @@ define([
   });
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('focus', function () {
-    const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
-    fetchTemplates($(this).val().trim(), dropdownName);
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
@@ -2370,8 +2368,6 @@ define([
   }, 300));
 
   $(document).on('focus', '.template-input', function () {
-    const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
-    fetchTemplates($(this).val().trim(), dropdownName);
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
@@ -2381,7 +2377,6 @@ define([
   }, 300));
 
   $(document).on('focus', '.return-envelope-input', function () {
-    fetchReturnEnvelope($(this).val().trim());
     $(this).closest('.return-envelope-dropdown-wrap').next('.dropdown-options').show();
   });
 
