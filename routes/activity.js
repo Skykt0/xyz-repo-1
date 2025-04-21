@@ -61,8 +61,7 @@ exports.execute = async function (req, res) {
       method: 'POST',
       url: internalPostcardJson.messageType === 'Postcards' ? baseUrl + 'postcards'
            : internalPostcardJson.messageType === 'Letters' || internalPostcardJson.messageType === 'LettersCardInsert'
-           ? baseUrl + 'letters'
-           : baseUrl + 'self_mailers',
+           ? baseUrl + 'letters' : baseUrl + 'self_mailers',
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
