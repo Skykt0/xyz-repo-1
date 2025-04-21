@@ -2456,6 +2456,25 @@ define([
       $('.contact-option.' + selectedValue).removeClass('hidden');
     });
 
+    function toggleAsterisk() {
+      const firstName = $('#newContactFirstName').val().trim();
+      const companyName = $('#newContactCompanyName').val().trim();
+
+      if (firstName !== '') {
+        $('label[for="newContactCompanyName"] .asterisk').hide();
+      } else {
+        $('label[for="newContactCompanyName"] .asterisk').show();
+      }
+
+      if (companyName !== '') {
+        $('label[for="newContactFirstName"] .asterisk').hide();
+      } else {
+        $('label[for="newContactFirstName"] .asterisk').show();
+      }
+    }
+
+    $('#newContactFirstName, #newContactCompanyName').on('input', toggleAsterisk);
+
     $(document).on('click', function (event) {
       let isCartInsertEnabled = $('#card-insert').prop('checked');
       let selectedMessageType = $('input[name="msgType"]:checked').val() !== undefined ? $('input[name="msgType"]:checked').val().replace(/\s+/g, '') : undefined;
