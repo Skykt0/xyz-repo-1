@@ -2056,7 +2056,7 @@ define([
     
       const dropdownTypeLabel = templateName.includes('returnEnvelope') ? 'return-envelope' : 'template';
       const $dropdownTemplateInput = $list
-        .siblings('.template-dropdown-wrap')
+        .siblings(`.${dropdownTypeLabel}-dropdown-wrap`)
         .find('input');
     
       $dropdownTemplateInput.val(templateDesc || 'No description').attr('data-id', templateId);
