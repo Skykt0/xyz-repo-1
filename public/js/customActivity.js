@@ -1971,6 +1971,7 @@ define([
         selectedCardInsertType = $('input[name="cardType"]:checked').val();
       }
       let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
+      let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
       if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
         selectedMessageType = 'trifold';
       } else if(isCartInsertEnabled && selectedMessageType === 'Letters' ) {
@@ -1983,8 +1984,8 @@ define([
           const  $list = $inputElement.parent('.template-dropdown-wrap').siblings('.dropdown-options');
           populateDropdown(dropdownName, sortedData, $list);
         } else {
-          populateDropdown('frontTemplateList', sortedData);
-          populateDropdown('backTemplateList', sortedData);
+          populateDropdown('frontTemplateList', sortedData, $(`.${selectedMessageType} .${selectedCreationType} .frontTemplateList`));
+          populateDropdown('backTemplateList', sortedData, $(`.${selectedMessageType} .${selectedCreationType} .backTemplateList`));
         }
       }
     } catch (error) {
