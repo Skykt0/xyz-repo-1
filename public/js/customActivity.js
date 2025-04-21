@@ -625,7 +625,46 @@ define([
       } else if(previewPayload.creationType === 'pdf-creation-type'){
         postCardJson.pdf = previewPayload.pdfLink;
       }
-    }
+    } else if(previewPayload.messageType === 'LettersCardInsert'){
+      if(previewPayload.extraService !== '' && previewPayload.extraService !== undefined && !previewPayload.isExpressDelivery) {
+        postCardJson.extraService = previewPayload.extraService;
+      }
+      if(previewPayload.envelopeType !== '' && previewPayload.envelopeType !== undefined){
+        postCardJson.envelopeType = previewPayload.envelopeType;
+      }
+      if(previewPayload.returnEnvelope !== '' && previewPayload.returnEnvelope !== undefined){
+        postCardJson.returnEnvelope = previewPayload.returnEnvelope;
+      }
+      postCardJson.color = previewPayload.color;
+      postCardJson.doubleSided = previewPayload.doubleSided;
+      if (previewPayload.perforatedPage) {
+        postCardJson.perforatedPage = 1;
+      }
+      if(previewPayload.addressPlacement === true) {
+        postCardJson.addressPlacement = 'insert_blank_page';
+      } else {
+        postCardJson.addressPlacement = 'top_first_page';
+      }
+      if(selectedCardInsertType === 'singleSide'){
+        if(previewPayload.creationType === 'html-creation-type'){
+          postCardJson.html = previewPayload.cardFrontHtmlContent;
+        } else if(previewPayload.creationType === 'template-creation-type'){
+          postCardJson.template = previewPayload.frontTemplateId;
+        } else if(previewPayload.creationType === 'pdf-creation-type'){
+          postCardJson.pdf = previewPayload.pdfLink;
+        }
+      } else if(selectedCardInsertType === 'doubleSide'){
+        if(previewPayload.creationType === 'html-creation-type'){
+          postCardJson.frontHTML = previewPayload.cardFrontHtmlContent;
+          postCardJson.backHTML = previewPayload.cardBackHtmlContent;
+        } else if(previewPayload.creationType === 'template-creation-type'){
+          postCardJson.frontTemplate = previewPayload.cardFrontTemplateId;
+          postCardJson.backTemplate = previewPayload.cardBackTemplateId;
+        } else if(previewPayload.creationType === 'pdf-creation-type'){
+          postCardJson.pdf = previewPayload.cardPdf;
+        }
+      } 
+    } 
     payload['arguments'].execute.inArguments[0]['postcardJson'] = postCardJson;
     authorization['authToken'] = authToken;
     authorization['et_subdomain'] = et_subdomain;
