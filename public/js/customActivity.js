@@ -510,6 +510,7 @@ define([
 
   async function save() {
     let isCartInsertEnabled = $('#card-insert').prop('checked');
+    let selectedCardInsertDesignFormat = $('input[name=\'cardInsertType\']:checked').val().replace(/\s+/g, '');
     let selectedCardInsertType;
     if(isCartInsertEnabled){
       selectedCardInsertType = $('input[name="cardType"]:checked').val();
@@ -647,21 +648,67 @@ define([
       }
       if(selectedCardInsertType === 'singleSide'){
         if(previewPayload.creationType === 'html-creation-type'){
-          postCardJson.html = previewPayload.cardFrontHtmlContent;
+          postCardJson.html = previewPayload.frontHtmlContent;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard[singleSided][pdf] = previewPayload.pdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard[singleSided][template] = previewPayload.frontTemplateId;
+          } else {            
+            postCardJson.plasticCard[singleSided][html] = previewPayload.cardfrontHtmlContent;
+          }
         } else if(previewPayload.creationType === 'template-creation-type'){
           postCardJson.template = previewPayload.frontTemplateId;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard[singleSided][pdf] = previewPayload.pdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard[singleSided][template] = previewPayload.cardFrontTemplateId;
+          } else {            
+            postCardJson.plasticCard[singleSided][html] = previewPayload.cardfrontHtmlContent;
+          }
         } else if(previewPayload.creationType === 'pdf-creation-type'){
           postCardJson.pdf = previewPayload.pdfLink;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard[singleSided][pdf] = previewPayload.cardPdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard[singleSided][template] = previewPayload.cardFrontTemplateId;
+          } else {            
+            postCardJson.plasticCard[singleSided][html] = previewPayload.cardfrontHtmlContent;
+          }
         }
       } else if(selectedCardInsertType === 'doubleSide'){
         if(previewPayload.creationType === 'html-creation-type'){
-          postCardJson.frontHTML = previewPayload.cardFrontHtmlContent;
-          postCardJson.backHTML = previewPayload.cardBackHtmlContent;
+          postCardJson.html = previewPayload.frontHtmlContent;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard[doubleSided][pdf] = previewPayload.cardPdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard[doubleSided][frontTemplate] = previewPayload.cardFrontTemplateId;
+            postCardJson.plasticCard[doubleSided][backTemplate] = previewPayload.cardBackTemplateId;
+          } else {            
+            postCardJson.plasticCard[doubleSided][frontHTML] = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard[doubleSided][backHTML] = previewPayload.cardbackHtmlContent;
+          }
         } else if(previewPayload.creationType === 'template-creation-type'){
-          postCardJson.frontTemplate = previewPayload.cardFrontTemplateId;
-          postCardJson.backTemplate = previewPayload.cardBackTemplateId;
+          postCardJson.template = previewPayload.frontTemplateId;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard[doubleSided][pdf] = previewPayload.cardPdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard[doubleSided][frontTemplate] = previewPayload.cardFrontTemplateId;
+            postCardJson.plasticCard[doubleSided][backTemplate] = previewPayload.cardBackTemplateId;
+          } else {            
+            postCardJson.plasticCard[doubleSided][frontHTML] = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard[doubleSided][backHTML] = previewPayload.cardbackHtmlContent;
+          }
         } else if(previewPayload.creationType === 'pdf-creation-type'){
-          postCardJson.pdf = previewPayload.cardPdf;
+          postCardJson.pdf = previewPayload.pdfLink;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard[doubleSided][pdf] = previewPayload.cardPdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard[doubleSided][frontTemplate] = previewPayload.cardFrontTemplateId;
+            postCardJson.plasticCard[doubleSided][backTemplate] = previewPayload.cardBackTemplateId;
+          } else {            
+            postCardJson.plasticCard[doubleSided][frontHTML] = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard[doubleSided][backHTML] = previewPayload.cardbackHtmlContent;
+          }
         }
       } 
     } 
@@ -669,7 +716,7 @@ define([
     authorization['authToken'] = authToken;
     authorization['et_subdomain'] = et_subdomain;
     authorization['authTSSD'] = authTSSD;
-    console.log(JSON.stringify(postcardJson));
+    
     payload['arguments'].execute.inArguments[0]['authorization'] = authorization;
     connection.trigger('updateActivity', payload);
   }
@@ -1400,7 +1447,7 @@ define([
         const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .creation-template`) ?.attr('data-id');
 
         previewPayload.frontTemplateId = frontTemplateId;
-        previewPayload.frontTemplateName = frontTemplateName;
+        previewPapreviewPayload.frontTemplateIdyload.frontTemplateName = frontTemplateName;
         previewPayload.plasticCardSize = selectedPlasticCardSize;
 
         if(selectedCardInsertDesignFormat === 'pdf') {
@@ -1431,7 +1478,6 @@ define([
         previewPayload.size = size;
       }
     }
-    console.log(JSON.stringify(previewPayload));
   }
 
   async function createMessage() {
@@ -1631,7 +1677,7 @@ define([
         data.append('mailingClass', previewPayload.mailingClass);
       }
     }
-    console.log(data.toString);
+    
     try {
       const response = await fetch(url, {
         method: 'POST',
