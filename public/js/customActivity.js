@@ -1823,11 +1823,18 @@ define([
       },
       success: function (response) {
         $('#dropdown-options').empty();
-        response.data.forEach(function (contact) {
-          $('#dropdown-options').append(
-            $('<div>').text(contact.firstName ? contact.firstName : contact.companyName).data('contact', contact)
-          );
-        });
+        if (response.data.length === 0) {
+          const $emptyItem = $('<div>')
+            .text('No options available');
+          $('#dropdown-options').append($emptyItem);
+        } else {
+          response.data.forEach(function (contact) {
+            const $item = $('<div>')
+              .text(contact.firstName ? contact.firstName : contact.companyName)
+              .data('contact', contact);
+            $('#dropdown-options').append($item);
+          });
+        }
 
         if (response.data.length > 0) {
           $('#dropdown-options').show();
