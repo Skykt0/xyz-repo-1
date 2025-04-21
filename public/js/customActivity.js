@@ -1392,6 +1392,7 @@ define([
         previewPayload.size = size;
       }
     }
+    console.log(JSON.stringify(previewPayload));
   }
 
   async function createMessage() {
@@ -1591,7 +1592,7 @@ define([
         data.append('mailingClass', previewPayload.mailingClass);
       }
     }
-    
+    console.log(data.toString);
     try {
       const response = await fetch(url, {
         method: 'POST',
