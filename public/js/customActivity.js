@@ -2372,6 +2372,10 @@ define([
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
+  $(document).on('blur', '.template-input', function () {
+    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').hide();
+  });
+  
   $(document).on('input', '.template-input', debounce(function () {
     const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
     fetchTemplates($(this).val().trim(), dropdownName, $(this));
@@ -2434,27 +2438,25 @@ define([
         selectedMessageType = 'LettersCardInsert';
       }
       let selectedCreationType = $('input[name=\'createType\']:checked').val() !== undefined ? $('input[name=\'createType\']:checked').val().replace(/\s+/g, '') : undefined;
-      const sharedSelectors = [
-        '#letter-card-insert-front-template-input',
-        '#letter-card-insert-back-template-input',
-        '#letter-card-insert-html-front-template-input',
-        '#letter-card-insert-html-back-template-input',
-        '#letter-card-insert-pdf-front-template-input',
-        '#letter-card-insert-pdf-back-template-input',
-        '#letter-card-insert-creation-template-input'
-      ];
+      // const sharedSelectors = [
+      //   '#letter-card-insert-front-template-input',
+      //   '#letter-card-insert-back-template-input',
+      //   '#letter-card-insert-html-front-template-input',
+      //   '#letter-card-insert-html-back-template-input',
+      //   '#letter-card-insert-pdf-front-template-input',
+      //   '#letter-card-insert-pdf-back-template-input',
+      //   '#letter-card-insert-creation-template-input'
+      // ];
       
       const frontSelectors = [
         '#frontTemplateList',
         '#front-template-input',
-        '#letter-template-input',
-        ...sharedSelectors
+        '#letter-template-input'
       ];
       
       const backSelectors = [
         '#backTemplateList',
-        '#back-template-input',
-        ...sharedSelectors
+        '#back-template-input'
       ];
 
       const isClickInsideDropdown = $(event.target).is('#dropdown-options, #search-contact');
