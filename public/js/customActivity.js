@@ -2390,9 +2390,14 @@ define([
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
-  // $(document).on('blur', '.template-input', function () {
-  //   $(this).closest('.template-dropdown-wrap').next('.dropdown-options').hide();
-  // });
+  $(document).on('blur', '.template-input', function (event) {
+    console.log('Event target:');
+    console.log(event.target);
+    
+    console.log('Related target:'); 
+    console.log(event.relatedTarget);
+    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').hide();
+  });
   
   $(document).on('input', '.template-input', debounce(function () {
     const dropdownName = $(this).parent('.template-dropdown-wrap').siblings('.dropdown-options').attr('id');
