@@ -2507,7 +2507,10 @@ define([
       const firstName = $('#newContactFirstName').val().trim();
       const companyName = $('#newContactCompanyName').val().trim();
 
-      if (firstName !== '' && companyName === '') {
+      if(firstName === '' && companyName === '') {
+        $('label[for="newContactCompanyName"] .asterisk').show();
+        $('label[for="newContactFirstName"] .asterisk').show();
+      } else if (firstName !== '' && companyName === '') {
         $('label[for="newContactCompanyName"] .asterisk').hide();
         $('label[for="newContactFirstName"] .asterisk').show();
       } else if (companyName !== '' && firstName === '') {
