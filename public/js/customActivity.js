@@ -546,7 +546,7 @@ define([
       express: previewPayload.isExpressDelivery,
       description: previewPayload.description,
     };
-    if(previewPayload.messageType !== 'Letters') {
+    if(previewPayload.messageType !== 'Letters' && previewPayload.messageType !== 'LettersCardInsert') {
       postCardJson.size = previewPayload.size;
     }
     if(!previewPayload.isExpressDelivery) {
