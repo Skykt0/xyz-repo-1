@@ -100,6 +100,7 @@ define([
         $('input[name=\'createType\'][value=\'' + value + '\']').prop('checked', true);
         break;
       case 'senderContactType':
+        previewPayload.prevContactType = value;
         $('input[name=\'senderContactType\'][value=\'' + value + '\']').prop('checked', true).trigger('change');
         break;
       case 'newContactFields':
@@ -2496,7 +2497,10 @@ define([
     $('#sendDate3').val(today).attr('min', today);
     
     $('input[name="senderContactType"]').on('change', function () {
-      resetContactFields();
+      if(previewPayload.prevContactType !== selectedValue) {
+        resetContactFields();
+        previewPayload.prevContactType = selectedValue;
+      }
       const selectedValue = $(this).val(); 
       $('.contact-option').addClass('hidden');
       $('.contact-option.' + selectedValue).removeClass('hidden');
