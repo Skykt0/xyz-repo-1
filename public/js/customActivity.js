@@ -2509,15 +2509,12 @@ define([
 
       if (firstName !== '' && companyName === '') {
         $('label[for="newContactCompanyName"] .asterisk').hide();
-      } else {
+        $('label[for="newContactFirstName"] .asterisk').show();
+      } else if (companyName !== '' && firstName === '') {
+        $('label[for="newContactFirstName"] .asterisk').hide();
         $('label[for="newContactCompanyName"] .asterisk').show();
       }
 
-      if (companyName !== '' && firstName === '') {
-        $('label[for="newContactFirstName"] .asterisk').hide();
-      } else {
-        $('label[for="newContactFirstName"] .asterisk').show();
-      }
     }
 
     $('#newContactFirstName, #newContactCompanyName').on('input', toggleAsterisk);
