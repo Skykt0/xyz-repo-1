@@ -100,7 +100,7 @@ define([
         $('input[name=\'createType\'][value=\'' + value + '\']').prop('checked', true);
         break;
       case 'senderContactType':
-        $('input[name=\'senderContactType\'][value=\'' + value + '\']').prop('checked', true);
+        $('input[name=\'senderContactType\'][value=\'' + value + '\']').prop('checked', true).trigger('change');
         break;
       case 'newContactFields':
         const newContact = value;
