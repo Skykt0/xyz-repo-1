@@ -1451,7 +1451,7 @@ define([
         const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .creation-template`) ?.attr('data-id');
 
         previewPayload.frontTemplateId = frontTemplateId;
-        previewPapreviewPayload.frontTemplateIdyload.frontTemplateName = frontTemplateName;
+        previewPayload.frontTemplateName = frontTemplateName;
         previewPayload.plasticCardSize = selectedPlasticCardSize;
 
         if(selectedCardInsertDesignFormat === 'pdf') {
