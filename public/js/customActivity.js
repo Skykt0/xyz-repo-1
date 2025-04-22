@@ -392,7 +392,7 @@ define([
         fetchReturnEnvelope();
 
         if(previewPayload.contactEnvironment !== currentEnabledEnvironmenet) {
-          $('.contact-dropdown-container #search-contact').val('');
+          resetContactFields();
         }
         fetchContacts();
 
@@ -835,6 +835,20 @@ define([
       $(`${containerSelector} textarea`).val('');
       $(`${containerSelector} .size-radio-label .radio-input`).first().prop('checked', true);
     });
+  }
+
+  function resetContactFields() {
+    $('.contact-dropdown-container #search-contact').val('');
+    $('#newContactFirstName').val('');
+    $('#newContactLastName').val('');
+    $('#newContactCompanyName').val('');
+    $('#newContactEmail').val('');
+    $('#newContactAddressLine1').val('');
+    $('#newContactAddressLine2').val('');
+    $('#newContactCity').val('');
+    $('#newContactState').val('');
+    $('#newContactCountryCode').val('');
+    $('#newContactPostal').val('');
   }
 
   async function validateStep3() {
@@ -2482,6 +2496,7 @@ define([
     $('#sendDate3').val(today).attr('min', today);
     
     $('input[name="senderContactType"]').on('change', function () {
+      resetContactFields();
       const selectedValue = $(this).val(); 
       $('.contact-option').addClass('hidden');
       $('.contact-option.' + selectedValue).removeClass('hidden');
