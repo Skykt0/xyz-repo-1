@@ -1675,7 +1675,7 @@ define([
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
         $('#pdf-preview-container').hide();
-        $('.preview-message').html('<span>Review your mail piece before sending!</span><span>Click the button below to check the preview.</span>').show();
+        $('.preview-message').html('<div>Review your mail piece before sending!</div><div>Click the button below to check the preview.</div>').show();
       }
   
       $('.retry-btn-wrap .loader').addClass('show');
@@ -1685,7 +1685,7 @@ define([
   
       if (pdfUrl) {
         previewPayload.previewURL = pdfUrl;
-        $('.preview-message').html('<span>Review your mail piece before sending!</span><span>Click the button below to check the preview.</span>');
+        $('.preview-message').html('<div>Review your mail piece before sending!</div><div>Click the button below to check the preview.</div>');
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
         $('.retry-preview-btn').text('Show Preview');
         $('.retry-btn-wrap .loader').removeClass('show');
