@@ -2418,12 +2418,12 @@ define([
       : $('.mapping-fields-group label[for="firstName"]');
   
     if ($(this).val() !== 'Select') {
-      targetLabel.text(targetLabel.text().replace(' *', ''));
+      targetLabel.find('.asterisk').remove();
     } else {
-      if (!targetLabel.text().includes('*')) {
-        targetLabel.text(targetLabel.text() + ' *');
+      if (targetLabel.find('.asterisk').length === 0) {
+        targetLabel.append(' <span class="asterisk">*</span>');
       }
-    }  
+    }
   });
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('focus', function () {
