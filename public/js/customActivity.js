@@ -628,6 +628,7 @@ define([
       }
     } else if(previewPayload.messageType === 'LettersCardInsert'){
       postCardJson.plasticCard = postCardJson.plasticCard || {};
+      postCardJson.plasticCard.size = previewPayload.plasticCardSize;
       if(previewPayload.extraService !== '' && previewPayload.extraService !== undefined && !previewPayload.isExpressDelivery) {
         postCardJson.extraService = previewPayload.extraService;
       }
