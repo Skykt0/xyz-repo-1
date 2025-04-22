@@ -2439,14 +2439,20 @@ define([
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
-  $(document).on('blur', '.template-input', function () {
+  $(document).on('blur', '.template-input', function (e) {
     const $input = $(this);
-    setTimeout(function () {
-      if (!$input.closest('.template-dropdown-wrap').next('.dropdown-options').find(document.activeElement).length &&
-          !$(document.activeElement).hasClass('dropdown-item')) {
-        $input.closest('.template-dropdown-wrap').next('.dropdown-options').hide();
-      }
-    }, 150);
+    const $dropdown = $input.closest('.template-dropdown-wrap').siblings('.dropdown-options');
+    const $related = $(e.relatedTarget);
+
+    if ($related.length && $dropdown.has($related).length && $related.hasClass('dropdown-item')) {
+      const templateDesc = $related.text();
+      const templateId = $related.attr('data-id');
+  
+      $input.val(templateDesc).attr('data-id', templateId);
+      $dropdown.hide();
+    } else {
+      $dropdown.hide();
+    }
   });
   
   $(document).on('input', '.template-input', debounce(function () {
