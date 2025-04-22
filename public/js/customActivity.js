@@ -2097,7 +2097,7 @@ define([
       $list.append($listItem);
     });
   
-    $list.off('click', '.dropdown-item').on('click', '.dropdown-item', function () {
+    $list.off('mousedown', '.dropdown-item').on('mousedown', '.dropdown-item', function () {
       const $clickedItem = $(this);
       const templateId = $clickedItem.attr('data-id');
       const templateDesc = $clickedItem.text();
@@ -2442,17 +2442,8 @@ define([
   $(document).on('blur', '.template-input', function (e) {
     const $input = $(this);
     const $dropdown = $input.closest('.template-dropdown-wrap').siblings('.dropdown-options');
-    const $related = $(e.relatedTarget);
 
-    if ($related.length && $dropdown.has($related).length && $related.hasClass('dropdown-item')) {
-      const templateDesc = $related.text();
-      const templateId = $related.attr('data-id');
-  
-      $input.val(templateDesc).attr('data-id', templateId);
-      $dropdown.hide();
-    } else {
-      $dropdown.hide();
-    }
+    $dropdown.hide();
   });
   
   $(document).on('input', '.template-input', debounce(function () {
