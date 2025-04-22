@@ -126,6 +126,7 @@ define([
           $('#card-insert-container').addClass('visible');
           $('.card-insert-wrapper').addClass('visible');
         }
+        executeScreenTwoMethods();
         $('input[name=\'msgType\'][value=\'' + value + '\']').prop('checked', true).trigger('change');
         break;
       case 'description':
