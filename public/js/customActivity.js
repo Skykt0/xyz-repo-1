@@ -527,6 +527,7 @@ define([
 
   async function save() {
     let isCartInsertEnabled = $('#card-insert').prop('checked');
+    let selectedCardInsertDesignFormat = $('input[name=\'cardInsertType\']:checked').val().replace(/\s+/g, '');
     let selectedCardInsertType;
     if(isCartInsertEnabled){
       selectedCardInsertType = $('input[name="cardType"]:checked').val();
@@ -563,7 +564,7 @@ define([
       express: previewPayload.isExpressDelivery,
       description: previewPayload.description,
     };
-    if(previewPayload.messageType !== 'Letters') {
+    if(previewPayload.messageType !== 'Letters' && previewPayload.messageType !== 'LettersCardInsert') {
       postCardJson.size = previewPayload.size;
     }
     if(!previewPayload.isExpressDelivery) {
@@ -643,7 +644,97 @@ define([
       } else if(previewPayload.creationType === 'pdf-creation-type'){
         postCardJson.pdf = previewPayload.pdfLink;
       }
+    } else if(previewPayload.messageType === 'LettersCardInsert'){
+      postCardJson.plasticCard = postCardJson.plasticCard || {};
+      postCardJson.plasticCard.size = previewPayload.plasticCardSize;
+      if(previewPayload.extraService !== '' && previewPayload.extraService !== undefined && !previewPayload.isExpressDelivery) {
+        postCardJson.extraService = previewPayload.extraService;
+      }
+      if(previewPayload.envelopeType !== '' && previewPayload.envelopeType !== undefined){
+        postCardJson.envelopeType = previewPayload.envelopeType;
+      }
+      if(previewPayload.returnEnvelope !== '' && previewPayload.returnEnvelope !== undefined){
+        postCardJson.returnEnvelope = previewPayload.returnEnvelope;
+      }
+      postCardJson.color = previewPayload.color;
+      postCardJson.doubleSided = previewPayload.doubleSided;
+      if (previewPayload.perforatedPage) {
+        postCardJson.perforatedPage = 1;
+      }
+      if(previewPayload.addressPlacement === true) {
+        postCardJson.addressPlacement = 'insert_blank_page';
+      } else {
+        postCardJson.addressPlacement = 'top_first_page';
+      }
+      if(selectedCardInsertType === 'singleSide'){
+        postCardJson.plasticCard.singleSided = postCardJson.plasticCard.singleSided || {};
+        if(previewPayload.creationType === 'html-creation-type'){
+          postCardJson.html = previewPayload.frontHtmlContent;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard.singleSided.pdf = previewPayload.pdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard.singleSided.template = previewPayload.frontTemplateId;
+          } else {            
+            postCardJson.plasticCard.singleSided.html = previewPayload.cardfrontHtmlContent;
+          }
+        } else if(previewPayload.creationType === 'template-creation-type'){
+          postCardJson.template = previewPayload.frontTemplateId;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard.singleSided.pdf = previewPayload.pdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard.singleSided.template = previewPayload.cardFrontTemplateId;
+          } else {            
+            postCardJson.plasticCard.singleSided.html = previewPayload.cardfrontHtmlContent;
+          }
+        } else if(previewPayload.creationType === 'pdf-creation-type'){
+          postCardJson.pdf = previewPayload.pdfLink;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard.singleSided.pdf = previewPayload.cardPdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard.singleSided.template = previewPayload.cardFrontTemplateId;
+          } else {            
+            postCardJson.plasticCard.singleSided.html = previewPayload.cardfrontHtmlContent;
+          }
+        }
+      } else if(selectedCardInsertType === 'doubleSide'){      
+        postCardJson.plasticCard.doubleSided = postCardJson.plasticCard.doubleSided || {};
+        if(previewPayload.creationType === 'html-creation-type'){
+          postCardJson.html = previewPayload.frontHtmlContent;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard.doubleSided.pdf = previewPayload.cardPdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard.doubleSided.frontTemplate = previewPayload.cardFrontTemplateId;
+            postCardJson.plasticCard.doubleSided.backTemplate = previewPayload.cardBackTemplateId;
+          } else {            
+            postCardJson.plasticCard.doubleSided.frontHTML = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard.doubleSided.backHTML = previewPayload.cardbackHtmlContent;
+          }
+        } else if(previewPayload.creationType === 'template-creation-type'){
+          postCardJson.template = previewPayload.frontTemplateId;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard.doubleSided.pdf = previewPayload.cardPdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard.doubleSided.frontTemplate = previewPayload.cardFrontTemplateId;
+            postCardJson.plasticCard.doubleSided.backTemplate = previewPayload.cardBackTemplateId;
+          } else {            
+            postCardJson.plasticCard.doubleSided.frontHTML = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard.doubleSided.backHTML = previewPayload.cardbackHtmlContent;
+          }
+        } else if(previewPayload.creationType === 'pdf-creation-type'){
+          postCardJson.pdf = previewPayload.pdfLink;
+          if(selectedCardInsertDesignFormat === 'pdf'){
+            postCardJson.plasticCard.doubleSided.pdf = previewPayload.cardPdfLink;
+          } else if(selectedCardInsertDesignFormat === 'template'){
+            postCardJson.plasticCard.doubleSided.frontTemplate = previewPayload.cardFrontTemplateId;
+            postCardJson.plasticCard.doubleSided.backTemplate = previewPayload.cardBackTemplateId;
+          } else {            
+            postCardJson.plasticCard.doubleSided.frontHTML = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard.doubleSided.backHTML = previewPayload.cardbackHtmlContent;
+          }
+        }
+      } 
     }
+    
     payload['arguments'].execute.inArguments[0]['postcardJson'] = postCardJson;
     authorization['authToken'] = authToken;
     authorization['et_subdomain'] = et_subdomain;
