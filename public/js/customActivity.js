@@ -627,6 +627,7 @@ define([
         postCardJson.pdf = previewPayload.pdfLink;
       }
     } else if(previewPayload.messageType === 'LettersCardInsert'){
+      postCardJson.plasticCard = postCardJson.plasticCard || {};
       if(previewPayload.extraService !== '' && previewPayload.extraService !== undefined && !previewPayload.isExpressDelivery) {
         postCardJson.extraService = previewPayload.extraService;
       }
@@ -647,6 +648,7 @@ define([
         postCardJson.addressPlacement = 'top_first_page';
       }
       if(selectedCardInsertType === 'singleSide'){
+        postCardJson.plasticCard.singleSided = postCardJson.plasticCard.singleSided || {};
         if(previewPayload.creationType === 'html-creation-type'){
           postCardJson.html = previewPayload.frontHtmlContent;
           if(selectedCardInsertDesignFormat === 'pdf'){
@@ -675,7 +677,8 @@ define([
             postCardJson.plasticCard.singleSided.html = previewPayload.cardfrontHtmlContent;
           }
         }
-      } else if(selectedCardInsertType === 'doubleSide'){
+      } else if(selectedCardInsertType === 'doubleSide'){      
+        postCardJson.plasticCard.doubleSided = postCardJson.plasticCard.doubleSided || {};
         if(previewPayload.creationType === 'html-creation-type'){
           postCardJson.html = previewPayload.frontHtmlContent;
           if(selectedCardInsertDesignFormat === 'pdf'){
