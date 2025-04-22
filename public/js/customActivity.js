@@ -99,6 +99,22 @@ define([
       case 'creationType':
         $('input[name=\'createType\'][value=\'' + value + '\']').prop('checked', true);
         break;
+      case 'senderContactType':
+        $('input[name=\'senderContactType\'][value=\'' + value + '\']').prop('checked', true);
+        break;
+      case 'newContactFields':
+        const newContact = value;
+        $('#newContactFirstName').val(newContact.firstName);
+        $('#newContactLastName').val(newContact.lastName);
+        $('#newContactCompanyName').val(newContact.companyName);
+        $('#newContactEmail').val(newContact.email);
+        $('#newContactAddressLine1').val(newContact.addressLine1);
+        $('#newContactAddressLine2').val(newContact.addressLine2);
+        $('#newContactCity').val(newContact.city);
+        $('#newContactState').val(newContact.provinceOrState);
+        $('#newContactCountryCode').val(newContact.countryCode);
+        $('#newContactPostal').val(newContact.postalOrZip);
+        break;
       case 'messageType':
         if(value === 'trifold'){
           value = 'selfmailer';
@@ -536,6 +552,7 @@ define([
     }
     previewPayload.messageType = selectedMessageType;
     previewPayload.creationType = $('input[name=\'createType\']:checked').val();
+    previewPayload.senderContactType = $('input[name=\'senderContactType\']:checked').val();
     payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
     payload['arguments'].execute.inArguments[0]['MapDESchema']=MapDESchema;
     payload['arguments'].execute.inArguments[0]['previewDEMapOptions']=previewDEMapOptions;
@@ -1796,6 +1813,7 @@ define([
       if (isFromContact) {
         fromContact.id = data.id;
         fromContact.name = data.firstName;
+        previewPayload.newContactFields = contact;
       } else {
         toContact = data.id;
       }
