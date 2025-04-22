@@ -2503,18 +2503,22 @@ define([
   });
 
   $('.mapping-fields-group #firstName, .mapping-fields-group #companyName').change(function () {
-    var isFirstName = $(this).attr('id') === 'firstName';
-    var targetLabel = isFirstName 
-      ? $('.mapping-fields-group label[for="companyName"]') 
-      : $('.mapping-fields-group label[for="firstName"]');
+    const firstName = $('.mapping-fields-group #firstName').val();
+    const companyName = $('.mapping-fields-group #companyName').val();
   
-    if ($(this).val() !== 'Select') {
-      targetLabel.text(targetLabel.text().replace(' *', ''));
-    } else {
-      if (!targetLabel.text().includes('*')) {
-        targetLabel.text(targetLabel.text() + ' *');
-      }
-    }  
+    const $firstAsterisk = $('.mapping-fields-group label[for="firstName"] .asterisk');
+    const $companyAsterisk = $('.mapping-fields-group label[for="companyName"] .asterisk');
+  
+    if (firstName === 'Select' && companyName === 'Select') {
+      $firstAsterisk.show();
+      $companyAsterisk.show();
+    } else if (firstName !== 'Select' && companyName === 'Select') {
+      $firstAsterisk.show();
+      $companyAsterisk.hide();
+    } else if (companyName !== 'Select' && firstName === 'Select') {
+      $firstAsterisk.hide();
+      $companyAsterisk.show();
+    }
   });
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('focus', function () {
@@ -2598,16 +2602,15 @@ define([
       const firstName = $('#newContactFirstName').val().trim();
       const companyName = $('#newContactCompanyName').val().trim();
 
-      if (firstName !== '') {
-        $('label[for="newContactCompanyName"] .asterisk').hide();
-      } else {
+      if(firstName === '' && companyName === '') {
         $('label[for="newContactCompanyName"] .asterisk').show();
-      }
-
-      if (companyName !== '') {
-        $('label[for="newContactFirstName"] .asterisk').hide();
-      } else {
         $('label[for="newContactFirstName"] .asterisk').show();
+      } else if (firstName !== '' && companyName === '') {
+        $('label[for="newContactCompanyName"] .asterisk').hide();
+        $('label[for="newContactFirstName"] .asterisk').show();
+      } else if (companyName !== '' && firstName === '') {
+        $('label[for="newContactFirstName"] .asterisk').hide();
+        $('label[for="newContactCompanyName"] .asterisk').show();
       }
     }
 
