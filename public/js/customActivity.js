@@ -126,7 +126,8 @@ define([
           $('#card-insert-container').addClass('visible');
           $('.card-insert-wrapper').addClass('visible');
         }
-        $('input[name=\'msgType\'][value=\'' + value + '\']').prop('checked', true);
+        executeScreenTwoMethods();
+        $('input[name=\'msgType\'][value=\'' + value + '\']').prop('checked', true).trigger('change');
         break;
       case 'description':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .description';
@@ -931,9 +932,9 @@ define([
 
   function resetContactFields() {
     $('.contact-dropdown-container #search-contact').val('');
-    $('#newContactFirstName').val('');
+    $('#newContactFirstName').val('').trigger('input');
     $('#newContactLastName').val('');
-    $('#newContactCompanyName').val('');
+    $('#newContactCompanyName').val('').trigger('input');
     $('#newContactEmail').val('');
     $('#newContactAddressLine1').val('');
     $('#newContactAddressLine2').val('');
@@ -2107,7 +2108,6 @@ define([
       }
   
       let selectedMessageType = $('input[name="msgType"]:checked').val().replace(/\s+/g, '');
-      let selectedCreationType = $('input[name=\'createType\']:checked').val().replace(/\s+/g, '');
   
       if (isCartInsertEnabled && selectedMessageType === 'selfmailer') {
         selectedMessageType = 'trifold';
