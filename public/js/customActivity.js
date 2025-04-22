@@ -650,64 +650,64 @@ define([
         if(previewPayload.creationType === 'html-creation-type'){
           postCardJson.html = previewPayload.frontHtmlContent;
           if(selectedCardInsertDesignFormat === 'pdf'){
-            postCardJson.plasticCard[singleSided][pdf] = previewPayload.pdfLink;
+            postCardJson.plasticCard.singleSided.pdf = previewPayload.pdfLink;
           } else if(selectedCardInsertDesignFormat === 'template'){
-            postCardJson.plasticCard[singleSided][template] = previewPayload.frontTemplateId;
+            postCardJson.plasticCard.singleSided.template = previewPayload.frontTemplateId;
           } else {            
-            postCardJson.plasticCard[singleSided][html] = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard.singleSided.html = previewPayload.cardfrontHtmlContent;
           }
         } else if(previewPayload.creationType === 'template-creation-type'){
           postCardJson.template = previewPayload.frontTemplateId;
           if(selectedCardInsertDesignFormat === 'pdf'){
-            postCardJson.plasticCard[singleSided][pdf] = previewPayload.pdfLink;
+            postCardJson.plasticCard.singleSided.pdf = previewPayload.pdfLink;
           } else if(selectedCardInsertDesignFormat === 'template'){
-            postCardJson.plasticCard[singleSided][template] = previewPayload.cardFrontTemplateId;
+            postCardJson.plasticCard.singleSided.template = previewPayload.cardFrontTemplateId;
           } else {            
-            postCardJson.plasticCard[singleSided][html] = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard.singleSided.html = previewPayload.cardfrontHtmlContent;
           }
         } else if(previewPayload.creationType === 'pdf-creation-type'){
           postCardJson.pdf = previewPayload.pdfLink;
           if(selectedCardInsertDesignFormat === 'pdf'){
-            postCardJson.plasticCard[singleSided][pdf] = previewPayload.cardPdfLink;
+            postCardJson.plasticCard.singleSided.pdf = previewPayload.cardPdfLink;
           } else if(selectedCardInsertDesignFormat === 'template'){
-            postCardJson.plasticCard[singleSided][template] = previewPayload.cardFrontTemplateId;
+            postCardJson.plasticCard.singleSided.template = previewPayload.cardFrontTemplateId;
           } else {            
-            postCardJson.plasticCard[singleSided][html] = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard.singleSided.html = previewPayload.cardfrontHtmlContent;
           }
         }
       } else if(selectedCardInsertType === 'doubleSide'){
         if(previewPayload.creationType === 'html-creation-type'){
           postCardJson.html = previewPayload.frontHtmlContent;
           if(selectedCardInsertDesignFormat === 'pdf'){
-            postCardJson.plasticCard[doubleSided][pdf] = previewPayload.cardPdfLink;
+            postCardJson.plasticCard.doubleSided.pdf = previewPayload.cardPdfLink;
           } else if(selectedCardInsertDesignFormat === 'template'){
-            postCardJson.plasticCard[doubleSided][frontTemplate] = previewPayload.cardFrontTemplateId;
-            postCardJson.plasticCard[doubleSided][backTemplate] = previewPayload.cardBackTemplateId;
+            postCardJson.plasticCard.doubleSided.frontTemplate = previewPayload.cardFrontTemplateId;
+            postCardJson.plasticCard.doubleSided.backTemplate = previewPayload.cardBackTemplateId;
           } else {            
-            postCardJson.plasticCard[doubleSided][frontHTML] = previewPayload.cardfrontHtmlContent;
-            postCardJson.plasticCard[doubleSided][backHTML] = previewPayload.cardbackHtmlContent;
+            postCardJson.plasticCard.doubleSided.frontHTML = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard.doubleSided.backHTML = previewPayload.cardbackHtmlContent;
           }
         } else if(previewPayload.creationType === 'template-creation-type'){
           postCardJson.template = previewPayload.frontTemplateId;
           if(selectedCardInsertDesignFormat === 'pdf'){
-            postCardJson.plasticCard[doubleSided][pdf] = previewPayload.cardPdfLink;
+            postCardJson.plasticCard.doubleSided.pdf = previewPayload.cardPdfLink;
           } else if(selectedCardInsertDesignFormat === 'template'){
-            postCardJson.plasticCard[doubleSided][frontTemplate] = previewPayload.cardFrontTemplateId;
-            postCardJson.plasticCard[doubleSided][backTemplate] = previewPayload.cardBackTemplateId;
+            postCardJson.plasticCard.doubleSided.frontTemplate = previewPayload.cardFrontTemplateId;
+            postCardJson.plasticCard.doubleSided.backTemplate = previewPayload.cardBackTemplateId;
           } else {            
-            postCardJson.plasticCard[doubleSided][frontHTML] = previewPayload.cardfrontHtmlContent;
-            postCardJson.plasticCard[doubleSided][backHTML] = previewPayload.cardbackHtmlContent;
+            postCardJson.plasticCard.doubleSided.frontHTML = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard.doubleSided.backHTML = previewPayload.cardbackHtmlContent;
           }
         } else if(previewPayload.creationType === 'pdf-creation-type'){
           postCardJson.pdf = previewPayload.pdfLink;
           if(selectedCardInsertDesignFormat === 'pdf'){
-            postCardJson.plasticCard[doubleSided][pdf] = previewPayload.cardPdfLink;
+            postCardJson.plasticCard.doubleSided.pdf = previewPayload.cardPdfLink;
           } else if(selectedCardInsertDesignFormat === 'template'){
-            postCardJson.plasticCard[doubleSided][frontTemplate] = previewPayload.cardFrontTemplateId;
-            postCardJson.plasticCard[doubleSided][backTemplate] = previewPayload.cardBackTemplateId;
+            postCardJson.plasticCard.doubleSided.frontTemplate = previewPayload.cardFrontTemplateId;
+            postCardJson.plasticCard.doubleSided.backTemplate = previewPayload.cardBackTemplateId;
           } else {            
-            postCardJson.plasticCard[doubleSided][frontHTML] = previewPayload.cardfrontHtmlContent;
-            postCardJson.plasticCard[doubleSided][backHTML] = previewPayload.cardbackHtmlContent;
+            postCardJson.plasticCard.doubleSided.frontHTML = previewPayload.cardfrontHtmlContent;
+            postCardJson.plasticCard.doubleSided.backHTML = previewPayload.cardbackHtmlContent;
           }
         }
       } 
