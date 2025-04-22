@@ -2497,11 +2497,11 @@ define([
     $('#sendDate3').val(today).attr('min', today);
     
     $('input[name="senderContactType"]').on('change', function () {
+      const selectedValue = $(this).val();
       if(previewPayload.prevContactType !== selectedValue) {
         resetContactFields();
         previewPayload.prevContactType = selectedValue;
       }
-      const selectedValue = $(this).val(); 
       $('.contact-option').addClass('hidden');
       $('.contact-option.' + selectedValue).removeClass('hidden');
     });
