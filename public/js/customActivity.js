@@ -99,6 +99,23 @@ define([
       case 'creationType':
         $('input[name=\'createType\'][value=\'' + value + '\']').prop('checked', true);
         break;
+      case 'senderContactType':
+        previewPayload.prevContactType = value;
+        $('input[name=\'senderContactType\'][value=\'' + value + '\']').prop('checked', true).trigger('change');
+        break;
+      case 'newContactFields':
+        const newContact = value;
+        $('#newContactFirstName').val(newContact.firstName);
+        $('#newContactLastName').val(newContact.lastName);
+        $('#newContactCompanyName').val(newContact.companyName);
+        $('#newContactEmail').val(newContact.email);
+        $('#newContactAddressLine1').val(newContact.addressLine1);
+        $('#newContactAddressLine2').val(newContact.addressLine2);
+        $('#newContactCity').val(newContact.city);
+        $('#newContactState').val(newContact.provinceOrState);
+        $('#newContactCountryCode').val(newContact.countryCode);
+        $('#newContactPostal').val(newContact.postalOrZip);
+        break;
       case 'messageType':
         if(value === 'trifold'){
           value = 'selfmailer';
@@ -376,7 +393,7 @@ define([
         fetchReturnEnvelope();
 
         if(previewPayload.contactEnvironment !== currentEnabledEnvironmenet) {
-          $('.contact-dropdown-container #search-contact').val('');
+          resetContactFields();
         }
         fetchContacts();
 
@@ -536,6 +553,7 @@ define([
     }
     previewPayload.messageType = selectedMessageType;
     previewPayload.creationType = $('input[name=\'createType\']:checked').val();
+    previewPayload.senderContactType = $('input[name=\'senderContactType\']:checked').val();
     payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
     payload['arguments'].execute.inArguments[0]['MapDESchema']=MapDESchema;
     payload['arguments'].execute.inArguments[0]['previewDEMapOptions']=previewDEMapOptions;
@@ -818,6 +836,20 @@ define([
       $(`${containerSelector} textarea`).val('');
       $(`${containerSelector} .size-radio-label .radio-input`).first().prop('checked', true);
     });
+  }
+
+  function resetContactFields() {
+    $('.contact-dropdown-container #search-contact').val('');
+    $('#newContactFirstName').val('');
+    $('#newContactLastName').val('');
+    $('#newContactCompanyName').val('');
+    $('#newContactEmail').val('');
+    $('#newContactAddressLine1').val('');
+    $('#newContactAddressLine2').val('');
+    $('#newContactCity').val('');
+    $('#newContactState').val('');
+    $('#newContactCountryCode').val('');
+    $('#newContactPostal').val('');
   }
 
   async function validateStep3() {
@@ -1675,7 +1707,7 @@ define([
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
         $('#pdf-preview-container').hide();
-        $('.preview-message').html('<span>Review your mail piece before sending!</span><span>Click the button below to check the preview.</span>').show();
+        $('.preview-message').html('<div>Review your mail piece before sending!</div><div>Click the button below to check the preview.</div>').show();
       }
   
       $('.retry-btn-wrap .loader').addClass('show');
@@ -1685,7 +1717,7 @@ define([
   
       if (pdfUrl) {
         previewPayload.previewURL = pdfUrl;
-        $('.preview-message').html('<span>Review your mail piece before sending!</span><span>Click the button below to check the preview.</span>');
+        $('.preview-message').html('<div>Review your mail piece before sending!</div><div>Click the button below to check the preview.</div>');
         $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
         $('.retry-preview-btn').text('Show Preview');
         $('.retry-btn-wrap .loader').removeClass('show');
@@ -1796,6 +1828,7 @@ define([
       if (isFromContact) {
         fromContact.id = data.id;
         fromContact.name = data.firstName;
+        previewPayload.newContactFields = contact;
       } else {
         toContact = data.id;
       }
@@ -2464,7 +2497,11 @@ define([
     $('#sendDate3').val(today).attr('min', today);
     
     $('input[name="senderContactType"]').on('change', function () {
-      const selectedValue = $(this).val(); 
+      const selectedValue = $(this).val();
+      if(previewPayload.prevContactType !== selectedValue) {
+        resetContactFields();
+        previewPayload.prevContactType = selectedValue;
+      }
       $('.contact-option').addClass('hidden');
       $('.contact-option.' + selectedValue).removeClass('hidden');
     });
