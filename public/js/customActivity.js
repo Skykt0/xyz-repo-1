@@ -2507,13 +2507,13 @@ define([
       const firstName = $('#newContactFirstName').val().trim();
       const companyName = $('#newContactCompanyName').val().trim();
 
-      if (firstName !== '') {
+      if (firstName !== '' && companyName === '') {
         $('label[for="newContactCompanyName"] .asterisk').hide();
       } else {
         $('label[for="newContactCompanyName"] .asterisk').show();
       }
 
-      if (companyName !== '') {
+      if (companyName !== '' && firstName === '') {
         $('label[for="newContactFirstName"] .asterisk').hide();
       } else {
         $('label[for="newContactFirstName"] .asterisk').show();
