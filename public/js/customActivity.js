@@ -2097,7 +2097,7 @@ define([
       $list.append($listItem);
     });
   
-    $list.off('click', '.dropdown-item').on('click', '.dropdown-item', function () {
+    $list.off('mousedown', '.dropdown-item').on('mousedown', '.dropdown-item', function () {
       const $clickedItem = $(this);
       const templateId = $clickedItem.attr('data-id');
       const templateDesc = $clickedItem.text();
@@ -2439,14 +2439,11 @@ define([
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
-  $(document).on('blur', '.template-input', function () {
+  $(document).on('blur', '.template-input', function (e) {
     const $input = $(this);
-    setTimeout(function () {
-      if (!$input.closest('.template-dropdown-wrap').next('.dropdown-options').find(document.activeElement).length &&
-          !$(document.activeElement).hasClass('dropdown-item')) {
-        $input.closest('.template-dropdown-wrap').next('.dropdown-options').hide();
-      }
-    }, 150);
+    const $dropdown = $input.closest('.template-dropdown-wrap').siblings('.dropdown-options');
+
+    $dropdown.hide();
   });
   
   $(document).on('input', '.template-input', debounce(function () {
