@@ -44,8 +44,8 @@ define([
     connection.trigger('requestTokens');
     connection.trigger('requestEndpoints');
     connection.trigger('ready');
-    // $('#card-insert-type').addClass('hidden');
-    // $('.card-insert-creation-type-wrapper').addClass('hidden');
+    $('#card-insert-type').addClass('hidden');
+    $('.card-insert-creation-type-wrapper').addClass('hidden');
   }
   
   connection.on('initActivity', initialize);
@@ -102,6 +102,7 @@ define([
         if(postcardArguments.cardInsertObj !== null){
           $('#card-insert').prop('checked', postcardArguments.cardInsertObj.cardInsertEnabled).trigger('change');
           $('input[name="cardType"][value=\'' + postcardArguments.cardInsertObj.cardInsertType + '\']').prop('checked', true);
+          $('input[name="cardInsertType"][value=\'' + postcardArguments.cardInsertObj.cardInsertDesignFormat + '\']').prop('checked', true);
           previewPayload.cardInsertLayout = postcardArguments.cardInsertObj.cardInsertDesignFormat;
         }
         break;
@@ -193,13 +194,6 @@ define([
         previewPayload.templateEnvironment = apiKeyEnabled;
         previewPayload.envelopeEnvironment = apiKeyEnabled;
         previewPayload.contactEnvironment = apiKeyEnabled;
-        break;
-      case 'cardInsertObj':
-        if(value !== null){
-          $('#card-insert').prop('checked', value.cardInsertEnabled).trigger('change');
-          $('input[name="cardType"][value=\'' + value.cardInsertType + '\']').prop('checked', true);
-          previewPayload.cardInsertLayout = value.cardInsertDesignFormat;
-        }
         break;
       case 'cardInsertDesignFormat':
         if(value) {
