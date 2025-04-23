@@ -212,6 +212,10 @@ define([
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .pdfLink';
         $(queryString).val(value);
         break;
+      case 'cardPdfLink':
+        var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .cardPdfLink';
+        $(queryString).val(value);
+        break;
       case 'singleSideTemplateName':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '')+ ' .singleSideTemplate';
         $(queryString).val(value);
@@ -666,7 +670,7 @@ define([
         if(previewPayload.creationType === 'html-creation-type'){
           postCardJson.html = previewPayload.frontHtmlContent;
           if(selectedCardInsertDesignFormat === 'pdf'){
-            postCardJson.plasticCard.singleSided.pdf = previewPayload.pdfLink;
+            postCardJson.plasticCard.singleSided.pdf = previewPayload.cardPdfLink;
           } else if(selectedCardInsertDesignFormat === 'template'){
             postCardJson.plasticCard.singleSided.template = previewPayload.frontTemplateId;
           } else {            
@@ -1309,7 +1313,7 @@ define([
           previewPayload.plasticCardSize = selectedPlasticCardSize;
           if(selectedCardInsertDesignFormat === 'pdf') {
             const cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
-            previewPayload.cardPdf = cardPdfLink;
+            previewPayload.cardPdfLink = cardPdfLink;
           } else if(selectedCardInsertDesignFormat === 'template') {
             const cardFrontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`) ?.attr('data-id');
             const cardFrontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`).val();
@@ -1337,8 +1341,8 @@ define([
         if(selectedMessageType === 'LettersCardInsert') {
           previewPayload.plasticCardSize = selectedPlasticCardSize;
           if(selectedCardInsertDesignFormat === 'pdf') {
-            const pdfLink = $(`.${selectedMessageType} .${selectedCreationType} .pdfLink`).val().trim();
-            previewPayload.pdf = pdfLink;
+            const cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
+            previewPayload.cardPdfLink = cardPdfLink;
           } else if(selectedCardInsertDesignFormat === 'template') {
             const frontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`) ?.attr('data-id');
             const frontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val();
@@ -1453,7 +1457,7 @@ define([
 
         if(selectedCardInsertDesignFormat === 'pdf') {
           const cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
-          previewPayload.cardPdf = cardPdfLink;
+          previewPayload.cardPdfLink = cardPdfLink;
         } else if(selectedCardInsertDesignFormat === 'template') {
           const cardFrontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`) ?.attr('data-id');
           const cardFrontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`).val();
@@ -1479,8 +1483,8 @@ define([
         previewPayload.plasticCardSize = selectedPlasticCardSize;
 
         if(selectedCardInsertDesignFormat === 'pdf') {
-          const pdfLink = $(`.${selectedMessageType} .${selectedCreationType} .pdfLink`).val().trim();
-          previewPayload.pdf = pdfLink;
+          const cardPdfLink = $(`.${selectedMessageType} .${selectedCreationType} .cardPdfLink`).val().trim();
+          previewPayload.cardPdfLink = cardPdfLink;
         } else if(selectedCardInsertDesignFormat === 'template') {
           const cardFrontTemplateId = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`) ?.attr('data-id');
           const cardFrontTemplateName = $(`.${selectedMessageType} .${selectedCreationType} .card-front-template`).val();
