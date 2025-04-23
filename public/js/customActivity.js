@@ -99,6 +99,11 @@ define([
         break;
       case 'creationType':
         $('input[name=\'createType\'][value=\'' + value + '\']').prop('checked', true);
+        if(previewPayload.cardInsertObj !== null){
+          $('#card-insert').prop('checked', previewPayload.cardInsertObj.cardInsertEnabled).trigger('change');
+          $('input[name="cardType"][value=\'' + previewPayload.cardInsertObj.cardInsertType + '\']').prop('checked', true);
+          previewPayload.cardInsertLayout = previewPayload.cardInsertObj.cardInsertDesignFormat;
+        }
         break;
       case 'senderContactType':
         previewPayload.prevContactType = value;
