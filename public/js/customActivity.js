@@ -372,16 +372,14 @@ define([
         }
 
         currentEnabledEnvironmenet = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
-        if (isExtTemp) {
-          if(previewPayload.templateEnvironment !== currentEnabledEnvironmenet) {
-            $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('');
-            $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('');
-          }
+        if(previewPayload.templateEnvironment !== currentEnabledEnvironmenet) {
+          $(`.${selectedMessageType} .${selectedCreationType} .frontTemplate`).val('').attr('data-id', '');
+          $(`.${selectedMessageType} .${selectedCreationType} .backTemplate`).val('').attr('data-id', '');
         }
         fetchTemplates();
+
         if(previewPayload.envelopeEnvironment !== currentEnabledEnvironmenet) {
-          $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val('');
-          $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).attr('data-id', '');
+          $(`.${selectedMessageType} .${selectedCreationType} .returnEnvelope`).val('').attr('data-id', '');
         }
         fetchReturnEnvelope();
 
@@ -855,10 +853,7 @@ define([
         $('#card-insert-container').removeClass('visible');
         $('.card-insert-wrapper').removeClass('visible');
       }
-
-      if (this.id === 'letters' || this.id === 'self-mailer') {
-        $('#card-insert').prop('checked', false).trigger('change');
-      }
+      $('#card-insert').prop('checked', false).trigger('change');
     });
 
     $('#card-insert').change(function () {
@@ -1731,7 +1726,14 @@ define([
       previewPayload.pdfLink = previewPayload.pdf;
 
       if(previewPayload.liveApiKeyEnabled) {
-        let msgType = selectedMessageType === 'selfmailer' ? 'self_mailers' : selectedMessageType.toLowerCase();
+        let msgType = selectedMessageType.toLowerCase();
+
+        if(selectedMessageType === 'selfmailer') {
+          msgType = 'self_mailers';
+        } else if(selectedMessageType === 'LettersCardInsert') {
+          msgType = 'letters';
+        }
+
         deleteMailItem(msgType, result.id);
       }
       return result;
