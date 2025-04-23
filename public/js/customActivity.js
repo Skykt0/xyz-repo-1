@@ -87,6 +87,7 @@ define([
     );
     var postcardArguments = hasPostcardArguments ? payload['arguments'].execute.inArguments[0].internalPostcardJson : {};
     previewDEMapOptions = hasMapDESchema ?payload['arguments'].execute.inArguments[0].previewDEMapOptions : {};
+    executeScreenTwoMethods();
 
     $.each(postcardArguments, function(key, value) {
       switch (key) {
@@ -98,6 +99,13 @@ define([
         break;
       case 'creationType':
         $('input[name=\'createType\'][value=\'' + value + '\']').prop('checked', true);
+        if(postcardArguments.cardInsertObj !== null){
+          $('#card-insert').prop('checked', postcardArguments.cardInsertObj.cardInsertEnabled).trigger('change');
+          $('input[name="cardType"][value=\'' + postcardArguments.cardInsertObj.cardInsertType + '\']').prop('checked', true);
+          $('input[name="cardInsertType"][value=\'' + postcardArguments.cardInsertObj.cardInsertDesignFormat + '\']').prop('checked', true);
+          previewPayload.cardInsertLayout = postcardArguments.cardInsertObj.cardInsertType;
+          previewPayload.cardInsertDesignFormat = postcardArguments.cardInsertObj.cardInsertDesignFormat;
+        }
         break;
       case 'senderContactType':
         previewPayload.prevContactType = value;
@@ -126,7 +134,6 @@ define([
           $('#card-insert-container').addClass('visible');
           $('.card-insert-wrapper').addClass('visible');
         }
-        executeScreenTwoMethods();
         $('input[name=\'msgType\'][value=\'' + value + '\']').prop('checked', true).trigger('change');
         break;
       case 'description':
@@ -188,21 +195,6 @@ define([
         previewPayload.templateEnvironment = apiKeyEnabled;
         previewPayload.envelopeEnvironment = apiKeyEnabled;
         previewPayload.contactEnvironment = apiKeyEnabled;
-        break;
-      case 'cardInsertType':
-        if(value){
-          $('#card-insert').prop('checked', true);
-          $('#card-insert-type').removeClass('hidden');
-          $('.card-insert-creation-type-wrapper').removeClass('hidden');
-          $('input[name="cardType"][value=\'' + value + '\']').prop('checked', true);
-          previewPayload.cardInsertLayout = value;
-        }
-        break;
-      case 'cardInsertDesignFormat':
-        if(value) {
-          $('input[name="cardInsertType"][value=\'' + value + '\']').prop('checked', true);
-          previewPayload.cardInsertDesignFormat = value;
-        }
         break;
       case 'cardfrontHtmlContent':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .html-editor-front-card-insert';
@@ -532,9 +524,13 @@ define([
     let selectedCardInsertType;
     if(isCartInsertEnabled){
       selectedCardInsertType = $('input[name="cardType"]:checked').val();
-      previewPayload.cardInsertType = selectedCardInsertType;
+      previewPayload.cardInsertObj = {
+        cardInsertEnabled : true,
+        cardInsertDesignFormat : selectedCardInsertDesignFormat,
+        cardInsertType : selectedCardInsertType
+      };
     } else {
-      previewPayload.cardInsertType = null;
+      previewPayload.cardInsertObj = null;
     }
     payload['arguments'].execute.inArguments = [{}];
     var MapDESchema = {};
