@@ -103,7 +103,8 @@ define([
           $('#card-insert').prop('checked', postcardArguments.cardInsertObj.cardInsertEnabled).trigger('change');
           $('input[name="cardType"][value=\'' + postcardArguments.cardInsertObj.cardInsertType + '\']').prop('checked', true);
           $('input[name="cardInsertType"][value=\'' + postcardArguments.cardInsertObj.cardInsertDesignFormat + '\']').prop('checked', true);
-          previewPayload.cardInsertLayout = postcardArguments.cardInsertObj.cardInsertDesignFormat;
+          previewPayload.cardInsertLayout = postcardArguments.cardInsertObj.cardInsertType;
+          previewPayload.cardInsertDesignFormat = postcardArguments.cardInsertObj.cardInsertDesignFormat;
         }
         break;
       case 'senderContactType':
@@ -194,12 +195,6 @@ define([
         previewPayload.templateEnvironment = apiKeyEnabled;
         previewPayload.envelopeEnvironment = apiKeyEnabled;
         previewPayload.contactEnvironment = apiKeyEnabled;
-        break;
-      case 'cardInsertDesignFormat':
-        if(value) {
-          $('input[name="cardInsertType"][value=\'' + value + '\']').prop('checked', true);
-          previewPayload.cardInsertDesignFormat = value;
-        }
         break;
       case 'cardfrontHtmlContent':
         var queryString = '.' + postcardArguments.messageType.replace(/\s+/g, '') + ' .' + postcardArguments.creationType.replace(/\s+/g, '') + ' .html-editor-front-card-insert';
