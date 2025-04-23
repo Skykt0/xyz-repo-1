@@ -1626,12 +1626,12 @@ define([
       } else if(selectedMessageType === 'Letters' || selectedMessageType === 'LettersCardInsert'){
         data.append('html', previewPayload.frontHtmlContent);
         setLetterPreviewPayload(data, previewPayload);
-        if(selectedMessageType !== 'Letters' && selectedCardInsertType !== 'doubleSide') {
+        if(selectedMessageType !== 'Letters' && selectedCardInsertType === 'singleSide') {
           data.append('plasticCard[size]', previewPayload.plasticCardSize);
           if(selectedCardInsertDesignFormat === 'html') {
             data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
           } else if(selectedCardInsertDesignFormat === 'pdf') {
-            data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
+            data.append('plasticCard[singleSided][pdf]',previewPayload.cardPdfLink);
           } else if(selectedCardInsertDesignFormat === 'template') {
             data.append('plasticCard[singleSided][template]',previewPayload.frontTemplateId);
           }
@@ -1641,7 +1641,7 @@ define([
             data.append('plasticCard[doubleSided][frontHTML]',previewPayload.cardfrontHtmlContent);
             data.append('plasticCard[doubleSided][backHTML]',previewPayload.cardbackHtmlContent);
           } else if(selectedCardInsertDesignFormat === 'pdf') {
-            data.append('plasticCard[doubleSided][pdf]',previewPayload.cardPdf);
+            data.append('plasticCard[doubleSided][pdf]',previewPayload.cardPdfLink);
           } else if(selectedCardInsertDesignFormat === 'template') {
             data.append('plasticCard[doubleSided][frontTemplate]',previewPayload.cardFrontTemplateId);
             data.append('plasticCard[doubleSided][backTemplate]',previewPayload.cardBackTemplateId);
@@ -1688,7 +1688,7 @@ define([
           if(selectedCardInsertDesignFormat === 'html') {
             data.append('plasticCard[singleSided][html]',previewPayload.cardfrontHtmlContent);
           } else if(selectedCardInsertDesignFormat === 'pdf') {
-            data.append('plasticCard[singleSided][pdf]',previewPayload.pdf);
+            data.append('plasticCard[singleSided][pdf]',previewPayload.cardPdfLink);
           } else if(selectedCardInsertDesignFormat === 'template') {
             data.append('plasticCard[singleSided][template]',previewPayload.cardFrontTemplateId);
           }
@@ -1698,7 +1698,7 @@ define([
             data.append('plasticCard[doubleSided][frontHTML]',previewPayload.cardfrontHtmlContent);
             data.append('plasticCard[doubleSided][backHTML]',previewPayload.cardbackHtmlContent);
           } else if(selectedCardInsertDesignFormat === 'pdf') {
-            data.append('plasticCard[doubleSided][pdf]',previewPayload.cardPdf);
+            data.append('plasticCard[doubleSided][pdf]',previewPayload.cardPdfLink);
           } else if(selectedCardInsertDesignFormat === 'template') {
             data.append('plasticCard[doubleSided][frontTemplate]',previewPayload.cardFrontTemplateId);
             data.append('plasticCard[doubleSided][backTemplate]',previewPayload.cardBackTemplateId);
