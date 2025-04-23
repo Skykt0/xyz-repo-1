@@ -1731,7 +1731,14 @@ define([
       previewPayload.pdfLink = previewPayload.pdf;
 
       if(previewPayload.liveApiKeyEnabled) {
-        let msgType = selectedMessageType === 'selfmailer' ? 'self_mailers' : selectedMessageType.toLowerCase();
+        let msgType = selectedMessageType.toLowerCase();
+
+        if(selectedMessageType === 'selfmailer') {
+          msgType = 'self_mailers';
+        } else if(selectedMessageType === 'LettersCardInsert') {
+          msgType = 'letters';
+        }
+
         deleteMailItem(msgType, result.id);
       }
       return result;
