@@ -87,6 +87,7 @@ define([
     );
     var postcardArguments = hasPostcardArguments ? payload['arguments'].execute.inArguments[0].internalPostcardJson : {};
     previewDEMapOptions = hasMapDESchema ?payload['arguments'].execute.inArguments[0].previewDEMapOptions : {};
+    executeScreenTwoMethods();
 
     $.each(postcardArguments, function(key, value) {
       switch (key) {
@@ -126,7 +127,6 @@ define([
           $('#card-insert-container').addClass('visible');
           $('.card-insert-wrapper').addClass('visible');
         }
-        executeScreenTwoMethods();
         $('input[name=\'msgType\'][value=\'' + value + '\']').prop('checked', true).trigger('change');
         break;
       case 'description':
@@ -189,13 +189,11 @@ define([
         previewPayload.envelopeEnvironment = apiKeyEnabled;
         previewPayload.contactEnvironment = apiKeyEnabled;
         break;
-      case 'cardInsertType':
-        if(value){
-          $('#card-insert').prop('checked', true);
-          $('#card-insert-type').removeClass('hidden');
-          $('.card-insert-creation-type-wrapper').removeClass('hidden');
-          $('input[name="cardType"][value=\'' + value + '\']').prop('checked', true);
-          previewPayload.cardInsertLayout = value;
+      case 'cardInsertObj':
+        if(value !== null){
+          $('#card-insert').prop('checked', value.cardInsertEnabled).trigger('change');
+          $('input[name="cardType"][value=\'' + value.cardInsertType + '\']').prop('checked', true);
+          previewPayload.cardInsertLayout = value.cardInsertDesignFormat;
         }
         break;
       case 'cardInsertDesignFormat':
@@ -532,9 +530,13 @@ define([
     let selectedCardInsertType;
     if(isCartInsertEnabled){
       selectedCardInsertType = $('input[name="cardType"]:checked').val();
-      previewPayload.cardInsertType = selectedCardInsertType;
+      previewPayload.cardInsertObj = {
+        cardInsertEnabled : true,
+        cardInsertDesignFormat : selectedCardInsertDesignFormat,
+        cardInsertType : selectedCardInsertType
+      };
     } else {
-      previewPayload.cardInsertType = null;
+      previewPayload.cardInsertObj = null;
     }
     payload['arguments'].execute.inArguments = [{}];
     var MapDESchema = {};
