@@ -44,8 +44,8 @@ define([
     connection.trigger('requestTokens');
     connection.trigger('requestEndpoints');
     connection.trigger('ready');
-    $('#card-insert-type').addClass('hidden');
-    $('.card-insert-creation-type-wrapper').addClass('hidden');
+    // $('#card-insert-type').addClass('hidden');
+    // $('.card-insert-creation-type-wrapper').addClass('hidden');
   }
   
   connection.on('initActivity', initialize);
