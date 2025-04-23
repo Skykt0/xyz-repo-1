@@ -1295,6 +1295,7 @@ define([
       previewPayload.description = description;
       previewPayload.mailingClass = mailingClass;
       previewPayload.frontHtmlContent = frontHtmlContent;
+      previewPayload.isExpressDelivery = isExpressDelivery;
 
       if(selectedMessageType !== 'Letters' && selectedMessageType !== 'LettersCardInsert') {
         backHtmlContent = $(`.${selectedMessageType} .${selectedCreationType} .html-editor-back`).val();
@@ -1353,8 +1354,6 @@ define([
           const cardInsertSize = $(`.${selectedMessageType} .html-card-size .radio-input:checked`).val();
           previewPayload.cardSize = cardInsertSize;
         }
-      }else{
-        previewPayload.isExpressDelivery = isExpressDelivery;
       }
     } else if ($(`.${selectedMessageType} .screen-2`).css('display') === 'block') {
       const description = $(`.${selectedMessageType} .${selectedCreationType} .description`).val();;
