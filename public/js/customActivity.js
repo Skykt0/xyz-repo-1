@@ -99,10 +99,10 @@ define([
         break;
       case 'creationType':
         $('input[name=\'createType\'][value=\'' + value + '\']').prop('checked', true);
-        if(previewPayload.cardInsertObj !== null){
-          $('#card-insert').prop('checked', previewPayload.cardInsertObj.cardInsertEnabled).trigger('change');
-          $('input[name="cardType"][value=\'' + previewPayload.cardInsertObj.cardInsertType + '\']').prop('checked', true);
-          previewPayload.cardInsertLayout = previewPayload.cardInsertObj.cardInsertDesignFormat;
+        if(postcardArguments.cardInsertObj !== null){
+          $('#card-insert').prop('checked', postcardArguments.cardInsertObj.cardInsertEnabled).trigger('change');
+          $('input[name="cardType"][value=\'' + postcardArguments.cardInsertObj.cardInsertType + '\']').prop('checked', true);
+          previewPayload.cardInsertLayout = postcardArguments.cardInsertObj.cardInsertDesignFormat;
         }
         break;
       case 'senderContactType':
