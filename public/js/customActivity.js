@@ -688,7 +688,7 @@ define([
         } else if(previewPayload.creationType === 'template-creation-type'){
           postCardJson.template = previewPayload.frontTemplateId;
           if(selectedCardInsertDesignFormat === 'pdf'){
-            postCardJson.plasticCard.singleSided.pdf = previewPayload.pdfLink;
+            postCardJson.plasticCard.singleSided.pdf = previewPayload.cardPdfLink;
           } else if(selectedCardInsertDesignFormat === 'template'){
             postCardJson.plasticCard.singleSided.template = previewPayload.cardFrontTemplateId;
           } else {            
