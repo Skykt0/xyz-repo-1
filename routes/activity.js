@@ -34,7 +34,7 @@ exports.execute = async function (req, res) {
   const internalPostcardJson = requestBody.internalPostcardJson;
   internalPostcardJson.authTSSD = authTSSD;
   const loggingExternalKey = internalPostcardJson.loggingExternalKey;
-
+  const cardInsertObj = internalPostcardJson.cardInsertObj;
 
   let requestData = {
     authTSSD: authTSSD,
@@ -46,6 +46,8 @@ exports.execute = async function (req, res) {
     payload: JSON.stringify(internalPostcardJson),
     loggingExternalKey : loggingExternalKey
   };
+
+  requestData.object = cardInsertObj.cardInsertEnabled ? `${internalPostcardJson.messageType}-${cardInsertObj.cardInsertType}` : internalPostcardJson.messageType;
 
   try {
     let postcardJson = requestBody.postcardJson;
@@ -60,8 +62,8 @@ exports.execute = async function (req, res) {
     const postcardConfigOptions = {
       method: 'POST',
       url: internalPostcardJson.messageType === 'Postcards' ? baseUrl + 'postcards'
-           : internalPostcardJson.messageType === 'Letters' || internalPostcardJson.messageType === 'LettersCardInsert'
-           ? baseUrl + 'letters' : baseUrl + 'self_mailers',
+        : internalPostcardJson.messageType === 'Letters' || internalPostcardJson.messageType === 'LettersCardInsert'
+          ? baseUrl + 'letters' : baseUrl + 'self_mailers',
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
