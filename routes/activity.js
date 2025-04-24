@@ -54,12 +54,12 @@ exports.execute = async function (req, res) {
     const contactFields = requestBody.MapDESchema;
     postcardJson.to = contactFields;
     const mergeVariables = requestBody.mergeVariableSchema;
-    // postcardJson.mergeVariables = postcardJson.mergeVariables || {};
-    // for (const key in mergeVariables) {
-    //   if (mergeVariables.hasOwnProperty(key)) {
-    //     postcardJson.mergeVariables[key] = mergeVariables[key];
-    //   }
-    // }
+    postcardJson.mergeVariables = postcardJson.mergeVariables || {};
+    for (const key in mergeVariables) {
+      if (mergeVariables.hasOwnProperty(key)) {
+        postcardJson.mergeVariables[key] = mergeVariables[key];
+      }
+    }
 
     console.log('mergeVariable');
     console.log(postcardJson);
