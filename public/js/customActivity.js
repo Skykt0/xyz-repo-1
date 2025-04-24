@@ -65,7 +65,7 @@ define([
     $('.mapping-fields-group select').append(optionsData);
     connection.trigger('ready');
   });
-
+  console.log(data.toString);
   function initialize(data) {
     if (data) {
       payload = data;
