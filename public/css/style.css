@@ -1078,7 +1078,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .preview-message {
     font-size: 26px;
-    width: 51%;
     color: #666;
     font-weight: 600;
     margin-bottom: 10px;
