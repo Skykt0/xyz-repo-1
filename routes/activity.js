@@ -60,6 +60,10 @@ exports.execute = async function (req, res) {
         postcardJson.mergeVariables[key] = mergeVariables[key];
       }
     }
+
+    console.log('mergeVariable');
+    console.log(postcardJson);
+    
     let now = new Date();
     now.setMinutes(now.getMinutes() + 5);
     postcardJson.sendDate = now.toISOString();
