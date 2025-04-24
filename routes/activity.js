@@ -47,7 +47,7 @@ exports.execute = async function (req, res) {
     loggingExternalKey : loggingExternalKey
   };
 
-  requestData.object = cardInsertObj.cardInsertEnabled ? `${internalPostcardJson.messageType}-${cardInsertObj.cardInsertType}` : internalPostcardJson.messageType;
+  requestData.object = (cardInsertObj !== null && 'cardInsertEnabled' in cardInsertObj) ? `${internalPostcardJson.messageType}-${cardInsertObj.cardInsertType}` : internalPostcardJson.messageType;
 
   try {
     let postcardJson = requestBody.postcardJson;
