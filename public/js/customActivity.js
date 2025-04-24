@@ -23,6 +23,7 @@ define([
   let toContact = '';
   const POSTGRID_API_BASE_URL = 'https://api.postgrid.com/print-mail/v1/';
   let currentEnabledEnvironmenet = '';
+  const mergeVariablesFields = ['mergeVariable1', 'mergeVariable2', 'mergeVariable3', 'mergeVariable4'];
 
   var steps = [
     { 'label': 'Connect Account', 'key': 'step1' },
@@ -56,11 +57,13 @@ define([
   connection.on('requestedSchema', function (data) {
     var optionsData = '';
     data['schema'].forEach(ele => {
-      optionsData +=`<option value="${ele.name}">${ele.name}</option>`;
+      if(!mergeVariablesFields.includes(ele.name)) {
+        optionsData +=`<option value="${ele.name}">${ele.name}</option>`;
+      }
       var key = ele.key;
       const myArray = key.split('.');
       var value = myArray[0]+'.'+myArray[1]+'.'+'"'+ele.name+'"';  
-      deData[ele.name]=value;        
+      deData[ele.name]=value;     
     });
     $('.mapping-fields-group select').append(optionsData);
     connection.trigger('ready');
@@ -545,6 +548,11 @@ define([
       previewDEMapOptions[eleID]=optionSelect;
     });
 
+    var mergeVariableSchema = {};
+    mergeVariablesFields.forEach(fieldName => {
+      mergeVariableSchema[fieldName] = '{{'+deData[fieldName]+'}}';
+    });
+
     let selectedMessageType = $('input[name="msgType"]:checked').val();
     if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
       selectedMessageType = 'trifold';
@@ -556,6 +564,7 @@ define([
     previewPayload.senderContactType = $('input[name=\'senderContactType\']:checked').val();
     payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
     payload['arguments'].execute.inArguments[0]['MapDESchema']=MapDESchema;
+    payload['arguments'].execute.inArguments[0]['mergeVariableSchema']=mergeVariableSchema;
     payload['arguments'].execute.inArguments[0]['previewDEMapOptions']=previewDEMapOptions;
     payload['metaData'].isConfigured = true;
     var postCardJson = {
