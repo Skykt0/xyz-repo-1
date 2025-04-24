@@ -52,12 +52,14 @@ exports.execute = async function (req, res) {
   try {
     let postcardJson = requestBody.postcardJson;
     const contactFields = requestBody.MapDESchema;
-    const mergeVariables = requestBody.mergeVariableSchema;
-    console.log('mergeVariables');
-    console.log(mergeVariables);
-    console.log('mergeVariablesJSON');
-    console.log(JSON.stringify(mergeVariables));
     postcardJson.to = contactFields;
+    const mergeVariables = requestBody.mergeVariableSchema;
+    postcardJson.mergeVariables = postcardJson.mergeVariables || {};
+    for (const key in mergeVariables) {
+      if (mergeVariables.hasOwnProperty(key)) {
+        postcardJson.mergeVariables[key] = mergeVariables[key];
+      }
+    }
     let now = new Date();
     now.setMinutes(now.getMinutes() + 5);
     postcardJson.sendDate = now.toISOString();
