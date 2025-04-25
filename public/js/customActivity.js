@@ -2023,33 +2023,31 @@ define([
     }
 
     resetToContactMappingErrors();
-    if(selectedMessageType !== 'Postcards') {
-      if(selectedSenderContactType === 'existing-contact'){
-        isValid = validateInputField(fromContactElement) ? isValid : false ;
+    if(selectedSenderContactType === 'existing-contact' && selectedMessageType !== 'Postcards'){
+      isValid = validateInputField(fromContactElement) ? isValid : false ;
+    } else if(selectedSenderContactType === 'create-contact'){
+      const firstName = $('#newContactFirstName').val().trim();
+      const companyName = $('#newContactCompanyName').val().trim();
+
+      if (firstName === '' && companyName === '') {
+        $('#newContactFirstName, #newContactCompanyName').addClass('error');
+        newContactFieldWrap.siblings('.error-msg').addClass('show');
+        isValid = false;
       } else {
-        const firstName = $('#newContactFirstName').val().trim();
-        const companyName = $('#newContactCompanyName').val().trim();
-  
-        if (firstName === '' && companyName === '') {
-          $('#newContactFirstName, #newContactCompanyName').addClass('error');
+        $('#newContactFirstName, #newContactCompanyName').removeClass('error');
+      }
+
+      let requiredFields = ['#newContactAddressLine1', '#newContactCity', '#newContactState', '#newContactCountryCode'];
+      requiredFields.forEach(selector => {
+        const $field = $(selector);
+        const value = $field.val().trim();
+      
+        if (value === '') {
+          $field.addClass('error');
           newContactFieldWrap.siblings('.error-msg').addClass('show');
           isValid = false;
-        } else {
-          $('#newContactFirstName, #newContactCompanyName').removeClass('error');
         }
-  
-        let requiredFields = ['#newContactAddressLine1', '#newContactCity', '#newContactState', '#newContactCountryCode'];
-        requiredFields.forEach(selector => {
-          const $field = $(selector);
-          const value = $field.val().trim();
-        
-          if (value === '') {
-            $field.addClass('error');
-            newContactFieldWrap.siblings('.error-msg').addClass('show');
-            isValid = false;
-          }
-        });
-      }
+      });
     }
 
     previewPayload.fromContact = fromContact;
