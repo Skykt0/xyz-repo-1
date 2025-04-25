@@ -35,12 +35,13 @@ body {
 	border: 3px solid lightgray;
 	border-radius: 4px;
 	height: 32px;
+	width: 100%;
 	font-size: 16px;
 	box-sizing: border-box;
 }
 
 .screen-3 .input-field {
-	padding: 5px 10px;
+	padding: 2px;
 	border-radius: 3px;
 	border: 3px solid lightgray;
 	box-shadow: 0 0 1px 1px lightgray;
@@ -62,6 +63,10 @@ body {
 	font-size: 16px;
 }
 
+.screen-2 .input-label-radio {
+	font-size: 16px;
+	margin-bottom: 10px;
+  }
 .screen-3 .input-label-radio {
   font-size: 16px;
   margin-bottom: 10px;
@@ -170,7 +175,7 @@ body {
 	display: inline-block;
 }
 
-.screen-3 .error-message {
+.screen-3 .screen-2 .error-message {
 	color: red;
 	font-size: 16px;
 	display: block;
@@ -194,7 +199,7 @@ body {
 
 .screen-3 input[type="text"] {
   width: 100%;
-  padding: 5px 10px;
+  padding: 4px 5px;
   border-radius: 3px;
   outline: none;
   box-sizing: border-box;
@@ -212,6 +217,16 @@ body {
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	cursor: pointer;
+  outline: none;
+}
+
+.mapping-fields-group input {
+  width: 196px;
+  padding: 8px;
+  font-size: 14px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
 }
 
 #dropdown-options,
@@ -222,10 +237,11 @@ body {
 
 .screen-3 #search-contact,
 .screen-3 #front-template-input,
+.screen-3 #template-input,
 .screen-3 #back-template-input,
 .return-envelope-input {
     width: 100%;
-    padding: 8px 30px 8px 12px; 
+    padding: 5px; 
     box-sizing: border-box;
     border: 3px solid #ccc;
     border-radius: 4px;
@@ -255,7 +271,7 @@ body {
 	transform: translateY(-50%) rotate(45deg);
 }
 
-.screen-3 .dropdown-options, #letterScreen .dropdown-options {
+.screen .dropdown-options {
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -275,10 +291,8 @@ body {
 	cursor: pointer;
 }
 
-.screen-3 .dropdown-options div,
-.screen-3 .dropdown-options li,
-#letterScreen .dropdown-options div,
-#letterScreen .dropdown-options li {
+.screen .dropdown-options div,
+.screen .dropdown-options li{
 	padding: 8px;
 	cursor: pointer;
 	list-style: none;
@@ -288,10 +302,8 @@ body {
 	background: rgb(37 150 190);
 }
 
-.screen-3 .dropdown-options div:hover,
-.screen-3 .dropdown-options li:hover,
-#letterScreen .dropdown-options div:hover,
-#letterScreen .dropdown-options li:hover  {
+.screen .dropdown-options div:hover,
+.screen .dropdown-options li:hover {
 	background: #f0f0f0;
 }
 
@@ -408,7 +420,7 @@ body {
 .left-box {
 	display: flex;
 	flex-direction: column;
-	gap: 2rem;
+	gap: 1.75rem;
 }
 
 .section-label {
@@ -441,7 +453,7 @@ body {
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	color: #6b6b6b;
+	color: #000;
 }
 
 #card-insert-container {
@@ -568,7 +580,7 @@ input:checked + .test-to-live-slider::before {
 .card-insert-wrapper {
 	display: none;
 	flex-direction: column;
-	gap: 1rem;
+	gap: 1.75rem;
 }
 
 .card-insert-wrapper.visible {
@@ -580,6 +592,11 @@ input:checked + .test-to-live-slider::before {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
+}
+
+#step4 .message-label-input-wrap {
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .single-sided-radio-wrap,
@@ -641,6 +658,10 @@ input:checked + .test-to-live-slider::before {
   gap: 2rem;
 }
 
+.letters-card-insert .pdf-container .input-fields {
+	justify-content: flex-start;
+}
+
 .html-screen-wrapper .outer-input-fields .input-fields {
 	display: flex;
 	flex-wrap: wrap;
@@ -666,7 +687,9 @@ input:checked + .test-to-live-slider::before {
 }
 
 #letterScreen .pdf-container .input-fields .input-box,
-#letterScreen .template-container .existing-template-details .input-box {
+#letterScreen .template-container .existing-template-details .input-box,
+#letterCardInsertScreen .screen-1 .pdf-container .input-fields .input-box,
+#letterCardInsertScreen .screen-1 .template-container .existing-template-details .input-box {
   width: 31%;
 }
 
@@ -718,7 +741,7 @@ input:checked + .test-to-live-slider::before {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
-	width: 50%;
+	width: 60%;
 }
 
 .html-editor {
@@ -743,9 +766,14 @@ input:checked + .test-to-live-slider::before {
 	top: 1.25rem;
 }
 
+.html-btn-card-front{
+	left: 11rem;
+	top: 1.5rem;
+}
+
 .btn.btn-light.html-btn-front:hover,
 .btn.btn-light.html-btn-back:hover, .btn.btn-light.html-btn-card-front:hover, .btn.btn-light.html-btn-card-back:hover {
-	background: #bfbfbf;
+	background: #3B79F0;
 }
 
 .btn.btn-light.html-btn-front.show,
@@ -755,14 +783,18 @@ input:checked + .test-to-live-slider::before {
 
 .html-btn-front,
 .html-btn-back, .html-btn-card-front, .html-btn-card-back {
-	position: absolute;
 	padding: 0.3rem 1rem;
 	border-radius: 4px;
 	border: none;
 	font-weight: 500;
 	cursor: pointer;
-	background: #2569E6;
+	background: #4D8CFF;
   color: white;
+}
+
+.letters-card-insert .html-btn-front,
+.letters-card-insert .html-btn-back, .letters-card-insert .html-btn-card-front, .letters-card-insert .html-btn-card-back {
+  position: unset;
 }
 
 .trifold .screen-1 .btn{
@@ -802,6 +834,10 @@ input:checked + .test-to-live-slider::before {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
+}
+
+.pdf-container.html {
+  flex-direction: row;
 }
 
 .pdf-size, .pdf-card-size {
@@ -849,7 +885,6 @@ label[for="self-mailer-pdf-upload"] {
 
 #step4-heading {
 	margin: 0;
-	margin-bottom: 20px;
 }
 
 .mapping-container {
@@ -860,10 +895,13 @@ label[for="self-mailer-pdf-upload"] {
 	gap: 20px;
 }
 
-.mapping-left,
-.mapping-right {
+.sender-contact-container,
+.receiver-contact-contact {
 	flex: 1;
 	background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .mapping-radio-group {
@@ -908,7 +946,7 @@ label[for="self-mailer-pdf-upload"] {
 	margin-bottom: 12px;
 }
 
-.mapping-fields,
+.mapping-fields, .create-contact .error-msg,
 .error-message-contact-mapping {
 	width: 80%;
 	margin: auto;
@@ -920,7 +958,7 @@ label[for="self-mailer-pdf-upload"] {
 }
 
 .mapping-fields-group select {
-	border-color: #a0a0a0;
+	border: 2px solid #ccc;
 	outline: none;
 }
 
@@ -969,10 +1007,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .container.spacer.html-creation-type .html-btn-wrap,
-.container.spacer.pdf-creation-type .html-btn-wrap {
+.container.spacer.pdf-creation-type .html-btn-wrap,
+.screen .spacer .html-btn-wrap {
   position: absolute;
   width: 94%;
-  height: 7%;
   background: white;
   padding: 1.5rem 0.75rem 0.2rem;
   top: 2px;
@@ -1006,10 +1044,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     position: relative;
 }
 
-.template-dropdown-wrap .dropdown-icon, .return-envelope-dropdown-wrap .dropdown-icon {
+.dropdown-icon {
   position: absolute;
-  right: 4%;
-  top: 9px;
+  right: 4px;
+  top: 3px;
   transform: rotate(90deg);
   pointer-events: none;
   font-weight: bold;
@@ -1035,11 +1073,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: auto;
   border-radius: 30px;
   margin-top: 10px;
-  font-size: 16px;
+  font-size: 22px;
 }
 
 .preview-message {
-    font-size: 16px;
+    font-size: 26px;
     color: #666;
     font-weight: 600;
     margin-bottom: 10px;
@@ -1058,24 +1096,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-.next-btn {
-  background: #2569E6 !important;
-  color: #fff !important;
-}
-
-.fuelux .modal-footer a.back, .fuelux .modal-footer .cancel {
-  color: #2569E6 !important;
-  border: 0;
-  padding: 5px 10px;
-  font-size: 11px;
-  border-radius: 3px;
-}
-
-.fuelux .modal-footer a.back:hover, .fuelux .modal-footer .cancel:hover {
-  background-color: #f1f1f1;
-  border-color: #bbb;
 }
 
 .error-toast-wrap {
@@ -1136,7 +1156,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: block;
 }
 
-#letterScreen .html-creation-type .input-fields .input-box {
+#letterScreen .html-creation-type .input-fields .input-box,
+#letterCardInsertScreen .screen-1 .html-creation-type .input-fields .input-box {
   width: 45%;
 }
 
@@ -1155,9 +1176,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .checkbox-wrap .checkbox-label {
   display: flex;
   gap: 0.5rem;
+  width: fit-content;
 }
 
-.letter-pdf-fields, .letter-template-fields {
+.letter-pdf-fields, .letter-template-fields, .letter-card-insert-template-fields {
   display: flex;
   flex-direction: column;
   gap: 4rem;
@@ -1167,7 +1189,115 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: red;
 }
 
-.extra-service option[value=""],
-.envelope-type option[value=""] {
-  color: lightgray;
+.extra-service, .envelope-type {
+  width: 100%;
+}
+
+.extra-service-list .dropdown-item:first-child,
+.envelope-type-list .dropdown-item:first-child,
+.placeholder-style  {
+  color: grey;
+}
+
+.letters-card-insert .screen-3 .spacer,
+.letters-card-insert .screen-3 .template-container {
+  flex-direction: row;
+}
+
+.letters-card-insert .screen-3 .template-container.html .template-screen-wrapper,
+.letters-card-insert .screen-3 .template-container.template .template-screen-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.letters-card-insert .screen-3 .template-container.html .template-screen-wrapper {
+  width: 61%;
+}
+
+.letters-card-insert .screen-3 .template-container .input-box,
+.letters-card-insert .screen-2 .pdf-container.html .pdf-screen-wrapper .letter-pdf-fields .input-box {
+  width: 46%;
+}
+
+.letters-card-insert .screen-2 .pdf-container .input-box,
+.letters-card-insert .screen .template-container.template .input-box,
+.letters-card-insert .screen .pdf-container.template .input-box {
+  width: 30%;
+}
+
+.letters-card-insert .screen-3 .template-container .checkboxes-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1.75rem;
+}
+
+.letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields,
+.letters-card-insert .screen-2 .pdf-container .letter-pdf-fields  {
+  gap: 2.5rem;
+}
+
+.letters-card-insert .screen .template-container.template,
+.letters-card-insert .screen .pdf-container.template {
+  width: 100%;
+}
+
+.letters-card-insert .screen .template-container.template .checkboxes-container,
+.letters-card-insert .screen .pdf-container.template .checkboxes-container {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.dropdown-icon-angle-wrap {
+  position: absolute;
+  width: 16px;
+  height: 22px;
+  right: 5px;
+  top: 5px;
+  background: white;
+  pointer-events: none;
+}
+
+.contact-dropdown-container .dropdown-icon-angle-wrap {
+  right: 7rem;
+}
+
+.card-insert-input.hidden {
+  display: none !important;
+}
+
+.pdf-screen-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.pdf-container.html .pdf-screen-wrapper {
+  width: 60%;
+}
+
+.pdf-container.html .checkboxes-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1.75rem;
+  column-gap: unset;
+}
+
+.checkbox-input:disabled + span,
+.input-field:disabled + .dropdown-icon-angle-wrap,
+.input-field:disabled {
+  color: gray;
+  opacity: 0.6;
+}
+
+.extra-service-dropdown-wrap,
+.envelope-type-dropdown-wrap {
+  cursor: default;
+}
+
+.letter-card-insert-template-container .checkboxes-container .checkbox-wrap .checkbox-label {
+  width: max-content;
+}
+
+.contact-option-wrapper .hidden {
+  display: none;
 }

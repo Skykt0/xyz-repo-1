@@ -34,7 +34,7 @@ exports.execute = async function (req, res) {
   const internalPostcardJson = requestBody.internalPostcardJson;
   internalPostcardJson.authTSSD = authTSSD;
   const loggingExternalKey = internalPostcardJson.loggingExternalKey;
-
+  const cardInsertObj = internalPostcardJson.cardInsertObj;
 
   let requestData = {
     authTSSD: authTSSD,
@@ -47,10 +47,20 @@ exports.execute = async function (req, res) {
     loggingExternalKey : loggingExternalKey
   };
 
+  requestData.object = (cardInsertObj !== null && 'cardInsertEnabled' in cardInsertObj) ? `${internalPostcardJson.messageType}-${cardInsertObj.cardInsertType}` : internalPostcardJson.messageType;
+
   try {
     let postcardJson = requestBody.postcardJson;
     const contactFields = requestBody.MapDESchema;
     postcardJson.to = contactFields;
+    const mergeVariables = requestBody.mergeVariableSchema;
+    postcardJson.mergeVariables = postcardJson.mergeVariables || {};
+    for (const key in mergeVariables) {
+      if (mergeVariables.hasOwnProperty(key)) {
+        postcardJson.mergeVariables[key] = mergeVariables[key];
+      }
+    }
+
     let now = new Date();
     now.setMinutes(now.getMinutes() + 5);
     postcardJson.sendDate = now.toISOString();
@@ -59,9 +69,9 @@ exports.execute = async function (req, res) {
 
     const postcardConfigOptions = {
       method: 'POST',
-      url: internalPostcardJson.messageType === 'Postcards' || internalPostcardJson.messageType === 'Letters'
-        ? baseUrl + internalPostcardJson.messageType.toLowerCase()
-        : baseUrl + 'self_mailers',
+      url: internalPostcardJson.messageType === 'Postcards' ? baseUrl + 'postcards'
+        : internalPostcardJson.messageType === 'Letters' || internalPostcardJson.messageType === 'LettersCardInsert'
+          ? baseUrl + 'letters' : baseUrl + 'self_mailers',
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
