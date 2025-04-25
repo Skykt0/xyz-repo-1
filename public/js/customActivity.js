@@ -2023,31 +2023,33 @@ define([
     }
 
     resetToContactMappingErrors();
-    if(selectedSenderContactType === 'existing-contact'){
-      isValid = validateInputField(fromContactElement) ? isValid : false ;
-    } else {
-      const firstName = $('#newContactFirstName').val().trim();
-      const companyName = $('#newContactCompanyName').val().trim();
-
-      if (firstName === '' && companyName === '') {
-        $('#newContactFirstName, #newContactCompanyName').addClass('error');
-        newContactFieldWrap.siblings('.error-msg').addClass('show');
-        isValid = false;
+    if(selectedMessageType !== 'Postcards') {
+      if(selectedSenderContactType === 'existing-contact'){
+        isValid = validateInputField(fromContactElement) ? isValid : false ;
       } else {
-        $('#newContactFirstName, #newContactCompanyName').removeClass('error');
-      }
-
-      let requiredFields = ['#newContactAddressLine1', '#newContactCity', '#newContactState', '#newContactCountryCode'];
-      requiredFields.forEach(selector => {
-        const $field = $(selector);
-        const value = $field.val().trim();
-      
-        if (value === '') {
-          $field.addClass('error');
+        const firstName = $('#newContactFirstName').val().trim();
+        const companyName = $('#newContactCompanyName').val().trim();
+  
+        if (firstName === '' && companyName === '') {
+          $('#newContactFirstName, #newContactCompanyName').addClass('error');
           newContactFieldWrap.siblings('.error-msg').addClass('show');
           isValid = false;
+        } else {
+          $('#newContactFirstName, #newContactCompanyName').removeClass('error');
         }
-      });
+  
+        let requiredFields = ['#newContactAddressLine1', '#newContactCity', '#newContactState', '#newContactCountryCode'];
+        requiredFields.forEach(selector => {
+          const $field = $(selector);
+          const value = $field.val().trim();
+        
+          if (value === '') {
+            $field.addClass('error');
+            newContactFieldWrap.siblings('.error-msg').addClass('show');
+            isValid = false;
+          }
+        });
+      }
     }
 
     previewPayload.fromContact = fromContact;
@@ -2425,6 +2427,15 @@ define([
   $('.return-envelope-input').on('blur', function() {
     const $wrapper = $(this).closest('.mapping-dropdown');
     const $noOptionsItem = $wrapper.find('.returnEnvelopeList .dropdown-item.disabled');
+    
+    if ($noOptionsItem.length && $noOptionsItem.text().trim() === 'No options available') {
+      $(this).val('').trigger('input');
+    }
+  });
+
+  $('.mapping-dropdown input').on('blur', function() {
+    const $wrapper = $(this).closest('.mapping-dropdown');
+    const $noOptionsItem = $wrapper.find('.dropdown-options .dropdown-item.disabled');
     
     if ($noOptionsItem.length && $noOptionsItem.text().trim() === 'No options available') {
       $(this).val('').trigger('input');
