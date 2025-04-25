@@ -1833,7 +1833,7 @@ define([
         const elapsedTime = Date.now() - startTime;
         if (elapsedTime >= 60000 || retryOnce) {
           $('.retry-btn-wrap .loader').removeClass('show');
-          $('.preview-message').text('Failed to load the preview after several attempts. To try again, click the retry button.').show();
+          $('.preview-message').html('<div>Failed to load the preview after several attempts.</div> <div>To try again, click the retry button.</div>').show();
           $('.retry-preview-btn').text('Retry').show();
           return;
         }
@@ -1848,7 +1848,7 @@ define([
       }
     } catch {
       $('#pdf-preview-container, .retry-preview-btn').hide();
-      $('.preview-message').text('An error occurred while loading the preview.').show();
+      $('.preview-message').html('<div>An error occurred while loading the preview.</div>').show();
     }
   }  
 
