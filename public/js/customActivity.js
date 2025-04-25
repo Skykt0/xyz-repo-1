@@ -2023,9 +2023,9 @@ define([
     }
 
     resetToContactMappingErrors();
-    if(selectedSenderContactType === 'existing-contact'){
+    if(selectedSenderContactType === 'existing-contact' && selectedMessageType !== 'Postcards'){
       isValid = validateInputField(fromContactElement) ? isValid : false ;
-    } else {
+    } else if(selectedSenderContactType === 'create-contact'){
       const firstName = $('#newContactFirstName').val().trim();
       const companyName = $('#newContactCompanyName').val().trim();
 
@@ -2425,6 +2425,15 @@ define([
   $('.return-envelope-input').on('blur', function() {
     const $wrapper = $(this).closest('.mapping-dropdown');
     const $noOptionsItem = $wrapper.find('.returnEnvelopeList .dropdown-item.disabled');
+    
+    if ($noOptionsItem.length && $noOptionsItem.text().trim() === 'No options available') {
+      $(this).val('').trigger('input');
+    }
+  });
+
+  $('.mapping-dropdown input').on('blur', function() {
+    const $wrapper = $(this).closest('.mapping-dropdown');
+    const $noOptionsItem = $wrapper.find('.dropdown-options .dropdown-item.disabled');
     
     if ($noOptionsItem.length && $noOptionsItem.text().trim() === 'No options available') {
       $(this).val('').trigger('input');
