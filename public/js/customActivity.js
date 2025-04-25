@@ -2553,7 +2553,7 @@ define([
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
-  $(document).on('blur', '.template-input', function (e) {
+  $(document).on('blur', '.template-input', function () {
     const $input = $(this);
     const $dropdown = $input.closest('.template-dropdown-wrap').siblings('.dropdown-options');
 

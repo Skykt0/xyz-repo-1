@@ -67,6 +67,7 @@ body {
 	font-size: 16px;
 	margin-bottom: 10px;
   }
+
 .screen-3 .input-label-radio {
   font-size: 16px;
   margin-bottom: 10px;
@@ -686,16 +687,59 @@ input:checked + .test-to-live-slider::before {
 	gap: 0.5rem;
 }
 
-#letterScreen .pdf-container .input-fields .input-box,
-#letterScreen .template-container .existing-template-details .input-box,
-#letterCardInsertScreen .screen-1 .pdf-container .input-fields .input-box,
-#letterCardInsertScreen .screen-1 .template-container .existing-template-details .input-box {
-  width: 31%;
-}
-
 .trifold .html-screen-wrapper .input-fields .input-box,
 .selfmailer .html-screen-wrapper .input-fields .input-box {
 	width: 90%;
+}
+
+.letters-card-insert .screen-3 .template-container .input-box {
+  width: 46%;
+}
+
+.letters-card-insert .screen-2 .pdf-container .input-box,
+.letters-card-insert .screen .template-container.template .input-box,
+.letters-card-insert .screen .pdf-container.template .input-box {
+  width: 30%;
+}
+
+.letters-card-insert .screen-2 .pdf-container.html .pdf-screen-wrapper .letter-pdf-fields .input-box {
+  width: 46%;
+}
+
+#letter-screen .html-creation-type .input-fields .input-box {
+  width: 45%;
+}
+
+#letter-screen .pdf-container .input-fields .input-box,
+#letter-screen .template-container .existing-template-details .input-box,
+#letter-card-insert-screen .screen-1 .pdf-container .input-fields .input-box,
+#letter-card-insert-screen .screen-1 .template-container .existing-template-details .input-box {
+  width: 31%;
+}
+
+#letter-card-insert-screen .screen-1 .html-creation-type .input-fields .input-box {
+  width: 45%;
+}
+
+.dropdown-icon-angle-wrap {
+  position: absolute;
+  width: 16px;
+  height: 22px;
+  right: 5px;
+  top: 5px;
+  background: white;
+  pointer-events: none;
+}
+
+.contact-dropdown-container .dropdown-icon-angle-wrap {
+  right: 7rem;
+}
+
+.checkbox-input:disabled + span,
+.input-field:disabled + .dropdown-icon-angle-wrap,
+.input-field:disabled {
+  color: gray;
+  opacity: 0.6;
 }
 
 .html-screen-wrapper .input-fields .input-field {
@@ -799,6 +843,12 @@ input:checked + .test-to-live-slider::before {
 
 .trifold .screen-1 .btn{
 	position: static;
+}
+
+.checkbox-wrap .checkbox-label {
+  display: flex;
+  gap: 0.5rem;
+  width: fit-content;
 }
 
 .screen-1 .radio-buttons .radio-label,
@@ -1006,9 +1056,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     pointer-events: none;
 }
 
+.screen .spacer .html-btn-wrap,
 .container.spacer.html-creation-type .html-btn-wrap,
-.container.spacer.pdf-creation-type .html-btn-wrap,
-.screen .spacer .html-btn-wrap {
+.container.spacer.pdf-creation-type .html-btn-wrap {
   position: absolute;
   width: 94%;
   background: white;
@@ -1032,6 +1082,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: center;
 }
 
+.dropdown-icon {
+  position: absolute;
+  right: 4px;
+  top: 3px;
+  transform: rotate(90deg);
+  pointer-events: none;
+  font-weight: bold;
+}
+
 .contact-dropdown-wrap .dropdown-icon {
     position: absolute;
     right: 26%;
@@ -1042,15 +1101,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .template-dropdown-wrap, .return-envelope-dropdown-wrap {
     position: relative;
-}
-
-.dropdown-icon {
-  position: absolute;
-  right: 4px;
-  top: 3px;
-  transform: rotate(90deg);
-  pointer-events: none;
-  font-weight: bold;
 }
 
 .retry-btn-wrap {
@@ -1104,7 +1154,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   padding: 1rem;
   width: 97%;
   border-radius: 4px;
-  background-color: rgba(255, 0, 0, 0.75);
+  background-color: rgba(255 0 0 / 75%);
   gap: 1rem;
 }
 
@@ -1124,7 +1174,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .activity-loader {
-  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+ICA8ZyB3aWR0aD0iNTRweCIgaGVpZ2h0PSI1NHB4IiB2aWV3Qm94PSI1IDUgNTQgNTQiICBpZD0ibG9hZGVyIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNS4wMDAwMDAsIDUuMDAwMDAwKSIgZmlsbD0iIzE1ODllZSI+ICA8ZyBpZD0ic3Bpbm5lci1tZWRpdW0iPiAgIDxnIGlkPSJPdmFsLTM1Ij4gICAgPGNpcmNsZSBpZD0iVG9wIiBjeD0iMjciIGN5PSI2IiByPSI1Ij48L2NpcmNsZT4gICAgPGNpcmNsZSBpZD0iVG9wUmlnaHQiIGN4PSI0OCIgY3k9IjE3IiByPSI1Ij48L2NpcmNsZT4gICAgPGNpcmNsZSBpZD0iQm90dG9tUmlnaHQiIGN4PSI0OCIgY3k9IjM2IiByPSI1Ij48L2NpcmNsZT4gICAgPGNpcmNsZSBpZD0iQm90dG9tIiBjeD0iMjciIGN5PSI0OCIgcj0iNSI+PC9jaXJjbGU+ICAgIDxjaXJjbGUgaWQ9IkJvdHRvbUxlZnQiIGN4PSI2IiBjeT0iMzYiIHI9IjUiPjwvY2lyY2xlPiAgICA8Y2lyY2xlIGlkPSJUb3BMZWZ0IiBjeD0iNiIgY3k9IjE3IiByPSI1Ij48L2NpcmNsZT4gICA8L2c+ICA8L2c+IDwvZz4gPGFuaW1hdGVNb3Rpb24geGxpbms6aHJlZj0iI1RvcCIgcGF0aD0iTSAwIDAgViAtNSBaIiBkdXI9IjAuMjVzIiBiZWdpbj0iMHM7IFRvcExlZnRBbmltLmVuZCIgaWQ9IlRvcEFuaW0iIC8+IDxhbmltYXRlTW90aW9uIHhsaW5rOmhyZWY9IiNUb3BSaWdodCIgcGF0aD0iTSAwIDAgTCA1IC01IFoiIGR1cj0iMC4yNXMiIGJlZ2luPSJUb3BBbmltLmVuZCIgaWQ9IlRvcFJpZ2h0QW5pbSIgLz4gPGFuaW1hdGVNb3Rpb24geGxpbms6aHJlZj0iI0JvdHRvbVJpZ2h0IiBwYXRoPSJNIDAgMCBMIDUgNSBaIiBkdXI9IjAuMjVzIiBiZWdpbj0iVG9wUmlnaHRBbmltLmVuZCIgaWQ9IkJvdHRvbVJpZ2h0QW5pbSIgLz4gPGFuaW1hdGVNb3Rpb24geGxpbms6aHJlZj0iI0JvdHRvbSIgcGF0aD0iTSAwIDAgViA1IFoiIGR1cj0iMC4yNXMiIGJlZ2luPSJCb3R0b21SaWdodEFuaW0uZW5kIiBpZD0iQm90dG9tQW5pbSIgLz4gPGFuaW1hdGVNb3Rpb24geGxpbms6aHJlZj0iI0JvdHRvbUxlZnQiIHBhdGg9Ik0gMCAwIEwgLTUgNSBaIiBkdXI9IjAuMjVzIiBiZWdpbj0iQm90dG9tQW5pbS5lbmQiIGlkPSJCb3R0b21MZWZ0QW5pbSIgLz4gPGFuaW1hdGVNb3Rpb24geGxpbms6aHJlZj0iI1RvcExlZnQiIHBhdGg9Ik0gMCAwIEwgLTUgLTUgWiIgZHVyPSIwLjI1cyIgYmVnaW49IkJvdHRvbUxlZnRBbmltLmVuZCIgaWQ9IlRvcExlZnRBbmltIiAvPjwvc3ZnPg==);
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4IiB2aWV3Qm94PSIwIDAgNjQgNjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+ICA8ZyB3aWR0aD0iNTRweCIgaGVpZ2h0PSI1NHB4IiB2aWV3Qm94PSI1IDUgNTQgNTQiICBpZD0ibG9hZGVyIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNS4wMDAwMDAsIDUuMDAwMDAwKSIgZmlsbD0iIzE1ODllZSI+ICA8ZyBpZD0ic3Bpbm5lci1tZWRpdW0iPiAgIDxnIGlkPSJPdmFsLTM1Ij4gICAgPGNpcmNsZSBpZD0iVG9wIiBjeD0iMjciIGN5PSI2IiByPSI1Ij48L2NpcmNsZT4gICAgPGNpcmNsZSBpZD0iVG9wUmlnaHQiIGN4PSI0OCIgY3k9IjE3IiByPSI1Ij48L2NpcmNsZT4gICAgPGNpcmNsZSBpZD0iQm90dG9tUmlnaHQiIGN4PSI0OCIgY3k9IjM2IiByPSI1Ij48L2NpcmNsZT4gICAgPGNpcmNsZSBpZD0iQm90dG9tIiBjeD0iMjciIGN5PSI0OCIgcj0iNSI+PC9jaXJjbGU+ICAgIDxjaXJjbGUgaWQ9IkJvdHRvbUxlZnQiIGN4PSI2IiBjeT0iMzYiIHI9IjUiPjwvY2lyY2xlPiAgICA8Y2lyY2xlIGlkPSJUb3BMZWZ0IiBjeD0iNiIgY3k9IjE3IiByPSI1Ij48L2NpcmNsZT4gICA8L2c+ICA8L2c+IDwvZz4gPGFuaW1hdGVNb3Rpb24geGxpbms6aHJlZj0iI1RvcCIgcGF0aD0iTSAwIDAgViAtNSBaIiBkdXI9IjAuMjVzIiBiZWdpbj0iMHM7IFRvcExlZnRBbmltLmVuZCIgaWQ9IlRvcEFuaW0iIC8+IDxhbmltYXRlTW90aW9uIHhsaW5rOmhyZWY9IiNUb3BSaWdodCIgcGF0aD0iTSAwIDAgTCA1IC01IFoiIGR1cj0iMC4yNXMiIGJlZ2luPSJUb3BBbmltLmVuZCIgaWQ9IlRvcFJpZ2h0QW5pbSIgLz4gPGFuaW1hdGVNb3Rpb24geGxpbms6aHJlZj0iI0JvdHRvbVJpZ2h0IiBwYXRoPSJNIDAgMCBMIDUgNSBaIiBkdXI9IjAuMjVzIiBiZWdpbj0iVG9wUmlnaHRBbmltLmVuZCIgaWQ9IkJvdHRvbVJpZ2h0QW5pbSIgLz4gPGFuaW1hdGVNb3Rpb24geGxpbms6aHJlZj0iI0JvdHRvbSIgcGF0aD0iTSAwIDAgViA1IFoiIGR1cj0iMC4yNXMiIGJlZ2luPSJCb3R0b21SaWdodEFuaW0uZW5kIiBpZD0iQm90dG9tQW5pbSIgLz4gPGFuaW1hdGVNb3Rpb24geGxpbms6aHJlZj0iI0JvdHRvbUxlZnQiIHBhdGg9Ik0gMCAwIEwgLTUgNSBaIiBkdXI9IjAuMjVzIiBiZWdpbj0iQm90dG9tQW5pbS5lbmQiIGlkPSJCb3R0b21MZWZ0QW5pbSIgLz4gPGFuaW1hdGVNb3Rpb24geGxpbms6aHJlZj0iI1RvcExlZnQiIHBhdGg9Ik0gMCAwIEwgLTUgLTUgWiIgZHVyPSIwLjI1cyIgYmVnaW49IkJvdHRvbUxlZnRBbmltLmVuZCIgaWQ9IlRvcExlZnRBbmltIiAvPjwvc3ZnPg==");
   background-repeat: no-repeat;
   background-size: cover;
   display: none;
@@ -1143,22 +1193,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .loader-overlay {
   display: none;
   position: absolute;
-  left: 0px;
+  left: 0;
   top: 0;
   width: 1048px;
   height: 500px;
-  background: rgb(255, 255, 255);
+  background: rgb(255 255 255);
   opacity: 0.75;
   z-index: 1;
 }
 
 .loader-overlay.show {
   display: block;
-}
-
-#letterScreen .html-creation-type .input-fields .input-box,
-#letterCardInsertScreen .screen-1 .html-creation-type .input-fields .input-box {
-  width: 45%;
 }
 
 .checkboxes-container {
@@ -1171,12 +1216,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .template-container .checkboxes-container {
   display: flex;
   column-gap: 3rem;
-}
-
-.checkbox-wrap .checkbox-label {
-  display: flex;
-  gap: 0.5rem;
-  width: fit-content;
 }
 
 .letter-pdf-fields, .letter-template-fields, .letter-card-insert-template-fields {
@@ -1215,15 +1254,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 61%;
 }
 
-.letters-card-insert .screen-3 .template-container .input-box,
-.letters-card-insert .screen-2 .pdf-container.html .pdf-screen-wrapper .letter-pdf-fields .input-box {
-  width: 46%;
-}
-
-.letters-card-insert .screen-2 .pdf-container .input-box,
-.letters-card-insert .screen .template-container.template .input-box,
-.letters-card-insert .screen .pdf-container.template .input-box {
-  width: 30%;
+.pdf-container.html .checkboxes-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1.75rem;
+  column-gap: unset;
 }
 
 .letters-card-insert .screen-3 .template-container .checkboxes-container {
@@ -1247,20 +1282,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   grid-template-columns: repeat(5, 1fr);
 }
 
-.dropdown-icon-angle-wrap {
-  position: absolute;
-  width: 16px;
-  height: 22px;
-  right: 5px;
-  top: 5px;
-  background: white;
-  pointer-events: none;
-}
-
-.contact-dropdown-container .dropdown-icon-angle-wrap {
-  right: 7rem;
-}
-
 .card-insert-input.hidden {
   display: none !important;
 }
@@ -1273,20 +1294,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .pdf-container.html .pdf-screen-wrapper {
   width: 60%;
-}
-
-.pdf-container.html .checkboxes-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 1.75rem;
-  column-gap: unset;
-}
-
-.checkbox-input:disabled + span,
-.input-field:disabled + .dropdown-icon-angle-wrap,
-.input-field:disabled {
-  color: gray;
-  opacity: 0.6;
 }
 
 .extra-service-dropdown-wrap,
