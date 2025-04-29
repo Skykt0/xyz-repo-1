@@ -1733,6 +1733,12 @@ define([
         data.append('mailingClass', previewPayload.mailingClass);
       }
     }
+
+    mergeVariablesFields.forEach(field => {
+      const key = `mergeVariables[${field}]`;
+      const value = toTestCamelCase(field);
+      data.append(key, value);
+    });
     
     try {
       const response = await fetch(url, {
@@ -1960,7 +1966,6 @@ define([
       throw error;
     }
   }
-  
 
   function fetchContacts(searchQuery) {
     previewPayload.contactEnvironment = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
@@ -2011,6 +2016,16 @@ define([
         }
         return response.json();
       });
+  }
+
+  function toTestCamelCase(text) {
+    if (!text) {
+      return '';
+    }
+    const camelCase = text
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase());
+    return 'test' + camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
   }
 
   function debounce(func, delay) {
