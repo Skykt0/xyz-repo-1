@@ -23,7 +23,7 @@ define([
   let toContact = '';
   const POSTGRID_API_BASE_URL = 'https://api.postgrid.com/print-mail/v1/';
   let currentEnabledEnvironmenet = '';
-  const mergeVariablesFields = ['mergeVariable1', 'mergeVariable2', 'mergeVariable3', 'mergeVariable4'];
+  let mergeVariablesFields;
 
   var steps = [
     { 'label': 'Connect Account', 'key': 'step1' },
@@ -56,6 +56,21 @@ define([
 
   connection.on('requestedSchema', function (data) {
     var optionsData = '';
+    const excludedFieldNames = [
+      'First Name', 'Last Name', 'Company', 'Email Address',
+      'Address Line 1', 'Address Line 2', 'City', 'State',
+      'Country Code', 'PostalCode', 'SubscriberKey'
+    ];
+    const dataExtensionFields = data.schema;
+
+    mergeVariablesFields = dataExtensionFields
+      .filter(function(item) {
+        return !excludedFieldNames.includes(item.name);
+      })
+      .map(function(item) {
+        return item.name;
+      });
+
     data['schema'].forEach(ele => {
       if(!mergeVariablesFields.includes(ele.name)) {
         optionsData +=`<option value="${ele.name}">${ele.name}</option>`;
@@ -1718,6 +1733,12 @@ define([
         data.append('mailingClass', previewPayload.mailingClass);
       }
     }
+
+    mergeVariablesFields.forEach(field => {
+      const key = `mergeVariables[${field}]`;
+      const value = toTestCamelCase(field);
+      data.append(key, value);
+    });
     
     try {
       const response = await fetch(url, {
@@ -1945,7 +1966,6 @@ define([
       throw error;
     }
   }
-  
 
   function fetchContacts(searchQuery) {
     previewPayload.contactEnvironment = previewPayload.liveApiKeyEnabled ? 'Live' : 'Test';
@@ -1996,6 +2016,16 @@ define([
         }
         return response.json();
       });
+  }
+
+  function toTestCamelCase(text) {
+    if (!text) {
+      return '';
+    }
+    const camelCase = text
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase());
+    return 'test' + camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
   }
 
   function debounce(func, delay) {
@@ -2553,7 +2583,7 @@ define([
     $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
   });
 
-  $(document).on('blur', '.template-input', function (e) {
+  $(document).on('blur', '.template-input', function () {
     const $input = $(this);
     const $dropdown = $input.closest('.template-dropdown-wrap').siblings('.dropdown-options');
 
