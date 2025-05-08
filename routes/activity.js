@@ -53,7 +53,6 @@ exports.execute = async function (req, res) {
     let postcardJson = requestBody.postcardJson;
     const contactFields = requestBody.MapDESchema;
     postcardJson.to = contactFields;
-    /*
     const mergeVariables = requestBody.mergeVariableSchema;
     postcardJson.mergeVariables = postcardJson.mergeVariables || {};
     for (const key in mergeVariables) {
@@ -61,7 +60,6 @@ exports.execute = async function (req, res) {
         postcardJson.mergeVariables[key] = mergeVariables[key];
       }
     }
-    */
 
     let now = new Date();
     now.setMinutes(now.getMinutes() + 5);

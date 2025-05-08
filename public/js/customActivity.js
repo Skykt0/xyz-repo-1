@@ -563,11 +563,12 @@ define([
       previewDEMapOptions[eleID]=optionSelect;
     });
 
-    /*  var mergeVariableSchema = {};
+    var mergeVariableSchema = {};
       mergeVariablesFields.forEach(fieldName => {
-        mergeVariableSchema[fieldName] = '{{'+deData[fieldName]+'}}';
+        if(fieldName !== '' && fieldName !== undefined){
+          mergeVariableSchema[fieldName] = '{{'+deData[fieldName]+'}}';
+        }
       });
-    */
 
     let selectedMessageType = $('input[name="msgType"]:checked').val();
     if(isCartInsertEnabled && selectedMessageType === 'selfmailer') {
@@ -580,7 +581,7 @@ define([
     previewPayload.senderContactType = $('input[name=\'senderContactType\']:checked').val();
     payload['arguments'].execute.inArguments[0]['internalPostcardJson'] = previewPayload;
     payload['arguments'].execute.inArguments[0]['MapDESchema']=MapDESchema;
-    //payload['arguments'].execute.inArguments[0]['mergeVariableSchema']=mergeVariableSchema;
+    payload['arguments'].execute.inArguments[0]['mergeVariableSchema']=mergeVariableSchema;
     payload['arguments'].execute.inArguments[0]['previewDEMapOptions']=previewDEMapOptions;
     payload['metaData'].isConfigured = true;
     var postCardJson = {
